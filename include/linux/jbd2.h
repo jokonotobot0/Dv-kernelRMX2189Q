@@ -1151,6 +1151,7 @@ struct journal_s
 #endif
 };
 
+<<<<<<< HEAD
 /*
  * MTK WA:
  * Disable jbd2_handle lockdep checking.
@@ -1159,12 +1160,17 @@ struct journal_s
 #if 1
 #define jbd2_might_wait_for_commit(j)
 #else
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define jbd2_might_wait_for_commit(j) \
 	do { \
 		rwsem_acquire(&j->j_trans_commit_map, 0, 0, _THIS_IP_); \
 		rwsem_release(&j->j_trans_commit_map, 1, _THIS_IP_); \
 	} while (0)
+<<<<<<< HEAD
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /* journal feature predicate functions */
 #define JBD2_FEATURE_COMPAT_FUNCS(name, flagname) \

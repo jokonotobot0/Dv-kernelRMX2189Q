@@ -304,7 +304,11 @@ static int rohm_i2c_burst_read(struct i2c_client *client, u8 start, void *buf,
 	msg[1].len = len;
 	msg[1].buf = buf;
 
+<<<<<<< HEAD
 	i2c_lock_adapter(adap);
+=======
+	i2c_lock_bus(adap, I2C_LOCK_SEGMENT);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	for (i = 0; i < 2; i++) {
 		if (__i2c_transfer(adap, &msg[i], 1) < 0) {
@@ -313,7 +317,11 @@ static int rohm_i2c_burst_read(struct i2c_client *client, u8 start, void *buf,
 		}
 	}
 
+<<<<<<< HEAD
 	i2c_unlock_adapter(adap);
+=======
+	i2c_unlock_bus(adap, I2C_LOCK_SEGMENT);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	return ret;
 }

@@ -1018,7 +1018,11 @@ int arm_pmu_device_probe(struct platform_device *pdev,
 			 const struct pmu_probe_info *probe_table)
 {
 	const struct of_device_id *of_id;
+<<<<<<< HEAD
 	int (*init_fn)(struct arm_pmu *);
+=======
+	const int (*init_fn)(struct arm_pmu *);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct device_node *node = pdev->dev.of_node;
 	struct arm_pmu *pmu;
 	int ret = -ENODEV;

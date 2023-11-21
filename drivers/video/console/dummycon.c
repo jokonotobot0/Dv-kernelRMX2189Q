@@ -41,6 +41,7 @@ static void dummycon_init(struct vc_data *vc, int init)
 	vc_resize(vc, DUMMY_COLUMNS, DUMMY_ROWS);
 }
 
+<<<<<<< HEAD
 static void dummycon_deinit(struct vc_data *vc)
 {
 }
@@ -67,10 +68,14 @@ static int dummycon_scroll(struct vc_data *vc, int a, int b, int c, int d)
 }
 
 static int dummycon_switch(struct vc_data *vc)
+=======
+static int dummycon_dummy(void)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
     return 0;
 }
 
+<<<<<<< HEAD
 static int dummycon_blank(struct vc_data *vc, int a, int b)
 {
     return 0;
@@ -90,6 +95,9 @@ static int dummycon_font_copy(struct vc_data *vc, int a)
 {
     return 0;
 }
+=======
+#define DUMMY	(void *)dummycon_dummy
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /*
  *  The console `switch' structure for the dummy console
@@ -101,6 +109,7 @@ const struct consw dummy_con = {
     .owner =		THIS_MODULE,
     .con_startup =	dummycon_startup,
     .con_init =		dummycon_init,
+<<<<<<< HEAD
     .con_deinit =	dummycon_deinit,
     .con_clear =	dummycon_clear,
     .con_putc =		dummycon_putc,
@@ -112,5 +121,18 @@ const struct consw dummy_con = {
     .con_font_set =	dummycon_font_set,
     .con_font_default =	dummycon_font_default,
     .con_font_copy =	dummycon_font_copy,
+=======
+    .con_deinit =	DUMMY,
+    .con_clear =	DUMMY,
+    .con_putc =		DUMMY,
+    .con_putcs =	DUMMY,
+    .con_cursor =	DUMMY,
+    .con_scroll =	DUMMY,
+    .con_switch =	DUMMY,
+    .con_blank =	DUMMY,
+    .con_font_set =	DUMMY,
+    .con_font_default =	DUMMY,
+    .con_font_copy =	DUMMY,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 EXPORT_SYMBOL_GPL(dummy_con);

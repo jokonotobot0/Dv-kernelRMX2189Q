@@ -19,16 +19,20 @@
 #include <linux/regmap.h>
 #include <linux/pinctrl/pinconf-generic.h>
 
+<<<<<<< HEAD
 /* just for bringpup, and will be revert after bringup */
 /* #define GPIO_BRINGUP */
 
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define NO_EINT_SUPPORT    255
 #define MT_EDGE_SENSITIVE           0
 #define MT_LEVEL_SENSITIVE          1
 #define EINT_DBNC_SET_DBNC_BITS     4
 #define EINT_DBNC_RST_BIT           (0x1 << 1)
 #define EINT_DBNC_SET_EN            (0x1 << 0)
+<<<<<<< HEAD
 #define MTK_PINCTRL_NOT_SUPPORT        (0xffff)
 #if defined(CONFIG_PINCTRL_MTK_NO_UPSTREAM)
 #define MAX_IP_BASE		        16
@@ -64,6 +68,10 @@ enum {
 	GPIO_PULL_EN_DEFAULT = GPIO_PULL_ENABLE,
 };
 #endif
+=======
+
+#define MTK_PINCTRL_NOT_SUPPORT	(0xffff)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 struct mtk_desc_function {
 	const char *name;
@@ -77,11 +85,15 @@ struct mtk_desc_eint {
 
 struct mtk_desc_pin {
 	struct pinctrl_pin_desc	pin;
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_EINT_MULTI_TRIGGER_DESIGN
 	struct mtk_desc_eint eint;
 #else
 	const struct mtk_desc_eint eint;
 #endif
+=======
+	const struct mtk_desc_eint eint;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	const struct mtk_desc_function	*functions;
 };
 
@@ -111,7 +123,11 @@ struct mtk_desc_pin {
 struct mtk_pinctrl_group {
 	const char	*name;
 	unsigned long	config;
+<<<<<<< HEAD
 	unsigned	int pin;
+=======
+	unsigned	pin;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 /**
@@ -233,6 +249,7 @@ struct mtk_eint_offsets {
 	u8  ports;
 };
 
+<<<<<<< HEAD
 #if defined(CONFIG_PINCTRL_MTK_NO_UPSTREAM)
 /**
  * struct mt_pin_info - For all pins' setting.
@@ -286,6 +303,8 @@ struct mtk_pinctrl {
 #endif
 };
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /**
  * struct mtk_pinctrl_devdata - Provide HW GPIO related data.
  * @pins: An array describing all pins the pin controller affects.
@@ -323,6 +342,7 @@ struct mtk_pinctrl {
  * @port_shf: The shift between two registers.
  * @port_mask: The mask of register.
  * @port_align: Provide clear register and set register step.
+<<<<<<< HEAD
  * @regmap_num:chip regmap number.
  */
 struct mtk_pinctrl_devdata {
@@ -391,6 +411,23 @@ struct mtk_pinctrl_devdata {
 		unsigned int pin);
 	int (*mtk_pctl_get_pull_en)(struct mtk_pinctrl *pctl, unsigned int pin);
 #endif
+=======
+ */
+struct mtk_pinctrl_devdata {
+	const struct mtk_desc_pin	*pins;
+	unsigned int				npins;
+	const struct mtk_drv_group_desc	*grp_desc;
+	unsigned int	n_grp_cls;
+	const struct mtk_pin_drv_grp	*pin_drv_grp;
+	unsigned int	n_pin_drv_grps;
+	int (*spec_pull_set)(struct regmap *reg, unsigned int pin,
+			unsigned char align, bool isup, unsigned int arg);
+	int (*spec_ies_smt_set)(struct regmap *reg, unsigned int pin,
+			unsigned char align, int value, enum pin_config_param arg);
+	void (*spec_pinmux_set)(struct regmap *reg, unsigned int pin,
+			unsigned int mode);
+	void (*spec_dir_set)(unsigned int *reg_addr, unsigned int pin);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	unsigned int dir_offset;
 	unsigned int ies_offset;
 	unsigned int smt_offset;
@@ -408,10 +445,31 @@ struct mtk_pinctrl_devdata {
 	struct mtk_eint_offsets eint_offsets;
 	unsigned int	ap_num;
 	unsigned int	db_cnt;
+<<<<<<< HEAD
 #if defined(CONFIG_PINCTRL_MTK_NO_UPSTREAM)
 	unsigned int regmap_num;
 	const struct irq_domain_ops *mtk_irq_domain_ops;
 #endif
+=======
+};
+
+struct mtk_pinctrl {
+	struct regmap	*regmap1;
+	struct regmap	*regmap2;
+	struct pinctrl_desc pctl_desc;
+	struct device           *dev;
+	struct gpio_chip	*chip;
+	struct mtk_pinctrl_group	*groups;
+	unsigned			ngroups;
+	const char          **grp_names;
+	struct pinctrl_dev      *pctl_dev;
+	const struct mtk_pinctrl_devdata  *devdata;
+	void __iomem		*eint_reg_base;
+	struct irq_domain	*domain;
+	int			*eint_dual_edges;
+	u32 *wake_mask;
+	u32 *cur_mask;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 int mtk_pctrl_init(struct platform_device *pdev,
@@ -424,6 +482,7 @@ int mtk_pctrl_spec_pull_set_samereg(struct regmap *regmap,
 		unsigned char align, bool isup, unsigned int r1r0);
 
 int mtk_pconf_spec_set_ies_smt_range(struct regmap *regmap,
+<<<<<<< HEAD
 		const struct mtk_pin_ies_smt_set *ies_smt_infos,
 		unsigned int info_num, unsigned int pin,
 		unsigned char align, int value);
@@ -453,6 +512,10 @@ unsigned int mtk_gpio_debounce_select(const unsigned int *dbnc_infos,
 	int dbnc_infos_num, unsigned int debounce);
 int mtk_pctrl_get_gpio_chip_base(void);
 int gpio_get_tristate_input(unsigned int pin);
+=======
+		const struct mtk_pin_ies_smt_set *ies_smt_infos, unsigned int info_num,
+		unsigned int pin, unsigned char align, int value);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 extern const struct dev_pm_ops mtk_eint_pm_ops;
 

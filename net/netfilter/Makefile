@@ -119,11 +119,14 @@ obj-$(CONFIG_NETFILTER_XT_TARGET_CT) += xt_CT.o
 obj-$(CONFIG_NETFILTER_XT_TARGET_DSCP) += xt_DSCP.o
 obj-$(CONFIG_NETFILTER_XT_TARGET_HL) += xt_HL.o
 obj-$(CONFIG_NETFILTER_XT_TARGET_HMARK) += xt_HMARK.o
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 #Junyuan.Huang@PSW.CN.WiFi.Network.1471780, 2018/06/26,
 #Add for limit speed function
 obj-$(CONFIG_NETFILTER_XT_TARGET_IMQ) += xt_IMQ.o
 #endif /* VENDOR_EDIT */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 obj-$(CONFIG_NETFILTER_XT_TARGET_LED) += xt_LED.o
 obj-$(CONFIG_NETFILTER_XT_TARGET_LOG) += xt_LOG.o
 obj-$(CONFIG_NETFILTER_XT_TARGET_NETMAP) += xt_NETMAP.o
@@ -173,7 +176,10 @@ obj-$(CONFIG_NETFILTER_XT_MATCH_PHYSDEV) += xt_physdev.o
 obj-$(CONFIG_NETFILTER_XT_MATCH_PKTTYPE) += xt_pkttype.o
 obj-$(CONFIG_NETFILTER_XT_MATCH_POLICY) += xt_policy.o
 obj-$(CONFIG_NETFILTER_XT_MATCH_QUOTA) += xt_quota.o
+<<<<<<< HEAD
 obj-$(CONFIG_NETFILTER_XT_MATCH_QUOTA2) += xt_quota2.o
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 obj-$(CONFIG_NETFILTER_XT_MATCH_RATEEST) += xt_rateest.o
 obj-$(CONFIG_NETFILTER_XT_MATCH_REALM) += xt_realm.o
 obj-$(CONFIG_NETFILTER_XT_MATCH_RECENT) += xt_recent.o

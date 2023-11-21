@@ -33,6 +33,7 @@ sync framework:
  - clean up and ABI check for security issues
  - move it to drivers/base/dma-buf
 
+<<<<<<< HEAD
 vsoc.c, uapi/vsoc_shm.h
  - The current driver uses the same wait queue for all of the futexes in a
    region. This will cause false wakeups in regions with a large number of
@@ -42,5 +43,7 @@ vsoc.c, uapi/vsoc_shm.h
  - Remove VSOC_WAIT_FOR_INCOMING_INTERRUPT ioctl. This functionality has been
    superseded by the futex and is there for legacy reasons.
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 Please send patches to Greg Kroah-Hartman <greg@kroah.com> and Cc:
 Arve Hjønnevåg <arve@android.com> and Riley Andrews <riandrews@android.com>

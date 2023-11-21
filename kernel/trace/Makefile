@@ -34,7 +34,10 @@ obj-$(CONFIG_TRACING) += trace_printk.o
 obj-$(CONFIG_TRACING_MAP) += tracing_map.o
 obj-$(CONFIG_CONTEXT_SWITCH_TRACER) += trace_sched_switch.o
 obj-$(CONFIG_FUNCTION_TRACER) += trace_functions.o
+<<<<<<< HEAD
 obj-$(CONFIG_PREEMPTIRQ_EVENTS) += trace_irqsoff.o
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 obj-$(CONFIG_IRQSOFF_TRACER) += trace_irqsoff.o
 obj-$(CONFIG_PREEMPT_TRACER) += trace_irqsoff.o
 obj-$(CONFIG_SCHED_TRACER) += trace_sched_wakeup.o
@@ -68,10 +71,16 @@ obj-$(CONFIG_KGDB_KDB) += trace_kdb.o
 endif
 obj-$(CONFIG_PROBE_EVENTS) += trace_probe.o
 obj-$(CONFIG_UPROBE_EVENT) += trace_uprobe.o
+<<<<<<< HEAD
 obj-$(CONFIG_GPU_TRACEPOINTS) += gpu-traces.o
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 obj-$(CONFIG_TRACEPOINT_BENCHMARK) += trace_benchmark.o
 
 libftrace-y := ftrace.o
+<<<<<<< HEAD
 
 obj-$(CONFIG_TRACING) += mtk_trace.o
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

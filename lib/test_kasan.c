@@ -19,7 +19,10 @@
 #include <linux/string.h>
 #include <linux/uaccess.h>
 #include <linux/module.h>
+<<<<<<< HEAD
 #include <linux/kasan.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /*
  * Note: test functions are marked noinline so that their names appear in
@@ -440,6 +443,7 @@ static noinline void __init use_after_scope_test(void)
 	p[1023] = 1;
 }
 
+<<<<<<< HEAD
 static noinline void __init kasan_alloca_oob_left(void)
 {
 	volatile int i = 10;
@@ -468,6 +472,10 @@ static int __init kmalloc_tests_init(void)
 	 */
 	bool multishot = kasan_save_enable_multi_shot();
 
+=======
+static int __init kmalloc_tests_init(void)
+{
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	kmalloc_oob_right();
 	kmalloc_oob_left();
 	kmalloc_node_oob_right();
@@ -489,6 +497,7 @@ static int __init kmalloc_tests_init(void)
 	kmem_cache_oob();
 	kasan_stack_oob();
 	kasan_global_oob();
+<<<<<<< HEAD
 	kasan_alloca_oob_left();
 	kasan_alloca_oob_right();
 	ksize_unpoisons_memory();
@@ -497,6 +506,11 @@ static int __init kmalloc_tests_init(void)
 
 	kasan_restore_multi_shot(multishot);
 
+=======
+	ksize_unpoisons_memory();
+	copy_user_test();
+	use_after_scope_test();
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return -EAGAIN;
 }
 

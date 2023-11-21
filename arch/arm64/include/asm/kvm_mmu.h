@@ -47,7 +47,11 @@
  * If the page is in the bottom half, we have to use the top half. If
  * the page is in the top half, we have to use the bottom half:
  *
+<<<<<<< HEAD
  * T = __pa_symbol(__hyp_idmap_text_start)
+=======
+ * T = __virt_to_phys(__hyp_idmap_text_start)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  * if (T & BIT(VA_BITS - 1))
  *	HYP_VA_MIN = 0  //idmap in upper half
  * else
@@ -290,7 +294,11 @@ static inline void __kvm_flush_dcache_pud(pud_t pud)
 	kvm_flush_dcache_to_poc(page_address(page), PUD_SIZE);
 }
 
+<<<<<<< HEAD
 #define kvm_virt_to_phys(x)		__pa_symbol(x)
+=======
+#define kvm_virt_to_phys(x)		__virt_to_phys((unsigned long)(x))
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 void kvm_set_way_flush(struct kvm_vcpu *vcpu);
 void kvm_toggle_cache(struct kvm_vcpu *vcpu, bool was_enabled);

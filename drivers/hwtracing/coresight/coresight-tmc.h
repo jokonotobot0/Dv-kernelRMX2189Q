@@ -117,7 +117,11 @@ struct tmc_drvdata {
 	void __iomem		*vaddr;
 	u32			size;
 	u32			len;
+<<<<<<< HEAD
 	u32			mode;
+=======
+	local_t			mode;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	enum tmc_config_type	config_type;
 	enum tmc_mem_intf_width	memwidth;
 	u32			trigger_cntr;

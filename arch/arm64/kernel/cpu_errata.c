@@ -427,6 +427,7 @@ const struct arm64_cpu_capabilities arm64_errata[] = {
 		MIDR_RANGE(MIDR_CORTEX_A53, 0x00, 0x04),
 	},
 #endif
+<<<<<<< HEAD
 #ifdef CONFIG_ARM64_ERRATUM_855873
 	{
 	/* Cortex-A53 r0p[01] */
@@ -435,6 +436,8 @@ const struct arm64_cpu_capabilities arm64_errata[] = {
 		MIDR_RANGE(MIDR_CORTEX_A53, 0x00, 0x04),
 	},
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #ifdef CONFIG_CAVIUM_ERRATUM_23154
 	{
 	/* Cavium ThunderX, pass 1.x */

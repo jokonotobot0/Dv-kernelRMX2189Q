@@ -24,6 +24,7 @@
 
 struct mtk_sysirq_chip_data {
 	spinlock_t lock;
+<<<<<<< HEAD
 #ifndef CONFIG_MTK_INDIRECT_ACCESS
 	u32 nr_intpol_bases;
 	void __iomem **intpol_bases;
@@ -109,22 +110,38 @@ void _mt_irq_unmask(struct irq_data *data)
 
 #else
 
+=======
+	void __iomem *intpol_base;
+};
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int mtk_sysirq_set_type(struct irq_data *data, unsigned int type)
 {
 	irq_hw_number_t hwirq = data->hwirq;
 	struct mtk_sysirq_chip_data *chip_data = data->chip_data;
+<<<<<<< HEAD
 	u8 intpol_idx = chip_data->intpol_idx[hwirq];
 	void __iomem *base;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	u32 offset, reg_index, value;
 	unsigned long flags;
 	int ret;
 
+<<<<<<< HEAD
 	base = chip_data->intpol_bases[intpol_idx];
 	reg_index = chip_data->which_word[hwirq];
 	offset = hwirq & 0x1f;
 
 	spin_lock_irqsave(&chip_data->lock, flags);
 	value = readl_relaxed(base + reg_index * 4);
+=======
+	offset = hwirq & 0x1f;
+	reg_index = hwirq >> 5;
+
+	spin_lock_irqsave(&chip_data->lock, flags);
+	value = readl_relaxed(chip_data->intpol_base + reg_index * 4);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (type == IRQ_TYPE_LEVEL_LOW || type == IRQ_TYPE_EDGE_FALLING) {
 		if (type == IRQ_TYPE_LEVEL_LOW)
 			type = IRQ_TYPE_LEVEL_HIGH;
@@ -134,8 +151,12 @@ static int mtk_sysirq_set_type(struct irq_data *data, unsigned int type)
 	} else {
 		value &= ~(1 << offset);
 	}
+<<<<<<< HEAD
 
 	writel(value, base + reg_index * 4);
+=======
+	writel(value, chip_data->intpol_base + reg_index * 4);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	data = data->parent_data;
 	ret = data->chip->irq_set_type(data, type);
@@ -143,6 +164,7 @@ static int mtk_sysirq_set_type(struct irq_data *data, unsigned int type)
 	return ret;
 }
 
+<<<<<<< HEAD
 void _mt_irq_mask(struct irq_data *data)
 {
 	u32 offset, reg, value;
@@ -198,6 +220,8 @@ static void mtk_irq_chip_unmask_parent(struct irq_data *data)
 		_mt_irq_unmask(data);
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static struct irq_chip mtk_sysirq_chip = {
 	.name			= "MT_SYSIRQ",
 	.irq_mask		= irq_chip_mask_parent,
@@ -206,7 +230,10 @@ static struct irq_chip mtk_sysirq_chip = {
 	.irq_set_type		= mtk_sysirq_set_type,
 	.irq_retrigger		= irq_chip_retrigger_hierarchy,
 	.irq_set_affinity	= irq_chip_set_affinity_parent,
+<<<<<<< HEAD
 	.flags                  = IRQCHIP_SET_TYPE_MASKED,
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 static int mtk_sysirq_domain_translate(struct irq_domain *d,
@@ -266,6 +293,7 @@ static int __init mtk_sysirq_of_init(struct device_node *node,
 {
 	struct irq_domain *domain, *domain_parent;
 	struct mtk_sysirq_chip_data *chip_data;
+<<<<<<< HEAD
 	int ret, intpol_num = 0;
 	const char *need_unmask_str = NULL;
 #ifndef CONFIG_MTK_INDIRECT_ACCESS
@@ -280,10 +308,26 @@ static int __init mtk_sysirq_of_init(struct device_node *node,
 		return -EINVAL;
 	}
 
+=======
+	int ret, size, intpol_num;
+	struct resource res;
+
+	domain_parent = irq_find_host(parent);
+	if (!domain_parent) {
+		pr_err("mtk_sysirq: interrupt-parent not found\n");
+		return -EINVAL;
+	}
+
+	ret = of_address_to_resource(node, 0, &res);
+	if (ret)
+		return ret;
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	chip_data = kzalloc(sizeof(*chip_data), GFP_KERNEL);
 	if (!chip_data)
 		return -ENOMEM;
 
+<<<<<<< HEAD
 #ifndef CONFIG_MTK_INDIRECT_ACCESS
 	while (of_get_address(node, i++, NULL, NULL))
 		nr_intpol_bases++;
@@ -423,16 +467,32 @@ static int __init mtk_sysirq_of_init(struct device_node *node,
 	}
 
 
+=======
+	size = resource_size(&res);
+	intpol_num = size * 8;
+	chip_data->intpol_base = ioremap(res.start, size);
+	if (!chip_data->intpol_base) {
+		pr_err("mtk_sysirq: unable to map sysirq register\n");
+		ret = -ENXIO;
+		goto out_free;
+	}
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	domain = irq_domain_add_hierarchy(domain_parent, 0, intpol_num, node,
 					  &sysirq_domain_ops, chip_data);
 	if (!domain) {
 		ret = -ENOMEM;
+<<<<<<< HEAD
 		goto out_free_all;
+=======
+		goto out_unmap;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 	spin_lock_init(&chip_data->lock);
 
 	return 0;
 
+<<<<<<< HEAD
 out_free_all:
 #ifndef CONFIG_MTK_INDIRECT_ACCESS
 	kfree(chip_data->which_word);
@@ -447,8 +507,16 @@ out_free_intpol_words:
 	kfree(chip_data->intpol_words);
 #endif
 out_free_chip:
+=======
+out_unmap:
+	iounmap(chip_data->intpol_base);
+out_free:
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	kfree(chip_data);
 	return ret;
 }
 IRQCHIP_DECLARE(mtk_sysirq, "mediatek,mt6577-sysirq", mtk_sysirq_of_init);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

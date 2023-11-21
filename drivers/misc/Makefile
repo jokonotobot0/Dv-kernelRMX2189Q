@@ -54,6 +54,7 @@ obj-$(CONFIG_VEXPRESS_SYSCFG)	+= vexpress-syscfg.o
 obj-$(CONFIG_CXL_BASE)		+= cxl/
 obj-$(CONFIG_PANEL)             += panel.o
 
+<<<<<<< HEAD
 obj-$(CONFIG_UID_SYS_STATS)	+= uid_sys_stats.o
 obj-$(CONFIG_MEMORY_STATE_TIME)	+= memory_state_time.o
 obj-$(CONFIG_ARCH_MEDIATEK) += mediatek/
@@ -64,6 +65,8 @@ obj-$(CONFIG_MEDIATEK_SOLUTION) += mediatek/
 obj-y				+= schedx.o
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 lkdtm-$(CONFIG_LKDTM)		+= lkdtm_core.o
 lkdtm-$(CONFIG_LKDTM)		+= lkdtm_bugs.o
 lkdtm-$(CONFIG_LKDTM)		+= lkdtm_heap.o
@@ -71,10 +74,13 @@ lkdtm-$(CONFIG_LKDTM)		+= lkdtm_perms.o
 lkdtm-$(CONFIG_LKDTM)		+= lkdtm_rodata_objcopy.o
 lkdtm-$(CONFIG_LKDTM)		+= lkdtm_usercopy.o
 
+<<<<<<< HEAD
 #Junbo.Guo@ODM_WT.BSP.CHG 2020/3/24,Add for hardware_info
 obj-$(CONFIG_ODM_WT_EDIT)       += hardware_info.o
 
 CFLAGS_lkdtm_rodata.o		+= $(DISABLE_LTO)
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 KCOV_INSTRUMENT_lkdtm_rodata.o	:= n
 
 OBJCOPYFLAGS :=

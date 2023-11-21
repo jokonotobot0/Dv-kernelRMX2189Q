@@ -468,7 +468,11 @@ static void kernfs_drain(struct kernfs_node *kn)
 		rwsem_release(&kn->dep_map, 1, _RET_IP_);
 	}
 
+<<<<<<< HEAD
 	kernfs_drain_open_files(kn);
+=======
+	kernfs_unmap_bin_file(kn);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	mutex_lock(&kernfs_mutex);
 }

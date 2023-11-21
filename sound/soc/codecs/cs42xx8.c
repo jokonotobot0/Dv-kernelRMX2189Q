@@ -105,6 +105,7 @@ static const struct snd_kcontrol_new cs42xx8_adc3_snd_controls[] = {
 	SOC_ENUM("ADC3 Single Ended Mode Switch", adc3_single_enum),
 };
 
+<<<<<<< HEAD
 static int cs42xx8_adc_delay_event(struct snd_soc_dapm_widget *w,
 		struct snd_kcontrol *kcontrol, int event)
 {
@@ -119,6 +120,8 @@ static int cs42xx8_adc_delay_event(struct snd_soc_dapm_widget *w,
 	return 0;
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static const struct snd_soc_dapm_widget cs42xx8_dapm_widgets[] = {
 	SND_SOC_DAPM_DAC("DAC1", "Playback", CS42XX8_PWRCTL, 1, 1),
 	SND_SOC_DAPM_DAC("DAC2", "Playback", CS42XX8_PWRCTL, 2, 1),
@@ -134,10 +137,15 @@ static const struct snd_soc_dapm_widget cs42xx8_dapm_widgets[] = {
 	SND_SOC_DAPM_OUTPUT("AOUT4L"),
 	SND_SOC_DAPM_OUTPUT("AOUT4R"),
 
+<<<<<<< HEAD
 	SND_SOC_DAPM_ADC_E("ADC1", "Capture", CS42XX8_PWRCTL, 5, 1,
 			cs42xx8_adc_delay_event, SND_SOC_DAPM_POST_PMU),
 	SND_SOC_DAPM_ADC_E("ADC2", "Capture", CS42XX8_PWRCTL, 6, 1,
 			cs42xx8_adc_delay_event, SND_SOC_DAPM_POST_PMU),
+=======
+	SND_SOC_DAPM_ADC("ADC1", "Capture", CS42XX8_PWRCTL, 5, 1),
+	SND_SOC_DAPM_ADC("ADC2", "Capture", CS42XX8_PWRCTL, 6, 1),
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	SND_SOC_DAPM_INPUT("AIN1L"),
 	SND_SOC_DAPM_INPUT("AIN1R"),
@@ -148,8 +156,12 @@ static const struct snd_soc_dapm_widget cs42xx8_dapm_widgets[] = {
 };
 
 static const struct snd_soc_dapm_widget cs42xx8_adc3_dapm_widgets[] = {
+<<<<<<< HEAD
 	SND_SOC_DAPM_ADC_E("ADC3", "Capture", CS42XX8_PWRCTL, 7, 1,
 			   cs42xx8_adc_delay_event, SND_SOC_DAPM_POST_PMU),
+=======
+	SND_SOC_DAPM_ADC("ADC3", "Capture", CS42XX8_PWRCTL, 7, 1),
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	SND_SOC_DAPM_INPUT("AIN3L"),
 	SND_SOC_DAPM_INPUT("AIN3R"),

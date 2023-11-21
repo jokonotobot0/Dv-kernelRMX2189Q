@@ -27,6 +27,7 @@
  * receives, no matter what.
  */
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 //Junyuan.Huang@PSW.CN.WiFi.Network.1471780, 2018/06/26,
 //Add for limit speed function
@@ -46,6 +47,8 @@ void nf_unregister_queue_imq_handler(void)
 EXPORT_SYMBOL_GPL(nf_unregister_queue_imq_handler);
 #endif /* VENDOR_EDIT */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* return EBUSY when somebody else is registered, return EEXIST if the
  * same handler is registered, return 0 in case of success. */
 void nf_register_queue_handler(struct net *net, const struct nf_queue_handler *qh)
@@ -126,6 +129,7 @@ void nf_queue_nf_hook_drop(struct net *net, const struct nf_hook_entry *entry)
 	rcu_read_unlock();
 }
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 //Junyuan.Huang@PSW.CN.WiFi.Network.1471780, 2018/06/26,
 //Add for limit speed function
@@ -135,12 +139,17 @@ static int __nf_queue(struct sk_buff *skb, const struct nf_hook_state *state,
 static int __nf_queue(struct sk_buff *skb, const struct nf_hook_state *state,
 		      unsigned int queuenum)
 #endif /* VENDOR_EDIT */
+=======
+static int __nf_queue(struct sk_buff *skb, const struct nf_hook_state *state,
+		      unsigned int queuenum)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	int status = -ENOENT;
 	struct nf_queue_entry *entry = NULL;
 	const struct nf_afinfo *afinfo;
 	const struct nf_queue_handler *qh;
 	struct net *net = state->net;
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 //Junyuan.Huang@PSW.CN.WiFi.Network.1471780, 2018/06/26,
 //Add for limit speed function
@@ -161,6 +170,11 @@ static int __nf_queue(struct sk_buff *skb, const struct nf_hook_state *state,
 #endif /* VENDOR_EDIT */
 
 
+=======
+
+	/* QUEUE == DROP if no one is waiting, to be safe. */
+	qh = rcu_dereference(net->nf.queue_handler);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (!qh) {
 		status = -ESRCH;
 		goto err;
@@ -207,6 +221,7 @@ int nf_queue(struct sk_buff *skb, struct nf_hook_state *state,
 	int ret;
 
 	RCU_INIT_POINTER(state->hook_entries, entry);
+<<<<<<< HEAD
 
 #ifdef VENDOR_EDIT
 //Junyuan.Huang@PSW.CN.WiFi.Network.1471780, 2018/06/26,
@@ -225,6 +240,10 @@ int nf_queue(struct sk_buff *skb, struct nf_hook_state *state,
 			return 1;
 		}
 #endif /* VENDOR_EDIT */
+=======
+	ret = __nf_queue(skb, state, verdict >> NF_VERDICT_QBITS);
+	if (ret < 0) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		if (ret == -ESRCH &&
 		    (verdict & NF_VERDICT_FLAG_QUEUE_BYPASS)) {
 			*entryp = rcu_dereference(entry->next);
@@ -277,11 +296,14 @@ okfn:
 		local_bh_enable();
 		break;
 	case NF_QUEUE:
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 //Junyuan.Huang@PSW.CN.WiFi.Network.1471780, 2018/06/26,
 //Add for limit speed function
 	case NF_IMQ_QUEUE:
 #endif /* VENDOR_EDIT */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		err = nf_queue(skb, &entry->state, &hook_entry, verdict);
 		if (err == 1) {
 			if (hook_entry)

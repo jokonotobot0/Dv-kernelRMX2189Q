@@ -120,6 +120,7 @@ struct cpufreq_policy {
 	bool			fast_switch_possible;
 	bool			fast_switch_enabled;
 
+<<<<<<< HEAD
 	/*
 	 * Preferred average time interval between consecutive invocations of
 	 * the driver to set the frequency for this policy.  To be set by the
@@ -128,6 +129,8 @@ struct cpufreq_policy {
 	unsigned int		up_transition_delay_us;
 	unsigned int		down_transition_delay_us;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	 /* Cached frequency lookup from cpufreq_driver_resolve_freq. */
 	unsigned int cached_target_freq;
 	int cached_resolved_idx;
@@ -185,7 +188,10 @@ u64 get_cpu_idle_time(unsigned int cpu, u64 *wall, int io_busy);
 int cpufreq_get_policy(struct cpufreq_policy *policy, unsigned int cpu);
 int cpufreq_update_policy(unsigned int cpu);
 bool have_governor_per_policy(void);
+<<<<<<< HEAD
 bool cpufreq_driver_is_slow(void);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 struct kobject *get_governor_parent_kobj(struct cpufreq_policy *policy);
 void cpufreq_enable_fast_switch(struct cpufreq_policy *policy);
 void cpufreq_disable_fast_switch(struct cpufreq_policy *policy);
@@ -360,6 +366,7 @@ struct cpufreq_driver {
  */
 #define CPUFREQ_NEED_INITIAL_FREQ_CHECK	(1 << 5)
 
+<<<<<<< HEAD
 /*
  * Indicates that it is safe to call cpufreq_driver_target from
  * non-interruptable context in scheduler hot paths.  Drivers must
@@ -368,6 +375,8 @@ struct cpufreq_driver {
  */
 #define CPUFREQ_DRIVER_FAST		(1 << 6)
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 int cpufreq_register_driver(struct cpufreq_driver *driver_data);
 int cpufreq_unregister_driver(struct cpufreq_driver *driver_data);
 
@@ -562,6 +571,7 @@ struct governor_attr {
 	ssize_t (*store)(struct gov_attr_set *attr_set, const char *buf,
 			 size_t count);
 };
+<<<<<<< HEAD
 /* CPUFREQ DEFAULT GOVERNOR */
 /*
  * Performance governor is fallback governor if any other gov failed to auto
@@ -588,6 +598,8 @@ extern struct cpufreq_governor cpufreq_gov_conservative;
 extern struct cpufreq_governor cpufreq_gov_sched;
 #define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_sched)
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /*********************************************************************
  *                     FREQUENCY TABLE HELPERS                       *
@@ -910,10 +922,13 @@ static inline bool policy_has_boost_freq(struct cpufreq_policy *policy)
 }
 #endif
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 struct list_head *get_cpufreq_policy_list(void);
 #endif /* VENDOR_EDIT */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* the following are really really optional */
 extern struct freq_attr cpufreq_freq_attr_scaling_available_freqs;
 extern struct freq_attr cpufreq_freq_attr_scaling_boost_freqs;
@@ -925,6 +940,7 @@ unsigned int cpufreq_generic_get(unsigned int cpu);
 int cpufreq_generic_init(struct cpufreq_policy *policy,
 		struct cpufreq_frequency_table *table,
 		unsigned int transition_latency);
+<<<<<<< HEAD
 
 struct sched_domain;
 unsigned long cpufreq_scale_freq_capacity(struct sched_domain *sd, int cpu);
@@ -940,4 +956,6 @@ static inline int get_sched_cur_freq(int cid) { return 0; };
 #endif
 unsigned long cpufreq_scale_max_freq_capacity(struct sched_domain *sd, int cpu);
 unsigned long cpufreq_scale_min_freq_capacity(struct sched_domain *sd, int cpu);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif /* _LINUX_CPUFREQ_H */

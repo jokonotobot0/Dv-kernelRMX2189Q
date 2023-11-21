@@ -72,6 +72,7 @@ obj-$(CONFIG_CHARGER_TPS65090)	+= tps65090-charger.o
 obj-$(CONFIG_CHARGER_TPS65217)	+= tps65217_charger.o
 obj-$(CONFIG_AXP288_FUEL_GAUGE) += axp288_fuel_gauge.o
 obj-$(CONFIG_AXP288_CHARGER)	+= axp288_charger.o
+<<<<<<< HEAD
 
 ifeq ($(CONFIG_MACH_MT8173),y)
 	obj-y += mt81xx/
@@ -81,3 +82,5 @@ endif
 #ifdef VENDOR_EDIT /* Jianchao.Shi@BSP.CHG.Basic, 2018/01/12, sjc Add for charging */
 obj-$(CONFIG_OPPO_CHARGER)	+= oppo/
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

@@ -48,6 +48,7 @@ extern void user_describe(const struct key *user, struct seq_file *m);
 extern long user_read(const struct key *key,
 		      char __user *buffer, size_t buflen);
 
+<<<<<<< HEAD
 static inline const struct user_key_payload *user_key_payload_rcu(const struct key *key)
 {
 	return (struct user_key_payload *)dereference_key_rcu(key);
@@ -56,6 +57,11 @@ static inline const struct user_key_payload *user_key_payload_rcu(const struct k
 static inline struct user_key_payload *user_key_payload_locked(const struct key *key)
 {
 	return (struct user_key_payload *)dereference_key_locked((struct key *)key);
+=======
+static inline const struct user_key_payload *user_key_payload(const struct key *key)
+{
+	return (struct user_key_payload *)rcu_dereference_key(key);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 #endif /* CONFIG_KEYS */

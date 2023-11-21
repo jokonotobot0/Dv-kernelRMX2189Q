@@ -301,10 +301,14 @@ them as any other INPUT_PROP_BUTTONPAD device.
 INPUT_PROP_ACCELEROMETER
 -------------------------
 Directional axes on this device (absolute and/or relative x, y, z) represent
+<<<<<<< HEAD
 accelerometer data. Some devices also report gyroscope data, which devices
 can report through the rotational axes (absolute and/or relative rx, ry, rz).
 
 All other axes retain their meaning. A device must not mix
+=======
+accelerometer data. All other axes retain their meaning. A device must not mix
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 regular directional axes and accelerometer axes on the same event node.
 
 Guidelines:

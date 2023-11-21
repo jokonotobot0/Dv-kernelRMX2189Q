@@ -21,7 +21,10 @@
 #include <linux/of.h>
 #include <linux/smp.h>
 #include <linux/types.h>
+<<<<<<< HEAD
 #include <linux/mm.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #include <asm/cacheflush.h>
 #include <asm/cpu_ops.h>
@@ -99,7 +102,11 @@ static int smp_spin_table_cpu_prepare(unsigned int cpu)
 	 * boot-loader's endianess before jumping. This is mandated by
 	 * the boot protocol.
 	 */
+<<<<<<< HEAD
 	writeq_relaxed(__pa_symbol(secondary_holding_pen), release_addr);
+=======
+	writeq_relaxed(__pa(secondary_holding_pen), release_addr);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	__flush_dcache_area((__force void *)release_addr,
 			    sizeof(*release_addr));
 

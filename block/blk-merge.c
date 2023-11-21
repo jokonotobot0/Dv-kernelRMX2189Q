@@ -6,10 +6,15 @@
 #include <linux/bio.h>
 #include <linux/blkdev.h>
 #include <linux/scatterlist.h>
+<<<<<<< HEAD
 #include <mt-plat/mtk_blocktag.h>
 
 #include <trace/events/block.h>
 #include <mt-plat/mtk_blocktag.h> /* MTK PATCH */
+=======
+
+#include <trace/events/block.h>
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #include "blk.h"
 
@@ -438,6 +443,7 @@ static int __blk_bios_map_sg(struct request_queue *q, struct bio *bio,
 	}
 
 	for_each_bio(bio)
+<<<<<<< HEAD
 		bio_for_each_segment(bvec, bio, iter) {
 			__blk_segment_map_sg(q, &bvec, sglist, &bvprv, sg,
 					     &nsegs, &cluster);
@@ -445,6 +451,11 @@ static int __blk_bios_map_sg(struct request_queue *q, struct bio *bio,
 			mtk_btag_pidlog_map_sg(q, bio, &bvec);
 #endif
 		}
+=======
+		bio_for_each_segment(bvec, bio, iter)
+			__blk_segment_map_sg(q, &bvec, sglist, &bvprv, sg,
+					     &nsegs, &cluster);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	return nsegs;
 }
@@ -673,6 +684,7 @@ static void blk_account_io_merge(struct request *req)
 	}
 }
 
+<<<<<<< HEAD
 
 static int crypto_try_merge_bio(struct bio *bio, struct bio *nxt, int type)
 {
@@ -772,6 +784,8 @@ static bool crypto_not_mergeable(struct request *req, struct bio *nxt)
 		 nxt->bi_crypt_ctx.bc_keyring_key));
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * Has to be called with the request spinlock acquired
  */
@@ -799,9 +813,12 @@ static int attempt_merge(struct request_queue *q, struct request *req,
 	    !blk_write_same_mergeable(req->bio, next->bio))
 		return 0;
 
+<<<<<<< HEAD
 	if (crypto_not_mergeable(req, next->bio))
 		return 0;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/*
 	 * If we are allowed to merge, then append bio list
 	 * from next to rq and release next. merge_requests_fn
@@ -912,9 +929,12 @@ bool blk_rq_merge_ok(struct request *rq, struct bio *bio)
 	    !blk_write_same_mergeable(rq->bio, bio))
 		return false;
 
+<<<<<<< HEAD
 	if (crypto_not_mergeable(rq, bio))
 		return false;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return true;
 }
 

@@ -70,7 +70,11 @@ int dns_query(const char *type, const char *name, size_t namelen,
 	      const char *options, char **_result, time64_t *_expiry)
 {
 	struct key *rkey;
+<<<<<<< HEAD
 	struct user_key_payload *upayload;
+=======
+	const struct user_key_payload *upayload;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	const struct cred *saved_cred;
 	size_t typelen, desclen;
 	char *desc, *cp;
@@ -141,7 +145,11 @@ int dns_query(const char *type, const char *name, size_t namelen,
 	if (ret)
 		goto put;
 
+<<<<<<< HEAD
 	upayload = user_key_payload_locked(rkey);
+=======
+	upayload = user_key_payload(rkey);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	len = upayload->datalen;
 
 	ret = -ENOMEM;

@@ -54,6 +54,7 @@ rq_sched_info_depart(struct rq *rq, unsigned long long delta)
 #define schedstat_val_or_zero(var)	0
 #endif /* CONFIG_SCHEDSTATS */
 
+<<<<<<< HEAD
 #ifdef CONFIG_PSI
 /*
  * PSI tracks state that persists across sleeps, such as iowaits and
@@ -140,6 +141,8 @@ static inline void psi_ttwu_dequeue(struct task_struct *p) {}
 static inline void psi_task_tick(struct rq *rq) {}
 #endif /* CONFIG_PSI */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #ifdef CONFIG_SCHED_INFO
 static inline void sched_info_reset_dequeued(struct task_struct *t)
 {

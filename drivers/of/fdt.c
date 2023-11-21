@@ -1063,6 +1063,7 @@ int __init early_init_dt_scan_memory(unsigned long node, const char *uname,
 	return 0;
 }
 
+<<<<<<< HEAD
 /*
  * Convert configs to something easy to use in C code
  */
@@ -1096,11 +1097,23 @@ int __init early_init_dt_scan_chosen(unsigned long node, const char *uname,
 	pr_debug("search \"chosen\", depth: %d, uname: %s\n", depth, uname);
 
 	if (depth != 1 || !cmdline ||
+=======
+int __init early_init_dt_scan_chosen(unsigned long node, const char *uname,
+				     int depth, void *data)
+{
+	int l;
+	const char *p;
+
+	pr_debug("search \"chosen\", depth: %d, uname: %s\n", depth, uname);
+
+	if (depth != 1 || !data ||
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	    (strcmp(uname, "chosen") != 0 && strcmp(uname, "chosen@0") != 0))
 		return 0;
 
 	early_init_dt_check_for_initrd(node);
 
+<<<<<<< HEAD
 	/* Put CONFIG_CMDLINE in if forced or if data had nothing in it to start */
 	if (overwrite_incoming_cmdline || !cmdline[0])
 		strlcpy(cmdline, config_cmdline, COMMAND_LINE_SIZE);
@@ -1123,6 +1136,30 @@ int __init early_init_dt_scan_chosen(unsigned long node, const char *uname,
 			strlcpy(cmdline, p, min((int)l, COMMAND_LINE_SIZE));
 		}
 	}
+=======
+	/* Retrieve command line */
+	p = of_get_flat_dt_prop(node, "bootargs", &l);
+	if (p != NULL && l > 0)
+		strlcpy(data, p, min((int)l, COMMAND_LINE_SIZE));
+
+	/*
+	 * CONFIG_CMDLINE is meant to be a default in case nothing else
+	 * managed to set the command line, unless CONFIG_CMDLINE_FORCE
+	 * is set in which case we override whatever was found earlier.
+	 */
+#ifdef CONFIG_CMDLINE
+#if defined(CONFIG_CMDLINE_EXTEND)
+	strlcat(data, " ", COMMAND_LINE_SIZE);
+	strlcat(data, CONFIG_CMDLINE, COMMAND_LINE_SIZE);
+#elif defined(CONFIG_CMDLINE_FORCE)
+	strlcpy(data, CONFIG_CMDLINE, COMMAND_LINE_SIZE);
+#else
+	/* No arguments from boot loader, use kernel's  cmdl*/
+	if (!((char *)data)[0])
+		strlcpy(data, CONFIG_CMDLINE, COMMAND_LINE_SIZE);
+#endif
+#endif /* CONFIG_CMDLINE */
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	pr_debug("Command line is: %s\n", (char*)data);
 

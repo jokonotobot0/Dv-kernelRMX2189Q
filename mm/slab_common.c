@@ -458,9 +458,12 @@ EXPORT_SYMBOL(kmem_cache_create);
 static int shutdown_cache(struct kmem_cache *s,
 		struct list_head *release, bool *need_rcu_barrier)
 {
+<<<<<<< HEAD
 	/* free asan quarantined objects */
 	kasan_cache_shutdown(s);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (__kmem_cache_shutdown(s) != 0)
 		return -EBUSY;
 
@@ -744,6 +747,10 @@ void kmem_cache_destroy(struct kmem_cache *s)
 	get_online_cpus();
 	get_online_mems();
 
+<<<<<<< HEAD
+=======
+	kasan_cache_destroy(s);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	mutex_lock(&slab_mutex);
 
 	s->refcount--;
@@ -1131,6 +1138,7 @@ static void print_slabinfo_header(struct seq_file *m)
 	seq_puts(m, " : globalstat <listallocs> <maxobjs> <grown> <reaped> <error> <maxfreeable> <nodeallocs> <remotefrees> <alienoverflow>");
 	seq_puts(m, " : cpustat <allochit> <allocmiss> <freehit> <freemiss>");
 #endif
+<<<<<<< HEAD
 
 #if defined (VENDOR_EDIT) && defined(CONFIG_SLUB_STAT_DEBUG)
 /* Kui.Zhang@PSW.BSP.Kernel.Performance, 2018-11-12, if SLAB_STAT_DEBUG is
@@ -1139,6 +1147,8 @@ static void print_slabinfo_header(struct seq_file *m)
 
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	seq_putc(m, '\n');
 }
 
@@ -1194,6 +1204,7 @@ static void cache_show(struct kmem_cache *s, struct seq_file *m)
 
 	seq_printf(m, " : tunables %4u %4u %4u",
 		   sinfo.limit, sinfo.batchcount, sinfo.shared);
+<<<<<<< HEAD
 
 #if defined (VENDOR_EDIT) && defined(CONFIG_SLUB_STAT_DEBUG)
 /* Kui.Zhang@PSW.BSP.Kernel.Performance, 2018-11-12, if SLAB_STAT_DEBUG is
@@ -1206,6 +1217,10 @@ static void cache_show(struct kmem_cache *s, struct seq_file *m)
 		   sinfo.active_slabs, sinfo.num_slabs, sinfo.shared_avail);
 #endif
 
+=======
+	seq_printf(m, " : slabdata %6lu %6lu %6lu",
+		   sinfo.active_slabs, sinfo.num_slabs, sinfo.shared_avail);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	slabinfo_show_stats(m, s);
 	seq_putc(m, '\n');
 }

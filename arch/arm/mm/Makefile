@@ -13,6 +13,7 @@ obj-y				+= nommu.o
 endif
 
 obj-$(CONFIG_ARM_PTDUMP)	+= dump.o
+<<<<<<< HEAD
 
 ifneq ($(CONFIG_ARM_LPAE),y)
 ifeq ($(CONFIG_ARCH_HAS_PTE_SPECIAL),y)
@@ -20,6 +21,8 @@ obj-$(CONFIG_MMU)		+= gup.o
 endif
 endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 obj-$(CONFIG_MODULES)		+= proc-syms.o
 
 obj-$(CONFIG_ALIGNMENT_TRAP)	+= alignment.o
@@ -51,7 +54,10 @@ obj-$(CONFIG_CPU_CACHE_V7)	+= cache-v7.o
 obj-$(CONFIG_CPU_CACHE_FA)	+= cache-fa.o
 obj-$(CONFIG_CPU_CACHE_NOP)	+= cache-nop.o
 obj-$(CONFIG_CPU_CACHE_V7M)	+= cache-v7m.o
+<<<<<<< HEAD
 obj-$(CONFIG_MEDIATEK_SOLUTION)	+= cache-mtk-v8.o
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 AFLAGS_cache-v6.o	:=-Wa,-march=armv6
 AFLAGS_cache-v7.o	:=-Wa,-march=armv7-a
@@ -115,7 +121,10 @@ obj-$(CONFIG_CACHE_L2X0_PMU)	+= cache-l2x0-pmu.o
 obj-$(CONFIG_CACHE_XSC3L2)	+= cache-xsc3l2.o
 obj-$(CONFIG_CACHE_TAUROS2)	+= cache-tauros2.o
 obj-$(CONFIG_CACHE_UNIPHIER)	+= cache-uniphier.o
+<<<<<<< HEAD
 
 KBUILD_CPPFLAGS += -I$(srctree)/drivers/misc/mediatek/include
 
 obj-$(CONFIG_MEDIATEK_SOLUTION)	+= cache-mtk-v7.o
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

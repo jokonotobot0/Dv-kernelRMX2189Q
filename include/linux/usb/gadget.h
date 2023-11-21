@@ -48,7 +48,10 @@ struct usb_ep;
  *     by adding a zero length packet as needed;
  * @short_not_ok: When reading data, makes short packets be
  *     treated as errors (queue stops advancing till cleanup).
+<<<<<<< HEAD
  * @dma_mapped: Indicates if request has been mapped to DMA (internal)
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  * @complete: Function called when request completes, so this request and
  *	its buffer may be re-used.  The function will always be called with
  *	interrupts disabled, and it must not sleep.
@@ -104,7 +107,10 @@ struct usb_request {
 	unsigned		no_interrupt:1;
 	unsigned		zero:1;
 	unsigned		short_not_ok:1;
+<<<<<<< HEAD
 	unsigned		dma_mapped:1;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	void			(*complete)(struct usb_ep *ep,
 					struct usb_request *req);

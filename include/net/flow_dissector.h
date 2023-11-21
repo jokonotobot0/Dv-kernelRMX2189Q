@@ -3,7 +3,10 @@
 
 #include <linux/types.h>
 #include <linux/in6.h>
+<<<<<<< HEAD
 #include <linux/siphash.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <uapi/linux/if_ether.h>
 
 /**
@@ -152,7 +155,11 @@ struct flow_dissector {
 struct flow_keys {
 	struct flow_dissector_key_control control;
 #define FLOW_KEYS_HASH_START_FIELD basic
+<<<<<<< HEAD
 	struct flow_dissector_key_basic basic __aligned(SIPHASH_ALIGNMENT);
+=======
+	struct flow_dissector_key_basic basic;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct flow_dissector_key_tags tags;
 	struct flow_dissector_key_vlan vlan;
 	struct flow_dissector_key_keyid keyid;

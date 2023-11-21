@@ -36,6 +36,10 @@
 #include <linux/slab.h>
 #include <linux/spinlock.h>
 #include <linux/uaccess.h>
+<<<<<<< HEAD
+=======
+#include <linux/syslog.h>
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #include "internal.h"
 
@@ -120,6 +124,21 @@ static const struct seq_operations pstore_ftrace_seq_ops = {
 	.show	= pstore_ftrace_seq_show,
 };
 
+<<<<<<< HEAD
+=======
+static int pstore_check_syslog_permissions(struct pstore_private *ps)
+{
+	switch (ps->type) {
+	case PSTORE_TYPE_DMESG:
+	case PSTORE_TYPE_CONSOLE:
+		return check_syslog_permissions(SYSLOG_ACTION_READ_ALL,
+			SYSLOG_FROM_READER);
+	default:
+		return 0;
+	}
+}
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static ssize_t pstore_file_read(struct file *file, char __user *userbuf,
 						size_t count, loff_t *ppos)
 {
@@ -138,6 +157,13 @@ static int pstore_file_open(struct inode *inode, struct file *file)
 	int err;
 	const struct seq_operations *sops = NULL;
 
+<<<<<<< HEAD
+=======
+	err = pstore_check_syslog_permissions(ps);
+	if (err)
+		return err;
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (ps->type == PSTORE_TYPE_FTRACE)
 		sops = &pstore_ftrace_seq_ops;
 
@@ -174,6 +200,14 @@ static const struct file_operations pstore_file_operations = {
 static int pstore_unlink(struct inode *dir, struct dentry *dentry)
 {
 	struct pstore_private *p = d_inode(dentry)->i_private;
+<<<<<<< HEAD
+=======
+	int err;
+
+	err = pstore_check_syslog_permissions(p);
+	if (err)
+		return err;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (p->psi->erase)
 		p->psi->erase(p->type, p->id, p->count,
@@ -320,11 +354,15 @@ int pstore_mkfile(enum pstore_type_id type, char *psname, u64 id, int count,
 			  psname, id, compressed ? ".enc.z" : "");
 		break;
 	case PSTORE_TYPE_CONSOLE:
+<<<<<<< HEAD
 		if (id)
 			scnprintf(name, sizeof(name), "console-%s-%lld",
 					psname, id);
 		else
 			scnprintf(name, sizeof(name), "console-%s", psname);
+=======
+		scnprintf(name, sizeof(name), "console-%s-%lld", psname, id);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		break;
 	case PSTORE_TYPE_FTRACE:
 		scnprintf(name, sizeof(name), "ftrace-%s-%lld", psname, id);
@@ -411,7 +449,11 @@ static int pstore_fill_super(struct super_block *sb, void *data, int silent)
 
 	inode = pstore_get_inode(sb);
 	if (inode) {
+<<<<<<< HEAD
 		inode->i_mode = S_IFDIR | 0750;
+=======
+		inode->i_mode = S_IFDIR | 0755;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		inode->i_op = &pstore_dir_inode_operations;
 		inode->i_fop = &simple_dir_operations;
 		inc_nlink(inode);

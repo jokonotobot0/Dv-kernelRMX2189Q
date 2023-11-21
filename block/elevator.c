@@ -192,10 +192,13 @@ int elevator_init(struct request_queue *q, char *name)
 		return 0;
 
 	INIT_LIST_HEAD(&q->queue_head);
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /*Huacai.Zhou@PSW.BSP.Kernel.Performance, 2018-04-28, add foreground task io opt*/
 	INIT_LIST_HEAD(&q->fg_head);
 #endif /*VENDOR_EDIT*/
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	q->last_merge = NULL;
 	q->end_sector = 0;
 	q->boundary_rq = NULL;
@@ -388,10 +391,13 @@ void elv_dispatch_sort(struct request_queue *q, struct request *rq)
 	}
 
 	list_add(&rq->queuelist, entry);
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /*Huacai.Zhou@PSW.BSP.Kernel.Performance, 2018-04-28, add foreground task io opt*/
 	queue_throtl_add_request(q, rq, false);
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 EXPORT_SYMBOL(elv_dispatch_sort);
 
@@ -412,10 +418,13 @@ void elv_dispatch_add_tail(struct request_queue *q, struct request *rq)
 	q->end_sector = rq_end_sector(rq);
 	q->boundary_rq = rq;
 	list_add_tail(&rq->queuelist, &q->queue_head);
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /*Huacai.Zhou@PSW.BSP.Kernel.Performance, 2018-04-28, add foreground task io opt*/
 	queue_throtl_add_request(q, rq, false);
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 EXPORT_SYMBOL(elv_dispatch_add_tail);
 
@@ -575,11 +584,14 @@ void elv_requeue_request(struct request_queue *q, struct request *rq)
 	 */
 	if (blk_account_rq(rq)) {
 		q->in_flight[rq_is_sync(rq)]--;
+<<<<<<< HEAD
 #if defined(VENDOR_EDIT) && defined(CONFIG_OPPO_HEALTHINFO)
 // jiheng.xie@PSW.Tech.BSP.Performance, 2019/03/11
 // Add for ioqueue
 		ohm_ioqueue_dec_inflight(q, rq);
 #endif /*VENDOR_EDIT*/
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		if (rq->cmd_flags & REQ_SORTED)
 			elv_deactivate_rq(q, rq);
 	}
@@ -630,20 +642,26 @@ void __elv_add_request(struct request_queue *q, struct request *rq, int where)
 	case ELEVATOR_INSERT_FRONT:
 		rq->cmd_flags |= REQ_SOFTBARRIER;
 		list_add(&rq->queuelist, &q->queue_head);
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /*Huacai.Zhou@PSW.BSP.Kernel.Performance, 2018-04-28, add foreground task io opt*/
 		queue_throtl_add_request(q, rq, true);
 #endif /*VENDOR_EDIT*/
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		break;
 
 	case ELEVATOR_INSERT_BACK:
 		rq->cmd_flags |= REQ_SOFTBARRIER;
 		elv_drain_elevator(q);
 		list_add_tail(&rq->queuelist, &q->queue_head);
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /*Huacai.Zhou@PSW.BSP.Kernel.Performance, 2018-04-28, add foreground task io opt*/
 		queue_throtl_add_request(q, rq, false);
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		/*
 		 * We kick the queue here for the following reasons.
 		 * - The elevator might have returned NULL previously
@@ -760,11 +778,14 @@ void elv_completed_request(struct request_queue *q, struct request *rq)
 	 */
 	if (blk_account_rq(rq)) {
 		q->in_flight[rq_is_sync(rq)]--;
+<<<<<<< HEAD
 #if defined(VENDOR_EDIT) && defined(CONFIG_OPPO_HEALTHINFO)
 // jiheng.xie@PSW.Tech.BSP.Performance, 2019/03/11
 // Add for ioqueue
 		ohm_ioqueue_dec_inflight(q, rq);
 #endif /*VENDOR_EDIT*/
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		if ((rq->cmd_flags & REQ_SORTED) &&
 		    e->type->ops.elevator_completed_req_fn)
 			e->type->ops.elevator_completed_req_fn(q, rq);

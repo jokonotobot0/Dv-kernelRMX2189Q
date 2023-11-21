@@ -1,5 +1,32 @@
+<<<<<<< HEAD
 /* SPDX-License-Identifier: GPL-2.0 */
 /* Copyright(c) 2009-2012  Realtek Corporation.*/
+=======
+/******************************************************************************
+ *
+ * Copyright(c) 2009-2012  Realtek Corporation.
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of version 2 of the GNU General Public License as
+ * published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ * more details.
+ *
+ * The full GNU General Public License is included in this distribution in the
+ * file called LICENSE.
+ *
+ * Contact Information:
+ * wlanfae <wlanfae@realtek.com>
+ * Realtek Corporation, No. 2, Innovation Road II, Hsinchu Science Park,
+ * Hsinchu 300, Taiwan.
+ *
+ * Larry Finger <Larry.Finger@lwfinger.net>
+ *
+ *****************************************************************************/
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #ifndef __RTL_BASE_H__
 #define __RTL_BASE_H__
@@ -43,8 +70,20 @@ enum ap_peer {
 #define FRAME_OFFSET_ADDRESS3		16
 #define FRAME_OFFSET_SEQUENCE		22
 #define FRAME_OFFSET_ADDRESS4		24
+<<<<<<< HEAD
 #define MAX_LISTEN_INTERVAL		10
 #define MAX_RATE_TRIES			4
+=======
+
+#define SET_80211_HDR_FRAME_CONTROL(_hdr, _val)		\
+	WRITEEF2BYTE(_hdr, _val)
+#define SET_80211_HDR_TYPE_AND_SUBTYPE(_hdr, _val)	\
+	WRITEEF1BYTE(_hdr, _val)
+#define SET_80211_HDR_PWR_MGNT(_hdr, _val)		\
+	SET_BITS_TO_LE_2BYTE(_hdr, 12, 1, _val)
+#define SET_80211_HDR_TO_DS(_hdr, _val)			\
+	SET_BITS_TO_LE_2BYTE(_hdr, 8, 1, _val)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #define SET_80211_PS_POLL_AID(_hdr, _val)		\
 	(*(u16 *)((u8 *)(_hdr) + 2) = _val)
@@ -53,17 +92,41 @@ enum ap_peer {
 #define SET_80211_PS_POLL_TA(_hdr, _val)		\
 	ether_addr_copy(((u8 *)(_hdr))+10, (u8 *)(_val))
 
+<<<<<<< HEAD
+=======
+#define SET_80211_HDR_DURATION(_hdr, _val)	\
+	(*(u16 *)((u8 *)(_hdr) + FRAME_OFFSET_DURATION) = le16_to_cpu(_val))
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define SET_80211_HDR_ADDRESS1(_hdr, _val)	\
 	CP_MACADDR((u8 *)(_hdr)+FRAME_OFFSET_ADDRESS1, (u8 *)(_val))
 #define SET_80211_HDR_ADDRESS2(_hdr, _val)	\
 	CP_MACADDR((u8 *)(_hdr)+FRAME_OFFSET_ADDRESS2, (u8 *)(_val))
 #define SET_80211_HDR_ADDRESS3(_hdr, _val)	\
 	CP_MACADDR((u8 *)(_hdr)+FRAME_OFFSET_ADDRESS3, (u8 *)(_val))
+<<<<<<< HEAD
 
 #define SET_TX_DESC_SPE_RPT(__pdesc, __val)			\
 	le32p_replace_bits((__le32 *)(__pdesc + 8), __val, BIT(19))
 #define SET_TX_DESC_SW_DEFINE(__pdesc, __val)	\
 	le32p_replace_bits((__le32 *)(__pdesc + 24), __val, GENMASK(11, 0))
+=======
+#define SET_80211_HDR_FRAGMENT_SEQUENCE(_hdr, _val)  \
+	WRITEEF2BYTE((u8 *)(_hdr)+FRAME_OFFSET_SEQUENCE, _val)
+
+#define SET_BEACON_PROBE_RSP_TIME_STAMP_LOW(__phdr, __val)	\
+	WRITEEF4BYTE(((u8 *)(__phdr)) + 24, __val)
+#define SET_BEACON_PROBE_RSP_TIME_STAMP_HIGH(__phdr, __val) \
+	WRITEEF4BYTE(((u8 *)(__phdr)) + 28, __val)
+#define SET_BEACON_PROBE_RSP_BEACON_INTERVAL(__phdr, __val) \
+	WRITEEF2BYTE(((u8 *)(__phdr)) + 32, __val)
+#define GET_BEACON_PROBE_RSP_CAPABILITY_INFO(__phdr)		\
+	READEF2BYTE(((u8 *)(__phdr)) + 34)
+#define SET_BEACON_PROBE_RSP_CAPABILITY_INFO(__phdr, __val) \
+	WRITEEF2BYTE(((u8 *)(__phdr)) + 34, __val)
+#define MASK_BEACON_PROBE_RSP_CAPABILITY_INFO(__phdr, __val) \
+	SET_BEACON_PROBE_RSP_CAPABILITY_INFO(__phdr, \
+	(GET_BEACON_PROBE_RSP_CAPABILITY_INFO(__phdr) & (~(__val))))
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 int rtl_init_core(struct ieee80211_hw *hw);
 void rtl_deinit_core(struct ieee80211_hw *hw);
@@ -71,8 +134,13 @@ void rtl_init_rx_config(struct ieee80211_hw *hw);
 void rtl_init_rfkill(struct ieee80211_hw *hw);
 void rtl_deinit_rfkill(struct ieee80211_hw *hw);
 
+<<<<<<< HEAD
 void rtl_watch_dog_timer_callback(struct timer_list *t);
 void rtl_deinit_deferred_work(struct ieee80211_hw *hw, bool ips_wq);
+=======
+void rtl_watch_dog_timer_callback(unsigned long data);
+void rtl_deinit_deferred_work(struct ieee80211_hw *hw);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 bool rtl_action_proc(struct ieee80211_hw *hw, struct sk_buff *skb, u8 is_tx);
 int rtlwifi_rate_mapping(struct ieee80211_hw *hw, bool isht,
@@ -81,6 +149,7 @@ bool rtl_tx_mgmt_proc(struct ieee80211_hw *hw, struct sk_buff *skb);
 u8 rtl_is_special_data(struct ieee80211_hw *hw, struct sk_buff *skb, u8 is_tx,
 		       bool is_enc);
 
+<<<<<<< HEAD
 void rtl_tx_ackqueue(struct ieee80211_hw *hw, struct sk_buff *skb);
 bool rtl_is_tx_report_skb(struct ieee80211_hw *hw, struct sk_buff *skb);
 void rtl_set_tx_report(struct rtl_tcb_desc *ptcb_desc, u8 *pdesc,
@@ -97,6 +166,9 @@ u32 rtl_get_hal_edca_param(struct ieee80211_hw *hw,
 void rtl_beacon_statistic(struct ieee80211_hw *hw, struct sk_buff *skb);
 void rtl_collect_scan_list(struct ieee80211_hw *hw, struct sk_buff *skb);
 void rtl_scan_list_expire(struct ieee80211_hw *hw);
+=======
+void rtl_beacon_statistic(struct ieee80211_hw *hw, struct sk_buff *skb);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 int rtl_tx_agg_start(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
 	struct ieee80211_sta *sta, u16 tid, u16 *ssn);
 int rtl_tx_agg_stop(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
@@ -107,12 +179,18 @@ int rtl_rx_agg_start(struct ieee80211_hw *hw,
 		     struct ieee80211_sta *sta, u16 tid);
 int rtl_rx_agg_stop(struct ieee80211_hw *hw,
 		    struct ieee80211_sta *sta, u16 tid);
+<<<<<<< HEAD
 void rtl_rx_ampdu_apply(struct rtl_priv *rtlpriv);
 void rtl_c2hcmd_launcher(struct ieee80211_hw *hw, int exec);
 void rtl_c2hcmd_enqueue(struct ieee80211_hw *hw, struct sk_buff *skb);
 
 u8 rtl_mrate_idx_to_arfr_id(struct ieee80211_hw *hw, u8 rate_index,
 			    enum wireless_mode wirelessmode);
+=======
+void rtl_watchdog_wq_callback(void *data);
+void rtl_fwevt_wq_callback(void *data);
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 void rtl_get_tcb_desc(struct ieee80211_hw *hw,
 		      struct ieee80211_tx_info *info,
 		      struct ieee80211_sta *sta,
@@ -124,6 +202,11 @@ int rtl_send_smps_action(struct ieee80211_hw *hw,
 u8 *rtl_find_ie(u8 *data, unsigned int len, u8 ie);
 void rtl_recognize_peer(struct ieee80211_hw *hw, u8 *data, unsigned int len);
 u8 rtl_tid_to_ac(u8 tid);
+<<<<<<< HEAD
+=======
+extern struct attribute_group rtl_attribute_group;
+void rtl_easy_concurrent_retrytimer_callback(unsigned long data);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 extern struct rtl_global_var rtl_global_var;
 void rtl_phy_scan_operation_backup(struct ieee80211_hw *hw, u8 operation);
 

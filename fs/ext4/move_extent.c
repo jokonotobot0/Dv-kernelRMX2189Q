@@ -225,11 +225,15 @@ mext_page_mkuptodate(struct page *page, unsigned from, unsigned to)
 	for (i = 0; i < nr; i++) {
 		bh = arr[i];
 		if (!bh_uptodate_or_lock(bh)) {
+<<<<<<< HEAD
 			/*
 			 * Inline encryption shall be engaged for
 			 * moved data blocks
 			 */
 			err = bh_submit_read_crypt(inode, bh);
+=======
+			err = bh_submit_read(bh);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			if (err)
 				return err;
 		}
@@ -606,6 +610,7 @@ ext4_move_extents(struct file *o_filp, struct file *d_filp, __u64 orig_blk,
 		return -EOPNOTSUPP;
 	}
 
+<<<<<<< HEAD
 	/*
 	 * Limitaion is only applicable for SW encryption but not for
 	 * inline encryption
@@ -618,6 +623,13 @@ ext4_move_extents(struct file *o_filp, struct file *d_filp, __u64 orig_blk,
 				 "Online defrag not supported for encrypted files");
 			return -EOPNOTSUPP;
 		}
+=======
+	if (ext4_encrypted_inode(orig_inode) ||
+	    ext4_encrypted_inode(donor_inode)) {
+		ext4_msg(orig_inode->i_sb, KERN_ERR,
+			 "Online defrag not supported for encrypted files");
+		return -EOPNOTSUPP;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 
 	/* Protect orig and donor inodes against a truncate */

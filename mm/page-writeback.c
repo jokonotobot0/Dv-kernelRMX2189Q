@@ -38,7 +38,10 @@
 #include <linux/sched/rt.h>
 #include <linux/mm_inline.h>
 #include <trace/events/writeback.h>
+<<<<<<< HEAD
 #include <mt-plat/mtk_blocktag.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #include "internal.h"
 
@@ -1988,11 +1991,19 @@ void laptop_mode_timer_fn(unsigned long data)
 	 * We want to write everything out, not just down to the dirty
 	 * threshold
 	 */
+<<<<<<< HEAD
 	if (!bdi_has_dirty_io(q->backing_dev_info))
 		return;
 
 	rcu_read_lock();
 	list_for_each_entry_rcu(wb, &q->backing_dev_info->wb_list, bdi_node)
+=======
+	if (!bdi_has_dirty_io(&q->backing_dev_info))
+		return;
+
+	rcu_read_lock();
+	list_for_each_entry_rcu(wb, &q->backing_dev_info.wb_list, bdi_node)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		if (wb_has_dirty_io(wb))
 			wb_start_writeback(wb, nr_pages, true,
 					   WB_REASON_LAPTOP_TIMER);
@@ -2187,14 +2198,38 @@ retry:
 	while (!done && (index <= end)) {
 		int i;
 
+<<<<<<< HEAD
 		nr_pages = pagevec_lookup_range_tag(&pvec, mapping, &index, end,
 				tag);
+=======
+		nr_pages = pagevec_lookup_tag(&pvec, mapping, &index, tag,
+			      min(end - index, (pgoff_t)PAGEVEC_SIZE-1) + 1);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		if (nr_pages == 0)
 			break;
 
 		for (i = 0; i < nr_pages; i++) {
 			struct page *page = pvec.pages[i];
 
+<<<<<<< HEAD
+=======
+			/*
+			 * At this point, the page may be truncated or
+			 * invalidated (changing page->mapping to NULL), or
+			 * even swizzled back from swapper_space to tmpfs file
+			 * mapping. However, page->index will not change
+			 * because we have a reference on the page.
+			 */
+			if (page->index > end) {
+				/*
+				 * can't be range_cyclic (1st pass) because
+				 * end == -1 in that case.
+				 */
+				done = 1;
+				break;
+			}
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			done_index = page->index;
 
 			lock_page(page);
@@ -2419,6 +2454,7 @@ void account_page_dirtied(struct page *page, struct address_space *mapping)
 		task_io_account_write(PAGE_SIZE);
 		current->nr_dirtied++;
 		this_cpu_inc(bdp_ratelimits);
+<<<<<<< HEAD
 
 		/*
 		 * Dirty pages may be written by writeback thread later.
@@ -2426,6 +2462,8 @@ void account_page_dirtied(struct page *page, struct address_space *mapping)
 		 * before writeback takes over.
 		 */
 		mtk_btag_pidlog_set_pid(page);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 }
 EXPORT_SYMBOL(account_page_dirtied);
@@ -2712,10 +2750,16 @@ EXPORT_SYMBOL(clear_page_dirty_for_io);
 int test_clear_page_writeback(struct page *page)
 {
 	struct address_space *mapping = page_mapping(page);
+<<<<<<< HEAD
 	struct mem_cgroup *memcg;
 	int ret;
 
 	memcg = lock_page_memcg(page);
+=======
+	int ret;
+
+	lock_page_memcg(page);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (mapping && mapping_use_writeback_tags(mapping)) {
 		struct inode *inode = mapping->host;
 		struct backing_dev_info *bdi = inode_to_bdi(inode);
@@ -2743,6 +2787,7 @@ int test_clear_page_writeback(struct page *page)
 	} else {
 		ret = TestClearPageWriteback(page);
 	}
+<<<<<<< HEAD
 
 	/*
 	 * NOTE: Page might be free now! Writeback doesn't hold a page
@@ -2752,11 +2797,19 @@ int test_clear_page_writeback(struct page *page)
 	 */
 	if (ret) {
 		mem_cgroup_dec_stat(memcg, MEM_CGROUP_STAT_WRITEBACK);
+=======
+	if (ret) {
+		mem_cgroup_dec_page_stat(page, MEM_CGROUP_STAT_WRITEBACK);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		dec_node_page_state(page, NR_WRITEBACK);
 		dec_zone_page_state(page, NR_ZONE_WRITE_PENDING);
 		inc_node_page_state(page, NR_WRITTEN);
 	}
+<<<<<<< HEAD
 	__unlock_page_memcg(memcg);
+=======
+	unlock_page_memcg(page);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return ret;
 }
 

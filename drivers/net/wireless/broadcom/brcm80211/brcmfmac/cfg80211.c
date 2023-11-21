@@ -2774,6 +2774,10 @@ static s32 brcmf_inform_single_bss(struct brcmf_cfg80211_info *cfg,
 				   struct brcmf_bss_info_le *bi)
 {
 	struct wiphy *wiphy = cfg_to_wiphy(cfg);
+<<<<<<< HEAD
+=======
+	struct ieee80211_channel *notify_channel;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct cfg80211_bss *bss;
 	struct ieee80211_supported_band *band;
 	struct brcmu_chan ch;
@@ -2783,7 +2787,11 @@ static s32 brcmf_inform_single_bss(struct brcmf_cfg80211_info *cfg,
 	u16 notify_interval;
 	u8 *notify_ie;
 	size_t notify_ielen;
+<<<<<<< HEAD
 	struct cfg80211_inform_bss bss_data = {};
+=======
+	s32 notify_signal;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (le32_to_cpu(bi->length) > WL_BSS_INFO_MAX) {
 		brcmf_err("Bss info is larger than buffer. Discarding\n");
@@ -2803,20 +2811,29 @@ static s32 brcmf_inform_single_bss(struct brcmf_cfg80211_info *cfg,
 		band = wiphy->bands[NL80211_BAND_5GHZ];
 
 	freq = ieee80211_channel_to_frequency(channel, band->band);
+<<<<<<< HEAD
 	bss_data.chan = ieee80211_get_channel(wiphy, freq);
 	bss_data.scan_width = NL80211_BSS_CHAN_WIDTH_20;
 	bss_data.boottime_ns = ktime_to_ns(ktime_get_boottime());
+=======
+	notify_channel = ieee80211_get_channel(wiphy, freq);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	notify_capability = le16_to_cpu(bi->capability);
 	notify_interval = le16_to_cpu(bi->beacon_period);
 	notify_ie = (u8 *)bi + le16_to_cpu(bi->ie_offset);
 	notify_ielen = le32_to_cpu(bi->ie_length);
+<<<<<<< HEAD
 	bss_data.signal = (s16)le16_to_cpu(bi->RSSI) * 100;
+=======
+	notify_signal = (s16)le16_to_cpu(bi->RSSI) * 100;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	brcmf_dbg(CONN, "bssid: %pM\n", bi->BSSID);
 	brcmf_dbg(CONN, "Channel: %d(%d)\n", channel, freq);
 	brcmf_dbg(CONN, "Capability: %X\n", notify_capability);
 	brcmf_dbg(CONN, "Beacon interval: %d\n", notify_interval);
+<<<<<<< HEAD
 	brcmf_dbg(CONN, "Signal: %d\n", bss_data.signal);
 
 	bss = cfg80211_inform_bss_data(wiphy, &bss_data,
@@ -2825,6 +2842,17 @@ static s32 brcmf_inform_single_bss(struct brcmf_cfg80211_info *cfg,
 				       0, notify_capability,
 				       notify_interval, notify_ie,
 				       notify_ielen, GFP_KERNEL);
+=======
+	brcmf_dbg(CONN, "Signal: %d\n", notify_signal);
+
+	bss = cfg80211_inform_bss(wiphy, notify_channel,
+				  CFG80211_BSS_FTYPE_UNKNOWN,
+				  (const u8 *)bi->BSSID,
+				  0, notify_capability,
+				  notify_interval, notify_ie,
+				  notify_ielen, notify_signal,
+				  GFP_KERNEL);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (!bss)
 		return -ENOMEM;

@@ -794,7 +794,10 @@ xfrm_state_find(const xfrm_address_t *daddr, const xfrm_address_t *saddr,
 	int error = 0;
 	struct xfrm_state *best = NULL;
 	u32 mark = pol->mark.v & pol->mark.m;
+<<<<<<< HEAD
 	u32 if_id = fl->flowi_xfrm.if_id;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	unsigned short encap_family = tmpl->encap_family;
 	unsigned int sequence;
 	struct km_event c;
@@ -809,7 +812,10 @@ xfrm_state_find(const xfrm_address_t *daddr, const xfrm_address_t *saddr,
 		if (x->props.family == encap_family &&
 		    x->props.reqid == tmpl->reqid &&
 		    (mark & x->mark.m) == x->mark.v &&
+<<<<<<< HEAD
 		    x->if_id == if_id &&
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		    !(x->props.flags & XFRM_STATE_WILDRECV) &&
 		    xfrm_state_addr_check(x, daddr, saddr, encap_family) &&
 		    tmpl->mode == x->props.mode &&
@@ -826,7 +832,10 @@ xfrm_state_find(const xfrm_address_t *daddr, const xfrm_address_t *saddr,
 		if (x->props.family == encap_family &&
 		    x->props.reqid == tmpl->reqid &&
 		    (mark & x->mark.m) == x->mark.v &&
+<<<<<<< HEAD
 		    x->if_id == if_id &&
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		    !(x->props.flags & XFRM_STATE_WILDRECV) &&
 		    xfrm_addr_equal(&x->id.daddr, daddr, encap_family) &&
 		    tmpl->mode == x->props.mode &&
@@ -866,7 +875,10 @@ found:
 		 * to current session. */
 		xfrm_init_tempstate(x, fl, tmpl, daddr, saddr, family);
 		memcpy(&x->mark, &pol->mark, sizeof(x->mark));
+<<<<<<< HEAD
 		x->if_id = if_id;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 		error = security_xfrm_state_alloc_acquire(x, pol->security, fl->flowi_secid);
 		if (error) {
@@ -924,7 +936,11 @@ out:
 }
 
 struct xfrm_state *
+<<<<<<< HEAD
 xfrm_stateonly_find(struct net *net, u32 mark, u32 if_id,
+=======
+xfrm_stateonly_find(struct net *net, u32 mark,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		    xfrm_address_t *daddr, xfrm_address_t *saddr,
 		    unsigned short family, u8 mode, u8 proto, u32 reqid)
 {
@@ -937,7 +953,10 @@ xfrm_stateonly_find(struct net *net, u32 mark, u32 if_id,
 		if (x->props.family == family &&
 		    x->props.reqid == reqid &&
 		    (mark & x->mark.m) == x->mark.v &&
+<<<<<<< HEAD
 		    x->if_id == if_id &&
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		    !(x->props.flags & XFRM_STATE_WILDRECV) &&
 		    xfrm_state_addr_check(x, daddr, saddr, family) &&
 		    mode == x->props.mode &&
@@ -1018,13 +1037,19 @@ static void __xfrm_state_bump_genids(struct xfrm_state *xnew)
 	struct xfrm_state *x;
 	unsigned int h;
 	u32 mark = xnew->mark.v & xnew->mark.m;
+<<<<<<< HEAD
 	u32 if_id = xnew->if_id;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	h = xfrm_dst_hash(net, &xnew->id.daddr, &xnew->props.saddr, reqid, family);
 	hlist_for_each_entry(x, net->xfrm.state_bydst+h, bydst) {
 		if (x->props.family	== family &&
 		    x->props.reqid	== reqid &&
+<<<<<<< HEAD
 		    x->if_id		== if_id &&
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		    (mark & x->mark.m) == x->mark.v &&
 		    xfrm_addr_equal(&x->id.daddr, &xnew->id.daddr, family) &&
 		    xfrm_addr_equal(&x->props.saddr, &xnew->props.saddr, family))
@@ -1047,7 +1072,11 @@ EXPORT_SYMBOL(xfrm_state_insert);
 static struct xfrm_state *__find_acq_core(struct net *net,
 					  const struct xfrm_mark *m,
 					  unsigned short family, u8 mode,
+<<<<<<< HEAD
 					  u32 reqid, u32 if_id, u8 proto,
+=======
+					  u32 reqid, u8 proto,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 					  const xfrm_address_t *daddr,
 					  const xfrm_address_t *saddr,
 					  int create)
@@ -1102,7 +1131,10 @@ static struct xfrm_state *__find_acq_core(struct net *net,
 		x->props.family = family;
 		x->props.mode = mode;
 		x->props.reqid = reqid;
+<<<<<<< HEAD
 		x->if_id = if_id;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		x->mark.v = m->v;
 		x->mark.m = m->m;
 		x->lft.hard_add_expires_seconds = net->xfrm.sysctl_acq_expires;
@@ -1157,7 +1189,11 @@ int xfrm_state_add(struct xfrm_state *x)
 
 	if (use_spi && !x1)
 		x1 = __find_acq_core(net, &x->mark, family, x->props.mode,
+<<<<<<< HEAD
 				     x->props.reqid, x->if_id, x->id.proto,
+=======
+				     x->props.reqid, x->id.proto,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 				     &x->id.daddr, &x->props.saddr, 0);
 
 	__xfrm_state_bump_genids(x);
@@ -1249,7 +1285,10 @@ static struct xfrm_state *xfrm_state_clone(struct xfrm_state *orig)
 	x->props.flags = orig->props.flags;
 	x->props.extra_flags = orig->props.extra_flags;
 
+<<<<<<< HEAD
 	x->if_id = orig->if_id;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	x->tfcpad = orig->tfcpad;
 	x->replay_maxdiff = orig->replay_maxdiff;
 	x->replay_maxage = orig->replay_maxage;
@@ -1404,6 +1443,7 @@ out:
 		if (x1->curlft.use_time)
 			xfrm_state_check_expire(x1);
 
+<<<<<<< HEAD
 		if (x->props.smark.m || x->props.smark.v || x->if_id) {
 			spin_lock_bh(&net->xfrm.xfrm_state_lock);
 
@@ -1417,6 +1457,8 @@ out:
 			spin_unlock_bh(&net->xfrm.xfrm_state_lock);
 		}
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		err = 0;
 		x->km.state = XFRM_STATE_DEAD;
 		__xfrm_state_put(x);
@@ -1480,13 +1522,21 @@ EXPORT_SYMBOL(xfrm_state_lookup_byaddr);
 
 struct xfrm_state *
 xfrm_find_acq(struct net *net, const struct xfrm_mark *mark, u8 mode, u32 reqid,
+<<<<<<< HEAD
 	      u32 if_id, u8 proto, const xfrm_address_t *daddr,
+=======
+	      u8 proto, const xfrm_address_t *daddr,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	      const xfrm_address_t *saddr, int create, unsigned short family)
 {
 	struct xfrm_state *x;
 
 	spin_lock_bh(&net->xfrm.xfrm_state_lock);
+<<<<<<< HEAD
 	x = __find_acq_core(net, mark, family, mode, reqid, if_id, proto, daddr, saddr, create);
+=======
+	x = __find_acq_core(net, mark, family, mode, reqid, proto, daddr, saddr, create);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	spin_unlock_bh(&net->xfrm.xfrm_state_lock);
 
 	return x;
@@ -1908,6 +1958,14 @@ int xfrm_user_policy(struct sock *sk, int optname, u8 __user *optval, int optlen
 	struct xfrm_mgr *km;
 	struct xfrm_policy *pol = NULL;
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_COMPAT
+	if (in_compat_syscall())
+		return -EOPNOTSUPP;
+#endif
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (!optval && !optlen) {
 		xfrm_sk_policy_insert(sk, XFRM_POLICY_IN, NULL);
 		xfrm_sk_policy_insert(sk, XFRM_POLICY_OUT, NULL);
@@ -1939,7 +1997,10 @@ int xfrm_user_policy(struct sock *sk, int optname, u8 __user *optval, int optlen
 	if (err >= 0) {
 		xfrm_sk_policy_insert(sk, err, pol);
 		xfrm_pol_put(pol);
+<<<<<<< HEAD
 		__sk_dst_reset(sk);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		err = 0;
 	}
 

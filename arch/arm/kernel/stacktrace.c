@@ -40,9 +40,12 @@ int notrace unwind_frame(struct stackframe *frame)
 	frame->sp = *(unsigned long *)(fp - 8);
 	frame->pc = *(unsigned long *)(fp - 4);
 
+<<<<<<< HEAD
 	if (ALIGN(frame->fp, THREAD_SIZE) != ALIGN(fp, THREAD_SIZE))
 		return -EINVAL;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return 0;
 }
 #endif
@@ -121,7 +124,10 @@ static noinline void __save_stack_trace(struct task_struct *tsk,
 	data.no_sched_functions = nosched;
 
 	if (tsk != current) {
+<<<<<<< HEAD
 #if 0
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #ifdef CONFIG_SMP
 		/*
 		 * What guarantees do we have here that 'tsk' is not
@@ -131,7 +137,10 @@ static noinline void __save_stack_trace(struct task_struct *tsk,
 		if (trace->nr_entries < trace->max_entries)
 			trace->entries[trace->nr_entries++] = ULONG_MAX;
 		return;
+<<<<<<< HEAD
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #else
 		frame.fp = thread_saved_fp(tsk);
 		frame.sp = thread_saved_sp(tsk);

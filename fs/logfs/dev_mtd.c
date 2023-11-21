@@ -122,9 +122,15 @@ static void logfs_mtd_sync(struct super_block *sb)
 	mtd_sync(mtd);
 }
 
+<<<<<<< HEAD
 static int logfs_mtd_readpage(struct file *_sb, struct page *page)
 {
 	struct super_block *sb = (struct super_block *)_sb;
+=======
+static int logfs_mtd_readpage(void *_sb, struct page *page)
+{
+	struct super_block *sb = _sb;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	int err;
 
 	err = logfs_mtd_read(sb, page->index << PAGE_SHIFT, PAGE_SIZE,

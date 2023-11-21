@@ -30,10 +30,13 @@
 #define RCU_TRACE(stmt)
 #endif /* #else #ifdef CONFIG_RCU_TRACE */
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_SCHED_MONITOR
 #include "mtk_sched_mon.h"
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * Process-level increment to ->dynticks_nesting field.  This allows for
  * architectures that use half-interrupts and half-exceptions from
@@ -119,6 +122,7 @@ static inline bool __rcu_reclaim(const char *rn, struct rcu_head *head)
 		return true;
 	} else {
 		RCU_TRACE(trace_rcu_invoke_callback(rn, head));
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_SCHED_MONITOR
 		mt_trace_RCU_SoftIRQ_start(head->func);
 #endif
@@ -126,6 +130,9 @@ static inline bool __rcu_reclaim(const char *rn, struct rcu_head *head)
 #ifdef CONFIG_MTK_SCHED_MONITOR
 		mt_trace_RCU_SoftIRQ_end();
 #endif
+=======
+		head->func(head);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		rcu_lock_release(&rcu_callback_map);
 		return false;
 	}

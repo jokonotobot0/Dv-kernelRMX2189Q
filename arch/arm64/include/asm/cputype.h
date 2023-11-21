@@ -77,7 +77,10 @@
 
 #define ARM_CPU_PART_AEM_V8		0xD0F
 #define ARM_CPU_PART_FOUNDATION		0xD00
+<<<<<<< HEAD
 #define ARM_CPU_PART_CORTEX_A35		0xD04
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define ARM_CPU_PART_CORTEX_A55		0xD05
 #define ARM_CPU_PART_CORTEX_A57		0xD07
 #define ARM_CPU_PART_CORTEX_A72		0xD08
@@ -93,7 +96,10 @@
 
 #define BRCM_CPU_PART_VULCAN		0x516
 
+<<<<<<< HEAD
 #define MIDR_CORTEX_A35 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A35)
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define MIDR_CORTEX_A53 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A53)
 #define MIDR_CORTEX_A55 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A55)
 #define MIDR_CORTEX_A57 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A57)
@@ -110,6 +116,7 @@
 #include <asm/sysreg.h>
 
 #define read_cpuid(reg)			read_sysreg_s(SYS_ ## reg)
+<<<<<<< HEAD
 /*
  * Represent a range of MIDR values for a given CPU model and a
  * range of variant/revision values.
@@ -148,6 +155,8 @@ is_midr_in_range_list(u32 midr, struct midr_range const *ranges)
 			return true;
 	return false;
 }
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /*
  * The CPU ID never changes at run time, so we might as well tell the

@@ -30,7 +30,11 @@ static struct kmem_cache *fuse_inode_cachep;
 struct list_head fuse_conn_list;
 DEFINE_MUTEX(fuse_mutex);
 
+<<<<<<< HEAD
 static int set_global_limit(const char *val, const struct kernel_param *kp);
+=======
+static int set_global_limit(const char *val, struct kernel_param *kp);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 unsigned max_user_bgreq;
 module_param_call(max_user_bgreq, set_global_limit, param_get_uint,
@@ -830,7 +834,11 @@ static void sanitize_global_limit(unsigned *limit)
 		*limit = (1 << 16) - 1;
 }
 
+<<<<<<< HEAD
 static int set_global_limit(const char *val, const struct kernel_param *kp)
+=======
+static int set_global_limit(const char *val, struct kernel_param *kp)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	int rv;
 

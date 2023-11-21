@@ -615,6 +615,7 @@ static void eem_unbind(struct usb_configuration *c, struct usb_function *f)
 	usb_free_all_descriptors(f);
 }
 
+<<<<<<< HEAD
 static void
 eem_old_unbind(struct usb_configuration *c, struct usb_function *f)
 {
@@ -677,6 +678,8 @@ int eem_bind_config(struct usb_configuration *c, struct eth_dev *dev)
 	return status;
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static struct usb_function *eem_alloc(struct usb_function_instance *fi)
 {
 	struct f_eem	*eem;

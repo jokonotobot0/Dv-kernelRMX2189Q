@@ -22,11 +22,16 @@
 #define MODULE_ARCH_VERMAGIC	"aarch64"
 
 #ifdef CONFIG_ARM64_MODULE_PLTS
+<<<<<<< HEAD
 struct mod_plt_sec {
+=======
+struct mod_arch_specific {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct elf64_shdr	*plt;
 	int			plt_num_entries;
 	int			plt_max_entries;
 };
+<<<<<<< HEAD
 
 struct mod_arch_specific {
 	struct mod_plt_sec	core;
@@ -35,6 +40,11 @@ struct mod_arch_specific {
 #endif
 
 u64 module_emit_plt_entry(struct module *mod, void *loc, const Elf64_Rela *rela,
+=======
+#endif
+
+u64 module_emit_plt_entry(struct module *mod, const Elf64_Rela *rela,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			  Elf64_Sym *sym);
 
 #ifdef CONFIG_RANDOMIZE_BASE

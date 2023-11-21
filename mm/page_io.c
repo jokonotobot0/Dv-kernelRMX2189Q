@@ -284,7 +284,10 @@ int __swap_writepage(struct page *page, struct writeback_control *wbc,
 		unlock_page(page);
 		ret = mapping->a_ops->direct_IO(&kiocb, &from);
 		if (ret == PAGE_SIZE) {
+<<<<<<< HEAD
 			current->swap_out++;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			count_vm_event(PSWPOUT);
 			ret = 0;
 		} else {
@@ -309,7 +312,10 @@ int __swap_writepage(struct page *page, struct writeback_control *wbc,
 
 	ret = bdev_write_page(sis->bdev, swap_page_sector(page), page, wbc);
 	if (!ret) {
+<<<<<<< HEAD
 		current->swap_out++;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		count_vm_event(PSWPOUT);
 		return 0;
 	}
@@ -326,8 +332,11 @@ int __swap_writepage(struct page *page, struct writeback_control *wbc,
 		bio_set_op_attrs(bio, REQ_OP_WRITE, REQ_SYNC);
 	else
 		bio_set_op_attrs(bio, REQ_OP_WRITE, 0);
+<<<<<<< HEAD
 
 	current->swap_out++;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	count_vm_event(PSWPOUT);
 	set_page_writeback(page);
 	unlock_page(page);

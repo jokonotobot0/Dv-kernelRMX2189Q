@@ -24,6 +24,7 @@
 #include <linux/swap.h>
 #include "ion_priv.h"
 
+<<<<<<< HEAD
 static unsigned long long last_alloc_ts;
 static void *ion_page_pool_alloc_pages(struct ion_page_pool *pool)
 {
@@ -48,6 +49,17 @@ static void *ion_page_pool_alloc_pages(struct ion_page_pool *pool)
 				  page, PAGE_SIZE << pool->order,
 				  DMA_BIDIRECTIONAL);
 	atomic64_add_return((1 << pool->order), &page_sz_cnt);
+=======
+static void *ion_page_pool_alloc_pages(struct ion_page_pool *pool)
+{
+	struct page *page = alloc_pages(pool->gfp_mask, pool->order);
+
+	if (!page)
+		return NULL;
+	if (!pool->cached)
+		ion_pages_sync_for_device(NULL, page, PAGE_SIZE << pool->order,
+					  DMA_BIDIRECTIONAL);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return page;
 }
 
@@ -55,22 +67,28 @@ static void ion_page_pool_free_pages(struct ion_page_pool *pool,
 				     struct page *page)
 {
 	__free_pages(page, pool->order);
+<<<<<<< HEAD
 	if (atomic64_sub_return((1 << pool->order), &page_sz_cnt) < 0) {
 		IONMSG("underflow!, total_now[0x%llx]free[%d]\n",
 		       (u64)atomic64_read(&page_sz_cnt),
 		       (int)(1 << pool->order));
 		atomic64_set(&page_sz_cnt, 0);
 	}
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static int ion_page_pool_add(struct ion_page_pool *pool, struct page *page)
 {
 	mutex_lock(&pool->mutex);
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /*Huacai.Zhou@PSW.BSP.Kernel.MM, 2018-09-25, add ion cached account*/
     zone_page_state_add(1L << pool->order, page_zone(page),
                 NR_IONCACHE_PAGES);
 #endif  /*VENDOR_EDIT*/
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (PageHighMem(page)) {
 		list_add_tail(&page->lru, &pool->high_items);
 		pool->high_count++;
@@ -95,11 +113,15 @@ static struct page *ion_page_pool_remove(struct ion_page_pool *pool, bool high)
 		page = list_first_entry(&pool->low_items, struct page, lru);
 		pool->low_count--;
 	}
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /*Huacai.Zhou@PSW.BSP.Kernel.MM, 2018-09-25, add ion cached account*/
         zone_page_state_add(-(1L << pool->order), page_zone(page),
                 NR_IONCACHE_PAGES);
 #endif /*VENDOR_EDIT*/
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	list_del(&page->lru);
 	return page;
 }
@@ -127,10 +149,13 @@ void ion_page_pool_free(struct ion_page_pool *pool, struct page *page)
 {
 	int ret;
 
+<<<<<<< HEAD
 	if (pool->order != compound_order(page))
 		IONMSG("free page = 0x%p, compound_order(page) = 0x%x",
 		       page, compound_order(page));
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	BUG_ON(pool->order != compound_order(page));
 
 	ret = ion_page_pool_add(pool, page);
@@ -187,10 +212,15 @@ struct ion_page_pool *ion_page_pool_create(gfp_t gfp_mask, unsigned int order,
 {
 	struct ion_page_pool *pool = kmalloc(sizeof(*pool), GFP_KERNEL);
 
+<<<<<<< HEAD
 	if (!pool) {
 		IONMSG("%s kmalloc failed pool is null.\n", __func__);
 		return NULL;
 	}
+=======
+	if (!pool)
+		return NULL;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	pool->high_count = 0;
 	pool->low_count = 0;
 	INIT_LIST_HEAD(&pool->low_items);

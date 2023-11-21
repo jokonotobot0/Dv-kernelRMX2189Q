@@ -1978,6 +1978,7 @@ ppp_do_recv(struct ppp *ppp, struct sk_buff *skb, struct channel *pch)
 	ppp_recv_unlock(ppp);
 }
 
+<<<<<<< HEAD
 /**
  * __ppp_decompress_proto - Decompress protocol field, slim version.
  * @skb: Socket buffer where protocol field should be decompressed. It must have
@@ -2018,6 +2019,8 @@ static bool ppp_decompress_proto(struct sk_buff *skb)
 	return pskb_may_pull(skb, 2);
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 void
 ppp_input(struct ppp_channel *chan, struct sk_buff *skb)
 {
@@ -2030,7 +2033,11 @@ ppp_input(struct ppp_channel *chan, struct sk_buff *skb)
 	}
 
 	read_lock_bh(&pch->upl);
+<<<<<<< HEAD
 	if (!ppp_decompress_proto(skb)) {
+=======
+	if (!pskb_may_pull(skb, 2)) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		kfree_skb(skb);
 		if (pch->ppp) {
 			++pch->ppp->dev->stats.rx_length_errors;
@@ -2127,9 +2134,12 @@ ppp_receive_nonmp_frame(struct ppp *ppp, struct sk_buff *skb)
 	if (ppp->flags & SC_MUST_COMP && ppp->rstate & SC_DC_FERROR)
 		goto err;
 
+<<<<<<< HEAD
 	/* At this point the "Protocol" field MUST be decompressed, either in
 	 * ppp_input(), ppp_decompress_frame() or in ppp_receive_mp_frame().
 	 */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	proto = PPP_PROTO(skb);
 	switch (proto) {
 	case PPP_VJC_COMP:
@@ -2301,9 +2311,12 @@ ppp_decompress_frame(struct ppp *ppp, struct sk_buff *skb)
 		skb_put(skb, len);
 		skb_pull(skb, 2);	/* pull off the A/C bytes */
 
+<<<<<<< HEAD
 		/* Don't call __ppp_decompress_proto() here, but instead rely on
 		 * corresponding algo (mppe/bsd/deflate) to decompress it.
 		 */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	} else {
 		/* Uncompressed frame - pass to decompressor so it
 		   can update its dictionary if necessary. */
@@ -2349,11 +2362,17 @@ ppp_receive_mp_frame(struct ppp *ppp, struct sk_buff *skb, struct channel *pch)
 
 	/*
 	 * Do protocol ID decompression on the first fragment of each packet.
+<<<<<<< HEAD
 	 * We have to do that here, because ppp_receive_nonmp_frame() expects
 	 * decompressed protocol field.
 	 */
 	if (PPP_MP_CB(skb)->BEbits & B)
 		__ppp_decompress_proto(skb);
+=======
+	 */
+	if ((PPP_MP_CB(skb)->BEbits & B) && (skb->data[0] & 1))
+		*skb_push(skb, 1) = 0;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/*
 	 * Expand sequence number to 32 bits, making it as close

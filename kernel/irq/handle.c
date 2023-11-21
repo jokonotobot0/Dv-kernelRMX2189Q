@@ -20,10 +20,13 @@
 
 #include "internals.h"
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_RT_THROTTLE_MON
 #include "mtk_rt_mon.h"
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /**
  * handle_bad_irq - handle spurious and unhandled irqs
  * @desc:      description of the interrupt
@@ -136,6 +139,7 @@ void __irq_wake_thread(struct irq_desc *desc, struct irqaction *action)
 	wake_up_process(action->thread);
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_RT_THROTTLE_MON
 static void save_isr_info(unsigned long long start, unsigned long long end)
 {
@@ -147,19 +151,25 @@ static void save_isr_info(unsigned long long start, unsigned long long end)
 }
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 irqreturn_t __handle_irq_event_percpu(struct irq_desc *desc, unsigned int *flags)
 {
 	irqreturn_t retval = IRQ_NONE;
 	unsigned int irq = desc->irq_data.irq;
 	struct irqaction *action;
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_RT_THROTTLE_MON
 	unsigned long long t1, t2;
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	for_each_action_of_desc(desc, action) {
 		irqreturn_t res;
 
 		trace_irq_handler_entry(irq, action);
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_RT_THROTTLE_MON
 		t1 = sched_clock();
 #endif
@@ -168,6 +178,9 @@ irqreturn_t __handle_irq_event_percpu(struct irq_desc *desc, unsigned int *flags
 		t2 = sched_clock();
 		save_isr_info(t1, t2);
 #endif
+=======
+		res = action->handler(irq, action->dev_id);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		trace_irq_handler_exit(irq, action, res);
 
 		if (WARN_ONCE(!irqs_disabled(),"irq %u handler %pF enabled interrupts\n",

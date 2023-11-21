@@ -22,7 +22,10 @@
 #include <linux/user-return-notifier.h>
 #include <linux/nospec.h>
 #include <linux/uprobes.h>
+<<<<<<< HEAD
 #include <linux/syscalls.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #include <asm/desc.h>
 #include <asm/traps.h>
@@ -182,8 +185,11 @@ __visible inline void prepare_exit_to_usermode(struct pt_regs *regs)
 	struct thread_info *ti = current_thread_info();
 	u32 cached_flags;
 
+<<<<<<< HEAD
 	addr_limit_user_check();
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (IS_ENABLED(CONFIG_PROVE_LOCKING) && WARN_ON(!irqs_disabled()))
 		local_irq_disable();
 

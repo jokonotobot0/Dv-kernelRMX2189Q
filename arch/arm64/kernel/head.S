@@ -326,14 +326,22 @@ __create_page_tables:
 	 * dirty cache lines being evicted.
 	 */
 	adrp	x0, idmap_pg_dir
+<<<<<<< HEAD
 	adrp	x1, swapper_pg_dir + SWAPPER_DIR_SIZE + RESERVED_TTBR0_SIZE
+=======
+	adrp	x1, swapper_pg_dir + SWAPPER_DIR_SIZE
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	bl	__inval_cache_range
 
 	/*
 	 * Clear the idmap and swapper page tables.
 	 */
 	adrp	x0, idmap_pg_dir
+<<<<<<< HEAD
 	adrp	x6, swapper_pg_dir + SWAPPER_DIR_SIZE + RESERVED_TTBR0_SIZE
+=======
+	adrp	x6, swapper_pg_dir + SWAPPER_DIR_SIZE
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 1:	stp	xzr, xzr, [x0], #16
 	stp	xzr, xzr, [x0], #16
 	stp	xzr, xzr, [x0], #16
@@ -412,7 +420,11 @@ __create_page_tables:
 	 * tables again to remove any speculatively loaded cache lines.
 	 */
 	adrp	x0, idmap_pg_dir
+<<<<<<< HEAD
 	adrp	x1, swapper_pg_dir + SWAPPER_DIR_SIZE + RESERVED_TTBR0_SIZE
+=======
+	adrp	x1, swapper_pg_dir + SWAPPER_DIR_SIZE
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	dmb	sy
 	bl	__inval_cache_range
 
@@ -428,8 +440,12 @@ ENDPROC(__create_page_tables)
 __primary_switched:
 	adrp	x4, init_thread_union
 	add	sp, x4, #THREAD_SIZE
+<<<<<<< HEAD
 	adr_l	x5, init_task
 	msr	sp_el0, x5			// Save thread_info
+=======
+	msr	sp_el0, x4			// Save thread_info
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	adr_l	x8, vectors			// load VBAR_EL1 with virtual
 	msr	vbar_el1, x8			// vector table address
@@ -699,10 +715,17 @@ __secondary_switched:
 	isb
 
 	adr_l	x0, secondary_data
+<<<<<<< HEAD
 	ldr	x1, [x0, #CPU_BOOT_STACK]	// get secondary_data.stack
 	mov	sp, x1
 	ldr	x2, [x0, #CPU_BOOT_TASK]
 	msr	sp_el0, x2
+=======
+	ldr	x0, [x0, #CPU_BOOT_STACK]	// get secondary_data.stack
+	mov	sp, x0
+	and	x0, x0, #~(THREAD_SIZE - 1)
+	msr	sp_el0, x0			// save thread_info
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	mov	x29, #0
 	b	secondary_start_kernel
 ENDPROC(__secondary_switched)

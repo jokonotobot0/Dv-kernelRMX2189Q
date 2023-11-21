@@ -781,7 +781,10 @@ int bdi_init(struct backing_dev_info *bdi)
 
 	bdi->dev = NULL;
 
+<<<<<<< HEAD
 	kref_init(&bdi->refcnt);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	bdi->min_ratio = 0;
 	bdi->max_ratio = 100;
 	bdi->max_prop_frac = FPROP_FRAC_BASE;
@@ -797,6 +800,7 @@ int bdi_init(struct backing_dev_info *bdi)
 }
 EXPORT_SYMBOL(bdi_init);
 
+<<<<<<< HEAD
 struct backing_dev_info *bdi_alloc_node(gfp_t gfp_mask, int node_id)
 {
 	struct backing_dev_info *bdi;
@@ -813,6 +817,8 @@ struct backing_dev_info *bdi_alloc_node(gfp_t gfp_mask, int node_id)
 	return bdi;
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 int bdi_register(struct backing_dev_info *bdi, struct device *parent,
 		const char *fmt, ...)
 {
@@ -893,12 +899,17 @@ void bdi_unregister(struct backing_dev_info *bdi)
 	}
 }
 
+<<<<<<< HEAD
 static void bdi_exit(struct backing_dev_info *bdi)
+=======
+void bdi_exit(struct backing_dev_info *bdi)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	WARN_ON_ONCE(bdi->dev);
 	wb_exit(&bdi->wb);
 }
 
+<<<<<<< HEAD
 static void release_bdi(struct kref *ref)
 {
 	struct backing_dev_info *bdi =
@@ -913,6 +924,8 @@ void bdi_put(struct backing_dev_info *bdi)
 	kref_put(&bdi->refcnt, release_bdi);
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 void bdi_destroy(struct backing_dev_info *bdi)
 {
 	bdi_unregister(bdi);

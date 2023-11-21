@@ -3,8 +3,11 @@
 #
 obj-$(CONFIG_USB_PHY)			+= phy.o
 obj-$(CONFIG_OF)			+= of.o
+<<<<<<< HEAD
 obj-$(CONFIG_USB_OTG_WAKELOCK)		+= otg-wakelock.o
 obj-$(CONFIG_DUAL_ROLE_USB_INTF)	+= class-dual-role.o
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 # transceiver drivers, keep the list sorted
 

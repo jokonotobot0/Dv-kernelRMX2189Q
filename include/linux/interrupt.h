@@ -18,7 +18,10 @@
 #include <linux/atomic.h>
 #include <asm/ptrace.h>
 #include <asm/irq.h>
+<<<<<<< HEAD
 #include <asm/sections.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /*
  * These correspond to the IORESOURCE_IRQ_* defines in
@@ -700,6 +703,10 @@ extern int early_irq_init(void);
 extern int arch_probe_nr_irqs(void);
 extern int arch_early_irq_init(void);
 
+<<<<<<< HEAD
+=======
+#if defined(CONFIG_FUNCTION_GRAPH_TRACER) || defined(CONFIG_KASAN)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * We want to know which function is an entrypoint of a hardirq or a softirq.
  */
@@ -707,4 +714,19 @@ extern int arch_early_irq_init(void);
 #define __softirq_entry  \
 	__attribute__((__section__(".softirqentry.text")))
 
+<<<<<<< HEAD
+=======
+/* Limits of hardirq entrypoints */
+extern char __irqentry_text_start[];
+extern char __irqentry_text_end[];
+/* Limits of softirq entrypoints */
+extern char __softirqentry_text_start[];
+extern char __softirqentry_text_end[];
+
+#else
+#define __irq_entry
+#define __softirq_entry
+#endif
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif

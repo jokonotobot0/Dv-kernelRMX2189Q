@@ -1,5 +1,34 @@
+<<<<<<< HEAD
 /* SPDX-License-Identifier: GPL-2.0 */
 /* Copyright(c) 2009-2012  Realtek Corporation.*/
+=======
+/******************************************************************************
+ *
+ * Copyright(c) 2009-2012  Realtek Corporation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of version 2 of the GNU General Public License as
+ * published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110, USA
+ *
+ * The full GNU General Public License is included in this distribution in the
+ * file called LICENSE.
+ *
+ * Contact Information:
+ * wlanfae <wlanfae@realtek.com>
+ * Realtek Corporation, No. 2, Innovation Road II, Hsinchu Science Park,
+ * Hsinchu 300, Taiwan.
+ *
+ *****************************************************************************/
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #ifndef __RTL_USB_H__
 #define __RTL_USB_H__
@@ -17,6 +46,10 @@
 #define USB_HIGH_SPEED_BULK_SIZE	512
 #define USB_FULL_SPEED_BULK_SIZE	64
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define RTL_USB_MAX_TXQ_NUM		4		/* max tx queue */
 #define RTL_USB_MAX_EP_NUM		6		/* max ep number */
 #define RTL_USB_MAX_TX_URBS_NUM		8
@@ -52,11 +85,18 @@ static inline void _rtl_install_trx_info(struct rtl_usb *rtlusb,
 					 u32 ep_num)
 {
 	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(skb);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	info->rate_driver_data[0] = rtlusb;
 	info->rate_driver_data[1] = (void *)(__kernel_size_t)ep_num;
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*  Add suspend/resume later */
 enum rtl_usb_state {
 	USB_STATE_STOP	= 0,
@@ -83,7 +123,11 @@ struct rtl_usb {
 	/* Bcn control register setting */
 	u32 reg_bcn_ctrl_val;
 	/* for 88/92cu card disable */
+<<<<<<< HEAD
 	u8	disablehwsm;
+=======
+	u8	disableHWSM;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/*QOS & EDCA */
 	enum acm_method acm_method;
 	/* irq  . HIMR,HIMR_EX */
@@ -126,12 +170,21 @@ struct rtl_usb {
 
 struct rtl_usb_priv {
 	struct bt_coexist_info bt_coexist;
+<<<<<<< HEAD
+=======
+	struct rtl_led_ctl ledctl;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct rtl_usb dev;
 };
 
 #define rtl_usbpriv(hw)	 (((struct rtl_usb_priv *)(rtl_priv(hw))->priv))
 #define rtl_usbdev(usbpriv)	(&((usbpriv)->dev))
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 int rtl_usb_probe(struct usb_interface *intf,
 		  const struct usb_device_id *id,
 		  struct rtl_hal_cfg *rtl92cu_hal_cfg);

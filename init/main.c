@@ -89,6 +89,7 @@
 #include <asm/sections.h>
 #include <asm/cacheflush.h>
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_RAM_CONSOLE
 #include <mt-plat/mtk_ram_console.h>
 #endif
@@ -105,6 +106,8 @@
 #endif
 #endif /* VENDOR_EDIT */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int kernel_init(void *);
 
 extern void init_IRQ(void);
@@ -441,6 +444,7 @@ static int __init do_early_param(char *param, char *val,
 		}
 	}
 	/* We accept everything at this stage. */
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 // Bin.Xu @ BSP.Kernel.Stability, 2019/12/02, Add for oppo_key_handle.
 #ifdef CONFIG_OPPO_KEY_HANDLE
@@ -449,6 +453,8 @@ static int __init do_early_param(char *param, char *val,
 #endif
 #endif /* VENDOR_EDIT */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return 0;
 }
 
@@ -562,11 +568,14 @@ asmlinkage __visible void __init start_kernel(void)
 	trap_init();
 	mm_init();
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 	// Kun.Hu@PSW.TECH.RELIABILTY, 2018/11/15, add for project phoenix(hang oppo)
 	if(phx_set_boot_stage)
 		phx_set_boot_stage(KERNEL_MM_INIT_DONE);
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/*
 	 * Set up the scheduler prior starting any interrupts (such as the
 	 * timer interrupt). Full topology setup happens at smp_init()
@@ -582,6 +591,7 @@ asmlinkage __visible void __init start_kernel(void)
 		 "Interrupts were enabled *very* early, fixing it\n"))
 		local_irq_disable();
 	idr_init_cache();
+<<<<<<< HEAD
 
 	/*
 	 * Allow workqueue creation and work item queueing/cancelling
@@ -590,6 +600,8 @@ asmlinkage __visible void __init start_kernel(void)
 	 */
 	workqueue_init_early();
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	rcu_init();
 
 	/* trace_printk() and trace points may be used after this */
@@ -616,11 +628,14 @@ asmlinkage __visible void __init start_kernel(void)
 	early_boot_irqs_disabled = false;
 	local_irq_enable();
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
     // Kun.Hu@TECH.BSP.Stability.PHOENIX_PROJECT 2019/06/11, Add for phoenix project
 	if(phx_set_boot_stage)
 		phx_set_boot_stage(KERNEL_LOCAL_IRQ_ENABLE);
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	kmem_cache_init_late();
 
 	/*
@@ -680,8 +695,14 @@ asmlinkage __visible void __init start_kernel(void)
 	security_init();
 	dbg_late_init();
 	vfs_caches_init();
+<<<<<<< HEAD
 	pagecache_init();
 	signals_init();
+=======
+	signals_init();
+	/* rootfs populating might need page-writeback */
+	page_writeback_init();
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	proc_root_init();
 	nsfs_init();
 	cpuset_init();
@@ -689,11 +710,14 @@ asmlinkage __visible void __init start_kernel(void)
 	taskstats_init_early();
 	delayacct_init();
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
     // Kun.Hu@PSW.TECH.RELIABILTY, 2018/11/15, add for project phoenix(hang oppo)
 	if(phx_set_boot_stage)
 		phx_set_boot_stage(KERNEL_DELAYACCT_INIT_DONE);
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	check_bugs();
 
 	acpi_subsystem_init();
@@ -810,6 +834,7 @@ static int __init_or_module do_one_initcall_debug(initcall_t fn)
 
 	return ret;
 }
+<<<<<<< HEAD
 #ifdef CONFIG_MTPROF
 #include <bootprof.h>
 #else
@@ -817,12 +842,15 @@ static int __init_or_module do_one_initcall_debug(initcall_t fn)
 #define TIME_LOG_END()
 #define bootprof_initcall(fn, ts)
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 int __init_or_module do_one_initcall(initcall_t fn)
 {
 	int count = preempt_count();
 	int ret;
 	char msgbuf[64];
+<<<<<<< HEAD
 #ifdef CONFIG_MTPROF
 	unsigned long long ts = 0;
 #endif
@@ -833,11 +861,21 @@ int __init_or_module do_one_initcall(initcall_t fn)
 	aee_rr_rec_last_init_func((unsigned long)fn);
 #endif
 	TIME_LOG_START();
+=======
+
+	if (initcall_blacklisted(fn))
+		return -EPERM;
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (initcall_debug)
 		ret = do_one_initcall_debug(fn);
 	else
 		ret = fn();
+<<<<<<< HEAD
 	TIME_LOG_END();
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	msgbuf[0] = 0;
 
 	if (preempt_count() != count) {
@@ -851,7 +889,10 @@ int __init_or_module do_one_initcall(initcall_t fn)
 	WARN(msgbuf[0], "initcall %pF returned with %s\n", fn, msgbuf);
 
 	add_latent_entropy();
+<<<<<<< HEAD
 	bootprof_initcall(fn, ts);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return ret;
 }
 
@@ -906,16 +947,20 @@ static void __init do_initcall_level(int level)
 		do_one_initcall(*fn);
 }
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 //cuixiaogang@SRC.hypnus.2019-1-3. add for hypnusd
 extern int __init hypnus_init(void);
 #endif /* VENDOR_EDIT */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static void __init do_initcalls(void)
 {
 	int level;
 
 	for (level = 0; level < ARRAY_SIZE(initcall_levels) - 1; level++)
 		do_initcall_level(level);
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_RAM_CONSOLE
 	aee_rr_rec_last_init_func(~(unsigned long)(0));
 #endif
@@ -926,6 +971,8 @@ static void __init do_initcalls(void)
     hypnus_init();
 #endif
 #endif /* VENDOR_EDIT */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 /*
@@ -940,20 +987,26 @@ static void __init do_basic_setup(void)
 	cpuset_init_smp();
 	shmem_init();
 	driver_init();
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
     // Kun.Hu@TECH.BSP.Stability.PHOENIX_PROJECT 2019/06/11, Add for phoenix project
 	if(phx_set_boot_stage)
 		phx_set_boot_stage(KERNEL_DRIVER_INIT_DONE);
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	init_irq_proc();
 	do_ctors();
 	usermodehelper_enable();
 	do_initcalls();
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
     // Kun.Hu@TECH.BSP.Stability.PHOENIX_PROJECT 2019/06/11, Add for phoenix project
 	if(phx_set_boot_stage)
 		phx_set_boot_stage(KERNEL_DO_INITCALLS_DONE);
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static void __init do_pre_smp_initcalls(void)
@@ -1036,6 +1089,7 @@ static int __ref kernel_init(void *unused)
 	numa_default_policy();
 
 	rcu_end_inkernel_boot();
+<<<<<<< HEAD
 #ifdef CONFIG_MTPROF
 	log_boot("Kernel_init_done");
 #endif
@@ -1045,6 +1099,9 @@ static int __ref kernel_init(void *unused)
 	if(phx_set_boot_stage)
 		phx_set_boot_stage(KERNEL_INIT_DONE);
 #endif
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (ramdisk_execute_command) {
 		ret = run_init_process(ramdisk_execute_command);
 		if (!ret)
@@ -1099,8 +1156,11 @@ static noinline void __init kernel_init_freeable(void)
 
 	smp_prepare_cpus(setup_max_cpus);
 
+<<<<<<< HEAD
 	workqueue_init();
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	do_pre_smp_initcalls();
 	lockup_detector_init();
 
@@ -1111,11 +1171,14 @@ static noinline void __init kernel_init_freeable(void)
 
 	do_basic_setup();
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
     // Kun.Hu@TECH.BSP.Stability.PHOENIX_PROJECT 2019/06/11, Add for phoenix project
 	if(phx_set_boot_stage)
 		phx_set_boot_stage(KERNEL_DO_BASIC_SETUP_DONE);
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* Open the /dev/console on the rootfs, this should never fail */
 	if (sys_open((const char __user *) "/dev/console", O_RDWR, 0) < 0)
 		pr_err("Warning: unable to open an initial console.\n");

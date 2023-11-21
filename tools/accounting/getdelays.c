@@ -202,8 +202,11 @@ static void print_delayacct(struct taskstats *t)
 	       "SWAP  %15s%15s%15s\n"
 	       "      %15llu%15llu%15llums\n"
 	       "RECLAIM  %12s%15s%15s\n"
+<<<<<<< HEAD
 	       "      %15llu%15llu%15llums\n"
 	       "THRASHING%12s%15s%15s\n"
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	       "      %15llu%15llu%15llums\n",
 	       "count", "real total", "virtual total",
 	       "delay total", "delay average",
@@ -223,11 +226,15 @@ static void print_delayacct(struct taskstats *t)
 	       "count", "delay total", "delay average",
 	       (unsigned long long)t->freepages_count,
 	       (unsigned long long)t->freepages_delay_total,
+<<<<<<< HEAD
 	       average_ms(t->freepages_delay_total, t->freepages_count),
 	       "count", "delay total", "delay average",
 	       (unsigned long long)t->thrashing_count,
 	       (unsigned long long)t->thrashing_delay_total,
 	       average_ms(t->thrashing_delay_total, t->thrashing_count));
+=======
+	       average_ms(t->freepages_delay_total, t->freepages_count));
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static void task_context_switch_counts(struct taskstats *t)

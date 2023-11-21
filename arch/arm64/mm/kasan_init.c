@@ -15,7 +15,10 @@
 #include <linux/kernel.h>
 #include <linux/memblock.h>
 #include <linux/start_kernel.h>
+<<<<<<< HEAD
 #include <linux/mm.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #include <asm/mmu_context.h>
 #include <asm/kernel-pgtable.h>
@@ -27,6 +30,7 @@
 
 static pgd_t tmp_pg_dir[PTRS_PER_PGD] __initdata __aligned(PGD_SIZE);
 
+<<<<<<< HEAD
 /*
  * The p*d_populate functions call virt_to_phys implicitly so they can't be used
  * directly on kernel symbols (bm_p*d). All the early functions are called too
@@ -34,6 +38,8 @@ static pgd_t tmp_pg_dir[PTRS_PER_PGD] __initdata __aligned(PGD_SIZE);
  * with the physical address from __pa_symbol.
  */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static void __init kasan_early_pte_populate(pmd_t *pmd, unsigned long addr,
 					unsigned long end)
 {
@@ -41,12 +47,20 @@ static void __init kasan_early_pte_populate(pmd_t *pmd, unsigned long addr,
 	unsigned long next;
 
 	if (pmd_none(*pmd))
+<<<<<<< HEAD
 		__pmd_populate(pmd, __pa_symbol(kasan_zero_pte), PMD_TYPE_TABLE);
+=======
+		pmd_populate_kernel(&init_mm, pmd, kasan_zero_pte);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	pte = pte_offset_kimg(pmd, addr);
 	do {
 		next = addr + PAGE_SIZE;
+<<<<<<< HEAD
 		set_pte(pte, pfn_pte(sym_to_pfn(kasan_zero_page),
+=======
+		set_pte(pte, pfn_pte(virt_to_pfn(kasan_zero_page),
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 					PAGE_KERNEL));
 	} while (pte++, addr = next, addr != end && pte_none(*pte));
 }
@@ -59,7 +73,11 @@ static void __init kasan_early_pmd_populate(pud_t *pud,
 	unsigned long next;
 
 	if (pud_none(*pud))
+<<<<<<< HEAD
 		__pud_populate(pud, __pa_symbol(kasan_zero_pmd), PMD_TYPE_TABLE);
+=======
+		pud_populate(&init_mm, pud, kasan_zero_pmd);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	pmd = pmd_offset_kimg(pud, addr);
 	do {
@@ -76,7 +94,11 @@ static void __init kasan_early_pud_populate(pgd_t *pgd,
 	unsigned long next;
 
 	if (pgd_none(*pgd))
+<<<<<<< HEAD
 		__pgd_populate(pgd, __pa_symbol(kasan_zero_pud), PUD_TYPE_TABLE);
+=======
+		pgd_populate(&init_mm, pgd, kasan_zero_pud);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	pud = pud_offset_kimg(pgd, addr);
 	do {
@@ -101,9 +123,13 @@ static void __init kasan_map_early_shadow(void)
 
 asmlinkage void __init kasan_early_init(void)
 {
+<<<<<<< HEAD
 #ifndef CONFIG_KASAN_ENHANCEMENT
 	BUILD_BUG_ON(KASAN_SHADOW_OFFSET != KASAN_SHADOW_END - (1UL << 61));
 #endif
+=======
+	BUILD_BUG_ON(KASAN_SHADOW_OFFSET != KASAN_SHADOW_END - (1UL << 61));
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	BUILD_BUG_ON(!IS_ALIGNED(KASAN_SHADOW_START, PGDIR_SIZE));
 	BUILD_BUG_ON(!IS_ALIGNED(KASAN_SHADOW_END, PGDIR_SIZE));
 	kasan_map_early_shadow();
@@ -158,7 +184,11 @@ void __init kasan_init(void)
 	 */
 	memcpy(tmp_pg_dir, swapper_pg_dir, sizeof(tmp_pg_dir));
 	dsb(ishst);
+<<<<<<< HEAD
 	cpu_replace_ttbr1(lm_alias(tmp_pg_dir));
+=======
+	cpu_replace_ttbr1(tmp_pg_dir);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	clear_pgds(KASAN_SHADOW_START, KASAN_SHADOW_END);
 
@@ -209,10 +239,17 @@ void __init kasan_init(void)
 	 */
 	for (i = 0; i < PTRS_PER_PTE; i++)
 		set_pte(&kasan_zero_pte[i],
+<<<<<<< HEAD
 			pfn_pte(sym_to_pfn(kasan_zero_page), PAGE_KERNEL_RO));
 
 	memset(kasan_zero_page, 0, PAGE_SIZE);
 	cpu_replace_ttbr1(lm_alias(swapper_pg_dir));
+=======
+			pfn_pte(virt_to_pfn(kasan_zero_page), PAGE_KERNEL_RO));
+
+	memset(kasan_zero_page, 0, PAGE_SIZE);
+	cpu_replace_ttbr1(swapper_pg_dir);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/* At this point kasan is fully initialized. Enable error messages */
 	init_task.kasan_depth = 0;

@@ -30,7 +30,10 @@
 #include <drm/drm_atomic.h>
 #include <drm/drm_mode.h>
 #include <drm/drm_plane_helper.h>
+<<<<<<< HEAD
 #include <linux/sync_file.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #include "drm_crtc_internal.h"
 
@@ -293,6 +296,7 @@ drm_atomic_get_crtc_state(struct drm_atomic_state *state,
 }
 EXPORT_SYMBOL(drm_atomic_get_crtc_state);
 
+<<<<<<< HEAD
 static void set_out_fence_for_crtc(struct drm_atomic_state *state,
 				   struct drm_crtc *crtc, s32 __user *fence_ptr)
 {
@@ -310,6 +314,8 @@ static s32 __user *get_out_fence_for_crtc(struct drm_atomic_state *state,
 	return fence_ptr;
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /**
  * drm_atomic_set_mode_for_crtc - set mode for CRTC
  * @state: the CRTC whose incoming state to update
@@ -514,6 +520,7 @@ int drm_atomic_crtc_set_property(struct drm_crtc *crtc,
 					&replaced);
 		state->color_mgmt_changed |= replaced;
 		return ret;
+<<<<<<< HEAD
 	} else if (property == config->prop_out_fence_ptr) {
 		s32 __user *fence_ptr = u64_to_user_ptr(val);
 
@@ -524,6 +531,8 @@ int drm_atomic_crtc_set_property(struct drm_crtc *crtc,
 			return -EFAULT;
 
 		set_out_fence_for_crtc(state->state, crtc, fence_ptr);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	} else if (crtc->funcs->atomic_set_property)
 		return crtc->funcs->atomic_set_property(crtc, state, property, val);
 	else
@@ -566,8 +575,11 @@ drm_atomic_crtc_get_property(struct drm_crtc *crtc,
 		*val = (state->ctm) ? state->ctm->base.id : 0;
 	else if (property == config->gamma_lut_property)
 		*val = (state->gamma_lut) ? state->gamma_lut->base.id : 0;
+<<<<<<< HEAD
 	else if (property == config->prop_out_fence_ptr)
 		*val = 0;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	else if (crtc->funcs->atomic_get_property)
 		return crtc->funcs->atomic_get_property(crtc, state, property, val);
 	else
@@ -723,6 +735,7 @@ int drm_atomic_plane_set_property(struct drm_plane *plane,
 		drm_atomic_set_fb_for_plane(state, fb);
 		if (fb)
 			drm_framebuffer_unreference(fb);
+<<<<<<< HEAD
 	} else if (property == config->prop_in_fence_fd) {
 		if (state->fence)
 			return -EINVAL;
@@ -734,6 +747,8 @@ int drm_atomic_plane_set_property(struct drm_plane *plane,
 		if (!state->fence)
 			return -EINVAL;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	} else if (property == config->prop_crtc_id) {
 		struct drm_crtc *crtc = drm_crtc_find(dev, val);
 		return drm_atomic_set_crtc_for_plane(state, crtc);
@@ -793,8 +808,11 @@ drm_atomic_plane_get_property(struct drm_plane *plane,
 
 	if (property == config->prop_fb_id) {
 		*val = (state->fb) ? state->fb->base.id : 0;
+<<<<<<< HEAD
 	} else if (property == config->prop_in_fence_fd) {
 		*val = -1;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	} else if (property == config->prop_crtc_id) {
 		*val = (state->crtc) ? state->crtc->base.id : 0;
 	} else if (property == config->prop_crtc_x) {
@@ -1197,6 +1215,7 @@ drm_atomic_set_fb_for_plane(struct drm_plane_state *plane_state,
 EXPORT_SYMBOL(drm_atomic_set_fb_for_plane);
 
 /**
+<<<<<<< HEAD
  * drm_atomic_set_fence_for_plane - set fence for plane
  * @plane_state: atomic state object for the plane
  * @fence: fence to use for the plane
@@ -1227,6 +1246,8 @@ drm_atomic_set_fence_for_plane(struct drm_plane_state *plane_state,
 EXPORT_SYMBOL(drm_atomic_set_fence_for_plane);
 
 /**
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  * drm_atomic_set_crtc_for_connector - set crtc for connector
  * @conn_state: atomic state object for the connector
  * @crtc: crtc to use for the connector
@@ -1545,9 +1566,17 @@ EXPORT_SYMBOL(drm_atomic_nonblocking_commit);
  */
 
 static struct drm_pending_vblank_event *create_vblank_event(
+<<<<<<< HEAD
 		struct drm_device *dev, uint64_t user_data)
 {
 	struct drm_pending_vblank_event *e = NULL;
+=======
+		struct drm_device *dev, struct drm_file *file_priv,
+		struct fence *fence, uint64_t user_data)
+{
+	struct drm_pending_vblank_event *e = NULL;
+	int ret;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	e = kzalloc(sizeof *e, GFP_KERNEL);
 	if (!e)
@@ -1557,6 +1586,20 @@ static struct drm_pending_vblank_event *create_vblank_event(
 	e->event.base.length = sizeof(e->event);
 	e->event.user_data = user_data;
 
+<<<<<<< HEAD
+=======
+	if (file_priv) {
+		ret = drm_event_reserve_init(dev, file_priv, &e->base,
+					     &e->event.base);
+		if (ret) {
+			kfree(e);
+			return NULL;
+		}
+	}
+
+	e->base.fence = fence;
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return e;
 }
 
@@ -1661,6 +1704,7 @@ void drm_atomic_clean_old_fb(struct drm_device *dev,
 }
 EXPORT_SYMBOL(drm_atomic_clean_old_fb);
 
+<<<<<<< HEAD
 /**
  * DOC: explicit fencing properties
  *
@@ -1861,6 +1905,8 @@ static void complete_crtc_signaling(struct drm_device *dev,
 	kfree(fence_state);
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 int drm_mode_atomic_ioctl(struct drm_device *dev,
 			  void *data, struct drm_file *file_priv)
 {
@@ -1873,10 +1919,18 @@ int drm_mode_atomic_ioctl(struct drm_device *dev,
 	struct drm_atomic_state *state;
 	struct drm_modeset_acquire_ctx ctx;
 	struct drm_plane *plane;
+<<<<<<< HEAD
 	struct drm_out_fence_state *fence_state;
 	unsigned plane_mask;
 	int ret = 0;
 	unsigned int i, j, num_fences;
+=======
+	struct drm_crtc *crtc;
+	struct drm_crtc_state *crtc_state;
+	unsigned plane_mask;
+	int ret = 0;
+	unsigned int i, j;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/* disallow for drivers not supporting atomic: */
 	if (!drm_core_check_feature(dev, DRIVER_ATOMIC))
@@ -1917,8 +1971,11 @@ retry:
 	plane_mask = 0;
 	copied_objs = 0;
 	copied_props = 0;
+<<<<<<< HEAD
 	fence_state = NULL;
 	num_fences = 0;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	for (i = 0; i < arg->count_objs; i++) {
 		uint32_t obj_id, count_props;
@@ -1993,10 +2050,27 @@ retry:
 		drm_mode_object_unreference(obj);
 	}
 
+<<<<<<< HEAD
 	ret = prepare_crtc_signaling(dev, state, arg, file_priv, &fence_state,
 				     &num_fences);
 	if (ret)
 		goto out;
+=======
+	if (arg->flags & DRM_MODE_PAGE_FLIP_EVENT) {
+		for_each_crtc_in_state(state, crtc, crtc_state, i) {
+			struct drm_pending_vblank_event *e;
+
+			e = create_vblank_event(dev, file_priv, NULL,
+						arg->user_data);
+			if (!e) {
+				ret = -ENOMEM;
+				goto out;
+			}
+
+			crtc_state->event = e;
+		}
+	}
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (arg->flags & DRM_MODE_ATOMIC_TEST_ONLY) {
 		/*
@@ -2013,7 +2087,24 @@ retry:
 out:
 	drm_atomic_clean_old_fb(dev, plane_mask, ret);
 
+<<<<<<< HEAD
 	complete_crtc_signaling(dev, state, fence_state, num_fences, !ret);
+=======
+	if (ret && arg->flags & DRM_MODE_PAGE_FLIP_EVENT) {
+		/*
+		 * Free the allocated event. drm_atomic_helper_setup_commit
+		 * can allocate an event too, so only free it if it's ours
+		 * to prevent a double free in drm_atomic_state_clear.
+		 */
+		for_each_crtc_in_state(state, crtc, crtc_state, i) {
+			struct drm_pending_vblank_event *event = crtc_state->event;
+			if (event && (event->base.fence || event->base.file_priv)) {
+				drm_event_cancel_free(dev, &event->base);
+				crtc_state->event = NULL;
+			}
+		}
+	}
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (ret == -EDEADLK) {
 		drm_atomic_state_clear(state);

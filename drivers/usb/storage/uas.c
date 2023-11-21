@@ -796,10 +796,15 @@ static int uas_slave_alloc(struct scsi_device *sdev)
 {
 	struct uas_dev_info *devinfo =
 		(struct uas_dev_info *)sdev->host->hostdata;
+<<<<<<< HEAD
 #ifndef VENDOR_EDIT
 /*LIZHIJIE@BSP.BASTCI.CHG  2019/10/18 add for asking the block layer to respect the maxpacket limitation*/
 	int maxp;
 #endif
+=======
+	int maxp;
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	sdev->hostdata = devinfo;
 
 	/*
@@ -817,11 +822,17 @@ static int uas_slave_alloc(struct scsi_device *sdev)
 	 * about the capabilities off the HC, so we use the most
 	 * pessimistic requirement.
 	 */
+<<<<<<< HEAD
 #ifndef VENDOR_EDIT
 /*LIZHIJIE@BSP.BASTCI.CHG  2019/10/18 add for asking the block layer to respect the maxpacket limitation*/
 	maxp = usb_maxpacket(devinfo->udev, devinfo->data_in_pipe, 0);
 	blk_queue_virt_boundary(sdev->request_queue, maxp - 1);
 #endif
+=======
+
+	maxp = usb_maxpacket(devinfo->udev, devinfo->data_in_pipe, 0);
+	blk_queue_virt_boundary(sdev->request_queue, maxp - 1);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/*
 	 * The protocol has no requirements on alignment in the strict sense.

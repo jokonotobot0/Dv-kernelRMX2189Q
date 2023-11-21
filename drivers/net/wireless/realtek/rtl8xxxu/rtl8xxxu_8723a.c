@@ -1,8 +1,15 @@
+<<<<<<< HEAD
 // SPDX-License-Identifier: GPL-2.0-only
 /*
  * RTL8XXXU mac80211 USB driver - 8723a specific subdriver
  *
  * Copyright (c) 2014 - 2017 Jes Sorensen <Jes.Sorensen@gmail.com>
+=======
+/*
+ * RTL8XXXU mac80211 USB driver - 8723a specific subdriver
+ *
+ * Copyright (c) 2014 - 2016 Jes Sorensen <Jes.Sorensen@redhat.com>
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  *
  * Portions, notably calibration code:
  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
@@ -11,6 +18,18 @@
  * rtl8723au driver. As the Realtek 8xxx chips are very similar in
  * their programming interface, I have started adding support for
  * additional 8xxx chips like the 8192cu, 8188cus, etc.
+<<<<<<< HEAD
+=======
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of version 2 of the GNU General Public License as
+ * published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  */
 
 #include <linux/init.h>
@@ -54,7 +73,11 @@ static struct rtl8xxxu_power_base rtl8723a_power_base = {
 	.reg_0868 = 0x02040608,
 };
 
+<<<<<<< HEAD
 static const struct rtl8xxxu_rfregval rtl8723au_radioa_1t_init_table[] = {
+=======
+static struct rtl8xxxu_rfregval rtl8723au_radioa_1t_init_table[] = {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	{0x00, 0x00030159}, {0x01, 0x00031284},
 	{0x02, 0x00098000}, {0x03, 0x00039c63},
 	{0x04, 0x000210e7}, {0x09, 0x0002044f},
@@ -129,6 +152,7 @@ static const struct rtl8xxxu_rfregval rtl8723au_radioa_1t_init_table[] = {
 	{0xff, 0xffffffff}
 };
 
+<<<<<<< HEAD
 static int rtl8723au_identify_chip(struct rtl8xxxu_priv *priv)
 {
 	struct device *dev = &priv->udev->dev;
@@ -178,6 +202,8 @@ out:
 	return ret;
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int rtl8723au_parse_efuse(struct rtl8xxxu_priv *priv)
 {
 	struct rtl8723au_efuse *efuse = &priv->efuse_wifi.efuse8723;
@@ -215,6 +241,7 @@ static int rtl8723au_parse_efuse(struct rtl8xxxu_priv *priv)
 	       efuse->ht20_max_power_offset,
 	       sizeof(efuse->ht20_max_power_offset));
 
+<<<<<<< HEAD
 	if (priv->efuse_wifi.efuse8723.version >= 0x01)
 		priv->default_crystal_cap = priv->efuse_wifi.efuse8723.xtal_k & 0x3f;
 	else
@@ -222,12 +249,29 @@ static int rtl8723au_parse_efuse(struct rtl8xxxu_priv *priv)
 
 	priv->power_base = &rtl8723a_power_base;
 
+=======
+	if (priv->efuse_wifi.efuse8723.version >= 0x01) {
+		priv->has_xtalk = 1;
+		priv->xtalk = priv->efuse_wifi.efuse8723.xtal_k & 0x3f;
+	}
+
+	priv->power_base = &rtl8723a_power_base;
+
+	dev_info(&priv->udev->dev, "Vendor: %.7s\n",
+		 efuse->vendor_name);
+	dev_info(&priv->udev->dev, "Product: %.41s\n",
+		 efuse->device_name);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return 0;
 }
 
 static int rtl8723au_load_firmware(struct rtl8xxxu_priv *priv)
 {
+<<<<<<< HEAD
 	const char *fw_name;
+=======
+	char *fw_name;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	int ret;
 
 	switch (priv->chip_cut) {
@@ -402,6 +446,7 @@ exit:
 	return ret;
 }
 
+<<<<<<< HEAD
 #define XTAL1	GENMASK(23, 18)
 #define XTAL0	GENMASK(17, 12)
 
@@ -480,20 +525,32 @@ static int rtl8723au_led_brightness_set(struct led_classdev *led_cdev,
 
 struct rtl8xxxu_fileops rtl8723au_fops = {
 	.identify_chip = rtl8723au_identify_chip,
+=======
+struct rtl8xxxu_fileops rtl8723au_fops = {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	.parse_efuse = rtl8723au_parse_efuse,
 	.load_firmware = rtl8723au_load_firmware,
 	.power_on = rtl8723au_power_on,
 	.power_off = rtl8xxxu_power_off,
+<<<<<<< HEAD
 	.read_efuse = rtl8xxxu_read_efuse,
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	.reset_8051 = rtl8xxxu_reset_8051,
 	.llt_init = rtl8xxxu_init_llt_table,
 	.init_phy_bb = rtl8xxxu_gen1_init_phy_bb,
 	.init_phy_rf = rtl8723au_init_phy_rf,
+<<<<<<< HEAD
 	.phy_lc_calibrate = rtl8723a_phy_lc_calibrate,
 	.phy_iq_calibrate = rtl8xxxu_gen1_phy_iq_calibrate,
 	.config_channel = rtl8xxxu_gen1_config_channel,
 	.parse_rx_desc = rtl8xxxu_parse_rxdesc16,
 	.parse_phystats = rtl8723au_rx_parse_phystats,
+=======
+	.phy_iq_calibrate = rtl8xxxu_gen1_phy_iq_calibrate,
+	.config_channel = rtl8xxxu_gen1_config_channel,
+	.parse_rx_desc = rtl8xxxu_parse_rxdesc16,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	.init_aggregation = rtl8xxxu_gen1_init_aggregation,
 	.enable_rf = rtl8xxxu_gen1_enable_rf,
 	.disable_rf = rtl8xxxu_gen1_disable_rf,
@@ -501,11 +558,15 @@ struct rtl8xxxu_fileops rtl8723au_fops = {
 	.set_tx_power = rtl8xxxu_gen1_set_tx_power,
 	.update_rate_mask = rtl8xxxu_update_rate_mask,
 	.report_connect = rtl8xxxu_gen1_report_connect,
+<<<<<<< HEAD
 	.report_rssi = rtl8xxxu_gen1_report_rssi,
 	.fill_txdesc = rtl8xxxu_fill_txdesc_v1,
 	.set_crystal_cap = rtl8723a_set_crystal_cap,
 	.cck_rssi = rtl8723a_cck_rssi,
 	.led_classdev_brightness_set = rtl8723au_led_brightness_set,
+=======
+	.fill_txdesc = rtl8xxxu_fill_txdesc_v1,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	.writeN_block_size = 1024,
 	.rx_agg_buf_size = 16000,
 	.tx_desc_size = sizeof(struct rtl8xxxu_txdesc32),

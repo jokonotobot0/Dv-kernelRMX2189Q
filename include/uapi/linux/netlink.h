@@ -28,6 +28,7 @@
 #define NETLINK_RDMA		20
 #define NETLINK_CRYPTO		21	/* Crypto layer */
 
+<<<<<<< HEAD
 #if defined(VENDOR_EDIT) && defined(CONFIG_OPPO_HANS)
 // Kun.Zhou@ROM.Framework, 2019/09/23, add for hans freeze manager
 #define NETLINK_OPPO_HANS       28      /* Socket for freezing solution*/
@@ -48,6 +49,11 @@
 #define MAX_LINKS 38
 #endif /* VENDOR_EDIT */
 
+=======
+#define NETLINK_INET_DIAG	NETLINK_SOCK_DIAG
+
+#define MAX_LINKS 32		
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 struct sockaddr_nl {
 	__kernel_sa_family_t	nl_family;	/* AF_NETLINK	*/

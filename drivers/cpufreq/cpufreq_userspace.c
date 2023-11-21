@@ -118,10 +118,14 @@ static void cpufreq_userspace_policy_limits(struct cpufreq_policy *policy)
 	mutex_unlock(&userspace_mutex);
 }
 
+<<<<<<< HEAD
 #ifndef CONFIG_CPU_FREQ_DEFAULT_GOV_USERSPACE
 static
 #endif
 struct cpufreq_governor cpufreq_gov_userspace = {
+=======
+static struct cpufreq_governor cpufreq_gov_userspace = {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	.name		= "userspace",
 	.init		= cpufreq_userspace_policy_init,
 	.exit		= cpufreq_userspace_policy_exit,

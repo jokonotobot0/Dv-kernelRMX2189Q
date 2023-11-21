@@ -16,7 +16,10 @@ OBJCOPYFLAGS	:=-O binary -R .comment -S
 ifneq ($(MACHINE),)
 include $(MACHINE)/Makefile.boot
 endif
+<<<<<<< HEAD
 include $(srctree)/arch/arm/boot/dts/Makefile
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 # Note: the following conditions must always be true:
 #   ZRELADDR == virt_to_phys(PAGE_OFFSET + TEXT_OFFSET)
@@ -30,6 +33,7 @@ export ZRELADDR INITRD_PHYS PARAMS_PHYS
 
 targets := Image zImage xipImage bootpImage uImage
 
+<<<<<<< HEAD
 DTB_NAMES := $(subst $\",,$(CONFIG_BUILD_ARM_APPENDED_DTB_IMAGE_NAMES))
 ifneq ($(DTB_NAMES),)
 DTB_LIST := $(addsuffix .dtb,$(DTB_NAMES))
@@ -38,6 +42,8 @@ DTB_LIST := $(dtb-y)
 endif
 DTB_OBJS := $(addprefix $(obj)/dts/,$(DTB_LIST))
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 ifeq ($(CONFIG_XIP_KERNEL),y)
 
 $(obj)/xipImage: vmlinux FORCE
@@ -61,6 +67,7 @@ $(obj)/Image: vmlinux FORCE
 $(obj)/compressed/vmlinux: $(obj)/Image FORCE
 	$(Q)$(MAKE) $(build)=$(obj)/compressed $@
 
+<<<<<<< HEAD
 $(obj)/zImage:	$(obj)/compressed/vmlinux $(obj)/mtk.dtb FORCE
 	$(call if_changed,objcopy)
 
@@ -71,6 +78,11 @@ $(obj)/zImage-dtb:	$(obj)/zImage $(DTB_OBJS) FORCE
 $(obj)/mtk.dtb: $(DTB_OBJS) FORCE
 	$(call if_changed,cat)
 
+=======
+$(obj)/zImage:	$(obj)/compressed/vmlinux FORCE
+	$(call if_changed,objcopy)
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 endif
 
 ifneq ($(LOADADDR),)

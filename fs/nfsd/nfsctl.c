@@ -1125,7 +1125,11 @@ static ssize_t write_v4_end_grace(struct file *file, char *buf, size_t size)
 
 static int nfsd_fill_super(struct super_block * sb, void * data, int silent)
 {
+<<<<<<< HEAD
 	static const struct tree_descr nfsd_files[] = {
+=======
+	static struct tree_descr nfsd_files[] = {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		[NFSD_List] = {"exports", &exports_nfsd_operations, S_IRUGO},
 		[NFSD_Export_features] = {"export_features",
 					&export_features_operations, S_IRUGO},

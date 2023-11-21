@@ -1402,6 +1402,10 @@ start_isoc_chain(struct usb_fifo *fifo, int num_packets_per_urb,
 				printk(KERN_DEBUG
 				       "%s: %s: alloc urb for fifo %i failed",
 				       hw->name, __func__, fifo->fifonum);
+<<<<<<< HEAD
+=======
+				continue;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			}
 			fifo->iso[i].owner_fifo = (struct usb_fifo *) fifo;
 			fifo->iso[i].indx = i;
@@ -1700,13 +1704,32 @@ hfcsusb_stop_endpoint(struct hfcsusb *hw, int channel)
 static int
 setup_hfcsusb(struct hfcsusb *hw)
 {
+<<<<<<< HEAD
 	u_char b;
+=======
+	void *dmabuf = kmalloc(sizeof(u_char), GFP_KERNEL);
+	u_char b;
+	int ret;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (debug & DBG_HFC_CALL_TRACE)
 		printk(KERN_DEBUG "%s: %s\n", hw->name, __func__);
 
+<<<<<<< HEAD
 	/* check the chip id */
 	if (read_reg_atomic(hw, HFCUSB_CHIP_ID, &b) != 1) {
+=======
+	if (!dmabuf)
+		return -ENOMEM;
+
+	ret = read_reg_atomic(hw, HFCUSB_CHIP_ID, dmabuf);
+
+	memcpy(&b, dmabuf, sizeof(u_char));
+	kfree(dmabuf);
+
+	/* check the chip id */
+	if (ret != 1) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		printk(KERN_DEBUG "%s: %s: cannot read chip id\n",
 		       hw->name, __func__);
 		return 1;

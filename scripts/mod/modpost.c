@@ -936,7 +936,10 @@ static const char *const head_sections[] = { ".head.text*", NULL };
 static const char *const linker_symbols[] =
 	{ "__init_begin", "_sinittext", "_einittext", NULL };
 static const char *const optim_symbols[] = { "*.constprop.*", NULL };
+<<<<<<< HEAD
 static const char *const cfi_symbols[] = { "*.cfi", NULL };
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 enum mismatch {
 	TEXT_TO_ANY_INIT,
@@ -1158,6 +1161,7 @@ static const struct sectioncheck *section_mismatch(
  *   fromsec = text section
  *   refsymname = *.constprop.*
  *
+<<<<<<< HEAD
  * Pattern 6:
  *   With CONFIG_CFI_CLANG, clang appends .cfi to all indirectly called
  *   functions and creates a function stub with the original name. This
@@ -1168,6 +1172,8 @@ static const struct sectioncheck *section_mismatch(
  *   fromsec = text section
  *   tosym   = *.cfi
  *
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  **/
 static int secref_whitelist(const struct sectioncheck *mismatch,
 			    const char *fromsec, const char *fromsym,
@@ -1206,12 +1212,15 @@ static int secref_whitelist(const struct sectioncheck *mismatch,
 	    match(fromsym, optim_symbols))
 		return 0;
 
+<<<<<<< HEAD
 	/* Check for pattern 6 */
 	if (match(fromsec, text_sections) &&
 	    match(tosec, init_exit_sections) &&
 	    match(tosym, cfi_symbols))
 		return 0;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return 1;
 }
 

@@ -557,6 +557,7 @@ static const struct panel_desc auo_b133htn01 = {
 	},
 };
 
+<<<<<<< HEAD
 static const struct drm_display_mode auo_g133han01_mode = {
 	.clock = 141200,
 	.hdisplay = 1920,
@@ -586,6 +587,8 @@ static const struct panel_desc auo_g133han01 = {
 	},
 };
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static const struct drm_display_mode avic_tm070ddh03_mode = {
 	.clock = 51200,
 	.hdisplay = 1024,
@@ -1606,9 +1609,12 @@ static const struct of_device_id platform_of_match[] = {
 		.compatible = "auo,b133xtn01",
 		.data = &auo_b133xtn01,
 	}, {
+<<<<<<< HEAD
 		.compatible = "auo,g133han01",
 		.data = &auo_g133han01,
 	}, {
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		.compatible = "avic,tm070ddh03",
 		.data = &avic_tm070ddh03,
 	}, {

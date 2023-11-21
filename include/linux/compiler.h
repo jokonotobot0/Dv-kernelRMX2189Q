@@ -478,6 +478,7 @@ unsigned long read_word_at_a_time(const void *addr)
 #define __visible
 #endif
 
+<<<<<<< HEAD
 #ifndef __norecordmcount
 #define __norecordmcount
 #endif
@@ -486,6 +487,8 @@ unsigned long read_word_at_a_time(const void *addr)
 #define __nocfi
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * Assume alignment of return value.
  */

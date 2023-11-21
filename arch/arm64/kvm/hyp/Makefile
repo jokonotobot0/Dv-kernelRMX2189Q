@@ -4,10 +4,13 @@
 
 ccflags-y += -fno-stack-protector -DDISABLE_BRANCH_PROFILING
 
+<<<<<<< HEAD
 ifeq ($(cc-name),clang)
 ccflags-y += -fno-jump-tables
 endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 KVM=../../../../virt/kvm
 
 obj-$(CONFIG_KVM_ARM_HOST) += $(KVM)/arm/hyp/vgic-v2-sr.o

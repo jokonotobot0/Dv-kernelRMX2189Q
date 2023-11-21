@@ -14,12 +14,16 @@
 # Based on the ia64 boot/Makefile.
 #
 
+<<<<<<< HEAD
 include $(srctree)/arch/arm64/boot/dts/Makefile
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 OBJCOPYFLAGS_Image :=-O binary -R .note -R .note.gnu.build-id -R .comment -S
 
 targets := Image Image.gz
 
+<<<<<<< HEAD
 DTB_NAMES := $(subst $\",,$(CONFIG_BUILD_ARM64_APPENDED_DTB_IMAGE_NAMES))
 ifneq ($(DTB_NAMES),)
 DTB_LIST := $(addsuffix .dtb,$(DTB_NAMES))
@@ -29,14 +33,20 @@ endif
 DTB_OBJS := $(addprefix $(obj)/dts/,$(DTB_LIST))
 
 $(obj)/Image: vmlinux $(obj)/mtk.dtb FORCE
+=======
+$(obj)/Image: vmlinux FORCE
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	$(call if_changed,objcopy)
 
 $(obj)/Image.bz2: $(obj)/Image FORCE
 	$(call if_changed,bzip2)
 
+<<<<<<< HEAD
 $(obj)/Image-dtb: $(obj)/Image $(DTB_OBJS) FORCE
 	$(call if_changed,cat)
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 $(obj)/Image.gz: $(obj)/Image FORCE
 	$(call if_changed,gzip)
 
@@ -49,12 +59,15 @@ $(obj)/Image.lzma: $(obj)/Image FORCE
 $(obj)/Image.lzo: $(obj)/Image FORCE
 	$(call if_changed,lzo)
 
+<<<<<<< HEAD
 $(obj)/Image.gz-dtb: $(obj)/Image.gz $(DTB_OBJS) FORCE
 	$(call if_changed,cat)
 
 $(obj)/mtk.dtb: $(DTB_OBJS) FORCE
 	$(call if_changed,cat)
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 install:
 	$(CONFIG_SHELL) $(srctree)/$(src)/install.sh $(KERNELRELEASE) \
 	$(obj)/Image System.map "$(INSTALL_PATH)"

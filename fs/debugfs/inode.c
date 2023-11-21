@@ -1,12 +1,25 @@
+<<<<<<< HEAD
 // SPDX-License-Identifier: GPL-2.0
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  *  inode.c - part of debugfs, a tiny little debug file system
  *
  *  Copyright (C) 2004 Greg Kroah-Hartman <greg@kroah.com>
  *  Copyright (C) 2004 IBM Inc.
  *
+<<<<<<< HEAD
  *  debugfs is for people to use instead of /proc or /sys.
  *  See ./Documentation/core-api/kernel-api.rst for more details.
+=======
+ *	This program is free software; you can redistribute it and/or
+ *	modify it under the terms of the GNU General Public License version
+ *	2 as published by the Free Software Foundation.
+ *
+ *  debugfs is for people to use instead of /proc or /sys.
+ *  See Documentation/DocBook/kernel-api for more details.
+ *
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  */
 
 #include <linux/module.h>
@@ -23,12 +36,21 @@
 #include <linux/parser.h>
 #include <linux/magic.h>
 #include <linux/slab.h>
+<<<<<<< HEAD
 #include <linux/refcount.h>
+=======
+#include <linux/srcu.h>
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #include "internal.h"
 
 #define DEBUGFS_DEFAULT_MODE	0700
 
+<<<<<<< HEAD
+=======
+DEFINE_SRCU(debugfs_srcu);
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static struct vfsmount *debugfs_mount;
 static int debugfs_mount_count;
 static bool debugfs_registered;
@@ -184,6 +206,7 @@ static const struct super_operations debugfs_super_operations = {
 	.destroy_inode	= debugfs_destroy_inode,
 };
 
+<<<<<<< HEAD
 static void debugfs_release_dentry(struct dentry *dentry)
 {
 	void *fsd = dentry->d_fsdata;
@@ -192,6 +215,8 @@ static void debugfs_release_dentry(struct dentry *dentry)
 		kfree(dentry->d_fsdata);
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static struct vfsmount *debugfs_automount(struct path *path)
 {
 	debugfs_automount_t f;
@@ -201,16 +226,28 @@ static struct vfsmount *debugfs_automount(struct path *path)
 
 static const struct dentry_operations debugfs_dops = {
 	.d_delete = always_delete_dentry,
+<<<<<<< HEAD
 	.d_release = debugfs_release_dentry,
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	.d_automount = debugfs_automount,
 };
 
 static int debug_fill_super(struct super_block *sb, void *data, int silent)
 {
+<<<<<<< HEAD
 	static const struct tree_descr debug_files[] = {{""}};
 	struct debugfs_fs_info *fsi;
 	int err;
 
+=======
+	static struct tree_descr debug_files[] = {{""}};
+	struct debugfs_fs_info *fsi;
+	int err;
+
+	save_mount_options(sb, data);
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	fsi = kzalloc(sizeof(struct debugfs_fs_info), GFP_KERNEL);
 	sb->s_fs_info = fsi;
 	if (!fsi) {
@@ -254,6 +291,7 @@ static struct file_system_type debug_fs_type = {
 };
 MODULE_ALIAS_FS("debugfs");
 
+<<<<<<< HEAD
 /**
  * debugfs_lookup() - look up an existing debugfs file
  * @name: a pointer to a string containing the name of the file to look up.
@@ -290,6 +328,8 @@ struct dentry *debugfs_lookup(const char *name, struct dentry *parent)
 }
 EXPORT_SYMBOL_GPL(debugfs_lookup);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static struct dentry *start_creating(const char *name, struct dentry *parent)
 {
 	struct dentry *dentry;
@@ -366,8 +406,12 @@ static struct dentry *__debugfs_create_file(const char *name, umode_t mode,
 	inode->i_private = data;
 
 	inode->i_fop = proxy_fops;
+<<<<<<< HEAD
 	dentry->d_fsdata = (void *)((unsigned long)real_fops |
 				DEBUGFS_FSDATA_IS_REAL_FOPS_BIT);
+=======
+	dentry->d_fsdata = (void *)real_fops;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	d_instantiate(dentry, inode);
 	fsnotify_create(d_inode(dentry->d_parent), dentry);
@@ -624,6 +668,7 @@ struct dentry *debugfs_create_symlink(const char *name, struct dentry *parent,
 }
 EXPORT_SYMBOL_GPL(debugfs_create_symlink);
 
+<<<<<<< HEAD
 static void __debugfs_remove_file(struct dentry *dentry, struct dentry *parent)
 {
 	struct debugfs_fsdata *fsd;
@@ -645,12 +690,15 @@ static void __debugfs_remove_file(struct dentry *dentry, struct dentry *parent)
 		wait_for_completion(&fsd->active_users_drained);
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int __debugfs_remove(struct dentry *dentry, struct dentry *parent)
 {
 	int ret = 0;
 
 	if (simple_positive(dentry)) {
 		dget(dentry);
+<<<<<<< HEAD
 		if (!d_is_reg(dentry)) {
 			if (d_is_dir(dentry))
 				ret = simple_rmdir(d_inode(parent), dentry);
@@ -661,6 +709,14 @@ static int __debugfs_remove(struct dentry *dentry, struct dentry *parent)
 		} else {
 			__debugfs_remove_file(dentry, parent);
 		}
+=======
+		if (d_is_dir(dentry))
+			ret = simple_rmdir(d_inode(parent), dentry);
+		else
+			simple_unlink(d_inode(parent), dentry);
+		if (!ret)
+			d_delete(dentry);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		dput(dentry);
 	}
 	return ret;
@@ -694,6 +750,11 @@ void debugfs_remove(struct dentry *dentry)
 	inode_unlock(d_inode(parent));
 	if (!ret)
 		simple_release_fs(&debugfs_mount, &debugfs_mount_count);
+<<<<<<< HEAD
+=======
+
+	synchronize_srcu(&debugfs_srcu);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 EXPORT_SYMBOL_GPL(debugfs_remove);
 
@@ -767,6 +828,11 @@ void debugfs_remove_recursive(struct dentry *dentry)
 	if (!__debugfs_remove(child, parent))
 		simple_release_fs(&debugfs_mount, &debugfs_mount_count);
 	inode_unlock(d_inode(parent));
+<<<<<<< HEAD
+=======
+
+	synchronize_srcu(&debugfs_srcu);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 EXPORT_SYMBOL_GPL(debugfs_remove_recursive);
 

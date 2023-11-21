@@ -1,8 +1,13 @@
 /*
  * Copyright (c) 2016 MediaTek Inc.
  * Author: Daniel Hsiao <daniel.hsiao@mediatek.com>
+<<<<<<< HEAD
  *      Jungchang Tsao <jungchang.tsao@mediatek.com>
  *      Tiffany Lin <tiffany.lin@mediatek.com>
+=======
+ *	Jungchang Tsao <jungchang.tsao@mediatek.com>
+ *	Tiffany Lin <tiffany.lin@mediatek.com>
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  *
  * This program is free software; you can redistribute it and/or
  * modify
@@ -24,6 +29,7 @@
 
 #include "mtk_vcodec_enc.h"
 #include "mtk_vcodec_enc_pm.h"
+<<<<<<< HEAD
 
 #ifdef CONFIG_VIDEO_MEDIATEK_VCU
 #include "mtk_vcu.h"
@@ -35,11 +41,18 @@ const struct venc_common_if *get_enc_common_if(void);
 const struct venc_common_if *get_h264_enc_comm_if(void);
 const struct venc_common_if *get_vp8_enc_comm_if(void);
 #endif
+=======
+#include "mtk_vpu.h"
+
+const struct venc_common_if *get_h264_enc_comm_if(void);
+const struct venc_common_if *get_vp8_enc_comm_if(void);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 int venc_if_init(struct mtk_vcodec_ctx *ctx, unsigned int fourcc)
 {
 	int ret = 0;
 
+<<<<<<< HEAD
 	ctx->oal_vcodec = 0;
 	ctx->slowmotion = 0;
 
@@ -58,6 +71,8 @@ int venc_if_init(struct mtk_vcodec_ctx *ctx, unsigned int fourcc)
 	}
 #endif
 #ifdef CONFIG_VIDEO_MEDIATEK_VPU
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	switch (fourcc) {
 	case V4L2_PIX_FMT_VP8:
 		ctx->enc_if = get_vp8_enc_comm_if();
@@ -68,6 +83,7 @@ int venc_if_init(struct mtk_vcodec_ctx *ctx, unsigned int fourcc)
 	default:
 		return -EINVAL;
 	}
+<<<<<<< HEAD
 #endif
 
 	if (ctx->oal_vcodec == 0) {
@@ -109,11 +125,20 @@ int venc_if_get_param(struct mtk_vcodec_ctx *ctx, enum venc_get_param_type type,
 		ctx->drv_handle = 0;
 		ctx->enc_if = NULL;
 	}
+=======
+
+	mtk_venc_lock(ctx);
+	mtk_vcodec_enc_clock_on(&ctx->dev->pm);
+	ret = ctx->enc_if->init(ctx, (unsigned long *)&ctx->drv_handle);
+	mtk_vcodec_enc_clock_off(&ctx->dev->pm);
+	mtk_venc_unlock(ctx);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	return ret;
 }
 
 int venc_if_set_param(struct mtk_vcodec_ctx *ctx,
+<<<<<<< HEAD
 	enum venc_set_param_type type, struct venc_enc_param *in)
 {
 	int ret = 0;
@@ -166,10 +191,30 @@ int venc_if_encode(struct mtk_vcodec_ctx *ctx,
 	enum venc_start_opt opt, struct venc_frm_buf *frm_buf,
 	struct mtk_vcodec_mem *bs_buf,
 	struct venc_done_result *result)
+=======
+		enum venc_set_param_type type, struct venc_enc_param *in)
+{
+	int ret = 0;
+
+	mtk_venc_lock(ctx);
+	mtk_vcodec_enc_clock_on(&ctx->dev->pm);
+	ret = ctx->enc_if->set_param(ctx->drv_handle, type, in);
+	mtk_vcodec_enc_clock_off(&ctx->dev->pm);
+	mtk_venc_unlock(ctx);
+
+	return ret;
+}
+
+int venc_if_encode(struct mtk_vcodec_ctx *ctx,
+		   enum venc_start_opt opt, struct venc_frm_buf *frm_buf,
+		   struct mtk_vcodec_mem *bs_buf,
+		   struct venc_done_result *result)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	int ret = 0;
 	unsigned long flags;
 
+<<<<<<< HEAD
 	if (ctx->drv_handle == 0)
 		return -EIO;
 
@@ -182,12 +227,31 @@ int venc_if_encode(struct mtk_vcodec_ctx *ctx,
 	if (ctx->oal_vcodec == 0 && ctx->slowmotion == 0)
 		venc_encode_unprepare(ctx, &flags);
 
+=======
+	mtk_venc_lock(ctx);
+
+	spin_lock_irqsave(&ctx->dev->irqlock, flags);
+	ctx->dev->curr_ctx = ctx;
+	spin_unlock_irqrestore(&ctx->dev->irqlock, flags);
+
+	mtk_vcodec_enc_clock_on(&ctx->dev->pm);
+	ret = ctx->enc_if->encode(ctx->drv_handle, opt, frm_buf,
+				  bs_buf, result);
+	mtk_vcodec_enc_clock_off(&ctx->dev->pm);
+
+	spin_lock_irqsave(&ctx->dev->irqlock, flags);
+	ctx->dev->curr_ctx = NULL;
+	spin_unlock_irqrestore(&ctx->dev->irqlock, flags);
+
+	mtk_venc_unlock(ctx);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return ret;
 }
 
 int venc_if_deinit(struct mtk_vcodec_ctx *ctx)
 {
 	int ret = 0;
+<<<<<<< HEAD
 	unsigned long flags;
 
 	if (ctx->drv_handle == 0)
@@ -200,6 +264,17 @@ int venc_if_deinit(struct mtk_vcodec_ctx *ctx)
 
 	if (ctx->oal_vcodec == 0 && ctx->slowmotion == 0)
 		venc_encode_unprepare(ctx, &flags);
+=======
+
+	if (ctx->drv_handle == 0)
+		return 0;
+
+	mtk_venc_lock(ctx);
+	mtk_vcodec_enc_clock_on(&ctx->dev->pm);
+	ret = ctx->enc_if->deinit(ctx->drv_handle);
+	mtk_vcodec_enc_clock_off(&ctx->dev->pm);
+	mtk_venc_unlock(ctx);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	ctx->drv_handle = 0;
 

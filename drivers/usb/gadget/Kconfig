@@ -209,6 +209,7 @@ config USB_F_PRINTER
 config USB_F_TCM
 	tristate
 
+<<<<<<< HEAD
 config USB_F_MTP
 	tristate
 
@@ -221,6 +222,8 @@ config USB_F_AUDIO_SRC
 config USB_F_ACC
 	tristate
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 # this first set of drivers all depend on bulk-capable hardware.
 
 config USB_CONFIGFS
@@ -374,6 +377,7 @@ config USB_CONFIGFS_F_FS
 	  implemented in kernel space (for instance Ethernet, serial or
 	  mass storage) and other are implemented in user space.
 
+<<<<<<< HEAD
 config USB_CONFIGFS_F_MTP
 	boolean "MTP gadget"
 	depends on USB_CONFIGFS
@@ -412,6 +416,8 @@ config USB_CONFIGFS_UEVENT
 	  state changes. The gadget can be in any of the following
 	  three states: "CONNECTED/DISCONNECTED/CONFIGURED"
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 config USB_CONFIGFS_F_UAC1
 	bool "Audio Class 1.0"
 	depends on USB_CONFIGFS
@@ -507,6 +513,7 @@ config USB_CONFIGFS_F_TCM
 	  Both protocols can work on USB2.0 and USB3.0.
 	  UAS utilizes the USB 3.0 feature called streams support.
 
+<<<<<<< HEAD
 config USB_G_ANDROID
 	bool "Android Composite Gadget"
 	select USB_F_ACM
@@ -523,6 +530,8 @@ config USB_G_ANDROID
 	  Each function can be configured and enabled/disabled
 	  dynamically from userspace through a sysfs interface.
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 choice
 	tristate "USB Gadget Drivers"
 	default USB_ETH

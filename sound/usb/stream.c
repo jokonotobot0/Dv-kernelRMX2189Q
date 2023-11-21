@@ -682,6 +682,7 @@ int snd_usb_parse_audio_interface(struct snd_usb_audio *chip, int iface_no)
 		/* some quirks for attributes here */
 
 		switch (chip->usb_id) {
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /* ZhiJie.Li@BSP.CHG.Basic, 2019/10/28, sjc Add for ISK UK400 */
 		case USB_ID(0x0451, 0x17ed): /* ISK UK400 */
@@ -689,6 +690,8 @@ int snd_usb_parse_audio_interface(struct snd_usb_audio *chip, int iface_no)
 				fp->attributes &= ~(UAC_EP_CS_ATTR_FILL_MAX);
 			break;
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		case USB_ID(0x0a92, 0x0053): /* AudioTrak Optoplay */
 			/* Optoplay sets the sample rate attribute although
 			 * it seems not supporting it in fact.

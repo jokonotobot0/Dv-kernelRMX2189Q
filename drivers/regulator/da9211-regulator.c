@@ -385,7 +385,10 @@ static int da9211_regulator_init(struct da9211 *chip)
 		if (gpio_is_valid(chip->pdata->gpio_ren[i])) {
 			config.ena_gpio = chip->pdata->gpio_ren[i];
 			config.ena_gpio_initialized = true;
+<<<<<<< HEAD
 			config.ena_gpio_flags |= GPIOF_OUT_INIT_HIGH;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		} else {
 			config.ena_gpio = -EINVAL;
 			config.ena_gpio_initialized = false;

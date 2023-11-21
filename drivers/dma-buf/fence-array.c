@@ -140,6 +140,7 @@ struct fence_array *fence_array_create(int num_fences, struct fence **fences,
 	atomic_set(&array->num_pending, signal_on_any ? 1 : num_fences);
 	array->fences = fences;
 
+<<<<<<< HEAD
 	/* enable signaling without our lock being held while callbacks
 	 * are installed on the array-member fences.  Otherwise there is
 	 * a potential deadlock between enabling signaling (our lock
@@ -148,6 +149,8 @@ struct fence_array *fence_array_create(int num_fences, struct fence **fences,
 	 */
 	fence_enable_sw_signaling_nolock(&array->base);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return array;
 }
 EXPORT_SYMBOL(fence_array_create);

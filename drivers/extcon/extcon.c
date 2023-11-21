@@ -906,6 +906,7 @@ int extcon_register_notifier(struct extcon_dev *edev, unsigned int id,
 	unsigned long flags;
 	int ret, idx = -EINVAL;
 
+<<<<<<< HEAD
 	if (!nb)
 		return -EINVAL;
 
@@ -935,6 +936,18 @@ int extcon_register_notifier(struct extcon_dev *edev, unsigned int id,
 			ret = -ENODEV;
 		}
 	}
+=======
+	if (!edev || !nb)
+		return -EINVAL;
+
+	idx = find_cable_index_by_id(edev, id);
+	if (idx < 0)
+		return idx;
+
+	spin_lock_irqsave(&edev->lock, flags);
+	ret = raw_notifier_chain_register(&edev->nh[idx], nb);
+	spin_unlock_irqrestore(&edev->lock, flags);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	return ret;
 }

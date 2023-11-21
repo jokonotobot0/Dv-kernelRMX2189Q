@@ -49,7 +49,10 @@
 
 #include <asm/uaccess.h>
 #include <asm/page.h>
+<<<<<<< HEAD
 #include <mt-plat/mtk_io_boost.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #ifdef CONFIG_JBD2_DEBUG
 ushort jbd2_journal_enable_debug __read_mostly;
@@ -187,6 +190,10 @@ static void commit_timeout(unsigned long __data)
  *    the disk.  Flushing these old buffers to reclaim space in the log is
  *    known as checkpointing, and this thread is responsible for that job.
  */
+<<<<<<< HEAD
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int kjournald2(void *arg)
 {
 	journal_t *journal = arg;
@@ -205,15 +212,21 @@ static int kjournald2(void *arg)
 	journal->j_task = current;
 	wake_up(&journal->j_wait_done_commit);
 
+<<<<<<< HEAD
 	mtk_iobst_register_tid(current->pid);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/*
 	 * And now, wait forever for commit wakeup events.
 	 */
 	write_lock(&journal->j_state_lock);
 
 loop:
+<<<<<<< HEAD
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (journal->j_flags & JBD2_UNMOUNT)
 		goto end_loop;
 
@@ -224,7 +237,10 @@ loop:
 		jbd_debug(1, "OK, requests differ\n");
 		write_unlock(&journal->j_state_lock);
 		del_timer_sync(&journal->j_commit_timer);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		jbd2_journal_commit_transaction(journal);
 		write_lock(&journal->j_state_lock);
 		goto loop;
@@ -339,7 +355,11 @@ static void journal_kill_thread(journal_t *journal)
  * IO is in progress. do_get_write_access() handles this.
  *
  * The function returns a pointer to the buffer_head to be used for IO.
+<<<<<<< HEAD
  *
+=======
+ * 
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  *
  * Return value:
  *  <0: Error
@@ -528,7 +548,11 @@ int __jbd2_log_start_commit(journal_t *journal, tid_t target)
 		WARN_ONCE(1, "JBD2: bad log_start_commit: %u %u %u %u\n",
 			  journal->j_commit_request,
 			  journal->j_commit_sequence,
+<<<<<<< HEAD
 			  target, journal->j_running_transaction ?
+=======
+			  target, journal->j_running_transaction ? 
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			  journal->j_running_transaction->t_tid : 0);
 	return 0;
 }

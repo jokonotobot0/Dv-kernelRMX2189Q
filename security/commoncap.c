@@ -31,10 +31,13 @@
 #include <linux/binfmts.h>
 #include <linux/personality.h>
 
+<<<<<<< HEAD
 #ifdef CONFIG_ANDROID_PARANOID_NETWORK
 #include <linux/android_aid.h>
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * If a non-root user executes a setuid-root binary in
  * !secure(SECURE_NOROOT) mode, then we raise capabilities.
@@ -77,6 +80,7 @@ int cap_capable(const struct cred *cred, struct user_namespace *targ_ns,
 {
 	struct user_namespace *ns = targ_ns;
 
+<<<<<<< HEAD
 #ifdef CONFIG_ANDROID_PARANOID_NETWORK
 	if (cap == CAP_NET_RAW && in_egroup_p(AID_NET_RAW))
 		return 0;
@@ -84,6 +88,8 @@ int cap_capable(const struct cred *cred, struct user_namespace *targ_ns,
 		return 0;
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* See if cred has the capability in the target user namespace
 	 * by examining the target user namespace and all of the target
 	 * user namespace's parents.

@@ -1,5 +1,36 @@
+<<<<<<< HEAD
 /* SPDX-License-Identifier: GPL-2.0 */
 /* Copyright(c) 2009-2012  Realtek Corporation.*/
+=======
+/******************************************************************************
+ *
+ * Copyright(c) 2009-2012  Realtek Corporation.
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of version 2 of the GNU General Public License as
+ * published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110, USA
+ *
+ * The full GNU General Public License is included in this distribution in the
+ * file called LICENSE.
+ *
+ * Contact Information:
+ * wlanfae <wlanfae@realtek.com>
+ * Realtek Corporation, No. 2, Innovation Road II, Hsinchu Science Park,
+ * Hsinchu 300, Taiwan.
+ *
+ * Larry Finger <Larry.Finger@lwfinger.net>
+ *
+ *****************************************************************************/
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #ifndef __RTL92CU_HW_H__
 #define __RTL92CU_HW_H__
@@ -14,12 +45,20 @@
 #define TX_TOTAL_PAGE_NUMBER			0xF8
 #define TX_PAGE_BOUNDARY			(TX_TOTAL_PAGE_NUMBER + 1)
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define CHIP_B_PAGE_NUM_PUBQ			0xE7
 
 /* For Test Chip Setting
  * (HPQ + LPQ + PUBQ) shall be TX_TOTAL_PAGE_NUMBER */
 #define CHIP_A_PAGE_NUM_PUBQ			0x7E
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* For Chip A Setting */
 #define WMM_CHIP_A_TX_TOTAL_PAGE_NUMBER		0xF5
 #define WMM_CHIP_A_TX_PAGE_BOUNDARY		\
@@ -29,6 +68,11 @@
 #define WMM_CHIP_A_PAGE_NUM_HPQ			0x29
 #define WMM_CHIP_A_PAGE_NUM_LPQ			0x29
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* Note: For Chip B Setting ,modify later */
 #define WMM_CHIP_B_TX_TOTAL_PAGE_NUMBER		0xF5
 #define WMM_CHIP_B_TX_PAGE_BOUNDARY		\
@@ -45,14 +89,22 @@
 /* should be renamed and moved to another file */
 enum _BOARD_TYPE_8192CUSB {
 	BOARD_USB_DONGLE		= 0,	/* USB dongle */
+<<<<<<< HEAD
 	BOARD_USB_HIGH_PA		= 1,	/* USB dongle - high power PA */
+=======
+	BOARD_USB_High_PA		= 1,	/* USB dongle - high power PA */
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	BOARD_MINICARD			= 2,	/* Minicard */
 	BOARD_USB_SOLO			= 3,	/* USB solo-Slim module */
 	BOARD_USB_COMBO			= 4,	/* USB Combo-Slim module */
 };
 
 #define IS_HIGHT_PA(boardtype)		\
+<<<<<<< HEAD
 	((boardtype == BOARD_USB_HIGH_PA) ? true : false)
+=======
+	((boardtype == BOARD_USB_High_PA) ? true : false)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #define RTL92C_DRIVER_INFO_SIZE				4
 void rtl92cu_read_eeprom_info(struct ieee80211_hw *hw);
@@ -78,6 +130,10 @@ void rtl92c_fill_h2c_cmd(struct ieee80211_hw *hw,
 bool rtl92cu_phy_mac_config(struct ieee80211_hw *hw);
 void rtl92cu_update_hal_rate_tbl(struct ieee80211_hw *hw,
 				 struct ieee80211_sta *sta,
+<<<<<<< HEAD
 				 u8 rssi_level, bool update_bw);
+=======
+				 u8 rssi_level);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #endif

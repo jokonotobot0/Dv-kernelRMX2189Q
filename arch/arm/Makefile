@@ -276,8 +276,11 @@ ifeq ($(FASTFPE),$(wildcard $(FASTFPE)))
 FASTFPE_OBJ	:=$(FASTFPE)/
 endif
 
+<<<<<<< HEAD
 subdir-ccflags-y += -Werror
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 core-$(CONFIG_FPE_NWFPE)	+= arch/arm/nwfpe/
 core-$(CONFIG_FPE_FASTFPE)	+= $(FASTFPE_OBJ)
 core-$(CONFIG_VFP)		+= arch/arm/vfp/
@@ -300,8 +303,11 @@ libs-y				:= arch/arm/lib/ $(libs-y)
 # Default target when executing plain make
 ifeq ($(CONFIG_XIP_KERNEL),y)
 KBUILD_IMAGE := xipImage
+<<<<<<< HEAD
 else ifeq ($(CONFIG_BUILD_ARM_APPENDED_DTB_IMAGE),y)
 KBUILD_IMAGE := zImage-dtb
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 else
 KBUILD_IMAGE := zImage
 endif
@@ -313,11 +319,14 @@ endif
 
 all:	$(KBUILD_IMAGE) $(KBUILD_DTBS)
 
+<<<<<<< HEAD
 MTK_PLATFORM := $(CONFIG_MTK_PLATFORM:"%"=%)
 MTK_PROJECT := $(CONFIG_ARCH_MTK_PROJECT:"%"=%)
 export MTK_PLATFORM MTK_PROJECT MTK_TARGET_PROJECT
 -include $(srctree)/scripts/drvgen/drvgen.mk
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 boot := arch/arm/boot
 
 archprepare:
@@ -341,12 +350,20 @@ $(BOOT_TARGETS): vmlinux
 $(INSTALL_TARGETS):
 	$(Q)$(MAKE) $(build)=$(boot) MACHINE=$(MACHINE) $@
 
+<<<<<<< HEAD
 %.dtb: | scripts $(DRVGEN_FILE_LIST)
+=======
+%.dtb: | scripts
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	$(Q)$(MAKE) $(build)=$(boot)/dts MACHINE=$(MACHINE) $(boot)/dts/$@
 
 PHONY += dtbs dtbs_install
 
+<<<<<<< HEAD
 dtbs: prepare scripts dtbo_check
+=======
+dtbs: prepare scripts
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	$(Q)$(MAKE) $(build)=$(boot)/dts
 
 dtbs_install:
@@ -358,9 +375,12 @@ ifeq ($(CONFIG_VDSO),y)
 	$(Q)$(MAKE) $(build)=arch/arm/vdso $@
 endif
 
+<<<<<<< HEAD
 zImage-dtb: vmlinux scripts dtbs
 	$(Q)$(MAKE) $(build)=$(boot) MACHINE=$(MACHINE) $(boot)/$@
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 # We use MRPROPER_FILES and CLEAN_FILES now
 archclean:
 	$(Q)$(MAKE) $(clean)=$(boot)

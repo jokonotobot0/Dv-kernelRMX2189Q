@@ -65,8 +65,11 @@ struct thread_info {
 #ifdef CONFIG_ARM_THUMBEE
 	unsigned long		thumbee_state;	/* ThumbEE Handler Base register */
 #endif
+<<<<<<< HEAD
 	int			cpu_excp;
 	void			*regs_on_excp;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 #define INIT_THREAD_INFO(tsk)						\

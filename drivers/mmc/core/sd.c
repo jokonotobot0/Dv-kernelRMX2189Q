@@ -20,11 +20,14 @@
 #include <linux/mmc/card.h>
 #include <linux/mmc/mmc.h>
 #include <linux/mmc/sd.h>
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 //Chunyi.Mei@PSW.BSP.Storage.Sdcard, 2018-12-10, Add for SD Card device information
 #include <linux/string_helpers.h>
 #include <soc/oppo/oppo_project.h>
 #endif /* VENDOR_EDIT */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #include "core.h"
 #include "bus.h"
@@ -32,6 +35,7 @@
 #include "sd.h"
 #include "sd_ops.h"
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 //Chunyi.Mei@PSW.BSP.Storage.Sdcard, 2018-12-10, Add for SD Card device information
 struct menfinfo {
@@ -72,6 +76,8 @@ struct card_blk_data {
 
 #endif /* VENDOR_EDIT */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static const unsigned int tran_exp[] = {
 	10000,		100000,		1000000,	10000000,
 	0,		0,		0,		0
@@ -311,10 +317,13 @@ static int mmc_read_ssr(struct mmc_card *card)
 			card->ssr.au = sd_au_size[au];
 			es = UNSTUFF_BITS(card->raw_ssr, 408 - 384, 16);
 			et = UNSTUFF_BITS(card->raw_ssr, 402 - 384, 6);
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 //Chunyi.Mei@PSW.BSP.Storage.Sdcard, 2018-12-10, Add for SD Card device information
 			card->ssr.speed_class = UNSTUFF_BITS(card->raw_ssr, 440 - 384, 8);
 #endif /* VENDOR_EDIT */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			if (es && et) {
 				eo = UNSTUFF_BITS(card->raw_ssr, 400 - 384, 2);
 				card->ssr.erase_timeout = (et * 1000) / es;
@@ -718,6 +727,7 @@ out:
 	return err;
 }
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 //Chunyi.Mei@PSW.BSP.Storage.Sdcard, 2018-12-10, Add for SD Card device information
 const char *manfinfo_string(struct mmc_card *card) {
@@ -759,6 +769,8 @@ MMC_DEV_ATTR(devinfo, " manufacturer: %s\n size: %s\n type: %s\n speed: %s\n cla
 	manfinfo_string(card), capacity_string(card), type_string(card), uhs_string(card), speed_class_string(card));
 #endif /* VENDOR_EDIT */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 MMC_DEV_ATTR(cid, "%08x%08x%08x%08x\n", card->raw_cid[0], card->raw_cid[1],
 	card->raw_cid[2], card->raw_cid[3]);
 MMC_DEV_ATTR(csd, "%08x%08x%08x%08x\n", card->raw_csd[0], card->raw_csd[1],
@@ -785,7 +797,12 @@ MMC_DEV_ATTR(ocr, "0x%08x\n", card->ocr);
 
 
 static ssize_t mmc_dsr_show(struct device *dev,
+<<<<<<< HEAD
 	struct device_attribute *attr, char *buf)
+=======
+                           struct device_attribute *attr,
+                           char *buf)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
        struct mmc_card *card = mmc_dev_to_card(dev);
        struct mmc_host *host = card->host;
@@ -799,6 +816,7 @@ static ssize_t mmc_dsr_show(struct device *dev,
 
 static DEVICE_ATTR(dsr, S_IRUGO, mmc_dsr_show, NULL);
 
+<<<<<<< HEAD
 #define MTK_SHOW_SPEED_CLASS  //for HUIWEI project use
 #ifdef MTK_SHOW_SPEED_CLASS
 static ssize_t mmc_speed_class_show(struct device *dev,
@@ -841,6 +859,9 @@ static struct attribute *sd_std_attrs[] = {
 //Chunyi.Mei@PSW.BSP.Storage.Sdcard, 2018-12-10, Add for SD Card device information
 	&dev_attr_devinfo.attr,
 #endif /* VENDOR_EDIT */
+=======
+static struct attribute *sd_std_attrs[] = {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	&dev_attr_cid.attr,
 	&dev_attr_csd.attr,
 	&dev_attr_scr.attr,
@@ -856,9 +877,12 @@ static struct attribute *sd_std_attrs[] = {
 	&dev_attr_serial.attr,
 	&dev_attr_ocr.attr,
 	&dev_attr_dsr.attr,
+<<<<<<< HEAD
 #ifdef MTK_SHOW_SPEED_CLASS
 	&dev_attr_speedclass.attr,
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	NULL,
 };
 ATTRIBUTE_GROUPS(sd_std);
@@ -988,9 +1012,12 @@ int mmc_sd_setup_card(struct mmc_host *host, struct mmc_card *card,
 	bool reinit)
 {
 	int err;
+<<<<<<< HEAD
 #ifdef CONFIG_MMC_PARANOID_SD_INIT
 	int retries;
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (!reinit) {
 		/*
@@ -1017,6 +1044,7 @@ int mmc_sd_setup_card(struct mmc_host *host, struct mmc_card *card,
 		/*
 		 * Fetch switch information from card.
 		 */
+<<<<<<< HEAD
 #ifdef CONFIG_MMC_PARANOID_SD_INIT
 		for (retries = 1; retries <= 3; retries++) {
 			err = mmc_read_switch(card);
@@ -1037,6 +1065,9 @@ int mmc_sd_setup_card(struct mmc_host *host, struct mmc_card *card,
 		err = mmc_read_switch(card);
 #endif
 
+=======
+		err = mmc_read_switch(card);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		if (err)
 			return err;
 	}
@@ -1218,9 +1249,13 @@ static void mmc_sd_remove(struct mmc_host *host)
 	BUG_ON(!host->card);
 
 	mmc_remove_card(host->card);
+<<<<<<< HEAD
 	mmc_claim_host(host);
 	host->card = NULL;
 	mmc_release_host(host);
+=======
+	host->card = NULL;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 /*
@@ -1236,14 +1271,19 @@ static int mmc_sd_alive(struct mmc_host *host)
  */
 static void mmc_sd_detect(struct mmc_host *host)
 {
+<<<<<<< HEAD
 	int err = 0;
 #ifdef CONFIG_MMC_PARANOID_SD_INIT
 	int retries = 5;
 #endif
+=======
+	int err;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	BUG_ON(!host);
 	BUG_ON(!host->card);
 
+<<<<<<< HEAD
 	/*
 	 * Try to acquire claim host. If failed to get the lock in 2 sec,
 	 * just return; This is to ensure that when this call is invoked
@@ -1255,10 +1295,14 @@ static void mmc_sd_detect(struct mmc_host *host)
 		pm_runtime_put_autosuspend(&host->card->dev);
 		return;
 	}
+=======
+	mmc_get_card(host->card);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/*
 	 * Just check if our card has been removed.
 	 */
+<<<<<<< HEAD
 #ifdef CONFIG_MMC_PARANOID_SD_INIT
 	while(retries) {
 		err = mmc_send_status(host->card, NULL);
@@ -1281,6 +1325,9 @@ static void mmc_sd_detect(struct mmc_host *host)
 #else
 	err = _mmc_detect_card_removed(host);
 #endif
+=======
+	err = _mmc_detect_card_removed(host);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	mmc_put_card(host->card);
 
@@ -1303,6 +1350,7 @@ static int _mmc_sd_suspend(struct mmc_host *host)
 
 	mmc_claim_host(host);
 
+<<<<<<< HEAD
 	if (host->card) {
 		if (mmc_card_suspended(host->card))
 			goto out;
@@ -1314,6 +1362,17 @@ static int _mmc_sd_suspend(struct mmc_host *host)
 			mmc_power_off(host);
 			mmc_card_set_suspended(host->card);
 		}
+=======
+	if (mmc_card_suspended(host->card))
+		goto out;
+
+	if (!mmc_host_is_spi(host))
+		err = mmc_deselect_cards(host);
+
+	if (!err) {
+		mmc_power_off(host);
+		mmc_card_set_suspended(host->card);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 
 out:
@@ -1344,9 +1403,12 @@ static int mmc_sd_suspend(struct mmc_host *host)
 static int _mmc_sd_resume(struct mmc_host *host)
 {
 	int err = 0;
+<<<<<<< HEAD
 #ifdef CONFIG_MMC_PARANOID_SD_INIT
 	int retries;
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	BUG_ON(!host);
 	BUG_ON(!host->card);
@@ -1357,6 +1419,7 @@ static int _mmc_sd_resume(struct mmc_host *host)
 		goto out;
 
 	mmc_power_up(host, host->card->ocr);
+<<<<<<< HEAD
 #ifdef CONFIG_MMC_PARANOID_SD_INIT
 	retries = 5;
 	while (retries) {
@@ -1374,6 +1437,9 @@ static int _mmc_sd_resume(struct mmc_host *host)
 #else
 	err = mmc_sd_init_card(host, host->card->ocr, host->card);
 #endif
+=======
+	err = mmc_sd_init_card(host, host->card->ocr, host->card);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	mmc_card_clr_suspended(host->card);
 
 out:
@@ -1448,9 +1514,12 @@ int mmc_attach_sd(struct mmc_host *host)
 {
 	int err;
 	u32 ocr, rocr;
+<<<<<<< HEAD
 #ifdef CONFIG_MMC_PARANOID_SD_INIT
 	int retries;
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	BUG_ON(!host);
 	WARN_ON(!host->claimed);
@@ -1474,6 +1543,15 @@ int mmc_attach_sd(struct mmc_host *host)
 			goto err;
 	}
 
+<<<<<<< HEAD
+=======
+	/*
+	 * Some SD cards claims an out of spec VDD voltage range. Let's treat
+	 * these bits as being in-valid and especially also bit7.
+	 */
+	ocr &= ~0x7FFF;
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	rocr = mmc_select_voltage(host, ocr);
 
 	/*
@@ -1487,6 +1565,7 @@ int mmc_attach_sd(struct mmc_host *host)
 	/*
 	 * Detect and init the card.
 	 */
+<<<<<<< HEAD
 #ifdef CONFIG_MMC_PARANOID_SD_INIT
 	retries = 5;
 	while (retries) {
@@ -1508,6 +1587,11 @@ int mmc_attach_sd(struct mmc_host *host)
 	if (err)
 		goto err;
 #endif
+=======
+	err = mmc_sd_init_card(host, rocr, NULL);
+	if (err)
+		goto err;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	mmc_release_host(host);
 	err = mmc_add_card(host->card);

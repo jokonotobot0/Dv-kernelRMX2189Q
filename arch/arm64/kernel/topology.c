@@ -19,12 +19,16 @@
 #include <linux/nodemask.h>
 #include <linux/of.h>
 #include <linux/sched.h>
+<<<<<<< HEAD
 #include <linux/sched.h>
 #include <linux/sched_energy.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #include <asm/cputype.h>
 #include <asm/topology.h>
 
+<<<<<<< HEAD
 /*
  * cpu capacity table
  * This per cpu data structure describes the relative capacity of each core.
@@ -50,6 +54,8 @@ static void set_capacity_scale(unsigned int cpu, unsigned long capacity)
 	per_cpu(cpu_scale, cpu) = capacity;
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int __init get_cpu_for_node(struct device_node *node)
 {
 	struct device_node *cpu_node;
@@ -204,12 +210,18 @@ static int __init parse_dt_topology(void)
 	 * When topology is provided cpu-map is essentially a root
 	 * cluster with restricted subnodes.
 	 */
+<<<<<<< HEAD
 	map = of_get_child_by_name(cn, "virtual-cpu-map");
 	if (!map) {
 		map = of_get_child_by_name(cn, "cpu-map");
 		if (!map)
 			goto out;
 	}
+=======
+	map = of_get_child_by_name(cn, "cpu-map");
+	if (!map)
+		goto out;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	ret = parse_cluster(map, 0);
 	if (ret != 0)
@@ -236,6 +248,7 @@ out:
 struct cpu_topology cpu_topology[NR_CPUS];
 EXPORT_SYMBOL_GPL(cpu_topology);
 
+<<<<<<< HEAD
 /* sd energy functions */
 inline
 const struct sched_group_energy * const cpu_cluster_energy(int cpu)
@@ -291,11 +304,14 @@ const struct sched_group_energy * const cpu_core_energy(int cpu)
 	return sge;
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 const struct cpumask *cpu_coregroup_mask(int cpu)
 {
 	return &cpu_topology[cpu].core_sibling;
 }
 
+<<<<<<< HEAD
 static int cpu_cpu_flags(void)
 {
 	return SD_ASYM_CPUCAPACITY;
@@ -330,6 +346,8 @@ static void update_cpu_capacity(unsigned int cpu)
 		cpu, arch_scale_cpu_capacity(NULL, cpu));
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static void update_siblings_masks(unsigned int cpuid)
 {
 	struct cpu_topology *cpu_topo, *cpuid_topo = &cpu_topology[cpuid];
@@ -391,7 +409,10 @@ void store_cpu_topology(unsigned int cpuid)
 
 topology_populated:
 	update_siblings_masks(cpuid);
+<<<<<<< HEAD
 	update_cpu_capacity(cpuid);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static void __init reset_cpu_topology(void)
@@ -412,6 +433,7 @@ static void __init reset_cpu_topology(void)
 	}
 }
 
+<<<<<<< HEAD
 /*
  * init_cpu_topology is called at boot when only one cpu is running
  * which prevent simultaneous write access to cpu_topology array
@@ -420,6 +442,10 @@ void __init init_cpu_topology(void)
 {
 	if (cpu_topology_init)
 		return;
+=======
+void __init init_cpu_topology(void)
+{
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	reset_cpu_topology();
 
 	/*
@@ -428,6 +454,7 @@ void __init init_cpu_topology(void)
 	 */
 	if (of_have_populated_dt() && parse_dt_topology())
 		reset_cpu_topology();
+<<<<<<< HEAD
 	else
 		set_sched_topology(arm64_topology);
 
@@ -450,3 +477,6 @@ cpu_capacity_sync(void)
 
 late_initcall_sync(cpu_capacity_sync)
 #endif
+=======
+}
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

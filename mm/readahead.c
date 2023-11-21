@@ -81,7 +81,11 @@ static void read_cache_pages_invalidate_pages(struct address_space *mapping,
  * Hides the details of the LRU cache etc from the filesystems.
  */
 int read_cache_pages(struct address_space *mapping, struct list_head *pages,
+<<<<<<< HEAD
 			int (*filler)(struct file *, struct page *), void *data)
+=======
+			int (*filler)(void *, struct page *), void *data)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	struct page *page;
 	int ret = 0;
@@ -207,6 +211,7 @@ out:
  * memory at once.
  */
 int force_page_cache_readahead(struct address_space *mapping, struct file *filp,
+<<<<<<< HEAD
 			       pgoff_t offset, unsigned long nr_to_read)
 {
 	struct backing_dev_info *bdi = inode_to_bdi(mapping->host);
@@ -222,6 +227,14 @@ int force_page_cache_readahead(struct address_space *mapping, struct file *filp,
 	 */
 	max_pages = max_t(unsigned long, bdi->io_pages, ra->ra_pages);
 	nr_to_read = min(nr_to_read, max_pages);
+=======
+		pgoff_t offset, unsigned long nr_to_read)
+{
+	if (unlikely(!mapping->a_ops->readpage && !mapping->a_ops->readpages))
+		return -EINVAL;
+
+	nr_to_read = min(nr_to_read, inode_to_bdi(mapping->host)->ra_pages);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	while (nr_to_read) {
 		int err;
 
@@ -378,6 +391,7 @@ ondemand_readahead(struct address_space *mapping,
 		   bool hit_readahead_marker, pgoff_t offset,
 		   unsigned long req_size)
 {
+<<<<<<< HEAD
 	struct backing_dev_info *bdi = inode_to_bdi(mapping->host);
 	unsigned long max_pages = ra->ra_pages;
 	unsigned long add_pages;
@@ -391,6 +405,12 @@ ondemand_readahead(struct address_space *mapping,
 		max_pages = min(req_size, bdi->io_pages);
 
 	/*
+=======
+	unsigned long max = ra->ra_pages;
+	pgoff_t prev_offset;
+
+	/*
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	 * start of file
 	 */
 	if (!offset)
@@ -403,7 +423,11 @@ ondemand_readahead(struct address_space *mapping,
 	if ((offset == (ra->start + ra->size - ra->async_size) ||
 	     offset == (ra->start + ra->size))) {
 		ra->start += ra->size;
+<<<<<<< HEAD
 		ra->size = get_next_ra_size(ra, max_pages);
+=======
+		ra->size = get_next_ra_size(ra, max);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		ra->async_size = ra->size;
 		goto readit;
 	}
@@ -418,16 +442,27 @@ ondemand_readahead(struct address_space *mapping,
 		pgoff_t start;
 
 		rcu_read_lock();
+<<<<<<< HEAD
 		start = page_cache_next_hole(mapping, offset + 1, max_pages);
 		rcu_read_unlock();
 
 		if (!start || start - offset > max_pages)
+=======
+		start = page_cache_next_hole(mapping, offset + 1, max);
+		rcu_read_unlock();
+
+		if (!start || start - offset > max)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			return 0;
 
 		ra->start = start;
 		ra->size = start - offset;	/* old async_size */
 		ra->size += req_size;
+<<<<<<< HEAD
 		ra->size = get_next_ra_size(ra, max_pages);
+=======
+		ra->size = get_next_ra_size(ra, max);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		ra->async_size = ra->size;
 		goto readit;
 	}
@@ -435,7 +470,11 @@ ondemand_readahead(struct address_space *mapping,
 	/*
 	 * oversize read
 	 */
+<<<<<<< HEAD
 	if (req_size > max_pages)
+=======
+	if (req_size > max)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		goto initial_readahead;
 
 	/*
@@ -451,7 +490,11 @@ ondemand_readahead(struct address_space *mapping,
 	 * Query the page cache and look for the traces(cached history pages)
 	 * that a sequential stream would leave behind.
 	 */
+<<<<<<< HEAD
 	if (try_context_readahead(mapping, ra, offset, req_size, max_pages))
+=======
+	if (try_context_readahead(mapping, ra, offset, req_size, max))
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		goto readit;
 
 	/*
@@ -462,7 +505,11 @@ ondemand_readahead(struct address_space *mapping,
 
 initial_readahead:
 	ra->start = offset;
+<<<<<<< HEAD
 	ra->size = get_init_ra_size(req_size, max_pages);
+=======
+	ra->size = get_init_ra_size(req_size, max);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	ra->async_size = ra->size > req_size ? ra->size - req_size : ra->size;
 
 readit:
@@ -470,6 +517,7 @@ readit:
 	 * Will this read hit the readahead marker made by itself?
 	 * If so, trigger the readahead marker hit now, and merge
 	 * the resulted next readahead window into the current one.
+<<<<<<< HEAD
 	 * Take care of maximum IO pages as above.
 	 */
 	if (offset == ra->start && ra->size == ra->async_size) {
@@ -481,6 +529,12 @@ readit:
 			ra->size = max_pages;
 			ra->async_size = max_pages >> 1;
 		}
+=======
+	 */
+	if (offset == ra->start && ra->size == ra->async_size) {
+		ra->async_size = get_next_ra_size(ra, max);
+		ra->size += ra->async_size;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 
 	return ra_submit(ra, mapping, filp);

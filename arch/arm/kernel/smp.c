@@ -29,6 +29,7 @@
 #include <linux/irq_work.h>
 #include <linux/slab.h>
 
+<<<<<<< HEAD
 #ifdef CONFIG_TRUSTY
 #ifdef CONFIG_TRUSTY_INTERRUPT_MAP
 #include <linux/trusty/trusty.h>
@@ -37,6 +38,8 @@
 #endif
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <linux/atomic.h>
 #include <asm/bugs.h>
 #include <asm/smp.h>
@@ -62,10 +65,13 @@
 #define CREATE_TRACE_POINTS
 #include <trace/events/ipi.h>
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_SCHED_MONITOR
 #include "mtk_sched_mon.h"
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * as from 2.5, kernels no longer have an init_tasks structure
  * so we need some other way of telling a new secondary core
@@ -92,10 +98,13 @@ enum ipi_msg_type {
 	 * or tracable with trace_ipi_*
 	 */
 	IPI_CPU_BACKTRACE,
+<<<<<<< HEAD
 #ifdef CONFIG_TRUSTY
 	IPI_CUSTOM_FIRST,
 	IPI_CUSTOM_LAST = 15,
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/*
 	 * SGI8-15 can be reserved by secure firmware, and thus may
 	 * not be usable by the kernel. Please keep the above limited
@@ -103,12 +112,15 @@ enum ipi_msg_type {
 	 */
 };
 
+<<<<<<< HEAD
 #ifdef CONFIG_TRUSTY
 #ifndef CONFIG_TRUSTY_INTERRUPT_MAP
 struct irq_domain *ipi_custom_irq_domain;
 #endif
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static DECLARE_COMPLETION(cpu_running);
 
 static struct smp_operations smp_ops __ro_after_init;
@@ -270,6 +282,7 @@ int __cpu_disable(void)
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_GIC_TARGET_ALL
 	{
 		unsigned long flags;
@@ -282,6 +295,8 @@ int __cpu_disable(void)
 	}
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/*
 	 * Take this CPU offline.  Once we clear this, we can't return,
 	 * and we must not schedule until we're ready to give up the cpu.
@@ -679,15 +694,19 @@ void handle_IPI(int ipinr, struct pt_regs *regs)
 
 	switch (ipinr) {
 	case IPI_WAKEUP:
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_SCHED_MONITOR
 		mt_trace_IPI_start(ipinr);
 		mt_trace_IPI_end(ipinr);
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		break;
 
 #ifdef CONFIG_GENERIC_CLOCKEVENTS_BROADCAST
 	case IPI_TIMER:
 		irq_enter();
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_SCHED_MONITOR
 		mt_trace_IPI_start(ipinr);
 #endif
@@ -695,6 +714,9 @@ void handle_IPI(int ipinr, struct pt_regs *regs)
 #ifdef CONFIG_MTK_SCHED_MONITOR
 		mt_trace_IPI_end(ipinr);
 #endif
+=======
+		tick_receive_broadcast();
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		irq_exit();
 		break;
 #endif
@@ -705,6 +727,7 @@ void handle_IPI(int ipinr, struct pt_regs *regs)
 
 	case IPI_CALL_FUNC:
 		irq_enter();
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_SCHED_MONITOR
 		mt_trace_IPI_start(ipinr);
 #endif
@@ -737,12 +760,22 @@ void handle_IPI(int ipinr, struct pt_regs *regs)
 #ifdef CONFIG_MTK_SCHED_MONITOR
 		mt_trace_IPI_end(ipinr);
 #endif
+=======
+		generic_smp_call_function_interrupt();
+		irq_exit();
+		break;
+
+	case IPI_CPU_STOP:
+		irq_enter();
+		ipi_cpu_stop(cpu);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		irq_exit();
 		break;
 
 #ifdef CONFIG_IRQ_WORK
 	case IPI_IRQ_WORK:
 		irq_enter();
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_SCHED_MONITOR
 		mt_trace_IPI_start(ipinr);
 #endif
@@ -750,12 +783,16 @@ void handle_IPI(int ipinr, struct pt_regs *regs)
 #ifdef CONFIG_MTK_SCHED_MONITOR
 		mt_trace_IPI_end(ipinr);
 #endif
+=======
+		irq_work_run();
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		irq_exit();
 		break;
 #endif
 
 	case IPI_COMPLETION:
 		irq_enter();
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_SCHED_MONITOR
 		mt_trace_IPI_start(ipinr);
 #endif
@@ -763,12 +800,16 @@ void handle_IPI(int ipinr, struct pt_regs *regs)
 #ifdef CONFIG_MTK_SCHED_MONITOR
 		mt_trace_IPI_end(ipinr);
 #endif
+=======
+		ipi_complete(cpu);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		irq_exit();
 		break;
 
 	case IPI_CPU_BACKTRACE:
 		printk_nmi_enter();
 		irq_enter();
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_SCHED_MONITOR
 		mt_trace_IPI_start(ipinr);
 #endif
@@ -776,11 +817,15 @@ void handle_IPI(int ipinr, struct pt_regs *regs)
 #ifdef CONFIG_MTK_SCHED_MONITOR
 		mt_trace_IPI_end(ipinr);
 #endif
+=======
+		nmi_cpu_backtrace(regs);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		irq_exit();
 		printk_nmi_exit();
 		break;
 
 	default:
+<<<<<<< HEAD
 #ifdef CONFIG_TRUSTY
 		if (ipinr >= IPI_CUSTOM_FIRST && ipinr <= IPI_CUSTOM_LAST)
 #ifndef CONFIG_TRUSTY_INTERRUPT_MAP
@@ -791,6 +836,8 @@ void handle_IPI(int ipinr, struct pt_regs *regs)
 		else
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		pr_crit("CPU%u: Unknown IPI message 0x%x\n",
 		        cpu, ipinr);
 		break;
@@ -801,6 +848,7 @@ void handle_IPI(int ipinr, struct pt_regs *regs)
 	set_irq_regs(old_regs);
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_TRUSTY
 #ifndef CONFIG_TRUSTY_INTERRUPT_MAP
 static void custom_ipi_enable(struct irq_data *data)
@@ -868,6 +916,8 @@ core_initcall(smp_custom_ipi_init);
 #endif
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 void smp_send_reschedule(int cpu)
 {
 	smp_cross_call(cpumask_of(cpu), IPI_RESCHEDULE);

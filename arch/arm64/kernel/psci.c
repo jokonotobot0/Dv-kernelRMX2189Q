@@ -20,7 +20,10 @@
 #include <linux/smp.h>
 #include <linux/delay.h>
 #include <linux/psci.h>
+<<<<<<< HEAD
 #include <linux/mm.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #include <uapi/linux/psci.h>
 
@@ -46,7 +49,11 @@ static int __init cpu_psci_cpu_prepare(unsigned int cpu)
 
 static int cpu_psci_cpu_boot(unsigned int cpu)
 {
+<<<<<<< HEAD
 	int err = psci_ops.cpu_on(cpu_logical_map(cpu), __pa_symbol(secondary_entry));
+=======
+	int err = psci_ops.cpu_on(cpu_logical_map(cpu), __pa(secondary_entry));
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (err)
 		pr_err("failed to boot CPU%d (%d)\n", cpu, err);
 

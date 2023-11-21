@@ -806,8 +806,11 @@ int usb_gadget_map_request_by_dev(struct device *dev,
 			dev_err(dev, "failed to map buffer\n");
 			return -EFAULT;
 		}
+<<<<<<< HEAD
 
 		req->dma_mapped = 1;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 
 	return 0;
@@ -832,10 +835,16 @@ void usb_gadget_unmap_request_by_dev(struct device *dev,
 				is_in ? DMA_TO_DEVICE : DMA_FROM_DEVICE);
 
 		req->num_mapped_sgs = 0;
+<<<<<<< HEAD
 	} else if (req->dma_mapped) {
 		dma_unmap_single(dev, req->dma, req->length,
 				is_in ? DMA_TO_DEVICE : DMA_FROM_DEVICE);
 		req->dma_mapped = 0;
+=======
+	} else {
+		dma_unmap_single(dev, req->dma, req->length,
+				is_in ? DMA_TO_DEVICE : DMA_FROM_DEVICE);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 }
 EXPORT_SYMBOL_GPL(usb_gadget_unmap_request_by_dev);
@@ -1301,9 +1310,13 @@ static int udc_bind_to_driver(struct usb_udc *udc, struct usb_gadget_driver *dri
 		driver->unbind(udc->gadget);
 		goto err1;
 	}
+<<<<<<< HEAD
 #ifndef CONFIG_USB_G_ANDROID
 	usb_udc_connect_control(udc);
 #endif
+=======
+	usb_udc_connect_control(udc);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	kobject_uevent(&udc->dev.kobj, KOBJ_CHANGE);
 	return 0;
@@ -1328,8 +1341,11 @@ int usb_gadget_probe_driver(struct usb_gadget_driver *driver)
 	mutex_lock(&udc_lock);
 	if (driver->udc_name) {
 		list_for_each_entry(udc, &udc_list, list) {
+<<<<<<< HEAD
 			pr_info("%s %s %s\n", __func__, driver->udc_name,
 				dev_name(&udc->dev));
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			ret = strcmp(driver->udc_name, dev_name(&udc->dev));
 			if (!ret)
 				break;

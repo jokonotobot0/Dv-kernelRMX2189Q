@@ -122,7 +122,11 @@ static inline void print_symbol(const char *fmt, unsigned long addr)
 
 static inline void print_ip_sym(unsigned long ip)
 {
+<<<<<<< HEAD
 	printk("[<%px>] %pS\n", (void *) ip, (void *) ip);
+=======
+	printk("[<%p>] %pS\n", (void *) ip, (void *) ip);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 #endif /*_LINUX_KALLSYMS_H*/

@@ -6,7 +6,10 @@
 #
 
 ccflags-y := -Idrivers/scsi
+<<<<<<< HEAD
 subdir-ccflags-y += -I$(srctree)/drivers/misc/mediatek/usb_boost
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 obj-$(CONFIG_USB_UAS)		+= uas.o
 obj-$(CONFIG_USB_STORAGE)	+= usb-storage.o

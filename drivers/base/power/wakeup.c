@@ -15,6 +15,7 @@
 #include <linux/seq_file.h>
 #include <linux/debugfs.h>
 #include <linux/pm_wakeirq.h>
+<<<<<<< HEAD
 #include <linux/types.h>
 #include <trace/events/power.h>
 #ifdef VENDOR_EDIT
@@ -27,6 +28,10 @@
 #include <linux/sysfs.h>
 #include <linux/fb.h>
 #endif /* VENDOR_EDIT */
+=======
+#include <trace/events/power.h>
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include "power.h"
 
 /*
@@ -47,6 +52,7 @@ static bool pm_abort_suspend __read_mostly;
  * atomic variable to hold them both.
  */
 static atomic_t combined_event_count = ATOMIC_INIT(0);
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 //Yunqing.Zeng@BSP.Power.Basic 2017/11/28 add for kernel wakelock time statistics
 static atomic_t ws_all_release_flag = ATOMIC_INIT(1);
@@ -56,6 +62,8 @@ static ktime_t ws_hold_all_time;
 static ktime_t reset_time;
 static spinlock_t statistics_lock;
 #endif /* VENDOR_EDIT */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #define IN_PROGRESS_BITS	(sizeof(int) * 4)
 #define MAX_IN_PROGRESS		((1 << IN_PROGRESS_BITS) - 1)
@@ -552,6 +560,7 @@ static void wakeup_source_activate(struct wakeup_source *ws)
 			"unregistered wakeup source\n"))
 		return;
 
+<<<<<<< HEAD
 	#ifdef VENDOR_EDIT
 	//Yunqing.Zeng@BSP.Power.Basic 2017/11/28 add for kernel wakelock time statistics
 	if(atomic_read(&ws_all_release_flag)) {
@@ -561,6 +570,8 @@ static void wakeup_source_activate(struct wakeup_source *ws)
 		spin_unlock(&statistics_lock);
 	}
 	#endif /* VENDOR_EDIT */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/*
 	 * active wakeup source should bring the system
 	 * out of PM_SUSPEND_FREEZE state
@@ -704,6 +715,7 @@ static void wakeup_source_deactivate(struct wakeup_source *ws)
 	trace_wakeup_source_deactivate(ws->name, cec);
 
 	split_counters(&cnt, &inpr);
+<<<<<<< HEAD
 	if (!inpr && waitqueue_active(&wakeup_count_wait_queue)) {
 		#ifdef VENDOR_EDIT
 		//Yunqing.Zeng@BSP.Power.Basic 2017/11/28 add for kernel wakelock time statistics
@@ -717,6 +729,10 @@ static void wakeup_source_deactivate(struct wakeup_source *ws)
 		#endif /* VENDOR_EDIT */
 		wake_up(&wakeup_count_wait_queue);
 	}
+=======
+	if (!inpr && waitqueue_active(&wakeup_count_wait_queue))
+		wake_up(&wakeup_count_wait_queue);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 /**
@@ -849,6 +865,7 @@ void pm_wakeup_event(struct device *dev, unsigned int msec)
 }
 EXPORT_SYMBOL_GPL(pm_wakeup_event);
 
+<<<<<<< HEAD
 void pm_get_active_wakeup_sources(char *pending_wakeup_source, size_t max)
 {
 	struct wakeup_source *ws, *last_active_ws = NULL;
@@ -880,6 +897,8 @@ void pm_get_active_wakeup_sources(char *pending_wakeup_source, size_t max)
 }
 EXPORT_SYMBOL_GPL(pm_get_active_wakeup_sources);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 void pm_print_active_wakeup_sources(void)
 {
 	struct wakeup_source *ws;
@@ -984,11 +1003,14 @@ bool pm_get_wakeup_count(unsigned int *count, bool block)
 			if (inpr == 0 || signal_pending(current))
 				break;
 
+<<<<<<< HEAD
 			#ifdef VENDOR_EDIT
 			/* ChaoYing.Chen@BSP.Power.Basic, 2017/12/9, Add for print wakeup source */
 			pm_print_active_wakeup_sources();
 			#endif /* VENDOR_EDIT */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			schedule();
 		}
 		finish_wait(&wakeup_count_wait_queue, &wait);
@@ -1092,7 +1114,11 @@ static int print_wakeup_source_stats(struct seq_file *m,
 		active_time = ktime_set(0, 0);
 	}
 
+<<<<<<< HEAD
 	seq_printf(m, "%-32s\t%lu\t\t%lu\t\t%lu\t\t%lu\t\t%lld\t\t%lld\t\t%lld\t\t%lld\t\t%lld\n",
+=======
+	seq_printf(m, "%-12s\t%lu\t\t%lu\t\t%lu\t\t%lu\t\t%lld\t\t%lld\t\t%lld\t\t%lld\t\t%lld\n",
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		   ws->name, active_count, ws->event_count,
 		   ws->wakeup_count, ws->expire_count,
 		   ktime_to_ms(active_time), ktime_to_ms(total_time),
@@ -1113,7 +1139,11 @@ static int wakeup_sources_stats_show(struct seq_file *m, void *unused)
 	struct wakeup_source *ws;
 	int srcuidx;
 
+<<<<<<< HEAD
 	seq_puts(m, "name\t\t\t\t\tactive_count\tevent_count\twakeup_count\t"
+=======
+	seq_puts(m, "name\t\tactive_count\tevent_count\twakeup_count\t"
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		"expire_count\tactive_since\ttotal_time\tmax_time\t"
 		"last_change\tprevent_suspend_time\n");
 
@@ -1132,6 +1162,7 @@ static int wakeup_sources_stats_open(struct inode *inode, struct file *file)
 	return single_open(file, wakeup_sources_stats_show, NULL);
 }
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 //Yanzhen.Feng@PSW.AD.OppoDebug.702252, 2015/08/14, Add for Sync App and Kernel time
 static ssize_t watchdog_write(struct file *file, const char __user *buf, size_t count, loff_t *ppos)
@@ -1179,20 +1210,26 @@ static ssize_t watchdog_write(struct file *file, const char __user *buf, size_t 
 }
 #endif /* VENDOR_EDIT */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static const struct file_operations wakeup_sources_stats_fops = {
 	.owner = THIS_MODULE,
 	.open = wakeup_sources_stats_open,
 	.read = seq_read,
 	.llseek = seq_lseek,
 	.release = single_release,
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 //Yanzhen.Feng@PSW.AD.OppoDebug.702252, 2016/06/21, Add for Sync App and Kernel time
 	.write          = watchdog_write,
 #endif /* VENDOR_EDIT */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 static int __init wakeup_sources_debugfs_init(void)
 {
+<<<<<<< HEAD
 #ifndef VENDOR_EDIT
 //Yanzhen.Feng@PSW.AD.OppoDebug.702252, 2016/06/21,  Modify for Sync App and Kernel time
 	wakeup_sources_stats_dentry = debugfs_create_file("wakeup_sources",
@@ -1469,3 +1506,11 @@ postcore_initcall(wakeup_sources_debugfs_init);
 //Yunqing.Zeng@BSP.Power.Basic 2017/11/09 add for wakelock profiler
 postcore_initcall(wakelock_profiler_init);
 #endif /* VENDOR_EDIT */
+=======
+	wakeup_sources_stats_dentry = debugfs_create_file("wakeup_sources",
+			S_IRUGO, NULL, NULL, &wakeup_sources_stats_fops);
+	return 0;
+}
+
+postcore_initcall(wakeup_sources_debugfs_init);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

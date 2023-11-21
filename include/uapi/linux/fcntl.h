@@ -43,6 +43,7 @@
 /* (1U << 31) is reserved for signed error codes */
 
 /*
+<<<<<<< HEAD
  * Set/Get write life time hints. {GET,SET}_RW_HINT operate on the
  * underlying inode, while {GET,SET}_FILE_RW_HINT operate only on
  * the specific file.
@@ -64,6 +65,8 @@
 #define RWH_WRITE_LIFE_EXTREME	5
 
 /*
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  * Types of directory notifications that may be requested.
  */
 #define DN_ACCESS	0x00000001	/* File accessed */

@@ -100,7 +100,10 @@ int sysctl_tcp_thin_dupack __read_mostly;
 int sysctl_tcp_moderate_rcvbuf __read_mostly = 1;
 int sysctl_tcp_early_retrans __read_mostly = 3;
 int sysctl_tcp_invalid_ratelimit __read_mostly = HZ/2;
+<<<<<<< HEAD
 int sysctl_tcp_default_init_rwnd __read_mostly = TCP_INIT_CWND * 2;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #define FLAG_DATA		0x01 /* Incoming frame contained data.		*/
 #define FLAG_WIN_UPDATE		0x02 /* Incoming ACK was a window update.	*/
@@ -130,6 +133,7 @@ int sysctl_tcp_default_init_rwnd __read_mostly = TCP_INIT_CWND * 2;
 #define REXMIT_LOST	1 /* retransmit packets marked lost */
 #define REXMIT_NEW	2 /* FRTO-style transmit of unsent/new packets */
 
+<<<<<<< HEAD
 //#ifdef VENDOR_EDIT
 //Junyuan.Huang@PSW.CN.WiFi.Network.internet.1197891, 2018/04/10,
 //Add code for appo sla function
@@ -137,6 +141,8 @@ void (*statistic_dev_rtt)(struct sock *sk,long rtt) = NULL;
 EXPORT_SYMBOL(statistic_dev_rtt);
 //#endif /* VENDOR_EDIT */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static void tcp_gro_dev_warn(struct sock *sk, const struct sk_buff *skb)
 {
 	static bool __once __read_mostly;
@@ -777,6 +783,7 @@ static void tcp_rtt_estimator(struct sock *sk, long mrtt_us)
 			tp->rtt_seq = tp->snd_nxt;
 			tp->mdev_max_us = tcp_rto_min_us(sk);
 		}
+<<<<<<< HEAD
 		//#ifdef VENDOR_EDIT
 		//Junyuan.Huang@PSW.CN.WiFi.Network.internet.1197891, 2018/04/10,
 		//Add code for appo sla function
@@ -784,6 +791,8 @@ static void tcp_rtt_estimator(struct sock *sk, long mrtt_us)
 			statistic_dev_rtt(sk,mrtt_us);
 		}
 		//#endif /* VENDOR_EDIT */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	} else {
 		/* no previous measure. */
 		srtt = m << 3;		/* take the measured time to be rtt */
@@ -5751,6 +5760,7 @@ static int tcp_rcv_synsent_state_process(struct sock *sk, struct sk_buff *skb,
 	int saved_clamp = tp->rx_opt.mss_clamp;
 	bool fastopen_fail;
 
+<<<<<<< HEAD
 	#ifdef VENDOR_EDIT
 	//Mengqing.Zhao@PSW.CN.WiFi.Network.internet.1394484, 2019/04/02,
 	//add for: When find TCP SYN-ACK Timestamp value error, just do not use Timestamp
@@ -5764,6 +5774,8 @@ static int tcp_rcv_synsent_state_process(struct sock *sk, struct sk_buff *skb,
 	}
 	#endif /* VENDOR_EDIT */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	tcp_parse_options(skb, &tp->rx_opt, 0, &foc);
 	if (tp->rx_opt.saw_tstamp && tp->rx_opt.rcv_tsecr)
 		tp->rx_opt.rcv_tsecr -= tp->tsoffset;
@@ -5786,6 +5798,7 @@ static int tcp_rcv_synsent_state_process(struct sock *sk, struct sk_buff *skb,
 			     tcp_time_stamp)) {
 			NET_INC_STATS(sock_net(sk),
 					LINUX_MIB_PAWSACTIVEREJECTED);
+<<<<<<< HEAD
 			#ifdef VENDOR_EDIT
 			//Mengqing.Zhao@PSW.CN.WiFi.Network.internet.1394484, 2019/04/02,
 			//add for: When find TCP SYN-ACK Timestamp value error, just do not use Timestamp
@@ -5809,6 +5822,10 @@ static int tcp_rcv_synsent_state_process(struct sock *sk, struct sk_buff *skb,
 			ts_error_count--;
 		}
 		#endif /* VENDOR_EDIT */
+=======
+			goto reset_and_undo;
+		}
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 		/* Now ACK is acceptable.
 		 *

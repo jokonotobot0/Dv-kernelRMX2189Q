@@ -126,6 +126,7 @@ static void tcp_mtu_probing(struct inet_connection_sock *icsk, struct sock *sk)
 {
 	struct net *net = sock_net(sk);
 
+<<<<<<< HEAD
 	#ifdef VENDOR_EDIT
 	//Rongzheng.tang@PSW.CN.WiFi.Network.internet.1066205, 2016/11/03,
 	/*
@@ -135,6 +136,8 @@ static void tcp_mtu_probing(struct inet_connection_sock *icsk, struct sock *sk)
 	net->ipv4.sysctl_tcp_mtu_probing = 1;
 	#endif /* VENDOR_EDIT */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* Black hole detection */
 	if (net->ipv4.sysctl_tcp_mtu_probing) {
 		if (!icsk->icsk_mtup.enabled) {

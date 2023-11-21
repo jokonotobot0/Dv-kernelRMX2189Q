@@ -131,9 +131,12 @@ static void __uart_start(struct tty_struct *tty)
 	struct uart_state *state = tty->driver_data;
 	struct uart_port *port = state->uart_port;
 
+<<<<<<< HEAD
 	if (port && port->ops->wake_peer)
 		port->ops->wake_peer(port);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (port && !uart_tx_stopped(port))
 		port->ops->start_tx(port);
 }

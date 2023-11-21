@@ -651,11 +651,18 @@ static unsigned long ptrace_get_debugreg(struct task_struct *tsk, int n)
 {
 	struct thread_struct *thread = &tsk->thread;
 	unsigned long val = 0;
+<<<<<<< HEAD
 	int index = n;
 
 	if (n < HBP_NUM) {
 		struct perf_event *bp = thread->ptrace_bps[index];
 		index = array_index_nospec(index, HBP_NUM);
+=======
+
+	if (n < HBP_NUM) {
+		int index = array_index_nospec(n, HBP_NUM);
+		struct perf_event *bp = thread->ptrace_bps[index];
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 		if (bp)
 			val = bp->hw.info.address;

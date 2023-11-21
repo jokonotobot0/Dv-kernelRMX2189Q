@@ -4,11 +4,15 @@
 #include <linux/kernel_stat.h>
 #include <linux/static_key.h>
 #include <linux/context_tracking.h>
+<<<<<<< HEAD
 #include <linux/cpufreq_times.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include "sched.h"
 #ifdef CONFIG_PARAVIRT
 #include <asm/paravirt.h>
 #endif
+<<<<<<< HEAD
 #include "walt.h"
 
 #ifdef VENDOR_EDIT
@@ -41,6 +45,10 @@ static void account_task_time(struct task_struct *p, unsigned int ticks,
         kstat->idx = idx + 1;
 }
 #endif /* VENDOR_EDIT */
+=======
+
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #ifdef CONFIG_IRQ_TIME_ACCOUNTING
 
 /*
@@ -67,6 +75,10 @@ void disable_sched_clock_irqtime(void)
 {
 	sched_clock_irqtime = 0;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static void irqtime_account_delta(struct irqtime *irqtime, u64 delta,
 				  enum cpu_usage_stat idx)
 {
@@ -78,6 +90,10 @@ static void irqtime_account_delta(struct irqtime *irqtime, u64 delta,
 	irqtime->tick_delta += delta;
 	u64_stats_update_end(&irqtime->sync);
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * Called before incrementing preempt_count on {soft,}irq_enter
  * and before decrementing preempt_count on {soft,}irq_exit.
@@ -87,20 +103,29 @@ void irqtime_account_irq(struct task_struct *curr)
 	struct irqtime *irqtime = this_cpu_ptr(&cpu_irqtime);
 	s64 delta;
 	int cpu;
+<<<<<<< HEAD
 #ifdef CONFIG_SCHED_WALT
 	u64 wallclock;
 	bool account = true;
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (!sched_clock_irqtime)
 		return;
 
 	cpu = smp_processor_id();
+<<<<<<< HEAD
 #ifdef CONFIG_SCHED_WALT
 	wallclock = sched_clock_cpu(cpu);
 #endif
 	delta = sched_clock_cpu(cpu) - irqtime->irq_start_time;
 	irqtime->irq_start_time += delta;
+=======
+	delta = sched_clock_cpu(cpu) - irqtime->irq_start_time;
+	irqtime->irq_start_time += delta;
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/*
 	 * We do not account for softirq time from ksoftirqd here.
 	 * We want to continue accounting softirq time to ksoftirqd thread
@@ -111,6 +136,7 @@ void irqtime_account_irq(struct task_struct *curr)
 		irqtime_account_delta(irqtime, delta, CPUTIME_IRQ);
 	else if (in_serving_softirq() && curr != this_cpu_ksoftirqd())
 		irqtime_account_delta(irqtime, delta, CPUTIME_SOFTIRQ);
+<<<<<<< HEAD
 #ifdef CONFIG_SCHED_WALT
 	else
 		account = false;
@@ -119,6 +145,11 @@ void irqtime_account_irq(struct task_struct *curr)
 #endif
 }
 EXPORT_SYMBOL_GPL(irqtime_account_irq);
+=======
+}
+EXPORT_SYMBOL_GPL(irqtime_account_irq);
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static cputime_t irqtime_tick_accounted(cputime_t maxtime)
 {
 	struct irqtime *irqtime = this_cpu_ptr(&cpu_irqtime);
@@ -127,12 +158,20 @@ static cputime_t irqtime_tick_accounted(cputime_t maxtime)
 	delta = nsecs_to_cputime(irqtime->tick_delta);
 	delta = min(delta, maxtime);
 	irqtime->tick_delta -= cputime_to_nsecs(delta);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return delta;
 }
 
 #else /* CONFIG_IRQ_TIME_ACCOUNTING */
 
 #define sched_clock_irqtime	(0)
+<<<<<<< HEAD
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static cputime_t irqtime_tick_accounted(cputime_t dummy)
 {
 	return 0;
@@ -174,11 +213,17 @@ void account_user_time(struct task_struct *p, cputime_t cputime,
 
 	/* Add user time to cpustat. */
 	task_group_account_field(p, index, cputime_to_nsecs(cputime));
+<<<<<<< HEAD
 	/* Account for user time used */
 	acct_account_cputime(p);
 
 	/* Account power usage for user time */
 	cpufreq_acct_update_power(p, cputime);
+=======
+
+	/* Account for user time used */
+	acct_account_cputime(p);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 /*
@@ -226,11 +271,17 @@ void __account_system_time(struct task_struct *p, cputime_t cputime,
 
 	/* Add system time to cpustat. */
 	task_group_account_field(p, index, cputime_to_nsecs(cputime));
+<<<<<<< HEAD
 	/* Account for system time used */
 	acct_account_cputime(p);
 
 	/* Account power usage for system time */
 	cpufreq_acct_update_power(p, cputime);
+=======
+
+	/* Account for system time used */
+	acct_account_cputime(p);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 /*
@@ -267,6 +318,10 @@ void account_system_time(struct task_struct *p, int hardirq_offset,
 void account_steal_time(cputime_t cputime)
 {
 	u64 *cpustat = kcpustat_this_cpu->cpustat;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	cpustat[CPUTIME_STEAL] += cputime_to_nsecs(cputime);
 }
 
@@ -324,6 +379,10 @@ static inline cputime_t account_other_time(cputime_t max)
 
 	if (accounted < max)
 		accounted += irqtime_tick_accounted(max - accounted);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return accounted;
 }
 
@@ -443,14 +502,18 @@ static void irqtime_account_process_tick(struct task_struct *p, int user_tick,
 		__account_system_time(p, cputime, scaled, CPUTIME_SOFTIRQ);
 	} else if (user_tick) {
 		account_user_time(p, cputime, scaled);
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /* Hailong.Liu@TECH.Kernel.CPU, 2019/10/24, stat cpu usage on each tick. */
 		account_task_time(p, ticks, CPUTIME_USER);
 #endif /* VENDOR_EDIT */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	} else if (p == rq->idle) {
 		account_idle_time(cputime);
 	} else if (p->flags & PF_VCPU) { /* System time or guest time */
 		account_guest_time(p, cputime, scaled);
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /* Hailong.Liu@TECH.Kernel.CPU, 2019/10/24, stat cpu usage on each tick. */
 		account_task_time(p, ticks, CPUTIME_USER);
@@ -461,6 +524,10 @@ static void irqtime_account_process_tick(struct task_struct *p, int user_tick,
 /* Hailong.Liu@TECH.Kernel.CPU, 2019/10/24, stat cpu usage on each tick. */
 		account_task_time(p, ticks, CPUTIME_SYSTEM);
 #endif /* VENDOR_EDIT */
+=======
+	} else {
+		__account_system_time(p, cputime, scaled,	CPUTIME_SYSTEM);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 }
 
@@ -498,6 +565,10 @@ void vtime_common_task_switch(struct task_struct *prev)
 
 #endif /* CONFIG_VIRT_CPU_ACCOUNTING */
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #ifdef CONFIG_VIRT_CPU_ACCOUNTING_NATIVE
 /*
  * Archs that account the whole time spent in the idle task
@@ -528,7 +599,13 @@ EXPORT_SYMBOL_GPL(task_cputime_adjusted);
 void thread_group_cputime_adjusted(struct task_struct *p, cputime_t *ut, cputime_t *st)
 {
 	struct task_cputime cputime;
+<<<<<<< HEAD
 	thread_group_cputime(p, &cputime);
+=======
+
+	thread_group_cputime(p, &cputime);
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	*ut = cputime.utime;
 	*st = cputime.stime;
 }
@@ -550,6 +627,10 @@ void account_process_tick(struct task_struct *p, int user_tick)
 		irqtime_account_process_tick(p, user_tick, rq, 1);
 		return;
 	}
+<<<<<<< HEAD
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	cputime = cputime_one_jiffy;
 	steal = steal_account_process_time(ULONG_MAX);
 
@@ -559,6 +640,7 @@ void account_process_tick(struct task_struct *p, int user_tick)
 	cputime -= steal;
 	scaled = cputime_to_scaled(cputime);
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /* Hailong.Liu@TECH.Kernel.CPU, 2019/10/24, stat cpu usage on each tick. */
 	if (user_tick) {
@@ -571,14 +653,21 @@ void account_process_tick(struct task_struct *p, int user_tick)
 		account_idle_time(cputime);
 	}
 #else
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (user_tick)
 		account_user_time(p, cputime, scaled);
 	else if ((p != rq->idle) || (irq_count() != HARDIRQ_OFFSET))
 		account_system_time(p, HARDIRQ_OFFSET, cputime, scaled);
 	else
 		account_idle_time(cputime);
+<<<<<<< HEAD
 #endif
 }
+=======
+}
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * Account multiple ticks of idle time.
  * @ticks: number of stolen ticks
@@ -591,6 +680,10 @@ void account_idle_ticks(unsigned long ticks)
 		irqtime_account_idle_ticks(ticks);
 		return;
 	}
+<<<<<<< HEAD
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	cputime = jiffies_to_cputime(ticks);
 	steal = steal_account_process_time(ULONG_MAX);
 
@@ -766,6 +859,10 @@ static cputime_t vtime_delta(struct task_struct *tsk)
 
 	if (time_before(now, (unsigned long)tsk->vtime_snap))
 		return 0;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return jiffies_to_cputime(now - tsk->vtime_snap);
 }
 

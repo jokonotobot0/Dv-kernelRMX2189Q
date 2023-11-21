@@ -1,12 +1,24 @@
+<<<<<<< HEAD
 // SPDX-License-Identifier: GPL-2.0
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  *  debugfs.h - a tiny little debug file system
  *
  *  Copyright (C) 2004 Greg Kroah-Hartman <greg@kroah.com>
  *  Copyright (C) 2004 IBM Inc.
  *
+<<<<<<< HEAD
  *  debugfs is for people to use instead of /proc or /sys.
  *  See Documentation/filesystems/ for more details.
+=======
+ *	This program is free software; you can redistribute it and/or
+ *	modify it under the terms of the GNU General Public License version
+ *	2 as published by the Free Software Foundation.
+ *
+ *  debugfs is for people to use instead of /proc or /sys.
+ *  See Documentation/DocBook/filesystems for more details.
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  */
 
 #ifndef _DEBUGFS_H_
@@ -20,6 +32,10 @@
 
 struct device;
 struct file_operations;
+<<<<<<< HEAD
+=======
+struct srcu_struct;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 struct debugfs_blob_wrapper {
 	void *data;
@@ -39,6 +55,28 @@ struct debugfs_regset32 {
 
 extern struct dentry *arch_debugfs_dir;
 
+<<<<<<< HEAD
+=======
+extern struct srcu_struct debugfs_srcu;
+
+/**
+ * debugfs_real_fops - getter for the real file operation
+ * @filp: a pointer to a struct file
+ *
+ * Must only be called under the protection established by
+ * debugfs_use_file_start().
+ */
+static inline const struct file_operations *debugfs_real_fops(struct file *filp)
+	__must_hold(&debugfs_srcu)
+{
+	/*
+	 * Neither the pointer to the struct file_operations, nor its
+	 * contents ever change -- srcu_dereference() is not needed here.
+	 */
+	return filp->f_path.dentry->d_fsdata;
+}
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define DEFINE_DEBUGFS_ATTRIBUTE(__fops, __get, __set, __fmt)		\
 static int __fops ## _open(struct inode *inode, struct file *file)	\
 {									\
@@ -56,8 +94,11 @@ static const struct file_operations __fops = {				\
 
 #if defined(CONFIG_DEBUG_FS)
 
+<<<<<<< HEAD
 struct dentry *debugfs_lookup(const char *name, struct dentry *parent);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 struct dentry *debugfs_create_file(const char *name, umode_t mode,
 				   struct dentry *parent, void *data,
 				   const struct file_operations *fops);
@@ -84,10 +125,17 @@ struct dentry *debugfs_create_automount(const char *name,
 void debugfs_remove(struct dentry *dentry);
 void debugfs_remove_recursive(struct dentry *dentry);
 
+<<<<<<< HEAD
 const struct file_operations *debugfs_real_fops(const struct file *filp);
 
 int debugfs_file_get(struct dentry *dentry);
 void debugfs_file_put(struct dentry *dentry);
+=======
+int debugfs_use_file_start(const struct dentry *dentry, int *srcu_idx)
+	__acquires(&debugfs_srcu);
+
+void debugfs_use_file_finish(int srcu_idx) __releases(&debugfs_srcu);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 ssize_t debugfs_attr_read(struct file *file, char __user *buf,
 			size_t len, loff_t *ppos);
@@ -160,12 +208,15 @@ ssize_t debugfs_write_file_bool(struct file *file, const char __user *user_buf,
  * want to duplicate the design decision mistakes of procfs and devfs again.
  */
 
+<<<<<<< HEAD
 static inline struct dentry *debugfs_lookup(const char *name,
 					    struct dentry *parent)
 {
 	return ERR_PTR(-ENODEV);
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static inline struct dentry *debugfs_create_file(const char *name, umode_t mode,
 					struct dentry *parent, void *data,
 					const struct file_operations *fops)
@@ -208,12 +259,23 @@ static inline void debugfs_remove(struct dentry *dentry)
 static inline void debugfs_remove_recursive(struct dentry *dentry)
 { }
 
+<<<<<<< HEAD
 static inline int debugfs_file_get(struct dentry *dentry)
+=======
+static inline int debugfs_use_file_start(const struct dentry *dentry,
+					int *srcu_idx)
+	__acquires(&debugfs_srcu)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	return 0;
 }
 
+<<<<<<< HEAD
 static inline void debugfs_file_put(struct dentry *dentry)
+=======
+static inline void debugfs_use_file_finish(int srcu_idx)
+	__releases(&debugfs_srcu)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 { }
 
 static inline ssize_t debugfs_attr_read(struct file *file, char __user *buf,

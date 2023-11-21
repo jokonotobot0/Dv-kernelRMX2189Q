@@ -28,6 +28,7 @@
 #include <linux/file.h>
 #include <linux/fs.h>
 #include <linux/usb/composite.h>
+<<<<<<< HEAD
 #include <uapi/linux/usb/ch9.h>
 
 #include "storage_common.h"
@@ -43,6 +44,11 @@ fsg_otg_desc = {
 };
 #endif
 
+=======
+
+#include "storage_common.h"
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* There is only one interface. */
 
 struct usb_interface_descriptor fsg_intf_desc = {
@@ -83,9 +89,12 @@ struct usb_endpoint_descriptor fsg_fs_bulk_out_desc = {
 EXPORT_SYMBOL_GPL(fsg_fs_bulk_out_desc);
 
 struct usb_descriptor_header *fsg_fs_function[] = {
+<<<<<<< HEAD
 #ifdef CONFIG_USBIF_COMPLIANCE
 	(struct usb_descriptor_header *) &fsg_otg_desc,
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	(struct usb_descriptor_header *) &fsg_intf_desc,
 	(struct usb_descriptor_header *) &fsg_fs_bulk_in_desc,
 	(struct usb_descriptor_header *) &fsg_fs_bulk_out_desc,
@@ -123,9 +132,12 @@ EXPORT_SYMBOL_GPL(fsg_hs_bulk_out_desc);
 
 
 struct usb_descriptor_header *fsg_hs_function[] = {
+<<<<<<< HEAD
 #ifdef CONFIG_USBIF_COMPLIANCE
 	(struct usb_descriptor_header *) &fsg_otg_desc,
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	(struct usb_descriptor_header *) &fsg_intf_desc,
 	(struct usb_descriptor_header *) &fsg_hs_bulk_in_desc,
 	(struct usb_descriptor_header *) &fsg_hs_bulk_out_desc,
@@ -170,9 +182,12 @@ struct usb_ss_ep_comp_descriptor fsg_ss_bulk_out_comp_desc = {
 EXPORT_SYMBOL_GPL(fsg_ss_bulk_out_comp_desc);
 
 struct usb_descriptor_header *fsg_ss_function[] = {
+<<<<<<< HEAD
 #ifdef CONFIG_USBIF_COMPLIANCE
 	(struct usb_descriptor_header *) &fsg_otg_desc,
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	(struct usb_descriptor_header *) &fsg_intf_desc,
 	(struct usb_descriptor_header *) &fsg_ss_bulk_in_desc,
 	(struct usb_descriptor_header *) &fsg_ss_bulk_in_comp_desc,
@@ -461,11 +476,15 @@ ssize_t fsg_store_file(struct fsg_lun *curlun, struct rw_semaphore *filesem,
 {
 	int		rc = 0;
 
+<<<<<<< HEAD
 #if !defined(CONFIG_USB_G_ANDROID)
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (curlun->prevent_medium_removal && fsg_lun_is_open(curlun)) {
 		LDBG(curlun, "eject attempt prevented\n");
 		return -EBUSY;				/* "Door is locked" */
 	}
+<<<<<<< HEAD
 #endif
 
 	pr_notice("fsg_store_file file=%s, count=%d, curlun->cdrom=%d\n", buf,
@@ -491,6 +510,8 @@ ssize_t fsg_store_file(struct fsg_lun *curlun, struct rw_semaphore *filesem,
 			fsg_lun_is_open(curlun)) {
 		((char *) buf)[0] = 0;
 	}
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/* Remove a trailing newline */
 	if (count > 0 && buf[count-1] == '\n')
@@ -551,6 +572,10 @@ ssize_t fsg_store_removable(struct fsg_lun *curlun, const char *buf,
 	return count;
 }
 EXPORT_SYMBOL_GPL(fsg_store_removable);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 ssize_t fsg_store_inquiry_string(struct fsg_lun *curlun, const char *buf,
 				 size_t count)
 {
@@ -568,4 +593,8 @@ ssize_t fsg_store_inquiry_string(struct fsg_lun *curlun, const char *buf,
 	return count;
 }
 EXPORT_SYMBOL_GPL(fsg_store_inquiry_string);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 MODULE_LICENSE("GPL");

@@ -248,7 +248,11 @@ static int out(struct sm_metadata *smm)
 	}
 
 	if (smm->recursion_count == 1)
+<<<<<<< HEAD
 		apply_bops(smm);
+=======
+		r = apply_bops(smm);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	smm->recursion_count--;
 

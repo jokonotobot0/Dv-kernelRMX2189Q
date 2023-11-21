@@ -594,15 +594,20 @@ struct v4l2_pix_format {
 #define V4L2_PIX_FMT_H264     v4l2_fourcc('H', '2', '6', '4') /* H264 with start codes */
 #define V4L2_PIX_FMT_H264_NO_SC v4l2_fourcc('A', 'V', 'C', '1') /* H264 without start codes */
 #define V4L2_PIX_FMT_H264_MVC v4l2_fourcc('M', '2', '6', '4') /* H264 MVC */
+<<<<<<< HEAD
 #define V4L2_PIX_FMT_H264_SLICE v4l2_fourcc('S', '2', '6', '4') /* H264 parsed slices */
 #define V4L2_PIX_FMT_H265     v4l2_fourcc('H', '2', '6', '5') /* H265 with start codes */
 #define V4L2_PIX_FMT_HEIF     v4l2_fourcc('H', 'E', 'I', 'F') /* HEIF */
 #define V4L2_PIX_FMT_H263     v4l2_fourcc('H', '2', '6', '3') /* H263          */
 #define V4L2_PIX_FMT_S263     v4l2_fourcc('S', '2', '6', '3') /* S263          */
+=======
+#define V4L2_PIX_FMT_H263     v4l2_fourcc('H', '2', '6', '3') /* H263          */
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define V4L2_PIX_FMT_MPEG1    v4l2_fourcc('M', 'P', 'G', '1') /* MPEG-1 ES     */
 #define V4L2_PIX_FMT_MPEG2    v4l2_fourcc('M', 'P', 'G', '2') /* MPEG-2 ES     */
 #define V4L2_PIX_FMT_MPEG4    v4l2_fourcc('M', 'P', 'G', '4') /* MPEG-4 part 2 ES */
 #define V4L2_PIX_FMT_XVID     v4l2_fourcc('X', 'V', 'I', 'D') /* Xvid           */
+<<<<<<< HEAD
 #define V4L2_PIX_FMT_DIVX     v4l2_fourcc('D', 'I', 'V', 'X') /* Divx           */
 #define V4L2_PIX_FMT_DIVX3    v4l2_fourcc('D', 'I', 'V', '3') /* Divx3         */
 #define V4L2_PIX_FMT_DIVX4    v4l2_fourcc('D', 'I', 'V', '4') /* Divx4         */
@@ -620,6 +625,11 @@ struct v4l2_pix_format {
 #define V4L2_PIX_FMT_WVC1      v4l2_fourcc('W', 'V', 'C', '1') /* VC1 */
 #define V4L2_PIX_FMT_RV30      v4l2_fourcc('R', 'V', '3', '0') /* RealVideo 8 */
 #define V4L2_PIX_FMT_RV40      v4l2_fourcc('R', 'V', '4', '0') /* RealVideo 9/10 */
+=======
+#define V4L2_PIX_FMT_VC1_ANNEX_G v4l2_fourcc('V', 'C', '1', 'G') /* SMPTE 421M Annex G compliant stream */
+#define V4L2_PIX_FMT_VC1_ANNEX_L v4l2_fourcc('V', 'C', '1', 'L') /* SMPTE 421M Annex L compliant stream */
+#define V4L2_PIX_FMT_VP8      v4l2_fourcc('V', 'P', '8', '0') /* VP8 */
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /*  Vendor-specific formats   */
 #define V4L2_PIX_FMT_CPIA1    v4l2_fourcc('C', 'P', 'I', 'A') /* cpia1 YUV */
@@ -651,6 +661,7 @@ struct v4l2_pix_format {
 #define V4L2_PIX_FMT_Y8I      v4l2_fourcc('Y', '8', 'I', ' ') /* Greyscale 8-bit L/R interleaved */
 #define V4L2_PIX_FMT_Y12I     v4l2_fourcc('Y', '1', '2', 'I') /* Greyscale 12-bit L/R interleaved */
 #define V4L2_PIX_FMT_Z16      v4l2_fourcc('Z', '1', '6', ' ') /* Depth data 16-bit */
+<<<<<<< HEAD
 #define V4L2_PIX_FMT_MT21C    v4l2_fourcc('M', 'T', '2', '1')
 	/* Mediatek compressed block mode  */
 #define V4L2_PIX_FMT_MT21    v4l2_fourcc('M', 'M', '2', '1')
@@ -685,6 +696,8 @@ struct v4l2_pix_format {
 	/* MTK 10-bit tile compressed block jump mode, two contiguous planes */
 #define V4L2_PIX_FMT_MT21CS10RJ    v4l2_fourcc('J', 'C', 'S', 'R')
 	/* MTK 10-bit raster compressed block jump mode, two cont. planes */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /* SDR formats - used only for Software Defined Radio devices */
 #define V4L2_SDR_FMT_CU8          v4l2_fourcc('C', 'U', '0', '8') /* IQ u8 */
@@ -953,6 +966,7 @@ struct v4l2_buffer {
 /* Image is a B-frame */
 #define V4L2_BUF_FLAG_BFRAME			0x00000020
 /* Buffer is ready, but the data contained within is corrupted. */
+<<<<<<< HEAD
 /* Status related. This would be used in videobuf_status  */
 #define V4L2_BUF_FLAG_ERROR			0x00000040
 /* Buffer is ready, but the data contained within is corrupted. */
@@ -962,13 +976,21 @@ struct v4l2_buffer {
 #define V4L2_BUF_FLAG_TIMECODE			0x00000100
 /* Reference freed flags*/
 #define V4L2_BUF_FLAG_REF_FREED		0x00000200
+=======
+#define V4L2_BUF_FLAG_ERROR			0x00000040
+/* timecode field is valid */
+#define V4L2_BUF_FLAG_TIMECODE			0x00000100
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* Buffer is prepared for queuing */
 #define V4L2_BUF_FLAG_PREPARED			0x00000400
 /* Cache handling flags */
 #define V4L2_BUF_FLAG_NO_CACHE_INVALIDATE	0x00000800
 #define V4L2_BUF_FLAG_NO_CACHE_CLEAN		0x00001000
+<<<<<<< HEAD
 /* Crop changed flags*/
 #define V4L2_BUF_FLAG_CROP_CHANGED		0x00008000
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* Timestamp type */
 #define V4L2_BUF_FLAG_TIMESTAMP_MASK		0x0000e000
 #define V4L2_BUF_FLAG_TIMESTAMP_UNKNOWN		0x00000000
@@ -980,7 +1002,10 @@ struct v4l2_buffer {
 #define V4L2_BUF_FLAG_TSTAMP_SRC_SOE		0x00010000
 /* mem2mem encoder/decoder */
 #define V4L2_BUF_FLAG_LAST			0x00100000
+<<<<<<< HEAD
 #define V4L2_BUF_FLAG_CSD			0x00200000
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /**
  * struct v4l2_exportbuffer - export of video buffer as DMABUF file descriptor
@@ -2130,11 +2155,14 @@ struct v4l2_streamparm {
 #define V4L2_EVENT_MOTION_DET			6
 #define V4L2_EVENT_PRIVATE_START		0x08000000
 
+<<<<<<< HEAD
 #define V4L2_EVENT_MTK_VCODEC_START	(V4L2_EVENT_PRIVATE_START + 0x00002000)
 #define V4L2_EVENT_MTK_VDEC_ERROR	(V4L2_EVENT_MTK_VCODEC_START + 1)
 #define V4L2_EVENT_MTK_VDEC_NOHEADER	(V4L2_EVENT_MTK_VCODEC_START + 2)
 #define V4L2_EVENT_MTK_VENC_ERROR	(V4L2_EVENT_MTK_VCODEC_START + 3)
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* Payload for V4L2_EVENT_VSYNC */
 struct v4l2_event_vsync {
 	/* Can be V4L2_FIELD_ANY, _NONE, _TOP or _BOTTOM */

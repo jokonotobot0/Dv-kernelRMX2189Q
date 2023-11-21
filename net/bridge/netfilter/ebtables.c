@@ -2288,8 +2288,15 @@ static int compat_do_replace(struct net *net, void __user *user,
 	state.buf_kern_len = size64;
 
 	ret = compat_copy_entries(entries_tmp, tmp.entries_size, &state);
+<<<<<<< HEAD
 	if (WARN_ON(ret < 0))
 		goto out_unlock;
+=======
+	if (WARN_ON(ret < 0)) {
+		vfree(entries_tmp);
+		goto out_unlock;
+	}
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	vfree(entries_tmp);
 	tmp.entries_size = size64;

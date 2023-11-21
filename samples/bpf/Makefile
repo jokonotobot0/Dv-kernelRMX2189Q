@@ -22,7 +22,10 @@ hostprogs-y += spintest
 hostprogs-y += map_perf_test
 hostprogs-y += test_overhead
 hostprogs-y += test_cgrp2_array_pin
+<<<<<<< HEAD
 hostprogs-y += test_cgrp2_attach
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 hostprogs-y += xdp1
 hostprogs-y += xdp2
 hostprogs-y += test_current_task_under_cgroup
@@ -51,7 +54,10 @@ spintest-objs := bpf_load.o libbpf.o spintest_user.o
 map_perf_test-objs := bpf_load.o libbpf.o map_perf_test_user.o
 test_overhead-objs := bpf_load.o libbpf.o test_overhead_user.o
 test_cgrp2_array_pin-objs := libbpf.o test_cgrp2_array_pin.o
+<<<<<<< HEAD
 test_cgrp2_attach-objs := libbpf.o test_cgrp2_attach.o
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 xdp1-objs := bpf_load.o libbpf.o xdp1_user.o
 # reuse xdp1 source intentionally
 xdp2-objs := bpf_load.o libbpf.o xdp1_user.o

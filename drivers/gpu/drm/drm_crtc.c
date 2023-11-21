@@ -33,7 +33,10 @@
 #include <linux/list.h>
 #include <linux/slab.h>
 #include <linux/export.h>
+<<<<<<< HEAD
 #include <linux/fence.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <drm/drmP.h>
 #include <drm/drm_crtc.h>
 #include <drm/drm_edid.h>
@@ -142,6 +145,7 @@ static void drm_crtc_unregister_all(struct drm_device *dev)
 	}
 }
 
+<<<<<<< HEAD
 static const struct fence_ops drm_crtc_fence_ops;
 
 static struct drm_crtc *fence_to_crtc(struct fence *fence)
@@ -190,6 +194,8 @@ struct fence *drm_crtc_create_fence(struct drm_crtc *crtc)
 	return fence;
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /**
  * drm_crtc_init_with_planes - Initialise a new CRTC object with
  *    specified primary and cursor planes.
@@ -247,11 +253,14 @@ int drm_crtc_init_with_planes(struct drm_device *dev, struct drm_crtc *crtc,
 		return -ENOMEM;
 	}
 
+<<<<<<< HEAD
 	crtc->fence_context = fence_context_alloc(1);
 	spin_lock_init(&crtc->fence_lock);
 	snprintf(crtc->timeline_name, sizeof(crtc->timeline_name),
 		 "CRTC:%d-%s", crtc->base.id, crtc->name);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	crtc->base.properties = &crtc->properties;
 
 	list_add_tail(&crtc->head, &config->crtc_list);
@@ -267,8 +276,11 @@ int drm_crtc_init_with_planes(struct drm_device *dev, struct drm_crtc *crtc,
 	if (drm_core_check_feature(dev, DRIVER_ATOMIC)) {
 		drm_object_attach_property(&crtc->base, config->prop_active, 0);
 		drm_object_attach_property(&crtc->base, config->prop_mode_id, 0);
+<<<<<<< HEAD
 		drm_object_attach_property(&crtc->base,
 					   config->prop_out_fence_ptr, 0);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 
 	return 0;
@@ -421,6 +433,7 @@ static int drm_mode_create_standard_properties(struct drm_device *dev)
 		return -ENOMEM;
 	dev->mode_config.prop_fb_id = prop;
 
+<<<<<<< HEAD
 	prop = drm_property_create_signed_range(dev, DRM_MODE_PROP_ATOMIC,
 			"IN_FENCE_FD", -1, INT_MAX);
 	if (!prop)
@@ -433,6 +446,8 @@ static int drm_mode_create_standard_properties(struct drm_device *dev)
 		return -ENOMEM;
 	dev->mode_config.prop_out_fence_ptr = prop;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	prop = drm_property_create_object(dev, DRM_MODE_PROP_ATOMIC,
 			"CRTC_ID", DRM_MODE_OBJECT_CRTC);
 	if (!prop)

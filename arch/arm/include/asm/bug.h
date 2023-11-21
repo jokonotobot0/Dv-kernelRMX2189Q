@@ -33,8 +33,12 @@
 
 #define __BUG(__file, __line, __value)				\
 do {								\
+<<<<<<< HEAD
 	asm volatile("nop\n\t"					\
 		"1:\t" BUG_INSTR(__value) "\n"  \
+=======
+	asm volatile("1:\t" BUG_INSTR(__value) "\n"  \
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		".pushsection .rodata.str, \"aMS\", %progbits, 1\n" \
 		"2:\t.asciz " #__file "\n" 			\
 		".popsection\n" 				\
@@ -50,7 +54,11 @@ do {								\
 
 #define __BUG(__file, __line, __value)				\
 do {								\
+<<<<<<< HEAD
 	asm volatile("nop\n\t" BUG_INSTR(__value) "\n");	\
+=======
+	asm volatile(BUG_INSTR(__value) "\n");			\
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	unreachable();						\
 } while (0)
 #endif  /* CONFIG_DEBUG_BUGVERBOSE */

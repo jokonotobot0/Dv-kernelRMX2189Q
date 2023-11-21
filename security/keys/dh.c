@@ -55,7 +55,11 @@ static ssize_t mpi_from_key(key_serial_t keyid, size_t maxlen, MPI *mpi)
 		if (status == 0) {
 			const struct user_key_payload *payload;
 
+<<<<<<< HEAD
 			payload = user_key_payload_locked(key);
+=======
+			payload = user_key_payload(key);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 			if (maxlen == 0) {
 				*mpi = NULL;

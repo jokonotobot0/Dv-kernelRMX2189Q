@@ -69,7 +69,10 @@ static void __page_cache_release(struct page *page)
 		del_page_from_lru_list(page, lruvec, page_off_lru(page));
 		spin_unlock_irqrestore(zone_lru_lock(zone), flags);
 	}
+<<<<<<< HEAD
 	__ClearPageWaiters(page);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	mem_cgroup_uncharge(page);
 }
 
@@ -785,7 +788,10 @@ void release_pages(struct page **pages, int nr, bool cold)
 
 		/* Clear Active bit in case of parallel mark_page_accessed */
 		__ClearPageActive(page);
+<<<<<<< HEAD
 		__ClearPageWaiters(page);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 		list_add(&page->lru, &pages_to_free);
 	}
@@ -956,6 +962,7 @@ unsigned pagevec_lookup(struct pagevec *pvec, struct address_space *mapping,
 }
 EXPORT_SYMBOL(pagevec_lookup);
 
+<<<<<<< HEAD
 unsigned pagevec_lookup_range_tag(struct pagevec *pvec,
 		struct address_space *mapping, pgoff_t *index, pgoff_t end,
 		int tag)
@@ -975,6 +982,17 @@ unsigned pagevec_lookup_range_nr_tag(struct pagevec *pvec,
 	return pagevec_count(pvec);
 }
 EXPORT_SYMBOL(pagevec_lookup_range_nr_tag);
+=======
+unsigned pagevec_lookup_tag(struct pagevec *pvec, struct address_space *mapping,
+		pgoff_t *index, int tag, unsigned nr_pages)
+{
+	pvec->nr = find_get_pages_tag(mapping, index, tag,
+					nr_pages, pvec->pages);
+	return pagevec_count(pvec);
+}
+EXPORT_SYMBOL(pagevec_lookup_tag);
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * Perform any setup for the swap system
  */

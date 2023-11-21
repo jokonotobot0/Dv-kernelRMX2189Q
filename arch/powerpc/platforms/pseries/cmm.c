@@ -708,7 +708,11 @@ static void cmm_exit(void)
  * Return value:
  * 	0 on success / other on failure
  **/
+<<<<<<< HEAD
 static int cmm_set_disable(const char *val, const struct kernel_param *kp)
+=======
+static int cmm_set_disable(const char *val, struct kernel_param *kp)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	int disable = simple_strtoul(val, NULL, 10);
 

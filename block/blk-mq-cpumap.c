@@ -35,19 +35,51 @@ int blk_mq_map_queues(struct blk_mq_tag_set *set)
 {
 	unsigned int *map = set->mq_map;
 	unsigned int nr_queues = set->nr_hw_queues;
+<<<<<<< HEAD
 	unsigned int i, queue, first_sibling;
 	cpumask_var_t cpus;
 
 	queue = 0;
 	for_each_possible_cpu(i) {
+=======
+	const struct cpumask *online_mask = cpu_online_mask;
+	unsigned int i, nr_cpus, nr_uniq_cpus, queue, first_sibling;
+	cpumask_var_t cpus;
+
+	if (!alloc_cpumask_var(&cpus, GFP_ATOMIC))
+		return -ENOMEM;
+
+	cpumask_clear(cpus);
+	nr_cpus = nr_uniq_cpus = 0;
+	for_each_cpu(i, online_mask) {
+		nr_cpus++;
+		first_sibling = get_first_sibling(i);
+		if (!cpumask_test_cpu(first_sibling, cpus))
+			nr_uniq_cpus++;
+		cpumask_set_cpu(i, cpus);
+	}
+
+	queue = 0;
+	for_each_possible_cpu(i) {
+		if (!cpumask_test_cpu(i, online_mask)) {
+			map[i] = 0;
+			continue;
+		}
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		/*
 		 * Easy case - we have equal or more hardware queues. Or
 		 * there are no thread siblings to take into account. Do
 		 * 1:1 if enough, or sequential mapping if less.
 		 */
+<<<<<<< HEAD
 		if (nr_queues >= nr_cpu_ids) {
 			map[i] = cpu_to_queue_index(nr_cpu_ids, nr_queues,
 						queue);
+=======
+		if (nr_queues >= nr_cpus || nr_cpus == nr_uniq_cpus) {
+			map[i] = cpu_to_queue_index(nr_cpus, nr_queues, queue);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			queue++;
 			continue;
 		}
@@ -59,7 +91,11 @@ int blk_mq_map_queues(struct blk_mq_tag_set *set)
 		 */
 		first_sibling = get_first_sibling(i);
 		if (first_sibling == i) {
+<<<<<<< HEAD
 			map[i] = cpu_to_queue_index(nr_cpu_ids, nr_queues,
+=======
+			map[i] = cpu_to_queue_index(nr_uniq_cpus, nr_queues,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 							queue);
 			queue++;
 		} else

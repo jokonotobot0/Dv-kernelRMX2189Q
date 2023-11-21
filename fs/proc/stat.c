@@ -12,6 +12,7 @@
 #include <linux/cputime.h>
 #include <linux/tick.h>
 
+<<<<<<< HEAD
 #if defined(VENDOR_EDIT) && defined(CONFIG_OPPO_HEALTHINFO)
 // wenbin.liu@PSW.BSP.MM, 2018/05/02
 // Add for get cpu load
@@ -19,6 +20,8 @@
 #include <soc/oppo/oppo_healthinfo.h>
 #endif /*VENDOR_EDIT*/
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #ifndef arch_irq_stat_cpu
 #define arch_irq_stat_cpu(cpu) 0
 #endif
@@ -54,12 +57,17 @@ static u64 get_idle_time(int cpu)
 {
 	u64 idle, idle_usecs = -1ULL;
 
+<<<<<<< HEAD
 #ifdef CONFIG_MEDIATEK_SOLUTION
 	idle_usecs = get_cpu_idle_time_us_wo_cpuoffline(cpu, NULL);
 #else
 	if (cpu_online(cpu))
 		idle_usecs = get_cpu_idle_time_us(cpu, NULL);
 #endif
+=======
+	if (cpu_online(cpu))
+		idle_usecs = get_cpu_idle_time_us(cpu, NULL);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (idle_usecs == -1ULL)
 		/* !NO_HZ or cpu offline so we can rely on cpustat.idle */
@@ -74,12 +82,17 @@ static u64 get_iowait_time(int cpu)
 {
 	u64 iowait, iowait_usecs = -1ULL;
 
+<<<<<<< HEAD
 #ifdef CONFIG_MEDIATEK_SOLUTION
 	iowait_usecs = get_cpu_iowait_time_us_wo_cpuoffline(cpu, NULL);
 #else
 	if (cpu_online(cpu))
 		iowait_usecs = get_cpu_iowait_time_us(cpu, NULL);
 #endif
+=======
+	if (cpu_online(cpu))
+		iowait_usecs = get_cpu_iowait_time_us(cpu, NULL);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (iowait_usecs == -1ULL)
 		/* !NO_HZ or cpu offline so we can rely on cpustat.iowait */
@@ -210,6 +223,7 @@ static const struct file_operations proc_stat_operations = {
 	.release	= single_release,
 };
 
+<<<<<<< HEAD
 #if defined(VENDOR_EDIT) && defined(CONFIG_OPPO_HEALTHINFO)
 // wenbin.liu@PSW.BSP.MM, 2018/05/02
 // Add for get cpu load
@@ -268,6 +282,8 @@ int ohm_get_cur_cpuload(bool ctrl)
 
 #endif /*VENDOR_EDIT*/
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int __init proc_stat_init(void)
 {
 	proc_create("stat", 0, NULL, &proc_stat_operations);

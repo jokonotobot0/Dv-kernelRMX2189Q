@@ -61,7 +61,10 @@ jiffies = jiffies_64;
 	. = ALIGN(PAGE_SIZE);				\
 	VMLINUX_SYMBOL(__entry_tramp_text_start) = .;	\
 	*(.entry.tramp.text)				\
+<<<<<<< HEAD
 	KEEP(*(.entry.tramp.text))			\
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	. = ALIGN(PAGE_SIZE);				\
 	VMLINUX_SYMBOL(__entry_tramp_text_end) = .;
 #else
@@ -180,11 +183,19 @@ SECTIONS
 	. = ALIGN(4);
 	.altinstructions : {
 		__alt_instructions = .;
+<<<<<<< HEAD
 		KEEP(*(.altinstructions))
 		__alt_instructions_end = .;
 	}
 	.altinstr_replacement : {
 		KEEP(*(.altinstr_replacement))
+=======
+		*(.altinstructions)
+		__alt_instructions_end = .;
+	}
+	.altinstr_replacement : {
+		*(.altinstr_replacement)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 	.rela : ALIGN(8) {
 		*(.rela .rela*)
@@ -229,11 +240,14 @@ SECTIONS
 	swapper_pg_dir = .;
 	. += SWAPPER_DIR_SIZE;
 
+<<<<<<< HEAD
 #ifdef CONFIG_ARM64_SW_TTBR0_PAN
 	reserved_ttbr0 = .;
 	. += RESERVED_TTBR0_SIZE;
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #ifdef CONFIG_UNMAP_KERNEL_AT_EL0
 	tramp_pg_dir = .;
 	. += PAGE_SIZE;

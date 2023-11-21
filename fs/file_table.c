@@ -142,6 +142,7 @@ struct file *get_empty_filp(void)
 over:
 	/* Ran out of filps - report that */
 	if (get_nr_files() > old_max) {
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_FD_LEAK_DETECT
 		static int fd_dump_all_files;
 
@@ -172,6 +173,8 @@ over:
 			}
 		}
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		pr_info("VFS: file-max limit %lu reached\n", get_max_files());
 		old_max = get_nr_files();
 	}

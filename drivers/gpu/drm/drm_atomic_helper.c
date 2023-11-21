@@ -3166,9 +3166,12 @@ void __drm_atomic_helper_plane_destroy_state(struct drm_plane_state *state)
 {
 	if (state->fb)
 		drm_framebuffer_unreference(state->fb);
+<<<<<<< HEAD
 
 	if (state->fence)
 		fence_put(state->fence);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 EXPORT_SYMBOL(__drm_atomic_helper_plane_destroy_state);
 

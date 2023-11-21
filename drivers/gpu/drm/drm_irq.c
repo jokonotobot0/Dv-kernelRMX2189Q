@@ -93,7 +93,11 @@ static void store_vblank(struct drm_device *dev, unsigned int pipe,
  * Reset the stored timestamp for the current vblank count to correspond
  * to the last vblank occurred.
  *
+<<<<<<< HEAD
  * Only to be called from drm_crtc_vblank_on().
+=======
+ * Only to be called from drm_vblank_on().
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  *
  * Note: caller must hold dev->vbl_lock since this reads & writes
  * device vblank fields.
@@ -234,6 +238,7 @@ static void drm_update_vblank_count(struct drm_device *dev, unsigned int pipe,
 	store_vblank(dev, pipe, diff, &t_vblank, cur_vblank);
 }
 
+<<<<<<< HEAD
 static u32 drm_vblank_count(struct drm_device *dev, unsigned int pipe)
 {
 	struct drm_vblank_crtc *vblank = &dev->vblank[pipe];
@@ -244,6 +249,8 @@ static u32 drm_vblank_count(struct drm_device *dev, unsigned int pipe)
 	return vblank->count;
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /**
  * drm_accurate_vblank_count - retrieve the master vblank counter
  * @crtc: which counter to retrieve
@@ -306,7 +313,11 @@ static void vblank_disable_and_save(struct drm_device *dev, unsigned int pipe)
 	 * Always update the count and timestamp to maintain the
 	 * appearance that the counter has been ticking all along until
 	 * this time. This makes the count account for the entire time
+<<<<<<< HEAD
 	 * between drm_crtc_vblank_on() and drm_crtc_vblank_off().
+=======
+	 * between drm_vblank_on() and drm_vblank_off().
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	 */
 	drm_update_vblank_count(dev, pipe, 0);
 
@@ -898,6 +909,34 @@ drm_get_last_vbltimestamp(struct drm_device *dev, unsigned int pipe,
 }
 
 /**
+<<<<<<< HEAD
+=======
+ * drm_vblank_count - retrieve "cooked" vblank counter value
+ * @dev: DRM device
+ * @pipe: index of CRTC for which to retrieve the counter
+ *
+ * Fetches the "cooked" vblank count value that represents the number of
+ * vblank events since the system was booted, including lost events due to
+ * modesetting activity.
+ *
+ * This is the legacy version of drm_crtc_vblank_count().
+ *
+ * Returns:
+ * The software vblank counter.
+ */
+u32 drm_vblank_count(struct drm_device *dev, unsigned int pipe)
+{
+	struct drm_vblank_crtc *vblank = &dev->vblank[pipe];
+
+	if (WARN_ON(pipe >= dev->num_crtcs))
+		return 0;
+
+	return vblank->count;
+}
+EXPORT_SYMBOL(drm_vblank_count);
+
+/**
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  * drm_crtc_vblank_count - retrieve "cooked" vblank counter value
  * @crtc: which counter to retrieve
  *
@@ -905,6 +944,11 @@ drm_get_last_vbltimestamp(struct drm_device *dev, unsigned int pipe,
  * vblank events since the system was booted, including lost events due to
  * modesetting activity.
  *
+<<<<<<< HEAD
+=======
+ * This is the native KMS version of drm_vblank_count().
+ *
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  * Returns:
  * The software vblank counter.
  */
@@ -1255,6 +1299,7 @@ void drm_crtc_wait_one_vblank(struct drm_crtc *crtc)
 EXPORT_SYMBOL(drm_crtc_wait_one_vblank);
 
 /**
+<<<<<<< HEAD
  * drm_crtc_vblank_off - disable vblank events on a CRTC
  * @crtc: CRTC in question
  *
@@ -1269,6 +1314,23 @@ void drm_crtc_vblank_off(struct drm_crtc *crtc)
 {
 	struct drm_device *dev = crtc->dev;
 	unsigned int pipe = drm_crtc_index(crtc);
+=======
+ * drm_vblank_off - disable vblank events on a CRTC
+ * @dev: DRM device
+ * @pipe: CRTC index
+ *
+ * Drivers can use this function to shut down the vblank interrupt handling when
+ * disabling a crtc. This function ensures that the latest vblank frame count is
+ * stored so that drm_vblank_on() can restore it again.
+ *
+ * Drivers must use this function when the hardware vblank counter can get
+ * reset, e.g. when suspending.
+ *
+ * This is the legacy version of drm_crtc_vblank_off().
+ */
+void drm_vblank_off(struct drm_device *dev, unsigned int pipe)
+{
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct drm_vblank_crtc *vblank = &dev->vblank[pipe];
 	struct drm_pending_vblank_event *e, *t;
 	struct timeval now;
@@ -1284,8 +1346,12 @@ void drm_crtc_vblank_off(struct drm_crtc *crtc)
 	DRM_DEBUG_VBL("crtc %d, vblank enabled %d, inmodeset %d\n",
 		      pipe, vblank->enabled, vblank->inmodeset);
 
+<<<<<<< HEAD
 	/* Avoid redundant vblank disables without previous
 	 * drm_crtc_vblank_on(). */
+=======
+	/* Avoid redundant vblank disables without previous drm_vblank_on(). */
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (drm_core_check_feature(dev, DRIVER_ATOMIC) || !vblank->inmodeset)
 		vblank_disable_and_save(dev, pipe);
 
@@ -1316,6 +1382,28 @@ void drm_crtc_vblank_off(struct drm_crtc *crtc)
 	}
 	spin_unlock_irqrestore(&dev->event_lock, irqflags);
 }
+<<<<<<< HEAD
+=======
+EXPORT_SYMBOL(drm_vblank_off);
+
+/**
+ * drm_crtc_vblank_off - disable vblank events on a CRTC
+ * @crtc: CRTC in question
+ *
+ * Drivers can use this function to shut down the vblank interrupt handling when
+ * disabling a crtc. This function ensures that the latest vblank frame count is
+ * stored so that drm_vblank_on can restore it again.
+ *
+ * Drivers must use this function when the hardware vblank counter can get
+ * reset, e.g. when suspending.
+ *
+ * This is the native kms version of drm_vblank_off().
+ */
+void drm_crtc_vblank_off(struct drm_crtc *crtc)
+{
+	drm_vblank_off(crtc->dev, drm_crtc_index(crtc));
+}
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 EXPORT_SYMBOL(drm_crtc_vblank_off);
 
 /**
@@ -1351,6 +1439,7 @@ void drm_crtc_vblank_reset(struct drm_crtc *crtc)
 EXPORT_SYMBOL(drm_crtc_vblank_reset);
 
 /**
+<<<<<<< HEAD
  * drm_crtc_vblank_on - enable vblank events on a CRTC
  * @crtc: CRTC in question
  *
@@ -1363,6 +1452,21 @@ void drm_crtc_vblank_on(struct drm_crtc *crtc)
 {
 	struct drm_device *dev = crtc->dev;
 	unsigned int pipe = drm_crtc_index(crtc);
+=======
+ * drm_vblank_on - enable vblank events on a CRTC
+ * @dev: DRM device
+ * @pipe: CRTC index
+ *
+ * This functions restores the vblank interrupt state captured with
+ * drm_vblank_off() again. Note that calls to drm_vblank_on() and
+ * drm_vblank_off() can be unbalanced and so can also be unconditionally called
+ * in driver load code to reflect the current hardware state of the crtc.
+ *
+ * This is the legacy version of drm_crtc_vblank_on().
+ */
+void drm_vblank_on(struct drm_device *dev, unsigned int pipe)
+{
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct drm_vblank_crtc *vblank = &dev->vblank[pipe];
 	unsigned long irqflags;
 
@@ -1389,6 +1493,26 @@ void drm_crtc_vblank_on(struct drm_crtc *crtc)
 		WARN_ON(drm_vblank_enable(dev, pipe));
 	spin_unlock_irqrestore(&dev->vbl_lock, irqflags);
 }
+<<<<<<< HEAD
+=======
+EXPORT_SYMBOL(drm_vblank_on);
+
+/**
+ * drm_crtc_vblank_on - enable vblank events on a CRTC
+ * @crtc: CRTC in question
+ *
+ * This functions restores the vblank interrupt state captured with
+ * drm_vblank_off() again. Note that calls to drm_vblank_on() and
+ * drm_vblank_off() can be unbalanced and so can also be unconditionally called
+ * in driver load code to reflect the current hardware state of the crtc.
+ *
+ * This is the native kms version of drm_vblank_on().
+ */
+void drm_crtc_vblank_on(struct drm_crtc *crtc)
+{
+	drm_vblank_on(crtc->dev, drm_crtc_index(crtc));
+}
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 EXPORT_SYMBOL(drm_crtc_vblank_on);
 
 /**
@@ -1542,10 +1666,18 @@ static int drm_queue_vblank_event(struct drm_device *dev, unsigned int pipe,
 	spin_lock_irqsave(&dev->event_lock, flags);
 
 	/*
+<<<<<<< HEAD
 	 * drm_crtc_vblank_off() might have been called after we called
 	 * drm_vblank_get(). drm_crtc_vblank_off() holds event_lock around the
 	 * vblank disable, so no need for further locking.  The reference from
 	 * drm_vblank_get() protects against vblank disable from another source.
+=======
+	 * drm_vblank_off() might have been called after we called
+	 * drm_vblank_get(). drm_vblank_off() holds event_lock
+	 * around the vblank disable, so no need for further locking.
+	 * The reference from drm_vblank_get() protects against
+	 * vblank disable from another source.
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	 */
 	if (!vblank->enabled) {
 		ret = -EINVAL;

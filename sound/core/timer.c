@@ -280,10 +280,16 @@ int snd_timer_open(struct snd_timer_instance **ti,
 		return -ENODEV;
 	}
 	if (!list_empty(&timer->open_list_head)) {
+<<<<<<< HEAD
 		struct snd_timer_instance *t =
 			list_entry(timer->open_list_head.next,
 				    struct snd_timer_instance, open_list);
 		if (t->flags & SNDRV_TIMER_IFLG_EXCLUSIVE) {
+=======
+		timeri = list_entry(timer->open_list_head.next,
+				    struct snd_timer_instance, open_list);
+		if (timeri->flags & SNDRV_TIMER_IFLG_EXCLUSIVE) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			mutex_unlock(&register_mutex);
 			return -EBUSY;
 		}

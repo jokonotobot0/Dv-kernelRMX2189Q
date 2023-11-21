@@ -12,7 +12,10 @@ obj-$(CONFIG_USB_DWC2)		+= dwc2/
 obj-$(CONFIG_USB_ISP1760)	+= isp1760/
 
 obj-$(CONFIG_USB_MON)		+= mon/
+<<<<<<< HEAD
 obj-$(CONFIG_USB_MTU3)		+= mtu3/
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 obj-$(CONFIG_PCI)		+= host/
 obj-$(CONFIG_USB_EHCI_HCD)	+= host/

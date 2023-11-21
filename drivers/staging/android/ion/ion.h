@@ -79,10 +79,14 @@ struct ion_platform_data {
  */
 struct ion_client *ion_client_create(struct ion_device *dev,
 				     const char *name);
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /* Huacai.Zhou@PSW.BSP.Kernel.MM, 2018-06-26, add ion total used account*/
 unsigned long ion_total(void);
 #endif /*VENDOR_EDIT*/
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /**
  * ion_client_destroy() -  free's a client and all it's handles
  * @client:	the client
@@ -176,6 +180,7 @@ struct ion_handle *ion_import_dma_buf(struct ion_client *client,
  */
 struct ion_handle *ion_import_dma_buf_fd(struct ion_client *client, int fd);
 
+<<<<<<< HEAD
 /**
  * ion_phys - returns the physical address and len of a handle
  * @client:	the client
@@ -195,4 +200,6 @@ struct ion_handle *ion_import_dma_buf_fd(struct ion_client *client, int fd);
 int ion_phys(struct ion_client *client, struct ion_handle *handle,
 	     ion_phys_addr_t *addr, size_t *len);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif /* _LINUX_ION_H */

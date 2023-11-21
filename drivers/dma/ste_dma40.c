@@ -142,7 +142,11 @@ enum d40_events {
  * when the DMA hw is powered off.
  * TODO: Add save/restore of D40_DREG_GCC on dma40 v3 or later, if that works.
  */
+<<<<<<< HEAD
 static u32 d40_backup_regs[] = {
+=======
+static __maybe_unused u32 d40_backup_regs[] = {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	D40_DREG_LCPA,
 	D40_DREG_LCLA,
 	D40_DREG_PRMSE,
@@ -211,7 +215,11 @@ static u32 d40_backup_regs_v4b[] = {
 
 #define BACKUP_REGS_SZ_V4B ARRAY_SIZE(d40_backup_regs_v4b)
 
+<<<<<<< HEAD
 static u32 d40_backup_regs_chan[] = {
+=======
+static __maybe_unused u32 d40_backup_regs_chan[] = {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	D40_CHAN_REG_SSCFG,
 	D40_CHAN_REG_SSELT,
 	D40_CHAN_REG_SSPTR,

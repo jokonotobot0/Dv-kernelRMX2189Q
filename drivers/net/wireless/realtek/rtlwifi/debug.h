@@ -1,5 +1,31 @@
+<<<<<<< HEAD
 /* SPDX-License-Identifier: GPL-2.0 */
 /* Copyright(c) 2009-2012  Realtek Corporation.*/
+=======
+/******************************************************************************
+ *
+ * Copyright(c) 2009-2012  Realtek Corporation.
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of version 2 of the GNU General Public License as
+ * published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ * more details.
+ *
+ * The full GNU General Public License is included in this distribution in the
+ * file called LICENSE.
+ *
+ * Contact Information:
+ * wlanfae <wlanfae@realtek.com>
+ * Realtek Corporation, No. 2, Innovation Road II, Hsinchu Science Park,
+ * Hsinchu 300, Taiwan.
+ *
+ * Larry Finger <Larry.Finger@lwfinger.net>
+ *****************************************************************************/
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #ifndef __RTL_DEBUG_H__
 #define __RTL_DEBUG_H__
@@ -15,7 +41,11 @@
  *unexpected HW behavior, HW BUG
  *and so on.
  */
+<<<<<<< HEAD
 /*#define DBG_EMERG			0 */
+=======
+#define DBG_EMERG			0
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /*
  *Abnormal, rare, or unexpeted cases.
@@ -84,7 +114,10 @@
 #define COMP_EASY_CONCURRENT	COMP_USB /* reuse of this bit is OK */
 #define COMP_BT_COEXIST			BIT(30)
 #define COMP_IQK			BIT(31)
+<<<<<<< HEAD
 #define COMP_TX_REPORT			BIT_ULL(32)
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /*--------------------------------------------------------------
 		Define the rt_print components
@@ -136,7 +169,11 @@ enum dbgp_flag_e {
 	FEEPROM = 11,
 	FPWR = 12,
 	FDM = 13,
+<<<<<<< HEAD
 	FDBGCTRL = 14,
+=======
+	FDBGCtrl = 14,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	FC2H = 15,
 	FBT = 16,
 	FINIT = 17,
@@ -146,6 +183,7 @@ enum dbgp_flag_e {
 
 #ifdef CONFIG_RTLWIFI_DEBUG
 
+<<<<<<< HEAD
 struct rtl_priv;
 
 __printf(4, 5)
@@ -167,15 +205,68 @@ void _rtl_dbg_print_data(struct rtl_priv *rtlpriv, u64 comp, int level,
 		      _hexdatalen)					\
 	_rtl_dbg_print_data(rtlpriv, _comp, _level,			\
 			    _titlestring, _hexdata, _hexdatalen)
+=======
+#define RT_ASSERT(_exp, fmt, ...)					\
+do {									\
+	if (!(_exp)) {							\
+		printk(KERN_DEBUG KBUILD_MODNAME ":%s(): " fmt,		\
+		       __func__, ##__VA_ARGS__);			\
+	}								\
+} while (0)
+
+
+struct rtl_priv;
+
+__printf(5, 6)
+void _rtl_dbg_trace(struct rtl_priv *rtlpriv, int comp, int level,
+		    const char *modname, const char *fmt, ...);
+
+#define RT_TRACE(rtlpriv, comp, level, fmt, ...)			\
+	_rtl_dbg_trace(rtlpriv, comp, level,				\
+		       KBUILD_MODNAME, fmt, ##__VA_ARGS__)
+
+#define RTPRINT(rtlpriv, dbgtype, dbgflag, fmt, ...)			\
+do {									\
+	if (unlikely(rtlpriv->dbg.dbgp_type[dbgtype] & dbgflag)) {	\
+		printk(KERN_DEBUG KBUILD_MODNAME ": " fmt,		\
+		       ##__VA_ARGS__);					\
+	}								\
+} while (0)
+
+#define RT_PRINT_DATA(rtlpriv, _comp, _level, _titlestring, _hexdata,	\
+		      _hexdatalen)					\
+do {									\
+	if (unlikely(((_comp) & rtlpriv->dbg.global_debugcomponents) &&	\
+		     (_level <= rtlpriv->dbg.global_debuglevel))) {	\
+		printk(KERN_DEBUG "%s: In process \"%s\" (pid %i): %s\n", \
+		       KBUILD_MODNAME, current->comm, current->pid,	\
+		       _titlestring);					\
+		print_hex_dump_bytes("", DUMP_PREFIX_NONE,		\
+				     _hexdata, _hexdatalen);		\
+	}								\
+} while (0)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #else
 
 struct rtl_priv;
 
+<<<<<<< HEAD
 __printf(4, 5)
 static inline void rtl_dbg(struct rtl_priv *rtlpriv,
 			   u64 comp, int level,
 			   const char *fmt, ...)
+=======
+__printf(2, 3)
+static inline void RT_ASSERT(int exp, const char *fmt, ...)
+{
+}
+
+__printf(4, 5)
+static inline void RT_TRACE(struct rtl_priv *rtlpriv,
+			    int comp, int level,
+			    const char *fmt, ...)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 }
 
@@ -187,7 +278,11 @@ static inline void RTPRINT(struct rtl_priv *rtlpriv,
 }
 
 static inline void RT_PRINT_DATA(struct rtl_priv *rtlpriv,
+<<<<<<< HEAD
 				 u64 comp, int level,
+=======
+				 int comp, int level,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 				 const char *titlestring,
 				 const void *hexdata, size_t hexdatalen)
 {
@@ -195,6 +290,7 @@ static inline void RT_PRINT_DATA(struct rtl_priv *rtlpriv,
 
 #endif
 
+<<<<<<< HEAD
 #ifdef CONFIG_RTLWIFI_DEBUG
 void rtl_debug_add_one(struct ieee80211_hw *hw);
 void rtl_debug_remove_one(struct ieee80211_hw *hw);
@@ -206,4 +302,7 @@ void rtl_debugfs_remove_topdir(void);
 #define rtl_debugfs_add_topdir()
 #define rtl_debugfs_remove_topdir()
 #endif
+=======
+void rtl_dbgp_flag_init(struct ieee80211_hw *hw);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif

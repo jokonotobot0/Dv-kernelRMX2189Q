@@ -185,9 +185,12 @@ config CRC8
 	  when they need to do cyclic redundancy check according CRC8
 	  algorithm. Module will be called crc8.
 
+<<<<<<< HEAD
 config XXHASH
 	tristate
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 config AUDIT_GENERIC
 	bool
 	depends on AUDIT && !AUDIT_ARCH
@@ -224,7 +227,11 @@ config ZLIB_INFLATE
 	tristate
 
 config ZLIB_DEFLATE
+<<<<<<< HEAD
 	tristate "ZLIB_DEFLATE function"
+=======
+	tristate
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	select BITREVERSE
 
 config LZO_COMPRESS
@@ -242,6 +249,7 @@ config LZ4HC_COMPRESS
 config LZ4_DECOMPRESS
 	tristate
 
+<<<<<<< HEAD
 config ZSTD_COMPRESS
 	select XXHASH
 	tristate
@@ -250,6 +258,8 @@ config ZSTD_DECOMPRESS
 	select XXHASH
 	tristate
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 source "lib/xz/Kconfig"
 
 #

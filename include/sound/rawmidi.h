@@ -78,7 +78,10 @@ struct snd_rawmidi_runtime {
 	size_t xruns;		/* over/underruns counter */
 	/* misc */
 	spinlock_t lock;
+<<<<<<< HEAD
 	struct mutex realloc_mutex;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	wait_queue_head_t sleep;
 	/* event handler (new bytes, input only) */
 	void (*event)(struct snd_rawmidi_substream *substream);

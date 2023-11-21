@@ -78,12 +78,16 @@
 #define KERNEL_START      _text
 #define KERNEL_END        _end
 
+<<<<<<< HEAD
 #ifdef CONFIG_KASAN
 #ifndef CONFIG_KASAN_ENHANCEMENT
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * The size of the KASAN shadow region. This should be 1/8th of the
  * size of the entire kernel virtual address space.
  */
+<<<<<<< HEAD
 #define KASAN_SHADOW_SCALE_SHIFT 3
 #else
 /*
@@ -93,6 +97,10 @@
 #define KASAN_SHADOW_SCALE_SHIFT 4
 #endif
 #define KASAN_SHADOW_SIZE	(UL(1) << (VA_BITS - KASAN_SHADOW_SCALE_SHIFT))
+=======
+#ifdef CONFIG_KASAN
+#define KASAN_SHADOW_SIZE	(UL(1) << (VA_BITS - 3))
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #else
 #define KASAN_SHADOW_SIZE	(0)
 #endif
@@ -161,11 +169,14 @@ extern u64			kimage_vaddr;
 /* the offset between the kernel virtual and physical mappings */
 extern u64			kimage_voffset;
 
+<<<<<<< HEAD
 static inline unsigned long kaslr_offset(void)
 {
 	return kimage_vaddr - KIMAGE_VADDR;
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * Allow all memory at the discovery stage. We will clip it later.
  */
@@ -206,7 +217,10 @@ static inline void *phys_to_virt(phys_addr_t x)
 #define __va(x)			((void *)__phys_to_virt((phys_addr_t)(x)))
 #define pfn_to_kaddr(pfn)	__va((pfn) << PAGE_SHIFT)
 #define virt_to_pfn(x)      __phys_to_pfn(__virt_to_phys(x))
+<<<<<<< HEAD
 #define sym_to_pfn(x)	    __phys_to_pfn(__pa_symbol(x))
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /*
  *  virt_to_page(k)	convert a _valid_ virtual address to struct page *
@@ -214,7 +228,11 @@ static inline void *phys_to_virt(phys_addr_t x)
  */
 #define ARCH_PFN_OFFSET		((unsigned long)PHYS_PFN_OFFSET)
 
+<<<<<<< HEAD
 #if !defined(CONFIG_SPARSEMEM_VMEMMAP) || defined(CONFIG_DEBUG_VIRTUAL)
+=======
+#ifndef CONFIG_SPARSEMEM_VMEMMAP
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define virt_to_page(kaddr)	pfn_to_page(__pa(kaddr) >> PAGE_SHIFT)
 #define _virt_addr_valid(kaddr)	pfn_valid(__pa(kaddr) >> PAGE_SHIFT)
 #else

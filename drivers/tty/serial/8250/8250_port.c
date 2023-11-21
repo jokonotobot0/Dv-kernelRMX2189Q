@@ -1814,6 +1814,7 @@ int serial8250_handle_irq(struct uart_port *port, unsigned int iir)
 
 	status = serial_port_in(port, UART_LSR);
 
+<<<<<<< HEAD
 #ifndef CONFIG_FIQ_DEBUGGER
 #ifdef CONFIG_MTK_ENG_BUILD
 #ifdef CONFIG_MTK_PRINTK_UART_CONSOLE
@@ -1825,6 +1826,9 @@ int serial8250_handle_irq(struct uart_port *port, unsigned int iir)
 
 	if (status & (UART_LSR_DR | UART_LSR_BI) &&
 	    iir & UART_IIR_RDI) {
+=======
+	if (status & (UART_LSR_DR | UART_LSR_BI)) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		if (!up->dma || handle_rx_dma(up, iir))
 			status = serial8250_rx_chars(up, status);
 	}
@@ -2732,7 +2736,10 @@ static void
 serial8250_pm(struct uart_port *port, unsigned int state,
 	      unsigned int oldstate)
 {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (port->pm)
 		port->pm(port, state, oldstate);
 	else

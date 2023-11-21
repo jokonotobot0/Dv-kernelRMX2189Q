@@ -46,6 +46,10 @@
 #define QUERY_DESC_HDR_SIZE       2
 #define QUERY_OSF_SIZE            (GENERAL_UPIU_REQUEST_SIZE - \
 					(sizeof(struct utp_upiu_header)))
+<<<<<<< HEAD
+=======
+#define RESPONSE_UPIU_SENSE_DATA_LENGTH	18
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #define UPIU_HEADER_DWORD(byte3, byte2, byte1, byte0)\
 			cpu_to_be32((byte3 << 24) | (byte2 << 16) |\
@@ -72,6 +76,7 @@ enum {
 	UFS_UPIU_RPMB_WLUN		= 0xC4,
 };
 
+<<<<<<< HEAD
 #if defined(CONFIG_UFSHPB)
 /**
  * ufs_is_valid_unit_desc_lun - checks if the given LUN has a unit descriptor
@@ -84,6 +89,8 @@ static inline bool ufs_is_valid_unit_desc_lun(u8 lun)
 }
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * UFS Protocol Information Unit related definitions
  */
@@ -144,18 +151,25 @@ enum flag_idn {
 	QUERY_FLAG_IDN_FDEVICEINIT      = 0x01,
 	QUERY_FLAG_IDN_PWR_ON_WPE	= 0x03,
 	QUERY_FLAG_IDN_BKOPS_EN         = 0x04,
+<<<<<<< HEAD
 	/* MTK PATCH: flag for fw update feasibility check */
 	QUERY_FLAG_IDN_PERMANENTLY_DISABLE_FW_UPDATE = 0xB,
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 /* Attribute idn for Query requests */
 enum attr_idn {
+<<<<<<< HEAD
 	/* MTK PATCH: attribute for BootLUN configuration */
 	QUERY_ATTR_IDN_BOOT_LUN_EN	= 0x00,
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	QUERY_ATTR_IDN_ACTIVE_ICC_LVL	= 0x03,
 	QUERY_ATTR_IDN_BKOPS_STATUS	= 0x05,
 	QUERY_ATTR_IDN_EE_CONTROL	= 0x0D,
 	QUERY_ATTR_IDN_EE_STATUS	= 0x0E,
+<<<<<<< HEAD
 	/* MTK PATCH: attribute for FFU status check */
 	QUERY_ATTR_IDN_DEVICE_FFU_STATUS = 0x14,
 };
@@ -168,6 +182,8 @@ enum ufs_ffu_status {
 	UFS_FFU_STATUS_INTERNAL_ERROR   = 0x3,
 	UFS_FFU_STATUS_VERSION_MISMATCH = 0x4,
 	UFS_FFU_STATUS_GENERAL_ERROR    = 0xFF,
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 /* Descriptor idn for Query requests */
@@ -181,7 +197,10 @@ enum desc_idn {
 	QUERY_DESC_IDN_RFU_1		= 0x6,
 	QUERY_DESC_IDN_GEOMETRY		= 0x7,
 	QUERY_DESC_IDN_POWER		= 0x8,
+<<<<<<< HEAD
 	QUERY_DESC_IDN_HEALTH		= 0x9,/* MTK PATCH */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	QUERY_DESC_IDN_MAX,
 };
 
@@ -195,6 +214,7 @@ enum ufs_desc_def_size {
 	QUERY_DESC_CONFIGURATION_DEF_SIZE	= 0x90,
 	QUERY_DESC_UNIT_DEF_SIZE		= 0x23,
 	QUERY_DESC_INTERCONNECT_DEF_SIZE	= 0x06,
+<<<<<<< HEAD
 
 	/* MTK PATCH: Geometry Descriptor size shall be 0x48 since UFS 2.1 */
 	QUERY_DESC_GEOMETRY_DEF_SIZE		= 0x48,
@@ -226,6 +246,10 @@ enum geometry_desc_param_offset {
 	GEOMETRY_DESC_HPB_SUBREGION_SIZE		= 0x4A,
 	GEOMETRY_DESC_HPB_DEVICE_MAX_ACTIVE_REGIONS	= 0x4B,
 #endif
+=======
+	QUERY_DESC_GEOMETRY_DEF_SIZE		= 0x44,
+	QUERY_DESC_POWER_DEF_SIZE		= 0x62,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 /* Unit descriptor parameters offsets in bytes*/
@@ -246,11 +270,14 @@ enum unit_desc_param {
 	UNIT_DESC_PARAM_PHY_MEM_RSRC_CNT	= 0x18,
 	UNIT_DESC_PARAM_CTX_CAPABILITIES	= 0x20,
 	UNIT_DESC_PARAM_LARGE_UNIT_SIZE_M1	= 0x22,
+<<<<<<< HEAD
 #if defined(CONFIG_UFSHPB)
 	UNIT_DESC_HPB_LU_MAX_ACTIVE_REGIONS		= 0x23,
 	UNIT_DESC_HPB_LU_PIN_REGION_START_OFFSET	= 0x25,
 	UNIT_DESC_HPB_LU_NUM_PIN_REGIONS		= 0x27,
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 /* Device descriptor parameters offsets in bytes*/
@@ -282,6 +309,7 @@ enum device_desc_param {
 	DEVICE_DESC_PARAM_UD_LEN		= 0x1B,
 	DEVICE_DESC_PARAM_RTT_CAP		= 0x1C,
 	DEVICE_DESC_PARAM_FRQ_RTC		= 0x1D,
+<<<<<<< HEAD
 #if defined(CONFIG_UFSHPB)
 	DEVICE_DESC_PARAM_FEAT_SUP		= 0x1F,
 #endif
@@ -290,6 +318,8 @@ enum device_desc_param {
 #if defined(CONFIG_UFSHPB)
 	DEVICE_DESC_PARAM_HPB_VER		= 0x40,
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 /*
@@ -481,7 +511,11 @@ struct utp_cmd_rsp {
 	__be32 residual_transfer_count;
 	__be32 reserved[4];
 	__be16 sense_data_len;
+<<<<<<< HEAD
 	u8 sense_data[18];
+=======
+	u8 sense_data[RESPONSE_UPIU_SENSE_DATA_LENGTH];
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 /**
@@ -574,6 +608,7 @@ struct ufs_vreg {
 	int max_uA;
 };
 
+<<<<<<< HEAD
 enum ufs_vreg_state {
 	UFS_REG_HBA_INIT,
 	UFS_REG_HBA_EXIT,
@@ -583,12 +618,17 @@ enum ufs_vreg_state {
 	UFS_REG_RESUME_SET_HPM,
 };
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 struct ufs_vreg_info {
 	struct ufs_vreg *vcc;
 	struct ufs_vreg *vccq;
 	struct ufs_vreg *vccq2;
 	struct ufs_vreg *vdd_hba;
+<<<<<<< HEAD
 	enum ufs_vreg_state state;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 struct ufs_dev_info {
@@ -598,8 +638,11 @@ struct ufs_dev_info {
 };
 
 #define MAX_MODEL_LEN 16
+<<<<<<< HEAD
 #define MAX_PRL_LEN   5
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /**
  * ufs_dev_desc - ufs device details from the device descriptor
  *
@@ -609,7 +652,10 @@ struct ufs_dev_info {
 struct ufs_dev_desc {
 	u16 wmanufacturerid;
 	char model[MAX_MODEL_LEN + 1];
+<<<<<<< HEAD
 	char prl[MAX_PRL_LEN + 1];
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 #endif /* End of Header */

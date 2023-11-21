@@ -150,7 +150,11 @@ static struct kparam_string kp_txselect = {
 	.string = txselect_list,
 	.maxlen = MAX_ATTEN_LEN
 };
+<<<<<<< HEAD
 static int  setup_txselect(const char *, const struct kernel_param *);
+=======
+static int  setup_txselect(const char *, struct kernel_param *);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 module_param_call(txselect, setup_txselect, param_get_string,
 		  &kp_txselect, S_IWUSR | S_IRUGO);
 MODULE_PARM_DESC(txselect,
@@ -6177,7 +6181,11 @@ static void set_no_qsfp_atten(struct qib_devdata *dd, int change)
 }
 
 /* handle the txselect parameter changing */
+<<<<<<< HEAD
 static int setup_txselect(const char *str, const struct kernel_param *kp)
+=======
+static int setup_txselect(const char *str, struct kernel_param *kp)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	struct qib_devdata *dd;
 	unsigned long val;

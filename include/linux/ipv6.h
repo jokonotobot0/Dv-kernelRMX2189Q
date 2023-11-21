@@ -37,11 +37,17 @@ struct ipv6_devconf {
 	__s32		accept_ra_rtr_pref;
 	__s32		rtr_probe_interval;
 #ifdef CONFIG_IPV6_ROUTE_INFO
+<<<<<<< HEAD
 	__s32		accept_ra_rt_info_min_plen;
 	__s32		accept_ra_rt_info_max_plen;
 #endif
 #endif
 	__s32		accept_ra_rt_table;
+=======
+	__s32		accept_ra_rt_info_max_plen;
+#endif
+#endif
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	__s32		proxy_ndp;
 	__s32		accept_source_route;
 	__s32		accept_ra_from_local;
@@ -66,7 +72,10 @@ struct ipv6_devconf {
 	} stable_secret;
 	__s32		use_oif_addrs_only;
 	__s32		keep_addr_on_down;
+<<<<<<< HEAD
 	__u32		addr_gen_mode;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	struct ctl_table_header *sysctl_header;
 };

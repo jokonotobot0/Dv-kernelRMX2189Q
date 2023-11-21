@@ -87,7 +87,10 @@
 #include <linux/slab.h>
 #include <linux/flex_array.h>
 #include <linux/posix-timers.h>
+<<<<<<< HEAD
 #include <linux/cpufreq_times.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #ifdef CONFIG_HARDWALL
 #include <asm/hardwall.h>
 #endif
@@ -96,12 +99,15 @@
 #include "fd.h"
 
 #include "../../lib/kstrtox.h"
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /* Wen.Luo@BSP.Kernel.Stability, 2019/04/26, Add for Process memory statistics */
 extern size_t get_ion_heap_by_pid(pid_t pid);
 extern size_t get_gl_mem_by_pid(pid_t pid);
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /* NOTE:
  *	Implementing inode permission operations in /proc is almost
@@ -409,6 +415,7 @@ static const struct file_operations proc_pid_cmdline_ops = {
 	.llseek	= generic_file_llseek,
 };
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /* Wen.Luo@BSP.Kernel.Stability, 2019/04/26, Add for Process memory statistics */
 #define P2K(x) ((x) << (PAGE_SHIFT - 10))	/* Converts #Pages to KB */
@@ -462,6 +469,8 @@ static const struct file_operations proc_pid_real_phymemory_ops = {
 };
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #ifdef CONFIG_KALLSYMS
 /*
  * Provides a wchan file via kallsyms in a proper one-value-per-file format.
@@ -1003,6 +1012,7 @@ static const struct file_operations proc_mem_operations = {
 	.release	= mem_release,
 };
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 static int proc_static_ux_show(struct seq_file *m, void *v)
 {
@@ -1166,6 +1176,8 @@ static const struct file_operations proc_stuck_trace_operations = {
 };
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int environ_open(struct inode *inode, struct file *file)
 {
 	return __mem_open(inode, file, PTRACE_MODE_READ);
@@ -1974,7 +1986,10 @@ int pid_getattr(struct vfsmount *mnt, struct dentry *dentry, struct kstat *stat)
 	return 0;
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* dentry stuff */
 
 /*
@@ -3146,6 +3161,7 @@ static const struct pid_entry tgid_base_stuff[] = {
 	REG("mounts",     S_IRUGO, proc_mounts_operations),
 	REG("mountinfo",  S_IRUGO, proc_mountinfo_operations),
 	REG("mountstats", S_IRUSR, proc_mountstats_operations),
+<<<<<<< HEAD
 #ifdef CONFIG_PROCESS_RECLAIM
 	REG("reclaim",    0222, proc_reclaim_operations),
 #endif
@@ -3153,6 +3169,11 @@ static const struct pid_entry tgid_base_stuff[] = {
 	REG("clear_refs", S_IWUSR, proc_clear_refs_operations),
 	REG("smaps",      S_IRUGO, proc_pid_smaps_operations),
 	REG("smaps_rollup", S_IRUGO, proc_pid_smaps_rollup_operations),
+=======
+#ifdef CONFIG_PROC_PAGE_MONITOR
+	REG("clear_refs", S_IWUSR, proc_clear_refs_operations),
+	REG("smaps",      S_IRUGO, proc_pid_smaps_operations),
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	REG("pagemap",    S_IRUSR, proc_pagemap_operations),
 #endif
 #ifdef CONFIG_SECURITY
@@ -3205,6 +3226,7 @@ static const struct pid_entry tgid_base_stuff[] = {
 	REG("timers",	  S_IRUGO, proc_timers_operations),
 #endif
 	REG("timerslack_ns", S_IRUGO|S_IWUGO, proc_pid_set_timerslack_ns_operations),
+<<<<<<< HEAD
 #ifdef CONFIG_CPU_FREQ_TIMES
 	ONE("time_in_state", 0444, proc_time_in_state_show),
 #endif
@@ -3216,6 +3238,8 @@ static const struct pid_entry tgid_base_stuff[] = {
 // Liujie.Xie@TECH.Kernel.Sched, 2019/08/29, add for stuck monitor
     REG("stuck_info", S_IRUGO | S_IWUGO, proc_stuck_trace_operations),
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 static int proc_tgid_base_readdir(struct file *file, struct dir_context *ctx)
@@ -3555,7 +3579,10 @@ static const struct pid_entry tid_base_stuff[] = {
 #ifdef CONFIG_PROC_PAGE_MONITOR
 	REG("clear_refs", S_IWUSR, proc_clear_refs_operations),
 	REG("smaps",     S_IRUGO, proc_tid_smaps_operations),
+<<<<<<< HEAD
 	REG("smaps_rollup", S_IRUGO, proc_pid_smaps_rollup_operations),
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	REG("pagemap",    S_IRUSR, proc_pagemap_operations),
 #endif
 #ifdef CONFIG_SECURITY
@@ -3601,6 +3628,7 @@ static const struct pid_entry tid_base_stuff[] = {
 	REG("projid_map", S_IRUGO|S_IWUSR, proc_projid_map_operations),
 	REG("setgroups",  S_IRUGO|S_IWUSR, proc_setgroups_operations),
 #endif
+<<<<<<< HEAD
 #ifdef CONFIG_CPU_FREQ_TIMES
 	ONE("time_in_state", 0444, proc_time_in_state_show),
 #endif
@@ -3609,6 +3637,8 @@ static const struct pid_entry tid_base_stuff[] = {
 	REG("real_phymemory",   S_IRUGO, proc_pid_real_phymemory_ops),
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 static int proc_tid_base_readdir(struct file *file, struct dir_context *ctx)

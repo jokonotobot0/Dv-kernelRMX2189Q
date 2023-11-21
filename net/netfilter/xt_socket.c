@@ -144,14 +144,21 @@ static bool xt_socket_sk_is_transparent(struct sock *sk)
 	}
 }
 
+<<<<<<< HEAD
 struct sock *xt_socket_lookup_slow_v4(struct net *net,
+=======
+static struct sock *xt_socket_lookup_slow_v4(struct net *net,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 					     const struct sk_buff *skb,
 					     const struct net_device *indev)
 {
 	const struct iphdr *iph = ip_hdr(skb);
 	struct sk_buff *data_skb = NULL;
 	int doff = 0;
+<<<<<<< HEAD
 	struct sock *sk = skb->sk;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	__be32 uninitialized_var(daddr), uninitialized_var(saddr);
 	__be16 uninitialized_var(dport), uninitialized_var(sport);
 	u8 uninitialized_var(protocol);
@@ -206,6 +213,7 @@ struct sock *xt_socket_lookup_slow_v4(struct net *net,
 	}
 #endif
 
+<<<<<<< HEAD
 	if (sk)
 		atomic_inc(&sk->sk_refcnt);
 	else
@@ -216,6 +224,11 @@ struct sock *xt_socket_lookup_slow_v4(struct net *net,
 	return sk;
 }
 EXPORT_SYMBOL(xt_socket_lookup_slow_v4);
+=======
+	return xt_socket_get_sock_v4(net, data_skb, doff, protocol, saddr,
+				     daddr, sport, dport, indev);
+}
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 static bool
 socket_match(const struct sk_buff *skb, struct xt_action_param *par,
@@ -247,7 +260,12 @@ socket_match(const struct sk_buff *skb, struct xt_action_param *par,
 		    transparent)
 			pskb->mark = sk->sk_mark;
 
+<<<<<<< HEAD
 		sock_gen_put(sk);
+=======
+		if (sk != skb->sk)
+			sock_gen_put(sk);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 		if (wildcard || !transparent)
 			sk = NULL;
@@ -351,11 +369,18 @@ xt_socket_get_sock_v6(struct net *net, struct sk_buff *skb, int doff,
 	return NULL;
 }
 
+<<<<<<< HEAD
 struct sock *xt_socket_lookup_slow_v6(struct net *net,
 					     const struct sk_buff *skb,
 					     const struct net_device *indev)
 {
 	struct sock *sk = skb->sk;
+=======
+static struct sock *xt_socket_lookup_slow_v6(struct net *net,
+					     const struct sk_buff *skb,
+					     const struct net_device *indev)
+{
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	__be16 uninitialized_var(dport), uninitialized_var(sport);
 	const struct in6_addr *daddr = NULL, *saddr = NULL;
 	struct ipv6hdr *iph = ipv6_hdr(skb);
@@ -395,6 +420,7 @@ struct sock *xt_socket_lookup_slow_v6(struct net *net,
 		return NULL;
 	}
 
+<<<<<<< HEAD
 	if (sk)
 		atomic_inc(&sk->sk_refcnt);
 	else
@@ -405,6 +431,11 @@ struct sock *xt_socket_lookup_slow_v6(struct net *net,
 	return sk;
 }
 EXPORT_SYMBOL(xt_socket_lookup_slow_v6);
+=======
+	return xt_socket_get_sock_v6(net, data_skb, doff, tproto, saddr, daddr,
+				     sport, dport, indev);
+}
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 static bool
 socket_mt6_v1_v2_v3(const struct sk_buff *skb, struct xt_action_param *par)

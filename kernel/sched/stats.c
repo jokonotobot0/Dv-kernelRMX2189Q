@@ -12,6 +12,7 @@
  */
 #define SCHEDSTAT_VERSION 15
 
+<<<<<<< HEAD
 #ifdef CONFIG_SMP
 static inline void show_easstat(struct seq_file *seq, struct eas_stats *stats)
 {
@@ -34,6 +35,8 @@ static inline void show_easstat(struct seq_file *seq, struct eas_stats *stats)
 }
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int show_schedstat(struct seq_file *seq, void *v)
 {
 	int cpu;
@@ -62,8 +65,11 @@ static int show_schedstat(struct seq_file *seq, void *v)
 		seq_printf(seq, "\n");
 
 #ifdef CONFIG_SMP
+<<<<<<< HEAD
 		show_easstat(seq, &rq->eas_stats);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		/* domain-specific stats */
 		rcu_read_lock();
 		for_each_domain(cpu, sd) {
@@ -90,8 +96,11 @@ static int show_schedstat(struct seq_file *seq, void *v)
 			    sd->sbf_count, sd->sbf_balanced, sd->sbf_pushed,
 			    sd->ttwu_wake_remote, sd->ttwu_move_affine,
 			    sd->ttwu_move_balance);
+<<<<<<< HEAD
 
 			show_easstat(seq, &sd->eas_stats);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		}
 		rcu_read_unlock();
 #endif

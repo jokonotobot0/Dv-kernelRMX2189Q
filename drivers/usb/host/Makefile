@@ -15,9 +15,12 @@ xhci-hcd-y += xhci-ring.o xhci-hub.o xhci-dbg.o
 xhci-hcd-y += xhci-trace.o
 ifneq ($(CONFIG_USB_XHCI_MTK), )
 	xhci-hcd-y += xhci-mtk-sch.o
+<<<<<<< HEAD
 ifneq ($(CONFIG_MTK_UAC_POWER_SAVING), )
     xhci-hcd-y += xhci-mtk-uac.o
 endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 endif
 
 xhci-plat-hcd-y := xhci-plat.o
@@ -85,7 +88,10 @@ obj-$(CONFIG_USB_HCD_BCMA)	+= bcma-hcd.o
 obj-$(CONFIG_USB_HCD_SSB)	+= ssb-hcd.o
 obj-$(CONFIG_USB_FOTG210_HCD)	+= fotg210-hcd.o
 obj-$(CONFIG_USB_MAX3421_HCD)	+= max3421-hcd.o
+<<<<<<< HEAD
 
 ifeq ($(CONFIG_MTK_UAC_POWER_SAVING),y)
     ccflags-y += -I$(srctree)/drivers/usb/mtu3
 endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

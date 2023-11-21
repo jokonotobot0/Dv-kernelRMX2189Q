@@ -457,12 +457,26 @@ struct inode *proc_get_inode(struct super_block *sb, struct proc_dir_entry *de)
 	return inode;
 }
 
+<<<<<<< HEAD
 int proc_fill_super(struct super_block *s)
 {
 	struct inode *root_inode;
 	int ret;
 
 	s->s_iflags |= SB_I_USERNS_VISIBLE | SB_I_NODEV;
+=======
+int proc_fill_super(struct super_block *s, void *data, int silent)
+{
+	struct pid_namespace *ns = get_pid_ns(s->s_fs_info);
+	struct inode *root_inode;
+	int ret;
+
+	if (!proc_parse_options(data, ns))
+		return -EINVAL;
+
+	/* User space would break if executables or devices appear on proc */
+	s->s_iflags |= SB_I_USERNS_VISIBLE | SB_I_NOEXEC | SB_I_NODEV;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	s->s_flags |= MS_NODIRATIME | MS_NOSUID | MS_NOEXEC;
 	s->s_blocksize = 1024;
 	s->s_blocksize_bits = 10;

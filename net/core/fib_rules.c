@@ -18,11 +18,14 @@
 #include <net/fib_rules.h>
 #include <net/ip_tunnels.h>
 
+<<<<<<< HEAD
 static const struct fib_kuid_range fib_kuid_range_unset = {
 	KUIDT_INIT(0),
 	KUIDT_INIT(~0),
 };
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 int fib_default_rule_add(struct fib_rules_ops *ops,
 			 u32 pref, u32 table, u32 flags)
 {
@@ -38,7 +41,10 @@ int fib_default_rule_add(struct fib_rules_ops *ops,
 	r->table = table;
 	r->flags = flags;
 	r->fr_net = ops->fro_net;
+<<<<<<< HEAD
 	r->uid_range = fib_kuid_range_unset;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	r->suppress_prefixlen = -1;
 	r->suppress_ifgroup = -1;
@@ -178,6 +184,7 @@ void fib_rules_unregister(struct fib_rules_ops *ops)
 }
 EXPORT_SYMBOL_GPL(fib_rules_unregister);
 
+<<<<<<< HEAD
 static int uid_range_set(struct fib_kuid_range *range)
 {
 	return uid_valid(range->start) && uid_valid(range->end);
@@ -206,6 +213,8 @@ static int nla_put_uid_range(struct sk_buff *skb, struct fib_kuid_range *range)
 	return nla_put(skb, FRA_UID_RANGE, sizeof(out), &out);
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int fib_rule_match(struct fib_rule *rule, struct fib_rules_ops *ops,
 			  struct flowi *fl, int flags,
 			  struct fib_lookup_arg *arg)
@@ -227,10 +236,13 @@ static int fib_rule_match(struct fib_rule *rule, struct fib_rules_ops *ops,
 	if (rule->l3mdev && !l3mdev_fib_rule_match(rule->fr_net, fl, arg))
 		goto out;
 
+<<<<<<< HEAD
 	if (uid_lt(fl->flowi_uid, rule->uid_range.start) ||
 	    uid_gt(fl->flowi_uid, rule->uid_range.end))
 		goto out;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	ret = ops->match(rule, fl, flags);
 out:
 	return (rule->flags & FIB_RULE_INVERT) ? !ret : ret;
@@ -343,10 +355,13 @@ static int rule_exists(struct fib_rules_ops *ops, struct fib_rule_hdr *frh,
 		if (r->l3mdev != rule->l3mdev)
 			continue;
 
+<<<<<<< HEAD
 		if (!uid_eq(r->uid_range.start, rule->uid_range.start) ||
 		    !uid_eq(r->uid_range.end, rule->uid_range.end))
 			continue;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		if (!ops->compare(r, frh, tb))
 			continue;
 		return 1;
@@ -425,7 +440,10 @@ int fib_nl_newrule(struct sk_buff *skb, struct nlmsghdr *nlh)
 	if (tb[FRA_TUN_ID])
 		rule->tun_id = nla_get_be64(tb[FRA_TUN_ID]);
 
+<<<<<<< HEAD
 	err = -EINVAL;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (tb[FRA_L3MDEV]) {
 #ifdef CONFIG_NET_L3_MASTER_DEV
 		rule->l3mdev = nla_get_u8(tb[FRA_L3MDEV]);
@@ -447,6 +465,10 @@ int fib_nl_newrule(struct sk_buff *skb, struct nlmsghdr *nlh)
 	else
 		rule->suppress_ifgroup = -1;
 
+<<<<<<< HEAD
+=======
+	err = -EINVAL;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (tb[FRA_GOTO]) {
 		if (rule->action != FR_ACT_GOTO)
 			goto errout_free;
@@ -471,6 +493,7 @@ int fib_nl_newrule(struct sk_buff *skb, struct nlmsghdr *nlh)
 	if (rule->l3mdev && rule->table)
 		goto errout_free;
 
+<<<<<<< HEAD
 	if (tb[FRA_UID_RANGE]) {
 		if (current_user_ns() != net->user_ns) {
 			err = -EPERM;
@@ -486,6 +509,8 @@ int fib_nl_newrule(struct sk_buff *skb, struct nlmsghdr *nlh)
 		rule->uid_range = fib_kuid_range_unset;
 	}
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if ((nlh->nlmsg_flags & NLM_F_EXCL) &&
 	    rule_exists(ops, frh, tb, rule)) {
 		err = -EEXIST;
@@ -554,7 +579,10 @@ int fib_nl_delrule(struct sk_buff *skb, struct nlmsghdr *nlh)
 	struct fib_rules_ops *ops = NULL;
 	struct fib_rule *rule, *tmp;
 	struct nlattr *tb[FRA_MAX+1];
+<<<<<<< HEAD
 	struct fib_kuid_range range;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	int err = -EINVAL;
 
 	if (nlh->nlmsg_len < nlmsg_msg_size(sizeof(*frh)))
@@ -574,6 +602,7 @@ int fib_nl_delrule(struct sk_buff *skb, struct nlmsghdr *nlh)
 	if (err < 0)
 		goto errout;
 
+<<<<<<< HEAD
 	if (tb[FRA_UID_RANGE]) {
 		range = nla_get_kuid_range(tb);
 		if (!uid_range_set(&range)) {
@@ -584,6 +613,8 @@ int fib_nl_delrule(struct sk_buff *skb, struct nlmsghdr *nlh)
 		range = fib_kuid_range_unset;
 	}
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	list_for_each_entry(rule, &ops->rules_list, list) {
 		if (frh->action && (frh->action != rule->action))
 			continue;
@@ -620,11 +651,14 @@ int fib_nl_delrule(struct sk_buff *skb, struct nlmsghdr *nlh)
 		    (rule->l3mdev != nla_get_u8(tb[FRA_L3MDEV])))
 			continue;
 
+<<<<<<< HEAD
 		if (uid_range_set(&range) &&
 		    (!uid_eq(rule->uid_range.start, range.start) ||
 		     !uid_eq(rule->uid_range.end, range.end)))
 			continue;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		if (!ops->compare(rule, frh, tb))
 			continue;
 
@@ -692,8 +726,12 @@ static inline size_t fib_rule_nlmsg_size(struct fib_rules_ops *ops,
 			 + nla_total_size(4) /* FRA_SUPPRESS_IFGROUP */
 			 + nla_total_size(4) /* FRA_FWMARK */
 			 + nla_total_size(4) /* FRA_FWMASK */
+<<<<<<< HEAD
 			 + nla_total_size_64bit(8) /* FRA_TUN_ID */
 			 + nla_total_size(sizeof(struct fib_kuid_range));
+=======
+			 + nla_total_size_64bit(8); /* FRA_TUN_ID */
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (ops->nlmsg_payload)
 		payload += ops->nlmsg_payload(rule);
@@ -753,9 +791,13 @@ static int fib_nl_fill_rule(struct sk_buff *skb, struct fib_rule *rule,
 	    (rule->tun_id &&
 	     nla_put_be64(skb, FRA_TUN_ID, rule->tun_id, FRA_PAD)) ||
 	    (rule->l3mdev &&
+<<<<<<< HEAD
 	     nla_put_u8(skb, FRA_L3MDEV, rule->l3mdev)) ||
 	    (uid_range_set(&rule->uid_range) &&
 	     nla_put_uid_range(skb, &rule->uid_range)))
+=======
+	     nla_put_u8(skb, FRA_L3MDEV, rule->l3mdev)))
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		goto nla_put_failure;
 
 	if (rule->suppress_ifgroup != -1) {

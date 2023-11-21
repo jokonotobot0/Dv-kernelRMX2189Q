@@ -44,14 +44,22 @@ static const struct file_operations capabilities_file_ops = {
 
 static int xenfs_fill_super(struct super_block *sb, void *data, int silent)
 {
+<<<<<<< HEAD
 	static const struct tree_descr xenfs_files[] = {
+=======
+	static struct tree_descr xenfs_files[] = {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		[2] = { "xenbus", &xen_xenbus_fops, S_IRUSR|S_IWUSR },
 		{ "capabilities", &capabilities_file_ops, S_IRUGO },
 		{ "privcmd", &xen_privcmd_fops, S_IRUSR|S_IWUSR },
 		{""},
 	};
 
+<<<<<<< HEAD
 	static const struct tree_descr xenfs_init_files[] = {
+=======
+	static struct tree_descr xenfs_init_files[] = {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		[2] = { "xenbus", &xen_xenbus_fops, S_IRUSR|S_IWUSR },
 		{ "capabilities", &capabilities_file_ops, S_IRUGO },
 		{ "privcmd", &xen_privcmd_fops, S_IRUSR|S_IWUSR },

@@ -14,6 +14,10 @@
 
 #include <linux/of.h>
 #include <linux/of_address.h>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <linux/io.h>
 #include <linux/slab.h>
 #include <linux/delay.h>
@@ -22,6 +26,7 @@
 #include "clk-mtk.h"
 #include "clk-gate.h"
 
+<<<<<<< HEAD
 static int is_subsys_pwr_on(struct mtk_clk_gate *cg)
 {
 	struct pwr_status *pwr = cg->pwr_stat;
@@ -38,17 +43,23 @@ static int is_subsys_pwr_on(struct mtk_clk_gate *cg)
 	return true;
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int mtk_cg_bit_is_cleared(struct clk_hw *hw)
 {
 	struct mtk_clk_gate *cg = to_mtk_clk_gate(hw);
 	u32 val;
 
+<<<<<<< HEAD
 #if !defined(CONFIG_MACH_MT6757)
 	regmap_read(cg->regmap, cg->sta_ofs, &val);
 #else
 	val = readl_relaxed((void __iomem *)((unsigned int)cg->regmap
 						+ cg->sta_ofs));
 #endif
+=======
+	regmap_read(cg->regmap, cg->sta_ofs, &val);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	val &= BIT(cg->bit);
 
@@ -59,17 +70,24 @@ static int mtk_cg_bit_is_set(struct clk_hw *hw)
 {
 	struct mtk_clk_gate *cg = to_mtk_clk_gate(hw);
 	u32 val;
+<<<<<<< HEAD
 #if !defined(CONFIG_MACH_MT6757)
 	regmap_read(cg->regmap, cg->sta_ofs, &val);
 #else
 	val = readl_relaxed((void __iomem *)((unsigned int)cg->regmap
 						+ cg->sta_ofs));
 #endif
+=======
+
+	regmap_read(cg->regmap, cg->sta_ofs, &val);
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	val &= BIT(cg->bit);
 
 	return val != 0;
 }
 
+<<<<<<< HEAD
 static int mtk_cg_is_enabled(struct clk_hw *hw)
 {
 	struct mtk_clk_gate *cg = to_mtk_clk_gate(hw);
@@ -99,11 +117,19 @@ static void mtk_cg_set_bit(struct clk_hw *hw)
 	writel_relaxed(BIT(cg->bit), (void __iomem *)((unsigned int)cg->regmap
 							+ cg->clr_ofs));
 #endif
+=======
+static void mtk_cg_set_bit(struct clk_hw *hw)
+{
+	struct mtk_clk_gate *cg = to_mtk_clk_gate(hw);
+
+	regmap_write(cg->regmap, cg->set_ofs, BIT(cg->bit));
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static void mtk_cg_clr_bit(struct clk_hw *hw)
 {
 	struct mtk_clk_gate *cg = to_mtk_clk_gate(hw);
+<<<<<<< HEAD
 #if !defined(CONFIG_MACH_MT6757)
 	regmap_write(cg->regmap, cg->clr_ofs, BIT(cg->bit));
 #else
@@ -126,6 +152,10 @@ static void mtk_cg_clr_bit_no_setclr(struct clk_hw *hw)
 	u32 cgbit = BIT(cg->bit);
 
 	regmap_update_bits(cg->regmap, cg->sta_ofs, cgbit, 0);
+=======
+
+	regmap_write(cg->regmap, cg->clr_ofs, BIT(cg->bit));
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static int mtk_cg_enable(struct clk_hw *hw)
@@ -152,6 +182,7 @@ static void mtk_cg_disable_inv(struct clk_hw *hw)
 	mtk_cg_clr_bit(hw);
 }
 
+<<<<<<< HEAD
 static int mtk_cg_enable_no_setclr(struct clk_hw *hw)
 {
 	mtk_cg_clr_bit_no_setclr(hw);
@@ -178,16 +209,25 @@ static void mtk_cg_disable_inv_no_setclr(struct clk_hw *hw)
 
 const struct clk_ops mtk_clk_gate_ops_setclr = {
 	.is_enabled	= mtk_cg_is_enabled,
+=======
+const struct clk_ops mtk_clk_gate_ops_setclr = {
+	.is_enabled	= mtk_cg_bit_is_cleared,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	.enable		= mtk_cg_enable,
 	.disable	= mtk_cg_disable,
 };
 
 const struct clk_ops mtk_clk_gate_ops_setclr_inv = {
+<<<<<<< HEAD
 	.is_enabled	= mtk_en_is_enabled,
+=======
+	.is_enabled	= mtk_cg_bit_is_set,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	.enable		= mtk_cg_enable_inv,
 	.disable	= mtk_cg_disable_inv,
 };
 
+<<<<<<< HEAD
 const struct clk_ops mtk_clk_gate_ops_no_setclr = {
 	.is_enabled	= mtk_cg_is_enabled,
 	.enable		= mtk_cg_enable_no_setclr,
@@ -200,6 +240,8 @@ const struct clk_ops mtk_clk_gate_ops_no_setclr_inv = {
 	.disable	= mtk_cg_disable_inv_no_setclr,
 };
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 struct clk *mtk_clk_register_gate(
 		const char *name,
 		const char *parent_name,
@@ -208,9 +250,13 @@ struct clk *mtk_clk_register_gate(
 		int clr_ofs,
 		int sta_ofs,
 		u8 bit,
+<<<<<<< HEAD
 		const struct clk_ops *ops,
 		struct pwr_status *pwr_stat,
 		struct regmap *pwr_regmap)
+=======
+		const struct clk_ops *ops)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	struct mtk_clk_gate *cg;
 	struct clk *clk;
@@ -231,8 +277,11 @@ struct clk *mtk_clk_register_gate(
 	cg->clr_ofs = clr_ofs;
 	cg->sta_ofs = sta_ofs;
 	cg->bit = bit;
+<<<<<<< HEAD
 	cg->pwr_stat = pwr_stat;
 	cg->pwr_regmap = pwr_regmap;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	cg->hw.init = &init;
 

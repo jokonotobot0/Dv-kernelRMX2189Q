@@ -680,6 +680,7 @@ struct drm_crtc {
 	 * context.
 	 */
 	struct drm_modeset_acquire_ctx *acquire_ctx;
+<<<<<<< HEAD
 
 	/**
 	 * @fence_context:
@@ -709,6 +710,8 @@ struct drm_crtc {
 	 * The name of the CRTC's fence timeline.
 	 */
 	char timeline_name[32];
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 /**
@@ -1189,6 +1192,7 @@ struct drm_mode_config {
 	 */
 	struct drm_property *prop_fb_id;
 	/**
+<<<<<<< HEAD
 	 * @prop_in_fence_fd: Sync File fd representing the incoming fences
 	 * for a Plane.
 	 */
@@ -1200,6 +1204,8 @@ struct drm_mode_config {
 	 */
 	struct drm_property *prop_out_fence_ptr;
 	/**
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	 * @prop_crtc_id: Default atomic plane property to specify the
 	 * &drm_crtc.
 	 */

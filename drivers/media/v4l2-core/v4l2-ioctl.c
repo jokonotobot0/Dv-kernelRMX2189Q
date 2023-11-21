@@ -1269,7 +1269,10 @@ static void v4l_fill_fmtdesc(struct v4l2_fmtdesc *fmt)
 		case V4L2_PIX_FMT_VC1_ANNEX_G:	descr = "VC-1 (SMPTE 412M Annex G)"; break;
 		case V4L2_PIX_FMT_VC1_ANNEX_L:	descr = "VC-1 (SMPTE 412M Annex L)"; break;
 		case V4L2_PIX_FMT_VP8:		descr = "VP8"; break;
+<<<<<<< HEAD
 		case V4L2_PIX_FMT_VP9:		descr = "VP9"; break;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		case V4L2_PIX_FMT_CPIA1:	descr = "GSPCA CPiA YUV"; break;
 		case V4L2_PIX_FMT_WNVA:		descr = "WNVA"; break;
 		case V4L2_PIX_FMT_SN9C10X:	descr = "GSPCA SN9C10X"; break;
@@ -1288,6 +1291,7 @@ static void v4l_fill_fmtdesc(struct v4l2_fmtdesc *fmt)
 		case V4L2_PIX_FMT_JPGL:		descr = "JPEG Lite"; break;
 		case V4L2_PIX_FMT_SE401:	descr = "GSPCA SE401"; break;
 		case V4L2_PIX_FMT_S5C_UYVY_JPG:	descr = "S5C73MX interleaved UYVY/JPEG"; break;
+<<<<<<< HEAD
 		case V4L2_PIX_FMT_DIVX:
 			descr = "DIVX";
 			break;
@@ -1324,6 +1328,8 @@ static void v4l_fill_fmtdesc(struct v4l2_fmtdesc *fmt)
 		case V4L2_PIX_FMT_MT21CS10TJ:
 		case V4L2_PIX_FMT_MT21CS10RJ:
 			descr = "Mediatek Video Block Format"; break;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		default:
 			WARN(1, "Unknown pixelformat 0x%08x\n", fmt->pixelformat);
 			if (fmt->description[0])
@@ -2507,8 +2513,16 @@ struct v4l2_ioctl_info {
 	unsigned int ioctl;
 	u32 flags;
 	const char * const name;
+<<<<<<< HEAD
 	int (*func)(const struct v4l2_ioctl_ops *ops, struct file *file,
 		    void *fh, void *p);
+=======
+	union {
+		u32 offset;
+		int (*func)(const struct v4l2_ioctl_ops *ops,
+				struct file *file, void *fh, void *p);
+	} u;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	void (*debug)(const void *arg, bool write_only);
 };
 
@@ -2516,21 +2530,40 @@ struct v4l2_ioctl_info {
 #define INFO_FL_PRIO	(1 << 0)
 /* This control can be valid if the filehandle passes a control handler. */
 #define INFO_FL_CTRL	(1 << 1)
+<<<<<<< HEAD
 /* This is ioctl has its own function */
 #define INFO_FL_FUNC	(1 << 2)
 /* Queuing ioctl */
 #define INFO_FL_QUEUE	(1 << 3)
+=======
+/* This is a standard ioctl, no need for special code */
+#define INFO_FL_STD	(1 << 2)
+/* This is ioctl has its own function */
+#define INFO_FL_FUNC	(1 << 3)
+/* Queuing ioctl */
+#define INFO_FL_QUEUE	(1 << 4)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* Zero struct from after the field to the end */
 #define INFO_FL_CLEAR(v4l2_struct, field)			\
 	((offsetof(struct v4l2_struct, field) +			\
 	  sizeof(((struct v4l2_struct *)0)->field)) << 16)
 #define INFO_FL_CLEAR_MASK (_IOC_SIZEMASK << 16)
 
+<<<<<<< HEAD
 #define DEFINE_IOCTL_STD_FNC(_vidioc) \
 	static int __v4l_ ## _vidioc ## _fnc(				\
 			const struct v4l2_ioctl_ops *ops, 		\
 			struct file *file, void *fh, void *p) {		\
 		return ops->_vidioc(file, fh, p); 			\
+=======
+#define IOCTL_INFO_STD(_ioctl, _vidioc, _debug, _flags)			\
+	[_IOC_NR(_ioctl)] = {						\
+		.ioctl = _ioctl,					\
+		.flags = _flags | INFO_FL_STD,				\
+		.name = #_ioctl,					\
+		.u.offset = offsetof(struct v4l2_ioctl_ops, _vidioc),	\
+		.debug = _debug,					\
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 
 #define IOCTL_INFO_FNC(_ioctl, _func, _debug, _flags)			\
@@ -2538,6 +2571,7 @@ struct v4l2_ioctl_info {
 		.ioctl = _ioctl,					\
 		.flags = _flags | INFO_FL_FUNC,				\
 		.name = #_ioctl,					\
+<<<<<<< HEAD
 		.func = _func,						\
 		.debug = _debug,					\
 	}
@@ -2576,6 +2610,12 @@ DEFINE_IOCTL_STD_FNC(vidioc_enum_dv_timings)
 DEFINE_IOCTL_STD_FNC(vidioc_query_dv_timings)
 DEFINE_IOCTL_STD_FNC(vidioc_dv_timings_cap)
 
+=======
+		.u.func = _func,					\
+		.debug = _debug,					\
+	}
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static struct v4l2_ioctl_info v4l2_ioctls[] = {
 	IOCTL_INFO_FNC(VIDIOC_QUERYCAP, v4l_querycap, v4l_print_querycap, 0),
 	IOCTL_INFO_FNC(VIDIOC_ENUM_FMT, v4l_enum_fmt, v4l_print_fmtdesc, INFO_FL_CLEAR(v4l2_fmtdesc, type)),
@@ -2760,8 +2800,19 @@ static long __video_do_ioctl(struct file *file,
 	}
 
 	write_only = _IOC_DIR(cmd) == _IOC_WRITE;
+<<<<<<< HEAD
 	if (info->flags & INFO_FL_FUNC) {
 		ret = info->func(ops, file, fh, arg);
+=======
+	if (info->flags & INFO_FL_STD) {
+		typedef int (*vidioc_op)(struct file *file, void *fh, void *p);
+		const void *p = vfd->ioctl_ops;
+		const vidioc_op *vidioc = p + info->u.offset;
+
+		ret = (*vidioc)(file, fh, arg);
+	} else if (info->flags & INFO_FL_FUNC) {
+		ret = info->u.func(ops, file, fh, arg);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	} else if (!ops->vidioc_default) {
 		ret = -ENOTTY;
 	} else {

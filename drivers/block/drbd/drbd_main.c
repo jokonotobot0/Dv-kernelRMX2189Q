@@ -2462,7 +2462,11 @@ static int drbd_congested(void *congested_data, int bdi_bits)
 
 	if (get_ldev(device)) {
 		q = bdev_get_queue(device->ldev->backing_bdev);
+<<<<<<< HEAD
 		r = bdi_congested(q->backing_dev_info, bdi_bits);
+=======
+		r = bdi_congested(&q->backing_dev_info, bdi_bits);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		put_ldev(device);
 		if (r)
 			reason = 'b';
@@ -2834,8 +2838,13 @@ enum drbd_ret_code drbd_create_device(struct drbd_config_context *adm_ctx, unsig
 	/* we have no partitions. we contain only ourselves. */
 	device->this_bdev->bd_contains = device->this_bdev;
 
+<<<<<<< HEAD
 	q->backing_dev_info->congested_fn = drbd_congested;
 	q->backing_dev_info->congested_data = device;
+=======
+	q->backing_dev_info.congested_fn = drbd_congested;
+	q->backing_dev_info.congested_data = device;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	blk_queue_make_request(q, drbd_make_request);
 	blk_queue_write_cache(q, true, true);

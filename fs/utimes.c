@@ -91,7 +91,11 @@ static int utimes_common(struct path *path, struct timespec *times)
 	}
 retry_deleg:
 	inode_lock(inode);
+<<<<<<< HEAD
 	error = notify_change2(path->mnt, path->dentry, &newattrs, &delegated_inode);
+=======
+	error = notify_change(path->dentry, &newattrs, &delegated_inode);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	inode_unlock(inode);
 	if (delegated_inode) {
 		error = break_deleg_wait(&delegated_inode);

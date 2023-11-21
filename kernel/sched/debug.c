@@ -261,6 +261,7 @@ set_table_entry(struct ctl_table *entry,
 }
 
 static struct ctl_table *
+<<<<<<< HEAD
 sd_alloc_ctl_energy_table(struct sched_group_energy *sge)
 {
 	struct ctl_table *table = sd_alloc_ctl_entry(5);
@@ -315,6 +316,11 @@ sd_alloc_ctl_domain_table(struct sched_domain *sd)
 	}
 
 	table = sd_alloc_ctl_entry(nr_entries);
+=======
+sd_alloc_ctl_domain_table(struct sched_domain *sd)
+{
+	struct ctl_table *table = sd_alloc_ctl_entry(14);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (table == NULL)
 		return NULL;
@@ -347,6 +353,7 @@ sd_alloc_ctl_domain_table(struct sched_domain *sd)
 		sizeof(long), 0644, proc_doulongvec_minmax, false);
 	set_table_entry(&table[12], "name", sd->name,
 		CORENAME_MAX_SIZE, 0444, proc_dostring, false);
+<<<<<<< HEAD
 	sg = sd->groups;
 	if (sg->sge) {
 		char buf[32];
@@ -360,6 +367,9 @@ sd_alloc_ctl_domain_table(struct sched_domain *sd)
 		} while (entry++, i++, sg = sg->next, sg != sd->groups);
 	}
 	/* &table[nr_entries-1] is terminator */
+=======
+	/* &table[13] is terminator */
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	return table;
 }
@@ -656,8 +666,12 @@ static void print_cpu(struct seq_file *m, int cpu)
 			   cpu, freq / 1000, (freq % 1000));
 	}
 #else
+<<<<<<< HEAD
 	SEQ_printf(m, "cpu#%d: %s\n", cpu,
 			cpu_is_offline(cpu) ? "Offline" : "Online");
+=======
+	SEQ_printf(m, "cpu#%d\n", cpu);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif
 
 #define P(x)								\
@@ -778,10 +792,16 @@ static int sched_debug_show(struct seq_file *m, void *v)
 {
 	int cpu = (unsigned long)(v - 2);
 
+<<<<<<< HEAD
 	if (cpu != -1) {
 		print_cpu(m, cpu);
 		SEQ_printf(m, "\n");
 	} else
+=======
+	if (cpu != -1)
+		print_cpu(m, cpu);
+	else
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		sched_debug_header(m);
 
 	return 0;
@@ -792,9 +812,15 @@ void sysrq_sched_debug_show(void)
 	int cpu;
 
 	sched_debug_header(NULL);
+<<<<<<< HEAD
 	/* for_each_online_cpu(cpu) */
 	for_each_possible_cpu(cpu)
 		print_cpu(NULL, cpu);
+=======
+	for_each_online_cpu(cpu)
+		print_cpu(NULL, cpu);
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 /*
@@ -983,6 +1009,7 @@ void proc_sched_show_task(struct task_struct *p, struct seq_file *m)
 		P_SCHEDSTAT(se.statistics.nr_wakeups_affine_attempts);
 		P_SCHEDSTAT(se.statistics.nr_wakeups_passive);
 		P_SCHEDSTAT(se.statistics.nr_wakeups_idle);
+<<<<<<< HEAD
 		/* eas */
 		/* select_idle_sibling() */
 		P_SCHEDSTAT(se.statistics.nr_wakeups_sis_attempts);
@@ -1010,6 +1037,9 @@ void proc_sched_show_task(struct task_struct *p, struct seq_file *m)
 		P_SCHEDSTAT(se.statistics.nr_wakeups_cas_attempts);
 		P_SCHEDSTAT(se.statistics.nr_wakeups_cas_count);
  
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		avg_atom = p->se.sum_exec_runtime;
 		if (nr_switches)
 			avg_atom = div64_ul(avg_atom, nr_switches);
@@ -1070,5 +1100,8 @@ void proc_sched_set_task(struct task_struct *p)
 	memset(&p->se.statistics, 0, sizeof(p->se.statistics));
 #endif
 }
+<<<<<<< HEAD
 
 #include "debug_aee.c"
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

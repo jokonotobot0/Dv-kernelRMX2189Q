@@ -24,6 +24,7 @@ obj-$(CONFIG_INPUT_JOYSTICK)	+= joystick/
 obj-$(CONFIG_INPUT_TABLET)	+= tablet/
 obj-$(CONFIG_INPUT_TOUCHSCREEN)	+= touchscreen/
 obj-$(CONFIG_INPUT_MISC)	+= misc/
+<<<<<<< HEAD
 obj-$(CONFIG_MTK_FINGERPRINT_SUPPORT)  += fingerprint/
 
 obj-$(CONFIG_INPUT_APMPOWER)	+= apm-power.o
@@ -38,3 +39,9 @@ obj-$(CONFIG_OPPO_FINGERPRINT)  += oppo_fp_drivers/
 obj-$(CONFIG_OPPO_FINGERPRINT)  += oppo_seccommon_drivers/
 #endif
 
+=======
+
+obj-$(CONFIG_INPUT_APMPOWER)	+= apm-power.o
+
+obj-$(CONFIG_RMI4_CORE)		+= rmi4/
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

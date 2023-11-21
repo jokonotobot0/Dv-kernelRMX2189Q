@@ -144,6 +144,7 @@
 
 #include "net-sysfs.h"
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 //Junyuan.Huang@PSW.CN.WiFi.Network.1471780, 2018/06/26,
 //Add for limit speed function
@@ -151,6 +152,8 @@
 #endif /* VENDOR_EDIT */
 
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* Instead of increasing this, you should create a hash table. */
 #define MAX_GRO_SKBS 8
 
@@ -2976,6 +2979,7 @@ static int xmit_one(struct sk_buff *skb, struct net_device *dev,
 	unsigned int len;
 	int rc;
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 //Junyuan.Huang@PSW.CN.WiFi.Network.1471780, 2018/06/26,
 //Add for limit speed function
@@ -2984,6 +2988,9 @@ static int xmit_one(struct sk_buff *skb, struct net_device *dev,
 #else /* VENDOR_EDIT */
 	if (!list_empty(&ptype_all) || !list_empty(&dev->ptype_all))
 #endif /* VENDOR_EDIT */
+=======
+	if (!list_empty(&ptype_all) || !list_empty(&dev->ptype_all))
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		dev_queue_xmit_nit(skb, dev);
 
 	len = skb->len;
@@ -3022,12 +3029,15 @@ out:
 	return skb;
 }
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 //Junyuan.Huang@PSW.CN.WiFi.Network.1471780, 2018/06/26,
 //Add for limit speed function
 EXPORT_SYMBOL_GPL(dev_hard_start_xmit);
 #endif /* VENDOR_EDIT */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static struct sk_buff *validate_xmit_vlan(struct sk_buff *skb,
 					  netdev_features_t features)
 {
@@ -7480,6 +7490,7 @@ EXPORT_SYMBOL(netdev_refcnt_read);
  * We can get stuck here if buggy protocols don't correctly
  * call dev_put.
  */
+<<<<<<< HEAD
  
  #if defined (REFCNT_DEBUG) && defined (REFCNT_MEMORY_DEBUG)
 unsigned int trace_idx;
@@ -7489,10 +7500,13 @@ struct refcnt_trace trace_array[MAX_TRACE_LEN];
 EXPORT_SYMBOL(trace_array);
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static void netdev_wait_allrefs(struct net_device *dev)
 {
 	unsigned long rebroadcast_time, warning_time;
 	int refcnt;
+<<<<<<< HEAD
     #if defined (REFCNT_DEBUG) && defined (REFCNT_MEMORY_DEBUG)
     bool refcnt_trace_dump = false;
     unsigned int idx = 0;
@@ -7500,6 +7514,8 @@ static void netdev_wait_allrefs(struct net_device *dev)
     unsigned int tmp = 0;
     struct stack_trace trace;
     #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	linkwatch_forget_dev(dev);
 
@@ -7538,6 +7554,7 @@ static void netdev_wait_allrefs(struct net_device *dev)
 
 		refcnt = netdev_refcnt_read(dev);
 
+<<<<<<< HEAD
         #ifndef VENDOR_EDIT
 		//Laixin@PSW.CN.WiFi.Basic.Switch.NA, 2019/05/27
 		//Modify for: debug wlan0 refcnt is not 0
@@ -7581,6 +7598,12 @@ static void netdev_wait_allrefs(struct net_device *dev)
                 pr_info("[mtk_net]====[ wlan0 refcnt backtrace end ]===========\n");
             }
             #endif
+=======
+		if (refcnt && time_after(jiffies, warning_time + 10 * HZ)) {
+			pr_emerg("unregister_netdevice: waiting for %s to become free. Usage count = %d\n",
+				 dev->name, refcnt);
+			warning_time = jiffies;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		}
 	}
 }

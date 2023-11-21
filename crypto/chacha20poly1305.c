@@ -13,7 +13,11 @@
 #include <crypto/internal/hash.h>
 #include <crypto/internal/skcipher.h>
 #include <crypto/scatterwalk.h>
+<<<<<<< HEAD
 #include <crypto/chacha.h>
+=======
+#include <crypto/chacha20.h>
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <crypto/poly1305.h>
 #include <linux/err.h>
 #include <linux/init.h>
@@ -51,7 +55,11 @@ struct poly_req {
 };
 
 struct chacha_req {
+<<<<<<< HEAD
 	u8 iv[CHACHA_IV_SIZE];
+=======
+	u8 iv[CHACHA20_IV_SIZE];
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct scatterlist src[1];
 	struct skcipher_request req; /* must be last member */
 };
@@ -97,7 +105,11 @@ static void chacha_iv(u8 *iv, struct aead_request *req, u32 icb)
 	memcpy(iv, &leicb, sizeof(leicb));
 	memcpy(iv + sizeof(leicb), ctx->salt, ctx->saltlen);
 	memcpy(iv + sizeof(leicb) + ctx->saltlen, req->iv,
+<<<<<<< HEAD
 	       CHACHA_IV_SIZE - sizeof(leicb) - ctx->saltlen);
+=======
+	       CHACHA20_IV_SIZE - sizeof(leicb) - ctx->saltlen);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static int poly_verify_tag(struct aead_request *req)
@@ -502,7 +514,11 @@ static int chachapoly_setkey(struct crypto_aead *aead, const u8 *key,
 	struct chachapoly_ctx *ctx = crypto_aead_ctx(aead);
 	int err;
 
+<<<<<<< HEAD
 	if (keylen != ctx->saltlen + CHACHA_KEY_SIZE)
+=======
+	if (keylen != ctx->saltlen + CHACHA20_KEY_SIZE)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		return -EINVAL;
 
 	keylen -= ctx->saltlen;
@@ -647,7 +663,11 @@ static int chachapoly_create(struct crypto_template *tmpl, struct rtattr **tb,
 
 	err = -EINVAL;
 	/* Need 16-byte IV size, including Initial Block Counter value */
+<<<<<<< HEAD
 	if (crypto_skcipher_alg_ivsize(chacha) != CHACHA_IV_SIZE)
+=======
+	if (crypto_skcipher_alg_ivsize(chacha) != CHACHA20_IV_SIZE)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		goto out_drop_chacha;
 	/* Not a stream cipher? */
 	if (chacha->base.cra_blocksize != 1)

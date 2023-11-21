@@ -249,7 +249,10 @@ static inline u64 ktime_get_raw_ns(void)
 
 extern u64 ktime_get_mono_fast_ns(void);
 extern u64 ktime_get_raw_fast_ns(void);
+<<<<<<< HEAD
 extern u64 ktime_get_boot_fast_ns(void);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /*
  * Timespec interfaces utilizing the ktime based ones

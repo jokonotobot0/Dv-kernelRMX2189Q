@@ -30,6 +30,10 @@
 #include <linux/userfaultfd_k.h>
 #include <linux/page_idle.h>
 #include <linux/shmem_fs.h>
+<<<<<<< HEAD
+=======
+#include <linux/page_owner.h>
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #include <asm/tlb.h>
 #include <asm/pgalloc.h>
@@ -1890,7 +1894,10 @@ static void __split_huge_page_tail(struct page *head, int tail,
 			 (1L << PG_mlocked) |
 			 (1L << PG_uptodate) |
 			 (1L << PG_active) |
+<<<<<<< HEAD
 			 (1L << PG_workingset) |
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			 (1L << PG_locked) |
 			 (1L << PG_unevictable) |
 			 (1L << PG_dirty)));
@@ -1951,6 +1958,12 @@ static void __split_huge_page(struct page *page, struct list_head *list,
 	}
 
 	ClearPageCompound(head);
+<<<<<<< HEAD
+=======
+
+	split_page_owner(head, HPAGE_PMD_ORDER);
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* See comment in __split_huge_page_tail() */
 	if (PageAnon(head)) {
 		page_ref_inc(head);

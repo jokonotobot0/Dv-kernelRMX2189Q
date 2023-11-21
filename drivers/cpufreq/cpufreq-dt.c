@@ -282,6 +282,7 @@ static int cpufreq_init(struct cpufreq_policy *policy)
 
 	policy->cpuinfo.transition_latency = transition_latency;
 
+<<<<<<< HEAD
         /*
          * Android: set default parameters for parity between schedutil and
          * schedfreq
@@ -289,6 +290,8 @@ static int cpufreq_init(struct cpufreq_policy *policy)
 	policy->up_transition_delay_us = transition_latency / NSEC_PER_USEC;
 	policy->down_transition_delay_us = 50000; /* 50ms */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return 0;
 
 out_free_cpufreq_table:

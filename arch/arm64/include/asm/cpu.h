@@ -70,7 +70,10 @@ void __init init_cpu_features(struct cpuinfo_arm64 *info);
 void update_cpu_features(int cpu, struct cpuinfo_arm64 *info,
 				 struct cpuinfo_arm64 *boot);
 
+<<<<<<< HEAD
 /* setup machine descriptor */
 void machine_desc_set(const char *str);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif /* __ASM_CPU_H */

@@ -304,6 +304,7 @@ int anon_vma_clone(struct vm_area_struct *dst, struct vm_area_struct *src)
 	return -ENOMEM;
 }
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /*wanghao@BSP.Kernel.Function 2019/10/10 add for avoid apk recursive fork*/
 #define RECURSIVE_MAX_FORK_TIME 30
@@ -375,6 +376,8 @@ int anon_vma_clone_oppo(struct vm_area_struct *dst, struct vm_area_struct *src)
 }
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * Attach vma to its own anon_vma, as well as to the anon_vmas that
  * the corresponding VMA in the parent process is attached to.
@@ -397,6 +400,7 @@ int anon_vma_fork(struct vm_area_struct *vma, struct vm_area_struct *pvma)
 	 * First, attach the new VMA to the parent VMA's anon_vmas,
 	 * so rmap can find non-COWed pages in child processes.
 	 */
+<<<<<<< HEAD
 	#ifdef VENDOR_EDIT
 	/*wanghao@BSP.Kernel.Function 2019/10/10 add for avoid apk recursive fork*/
 	error = anon_vma_clone_oppo(vma, pvma);
@@ -414,6 +418,11 @@ int anon_vma_fork(struct vm_area_struct *vma, struct vm_area_struct *pvma)
 	if (error)
 		return error;
 	#endif
+=======
+	error = anon_vma_clone(vma, pvma);
+	if (error)
+		return error;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/* An existing anon_vma has been reused, all done then. */
 	if (vma->anon_vma)
@@ -1789,6 +1798,7 @@ static int page_mapcount_is_zero(struct page *page)
 	return !page_mapcount(page);
 }
 
+<<<<<<< HEAD
 
 #if defined(VENDOR_EDIT) && defined(CONFIG_PROCESS_RECLAIM)
 /* Kui.Zhang@PSW.TEC.Kernel.Performance. 2019/01/16,
@@ -1812,6 +1822,8 @@ static int page_mapcount_is_zero(struct page *page)
 int try_to_unmap(struct page *page, enum ttu_flags flags,
 		struct vm_area_struct *vma)
 #else
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /**
  * try_to_unmap - try to remove all page table mappings to a page
  * @page: the page to get unmapped
@@ -1827,7 +1839,10 @@ int try_to_unmap(struct page *page, enum ttu_flags flags,
  * SWAP_MLOCK	- page is mlocked.
  */
 int try_to_unmap(struct page *page, enum ttu_flags flags)
+<<<<<<< HEAD
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	int ret;
 	struct rmap_private rp = {
@@ -1840,12 +1855,15 @@ int try_to_unmap(struct page *page, enum ttu_flags flags)
 		.arg = &rp,
 		.done = page_mapcount_is_zero,
 		.anon_lock = page_lock_anon_vma_read,
+<<<<<<< HEAD
 #if defined(VENDOR_EDIT) && defined(CONFIG_PROCESS_RECLAIM)
 		/* Kui.Zhang@PSW.TEC.Kernel.Performance. 2019/01/16,
 		 * Record the vma
 		 */
 		.target_vma = vma,
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	};
 
 	/*
@@ -1905,12 +1923,16 @@ int try_to_munlock(struct page *page)
 		.arg = &rp,
 		.done = page_not_mapped,
 		.anon_lock = page_lock_anon_vma_read,
+<<<<<<< HEAD
 #if defined(VENDOR_EDIT) && defined(CONFIG_PROCESS_RECLAIM)
 		/* Kui.Zhang@PSW.TEC.Kernel.Performance. 2019/01/16,
 		 * Record the vma
 		 */
 		.target_vma = NULL,
 #endif
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	};
 
 	VM_BUG_ON_PAGE(!PageLocked(page) || PageLRU(page), page);
@@ -1972,6 +1994,7 @@ static int rmap_walk_anon(struct page *page, struct rmap_walk_control *rwc,
 	struct anon_vma_chain *avc;
 	int ret = SWAP_AGAIN;
 
+<<<<<<< HEAD
 #if defined(VENDOR_EDIT) && defined(CONFIG_PROCESS_RECLAIM)
 	/* Kui.Zhang@PSW.TEC.Kernel.Performance. 2019/01/16,
 	 * Doing relcaim of the special vma
@@ -1982,6 +2005,8 @@ static int rmap_walk_anon(struct page *page, struct rmap_walk_control *rwc,
 	}
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (locked) {
 		anon_vma = page_anon_vma(page);
 		/* anon_vma disappear under us? */
@@ -2049,6 +2074,7 @@ static int rmap_walk_file(struct page *page, struct rmap_walk_control *rwc,
 	pgoff = page_to_pgoff(page);
 	if (!locked)
 		i_mmap_lock_read(mapping);
+<<<<<<< HEAD
 
 #if defined(VENDOR_EDIT) && defined(CONFIG_PROCESS_RECLAIM)
 	/* Kui.Zhang@PSW.TEC.Kernel.Performance. 2019/01/16,
@@ -2061,6 +2087,8 @@ static int rmap_walk_file(struct page *page, struct rmap_walk_control *rwc,
 	}
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	vma_interval_tree_foreach(vma, &mapping->i_mmap, pgoff, pgoff) {
 		unsigned long address = vma_address(page, vma);
 

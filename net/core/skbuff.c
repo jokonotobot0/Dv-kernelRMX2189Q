@@ -83,6 +83,7 @@ static struct kmem_cache *skbuff_fclone_cache __read_mostly;
 int sysctl_max_skb_frags __read_mostly = MAX_SKB_FRAGS;
 EXPORT_SYMBOL(sysctl_max_skb_frags);
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 //Junyuan.Huang@PSW.CN.WiFi.Network.1471780, 2018/06/26,
 //Add for limit speed function
@@ -169,6 +170,8 @@ static void skb_copy_stored_cb(struct sk_buff *new, const struct sk_buff *__old)
 }
 #endif /* VENDOR_EDIT */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /**
  *	skb_panic - private function for out-of-line support
  *	@skb:	buffer
@@ -744,6 +747,7 @@ static void skb_release_head_state(struct sk_buff *skb)
 		WARN_ON(in_irq());
 		skb->destructor(skb);
 	}
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 //Junyuan.Huang@PSW.CN.WiFi.Network.1471780, 2018/06/26,
 //Add for limit speed function
@@ -768,6 +772,8 @@ static void skb_release_head_state(struct sk_buff *skb)
 	if (skb->nf_queue_entry && net_ratelimit())
 		pr_warn("%s\n", "IMQ: kfree_skb: skb->nf_queue_entry != NULL");
 #endif /* VENDOR_EDIT */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #if IS_ENABLED(CONFIG_NF_CONNTRACK)
 	nf_conntrack_put(skb->nfct);
 #endif
@@ -957,12 +963,15 @@ static void __copy_skb_header(struct sk_buff *new, const struct sk_buff *old)
 	new->sp			= secpath_get(old->sp);
 #endif
 	__nf_copy(new, old, false);
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 //Junyuan.Huang@PSW.CN.WiFi.Network.1471780, 2018/06/26,
 //Add for limit speed function
 	new->cb_next = NULL;
 	/*skb_copy_stored_cb(new, old);*/
 #endif /* VENDOR_EDIT */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/* Note : this field could be in headers_start/headers_end section
 	 * It is not yet because we do not want to have a 16 bit hole
@@ -3618,6 +3627,7 @@ void __init skb_init(void)
 						0,
 						SLAB_HWCACHE_ALIGN|SLAB_PANIC,
 						NULL);
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 //Junyuan.Huang@PSW.CN.WiFi.Network.1471780, 2018/06/26,
 //Add for limit speed function
@@ -3627,6 +3637,8 @@ void __init skb_init(void)
 						  SLAB_HWCACHE_ALIGN|SLAB_PANIC,
 						  NULL);
 #endif /* VENDOR_EDIT */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static int

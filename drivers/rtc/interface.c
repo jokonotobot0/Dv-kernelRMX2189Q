@@ -384,6 +384,7 @@ int rtc_set_alarm(struct rtc_device *rtc, struct rtc_wkalrm *alarm)
 }
 EXPORT_SYMBOL_GPL(rtc_set_alarm);
 
+<<<<<<< HEAD
 int rtc_set_alarm_poweron(struct rtc_device *rtc, struct rtc_wkalrm *alarm)
 {
 	int err;
@@ -408,6 +409,8 @@ int rtc_set_alarm_poweron(struct rtc_device *rtc, struct rtc_wkalrm *alarm)
 }
 EXPORT_SYMBOL_GPL(rtc_set_alarm_poweron);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* Called once per device from rtc_device_register */
 int rtc_initialize_alarm(struct rtc_device *rtc, struct rtc_wkalrm *alarm)
 {

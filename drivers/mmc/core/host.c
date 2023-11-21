@@ -31,6 +31,11 @@
 #include "slot-gpio.h"
 #include "pwrseq.h"
 
+<<<<<<< HEAD
+=======
+#define cls_dev_to_mmc_host(d)	container_of(d, struct mmc_host, class_dev)
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static DEFINE_IDA(mmc_host_ida);
 static DEFINE_SPINLOCK(mmc_host_lock);
 
@@ -321,7 +326,11 @@ int mmc_of_parse(struct mmc_host *host)
 	host->dsr_req = !device_property_read_u32(dev, "dsr", &host->dsr);
 	if (host->dsr_req && (host->dsr & ~0xffff)) {
 		dev_err(host->parent,
+<<<<<<< HEAD
 		"device tree specified broken value for DSR: 0x%x, ignoring\n",
+=======
+			"device tree specified broken value for DSR: 0x%x, ignoring\n",
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			host->dsr);
 		host->dsr_req = 0;
 	}
@@ -342,9 +351,12 @@ struct mmc_host *mmc_alloc_host(int extra, struct device *dev)
 {
 	int err;
 	struct mmc_host *host;
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_EMMC_CQ_SUPPORT
 	int i;
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	host = kzalloc(sizeof(struct mmc_host) + extra, GFP_KERNEL);
 	if (!host)
@@ -399,6 +411,7 @@ again:
 	host->max_blk_size = 512;
 	host->max_blk_count = PAGE_SIZE / 512;
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_EMMC_CQ_SUPPORT
 	for (i = 0; i < EMMC_MAX_QUEUE_DEPTH; i++)
 		host->areq_que[i] = NULL;
@@ -417,6 +430,8 @@ again:
 
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return host;
 }
 
@@ -447,6 +462,7 @@ int mmc_add_host(struct mmc_host *host)
 	mmc_add_host_debugfs(host);
 #endif
 
+<<<<<<< HEAD
 #ifdef CONFIG_BLOCK
 	mmc_latency_hist_sysfs_init(host);
 #endif
@@ -454,6 +470,10 @@ int mmc_add_host(struct mmc_host *host)
 	mmc_start_host(host);
 	if (!(host->pm_flags & MMC_PM_IGNORE_PM_NOTIFY))
 		mmc_register_pm_notifier(host);
+=======
+	mmc_start_host(host);
+	mmc_register_pm_notifier(host);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	return 0;
 }
@@ -470,18 +490,25 @@ EXPORT_SYMBOL(mmc_add_host);
  */
 void mmc_remove_host(struct mmc_host *host)
 {
+<<<<<<< HEAD
 	if (!(host->pm_flags & MMC_PM_IGNORE_PM_NOTIFY))
 		mmc_unregister_pm_notifier(host);
+=======
+	mmc_unregister_pm_notifier(host);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	mmc_stop_host(host);
 
 #ifdef CONFIG_DEBUG_FS
 	mmc_remove_host_debugfs(host);
 #endif
 
+<<<<<<< HEAD
 #ifdef CONFIG_BLOCK
 	mmc_latency_hist_sysfs_exit(host);
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	device_del(&host->class_dev);
 
 	led_trigger_unregister_simple(host->led);

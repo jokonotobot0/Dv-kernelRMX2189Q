@@ -45,12 +45,20 @@ static ssize_t power_supply_show_property(struct device *dev,
 					  char *buf) {
 	static char *type_text[] = {
 		"Unknown", "Battery", "UPS", "Mains", "USB",
+<<<<<<< HEAD
 		"USB_DCP", "USB_CDP", "USB_ACA", "Wireless", "USB_C",
 		"USB_PD", "USB_PD_DRP"
 	};
 	static char *status_text[] = {
 		"Unknown", "Charging", "Discharging", "Not charging", "Full",
 		"Cmd discharging"
+=======
+		"USB_DCP", "USB_CDP", "USB_ACA", "USB_C",
+		"USB_PD", "USB_PD_DRP"
+	};
+	static char *status_text[] = {
+		"Unknown", "Charging", "Discharging", "Not charging", "Full"
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	};
 	static char *charge_type[] = {
 		"Unknown", "N/A", "Trickle", "Fast"
@@ -70,9 +78,12 @@ static ssize_t power_supply_show_property(struct device *dev,
 	static char *scope_text[] = {
 		"Unknown", "System", "Device"
 	};
+<<<<<<< HEAD
 static char *power_supply_battery_name[] = {
 	"oppo-atl-4v45-5000mah", "oppo-sdi-4v45-5000mah", "oppo-battery-unknown", "oppo-battery-unknown"
 };
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	ssize_t ret = 0;
 	struct power_supply *psy = dev_get_drvdata(dev);
 	const ptrdiff_t off = attr - power_supply_attrs;
@@ -108,6 +119,7 @@ static char *power_supply_battery_name[] = {
 		return sprintf(buf, "%s\n", type_text[value.intval]);
 	else if (off == POWER_SUPPLY_PROP_SCOPE)
 		return sprintf(buf, "%s\n", scope_text[value.intval]);
+<<<<<<< HEAD
 #ifdef ODM_WT_EDIT
 //Mingyao.Xie@ODM_WT.BSP.Storage.otg, 2018/11/01, Modify for monet otg_switch
 	else if (off == POWER_SUPPLY_PROP_OTG_SWITCH)
@@ -130,6 +142,12 @@ static char *power_supply_battery_name[] = {
 		return sprintf(buf, "%lld\n", value.int64val);
 	else
 		return sprintf(buf, "%d\n", value.intval);
+=======
+	else if (off >= POWER_SUPPLY_PROP_MODEL_NAME)
+		return sprintf(buf, "%s\n", value.strval);
+
+	return sprintf(buf, "%d\n", value.intval);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static ssize_t power_supply_store_property(struct device *dev,
@@ -158,6 +176,7 @@ static ssize_t power_supply_store_property(struct device *dev,
 /* Must be in the same order as POWER_SUPPLY_PROP_* */
 static struct device_attribute power_supply_attrs[] = {
 	/* Properties of type `int' */
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /* Jianchao.Shi@BSP.CHG.Basic, 2018/11/09, sjc Add for charging */
 	POWER_SUPPLY_ATTR(authenticate),
@@ -177,6 +196,8 @@ static struct device_attribute power_supply_attrs[] = {
 	POWER_SUPPLY_ATTR(charger_ic),
 #endif /* VENDOR_EDIT */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	POWER_SUPPLY_ATTR(status),
 	POWER_SUPPLY_ATTR(charge_type),
 	POWER_SUPPLY_ATTR(health),
@@ -237,6 +258,7 @@ static struct device_attribute power_supply_attrs[] = {
 	POWER_SUPPLY_ATTR(time_to_full_avg),
 	POWER_SUPPLY_ATTR(type),
 	POWER_SUPPLY_ATTR(scope),
+<<<<<<< HEAD
 	POWER_SUPPLY_ATTR(precharge_current),
 	POWER_SUPPLY_ATTR(charge_term_current),
 	POWER_SUPPLY_ATTR(calibrate),
@@ -342,6 +364,11 @@ static struct device_attribute power_supply_attrs[] = {
 	POWER_SUPPLY_ATTR(battery_id_vol),
 	POWER_SUPPLY_ATTR(battery_type),
 #endif
+=======
+	POWER_SUPPLY_ATTR(charge_term_current),
+	POWER_SUPPLY_ATTR(calibrate),
+	/* Properties of type `const char *' */
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	POWER_SUPPLY_ATTR(model_name),
 	POWER_SUPPLY_ATTR(manufacturer),
 	POWER_SUPPLY_ATTR(serial_number),

@@ -722,7 +722,10 @@ void __cfg80211_connect_result(struct net_device *dev, const u8 *bssid,
 		kzfree(wdev->connect_keys);
 		wdev->connect_keys = NULL;
 		wdev->ssid_len = 0;
+<<<<<<< HEAD
 		wdev->conn_owner_nlportid = 0;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		if (bss) {
 			cfg80211_unhold_bss(bss_from_pub(bss));
 			cfg80211_put_bss(wdev->wiphy, bss);
@@ -951,7 +954,10 @@ void __cfg80211_disconnected(struct net_device *dev, const u8 *ie,
 
 	wdev->current_bss = NULL;
 	wdev->ssid_len = 0;
+<<<<<<< HEAD
 	wdev->conn_owner_nlportid = 0;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	nl80211_send_disconnected(rdev, dev, reason, ie, ie_len, from_ap);
 
@@ -1124,13 +1130,20 @@ int cfg80211_disconnect(struct cfg80211_registered_device *rdev,
 	kzfree(wdev->connect_keys);
 	wdev->connect_keys = NULL;
 
+<<<<<<< HEAD
 	wdev->conn_owner_nlportid = 0;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (wdev->conn)
 		err = cfg80211_sme_disconnect(wdev, reason);
 	else if (!rdev->ops->disconnect)
 		cfg80211_mlme_down(rdev, dev);
+<<<<<<< HEAD
 	else if (wdev->ssid_len)
+=======
+	else if (wdev->current_bss)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		err = rdev_disconnect(rdev, dev, reason);
 
 	/*
@@ -1143,6 +1156,7 @@ int cfg80211_disconnect(struct cfg80211_registered_device *rdev,
 
 	return err;
 }
+<<<<<<< HEAD
 
 /**
  * Used to clean up after the connection / connection attempt owner socket
@@ -1172,3 +1186,5 @@ void cfg80211_autodisconnect_wk(struct work_struct *work)
 
 	wdev_unlock(wdev);
 }
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

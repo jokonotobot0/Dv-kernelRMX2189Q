@@ -42,4 +42,7 @@ obj-$(CONFIG_ISDN_I4L)		+= i4l/
 obj-$(CONFIG_KS7010)		+= ks7010/
 obj-$(CONFIG_GREYBUS)		+= greybus/
 obj-$(CONFIG_BCM2708_VCHIQ)	+= vc04_services/
+<<<<<<< HEAD
 obj-$(CONFIG_NANOHUB)		+= nanohub/
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

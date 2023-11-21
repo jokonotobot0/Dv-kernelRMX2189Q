@@ -86,6 +86,7 @@ void mmc_remove_card_debugfs(struct mmc_card *card);
 
 void mmc_init_context_info(struct mmc_host *host);
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_EMMC_CQ_SUPPORT
 void mmc_wait_cmdq_empty(struct mmc_host *host);
 void mmc_do_check(struct mmc_host *host);
@@ -95,6 +96,8 @@ void mmc_wait_cmdq_done(struct mmc_request *mrq);
 int mmc_run_queue_thread(void *data);
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 int mmc_execute_tuning(struct mmc_card *card);
 int mmc_hs200_to_hs400(struct mmc_card *card);
 int mmc_hs400_to_hs200(struct mmc_card *card);

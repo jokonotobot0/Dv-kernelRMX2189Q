@@ -416,7 +416,10 @@ static const struct nla_policy nl80211_policy[NUM_NL80211_ATTR] = {
 	[NL80211_ATTR_NAN_DUAL] = { .type = NLA_U8 },
 	[NL80211_ATTR_NAN_FUNC] = { .type = NLA_NESTED },
 	[NL80211_ATTR_BSSID] = { .len = ETH_ALEN },
+<<<<<<< HEAD
 	[NL80211_ATTR_EXTERNAL_AUTH_SUPPORT] = { .type = NLA_FLAG },
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 /* policy for the key attributes */
@@ -3759,6 +3762,12 @@ static bool nl80211_valid_auth_type(struct cfg80211_registered_device *rdev,
 		return true;
 	case NL80211_CMD_CONNECT:
 	case NL80211_CMD_START_AP:
+<<<<<<< HEAD
+=======
+		/* SAE not supported yet */
+		if (auth_type == NL80211_AUTHTYPE_SAE)
+			return false;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		return true;
 	default:
 		return false;
@@ -8008,6 +8017,7 @@ static int nl80211_associate(struct sk_buff *skb, struct genl_info *info)
 	err = nl80211_crypto_settings(rdev, info, &req.crypto, 1);
 	if (!err) {
 		wdev_lock(dev->ieee80211_ptr);
+<<<<<<< HEAD
 
 		err = cfg80211_mlme_assoc(rdev, dev, chan, bssid,
 					  ssid, ssid_len, &req);
@@ -8019,6 +8029,10 @@ static int nl80211_associate(struct sk_buff *skb, struct genl_info *info)
 			       bssid, ETH_ALEN);
 		}
 
+=======
+		err = cfg80211_mlme_assoc(rdev, dev, chan, bssid,
+					  ssid, ssid_len, &req);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		wdev_unlock(dev->ieee80211_ptr);
 	}
 
@@ -8736,6 +8750,7 @@ static int nl80211_connect(struct sk_buff *skb, struct genl_info *info)
 		}
 	}
 
+<<<<<<< HEAD
 	if (nla_get_flag(info->attrs[NL80211_ATTR_EXTERNAL_AUTH_SUPPORT])) {
 		if (!info->attrs[NL80211_ATTR_SOCKET_OWNER]) {
 			kzfree(connkeys);
@@ -8764,6 +8779,14 @@ static int nl80211_connect(struct sk_buff *skb, struct genl_info *info)
 
 	wdev_unlock(dev->ieee80211_ptr);
 
+=======
+	wdev_lock(dev->ieee80211_ptr);
+	err = cfg80211_connect(rdev, dev, &connect, connkeys,
+			       connect.prev_bssid);
+	wdev_unlock(dev->ieee80211_ptr);
+	if (err)
+		kzfree(connkeys);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return err;
 }
 
@@ -11769,6 +11792,7 @@ static int nl80211_tdls_cancel_channel_switch(struct sk_buff *skb,
 	return 0;
 }
 
+<<<<<<< HEAD
 static int nl80211_external_auth(struct sk_buff *skb, struct genl_info *info)
 {
 	struct cfg80211_registered_device *rdev = info->user_ptr[0];
@@ -11804,6 +11828,8 @@ static int nl80211_external_auth(struct sk_buff *skb, struct genl_info *info)
 	return rdev_external_auth(rdev, dev, &params);
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define NL80211_FLAG_NEED_WIPHY		0x01
 #define NL80211_FLAG_NEED_NETDEV	0x02
 #define NL80211_FLAG_NEED_RTNL		0x04
@@ -12677,6 +12703,7 @@ static const struct genl_ops nl80211_ops[] = {
 		.internal_flags = NL80211_FLAG_NEED_NETDEV_UP |
 				  NL80211_FLAG_NEED_RTNL,
 	},
+<<<<<<< HEAD
 	{
 		.cmd = NL80211_CMD_EXTERNAL_AUTH,
 		.doit = nl80211_external_auth,
@@ -12685,6 +12712,8 @@ static const struct genl_ops nl80211_ops[] = {
 		.internal_flags = NL80211_FLAG_NEED_NETDEV_UP |
 				  NL80211_FLAG_NEED_RTNL,
 	},
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 /* notification functions */
@@ -14496,8 +14525,11 @@ static int nl80211_netlink_notify(struct notifier_block * nb,
 
 			if (wdev->owner_nlportid == notify->portid)
 				schedule_destroy_work = true;
+<<<<<<< HEAD
 			else if (wdev->conn_owner_nlportid == notify->portid)
 				schedule_work(&wdev->disconnect_wk);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		}
 
 		spin_lock_bh(&rdev->beacon_registrations_lock);
@@ -14552,8 +14584,12 @@ void cfg80211_ft_event(struct net_device *netdev,
 	if (!ft_event->target_ap)
 		return;
 
+<<<<<<< HEAD
 	msg = nlmsg_new(100 + ft_event->ies_len + ft_event->ric_ies_len,
 			GFP_KERNEL);
+=======
+	msg = nlmsg_new(100 + ft_event->ric_ies_len, GFP_KERNEL);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (!msg)
 		return;
 
@@ -14653,6 +14689,7 @@ void nl80211_send_ap_stopped(struct wireless_dev *wdev)
 	nlmsg_free(msg);
 }
 
+<<<<<<< HEAD
 int cfg80211_external_auth_request(struct net_device *dev,
 				   struct cfg80211_external_auth_params *params,
 				   gfp_t gfp)
@@ -14694,6 +14731,8 @@ int cfg80211_external_auth_request(struct net_device *dev,
 }
 EXPORT_SYMBOL(cfg80211_external_auth_request);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* initialisation/exit functions */
 
 int nl80211_init(void)

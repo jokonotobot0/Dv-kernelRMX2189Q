@@ -65,6 +65,7 @@
 #include <asm/uaccess.h>
 #include <linux/mroute6.h>
 
+<<<<<<< HEAD
 #ifdef CONFIG_ANDROID_PARANOID_NETWORK
 #include <linux/android_aid.h>
 
@@ -79,6 +80,8 @@ static inline int current_has_network(void)
 }
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include "ip6_offload.h"
 
 MODULE_AUTHOR("Cast of dozens");
@@ -135,9 +138,12 @@ static int inet6_create(struct net *net, struct socket *sock, int protocol,
 	if (protocol < 0 || protocol >= IPPROTO_MAX)
 		return -EINVAL;
 
+<<<<<<< HEAD
 	if (!current_has_network())
 		return -EACCES;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* Look for the requested type/protocol pair. */
 lookup_protocol:
 	err = -ESOCKTNOSUPPORT;
@@ -184,7 +190,12 @@ lookup_protocol:
 	}
 
 	err = -EPERM;
+<<<<<<< HEAD
 	if (sock->type == SOCK_RAW && !kern && !capable(CAP_NET_RAW))
+=======
+	if (sock->type == SOCK_RAW && !kern &&
+	    !ns_capable(net->user_ns, CAP_NET_RAW))
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		goto out_rcu_unlock;
 
 	sock->ops = answer->ops;
@@ -711,7 +722,10 @@ int inet6_sk_rebuild_header(struct sock *sk)
 		fl6.flowi6_mark = sk->sk_mark;
 		fl6.fl6_dport = inet->inet_dport;
 		fl6.fl6_sport = inet->inet_sport;
+<<<<<<< HEAD
 		fl6.flowi6_uid = sk->sk_uid;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		security_sk_classify_flow(sk, flowi6_to_flowi(&fl6));
 
 		rcu_read_lock();

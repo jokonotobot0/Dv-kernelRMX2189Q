@@ -387,6 +387,7 @@ config SPI_MESON_SPIFC
 	  This enables master mode support for the SPIFC (SPI flash
 	  controller) available in Amlogic Meson SoCs.
 
+<<<<<<< HEAD
 config SPIS_MT27XX
 	tristate "MediaTek SPI slave device"
 	depends on ARCH_MEDIATEK || COMPILE_TEST
@@ -399,6 +400,11 @@ config SPIS_MT27XX
 config SPI_MT65XX
 	tristate "MediaTek SPI controller"
 	default n
+=======
+config SPI_MT65XX
+	tristate "MediaTek SPI controller"
+	depends on ARCH_MEDIATEK || COMPILE_TEST
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	help
 	  This selects the MediaTek(R) SPI bus driver.
 	  If you want to use MediaTek(R) SPI interface,
@@ -770,8 +776,11 @@ config SPI_TLE62X0
 
 endif # SPI_MASTER
 
+<<<<<<< HEAD
 source "drivers/spi/mediatek/Kconfig"
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 # (slave support would go here)
 
 endif # SPI

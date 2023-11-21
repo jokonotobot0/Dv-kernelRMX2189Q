@@ -303,6 +303,7 @@ enum xfrm_attr_type_t {
 	XFRMA_PROTO,		/* __u8 */
 	XFRMA_ADDRESS_FILTER,	/* struct xfrm_address_filter */
 	XFRMA_PAD,
+<<<<<<< HEAD
 	XFRMA_OFFLOAD_DEV,	/* struct xfrm_state_offload */
 	XFRMA_SET_MARK,		/* __u32 */
 	XFRMA_SET_MARK_MASK,	/* __u32 */
@@ -310,6 +311,10 @@ enum xfrm_attr_type_t {
 	__XFRMA_MAX
 
 #define XFRMA_OUTPUT_MARK XFRMA_SET_MARK	/* Compatibility */
+=======
+	__XFRMA_MAX
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define XFRMA_MAX (__XFRMA_MAX - 1)
 };
 

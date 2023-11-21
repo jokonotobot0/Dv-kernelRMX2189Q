@@ -1,5 +1,32 @@
+<<<<<<< HEAD
 /* SPDX-License-Identifier: GPL-2.0 */
 /* Copyright(c) 2009-2014  Realtek Corporation.*/
+=======
+/******************************************************************************
+ *
+ * Copyright(c) 2009-2014  Realtek Corporation.
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of version 2 of the GNU General Public License as
+ * published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ * more details.
+ *
+ * The full GNU General Public License is included in this distribution in the
+ * file called LICENSE.
+ *
+ * Contact Information:
+ * wlanfae <wlanfae@realtek.com>
+ * Realtek Corporation, No. 2, Innovation Road II, Hsinchu Science Park,
+ * Hsinchu 300, Taiwan.
+ *
+ * Larry Finger <Larry.Finger@lwfinger.net>
+ *
+ *****************************************************************************/
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #ifndef __RTL92E_PWRSEQ_H__
 #define __RTL92E_PWRSEQ_H__
@@ -112,7 +139,11 @@
 	/*wait power state to suspend*/					\
 	{0x0086, PWR_CUT_ALL_MSK, PWR_FAB_ALL_MSK, PWR_INTF_SDIO_MSK,	\
 	 PWR_BASEADDR_SDIO , PWR_CMD_POLLING, BIT(1), BIT(1)},		\
+<<<<<<< HEAD
 	/*0x04[12:11] = 2b'00 disable WL suspend*/			\
+=======
+	/*0x04[12:11] = 2b'01enable WL suspend*/			\
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	{0x0005, PWR_CUT_ALL_MSK, PWR_FAB_ALL_MSK, PWR_INTF_ALL_MSK,	\
 	 PWR_BASEADDR_MAC , PWR_CMD_WRITE, BIT(3) | BIT(4), 0},
 
@@ -159,7 +190,11 @@
 	/*Lock small LDO Register*/					\
 	{0x00CC, PWR_CUT_ALL_MSK, PWR_FAB_ALL_MSK, PWR_INTF_SDIO_MSK,	\
 	 PWR_BASEADDR_MAC , PWR_CMD_WRITE, BIT(2), 0},			\
+<<<<<<< HEAD
 	/*0x04[12:11] = 2b'00 disable WL suspend*/			\
+=======
+	/*0x04[12:11] = 2b'01enable WL suspend*/			\
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	{0x0005, PWR_CUT_ALL_MSK, PWR_FAB_ALL_MSK, PWR_INTF_ALL_MSK,	\
 	 PWR_BASEADDR_MAC , PWR_CMD_WRITE, BIT(3) | BIT(4), 0},
 

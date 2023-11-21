@@ -29,6 +29,7 @@
 #include <linux/workqueue.h>
 
 #define UEVENT_HELPER_PATH_LEN		256
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /* Jianchao.Shi@BSP.CHG.Basic, 2019/07/29, sjc Modify for charging */
 #define UEVENT_NUM_ENVP			128	/* number of env pointers */
@@ -37,6 +38,10 @@
 #define UEVENT_NUM_ENVP			32	/* number of env pointers */
 #define UEVENT_BUFFER_SIZE		2048	/* buffer for the variables */
 #endif
+=======
+#define UEVENT_NUM_ENVP			32	/* number of env pointers */
+#define UEVENT_BUFFER_SIZE		2048	/* buffer for the variables */
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #ifdef CONFIG_UEVENT_HELPER
 /* path to the userspace helper executed on an event */

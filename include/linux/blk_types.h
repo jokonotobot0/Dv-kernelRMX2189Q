@@ -17,6 +17,7 @@ struct io_context;
 struct cgroup_subsys_state;
 typedef void (bio_end_io_t) (struct bio *);
 
+<<<<<<< HEAD
 struct bio_crypt_ctx {
 	unsigned int	bc_flags;
 	unsigned int	bc_key_size;
@@ -30,6 +31,8 @@ struct bio_crypt_ctx {
 #endif
 };
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #ifdef CONFIG_BLOCK
 /*
  * main unit of I/O for the block layer and lower layers (ie drivers and
@@ -38,7 +41,10 @@ struct bio_crypt_ctx {
 struct bio {
 	struct bio		*bi_next;	/* request queue link */
 	struct block_device	*bi_bdev;
+<<<<<<< HEAD
 	unsigned short		bi_write_hint;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	int			bi_error;
 	unsigned int		bi_opf;		/* bottom bits req flags,
 						 * top bits REQ_OP. Use
@@ -82,6 +88,7 @@ struct bio {
 
 	unsigned short		bi_vcnt;	/* how many bio_vec's */
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_HW_FDE
 	/*
 	 * MTK PATH:
@@ -96,6 +103,8 @@ struct bio {
 	unsigned int		bi_key_idx;
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/*
 	 * Everything starting with bi_max_vecs will be preserved by bio_reset()
 	 */
@@ -108,9 +117,12 @@ struct bio {
 
 	struct bio_set		*bi_pool;
 
+<<<<<<< HEAD
 	/* Encryption context. May contain secret key material. */
 	struct bio_crypt_ctx	bi_crypt_ctx;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/*
 	 * We can inline a number of vecs at the end of the bio, to avoid
 	 * double allocations for a small number of bio_vecs. This member
@@ -193,10 +205,13 @@ enum rq_flag_bits {
 	__REQ_INTEGRITY,	/* I/O includes block integrity payload */
 	__REQ_FUA,		/* forced unit access */
 	__REQ_PREFLUSH,		/* request for cache flush */
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /*Huacai.Zhou@PSW.BSP.Kernel.Performance, 2018-04-28, add foreground task io opt*/
 	__REQ_FG,		/* foreground activity */
 #endif /*VENDOR_EDIT*/
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/* bio only flags */
 	__REQ_RAHEAD,		/* read ahead, can fail anytime */
@@ -218,16 +233,23 @@ enum rq_flag_bits {
 				   state must be ignored. */
 	__REQ_ALLOCED,		/* request came from our alloc pool */
 	__REQ_COPY_USER,	/* contains copies of user pages */
+<<<<<<< HEAD
 	__REQ_FLUSH_SEQ,        /* request for flush sequence */
+=======
+	__REQ_FLUSH_SEQ,	/* request for flush sequence */
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	__REQ_IO_STAT,		/* account I/O stat */
 	__REQ_MIXED_MERGE,	/* merge of different types, fail separately */
 	__REQ_PM,		/* runtime pm request */
 	__REQ_HASHED,		/* on IO scheduler merge hash */
 	__REQ_MQ_INFLIGHT,	/* track inflight for MQ */
+<<<<<<< HEAD
 #ifdef MTK_UFS_HQA
 	__REQ_POWER_LOSS,	/* MTK PATCH for SPOH */
 #endif
 	__REQ_DEV_STARTED,	/* MTK PATCH: submitted to storage device */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	__REQ_NR_BITS,		/* stops here */
 };
 
@@ -242,6 +264,7 @@ enum rq_flag_bits {
 
 #define REQ_FAILFAST_MASK \
 	(REQ_FAILFAST_DEV | REQ_FAILFAST_TRANSPORT | REQ_FAILFAST_DRIVER)
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /*Huacai.Zhou@PSW.BSP.Kernel.Performance, 2018-04-28, add foreground task io opt*/
 #define REQ_COMMON_MASK \
@@ -253,6 +276,11 @@ enum rq_flag_bits {
 	 REQ_PREFLUSH | REQ_FUA | REQ_INTEGRITY | REQ_NOMERGE)
 #endif /*VENDOR_EDIT*/
 
+=======
+#define REQ_COMMON_MASK \
+	(REQ_FAILFAST_MASK | REQ_SYNC | REQ_META | REQ_PRIO | REQ_NOIDLE | \
+	 REQ_PREFLUSH | REQ_FUA | REQ_INTEGRITY | REQ_NOMERGE)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define REQ_CLONE_MASK		REQ_COMMON_MASK
 
 /* This mask is used for both bio and request merge checking */
@@ -276,21 +304,27 @@ enum rq_flag_bits {
 #define REQ_ALLOCED		(1ULL << __REQ_ALLOCED)
 #define REQ_COPY_USER		(1ULL << __REQ_COPY_USER)
 #define REQ_PREFLUSH		(1ULL << __REQ_PREFLUSH)
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /*Huacai.Zhou@PSW.BSP.Kernel.Performance, 2018-04-28, add foreground task io opt*/
 #define REQ_FG			(1ULL << __REQ_FG)
 #endif /*VENDOR_EDIT*/
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define REQ_FLUSH_SEQ		(1ULL << __REQ_FLUSH_SEQ)
 #define REQ_IO_STAT		(1ULL << __REQ_IO_STAT)
 #define REQ_MIXED_MERGE		(1ULL << __REQ_MIXED_MERGE)
 #define REQ_PM			(1ULL << __REQ_PM)
 #define REQ_HASHED		(1ULL << __REQ_HASHED)
 #define REQ_MQ_INFLIGHT		(1ULL << __REQ_MQ_INFLIGHT)
+<<<<<<< HEAD
 #ifdef MTK_UFS_HQA
 /* MTK PATCH for SPOH */
 #define REQ_POWER_LOSS		(1ULL << __REQ_POWER_LOSS)
 #endif
 #define REQ_DEV_STARTED		(1ULL << __REQ_DEV_STARTED) /* MTK PATCH */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 enum req_op {
 	REQ_OP_READ,
@@ -327,6 +361,7 @@ static inline unsigned int blk_qc_t_to_tag(blk_qc_t cookie)
 	return cookie & ((1u << BLK_QC_T_SHIFT) - 1);
 }
 
+<<<<<<< HEAD
 
 /*
  * block crypt flags
@@ -398,4 +433,6 @@ void bio_bc_iv_set(struct bio *bio, unsigned long iv)
 
 unsigned long bio_bc_iv_get(struct bio *bio);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif /* __LINUX_BLK_TYPES_H */

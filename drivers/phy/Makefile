@@ -60,4 +60,7 @@ obj-$(CONFIG_PHY_PISTACHIO_USB)		+= phy-pistachio-usb.o
 obj-$(CONFIG_PHY_CYGNUS_PCIE)		+= phy-bcm-cygnus-pcie.o
 obj-$(CONFIG_ARCH_TEGRA) += tegra/
 obj-$(CONFIG_PHY_NS2_PCIE)		+= phy-bcm-ns2-pcie.o
+<<<<<<< HEAD
 obj-$(CONFIG_PHY_MTK_USB)		+= mediatek/
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

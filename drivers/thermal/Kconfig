@@ -60,6 +60,7 @@ choice
 	  This option sets which thermal governor shall be loaded at
 	  startup. If in doubt, select 'step_wise'.
 
+<<<<<<< HEAD
 config THERMAL_DEFAULT_GOV_BACKWARD_COMPATIBLE
 	bool "backward_compatible"
 	select THERMAL_BACKWARD_COMPATIBLE
@@ -70,6 +71,8 @@ config THERMAL_DEFAULT_GOV_BACKWARD_COMPATIBLE
 	  framework in Linux kernel 2.6. It sets cooler states whenever
 	  temperature is updated no meter cooler state change or not.
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 config THERMAL_DEFAULT_GOV_STEP_WISE
 	bool "step_wise"
 	select THERMAL_GOV_STEP_WISE
@@ -102,6 +105,7 @@ config THERMAL_DEFAULT_GOV_POWER_ALLOCATOR
 
 endchoice
 
+<<<<<<< HEAD
 config THERMAL_BACKWARD_COMPATIBLE
 	bool "Backward-compatible thermal governor"
 	help
@@ -110,6 +114,8 @@ config THERMAL_BACKWARD_COMPATIBLE
 	  framework in Linux kernel 2.6. It sets cooler states whenever
 	  temperature is updated no meter cooler state change or not.
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 config THERMAL_GOV_FAIR_SHARE
 	bool "Fair-share thermal governor"
 	help
@@ -193,12 +199,15 @@ config THERMAL_EMULATION
 	  because userland can easily disable the thermal policy by simply
 	  flooding this sysfs node with low temperature values.
 
+<<<<<<< HEAD
 config HORAE_THERMAL_SHELL
 	bool "Horae shell temp driver"
 	default y
 	help
 	  Provide three thermal zones(front, frame and back) to get real shell temp.
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 config HISI_THERMAL
 	tristate "Hisilicon thermal driver"
 	depends on (ARCH_HISI && CPU_THERMAL && OF) || COMPILE_TEST

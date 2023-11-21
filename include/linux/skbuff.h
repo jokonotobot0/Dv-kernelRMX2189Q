@@ -40,6 +40,7 @@
 #include <linux/if_packet.h>
 #include <net/flow.h>
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 //Junyuan.Huang@PSW.CN.WiFi.Network.1471780, 2018/06/26,
 //Add for limit speed function
@@ -47,6 +48,8 @@
 #endif /* VENDOR_EDIT */
 
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* The interface for checksum offload between the stack and networking drivers
  * is as follows...
  *
@@ -667,11 +670,14 @@ struct sk_buff {
 	 * first. This is owned by whoever has the skb queued ATM.
 	 */
 	char			cb[48] __aligned(8);
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 //Junyuan.Huang@PSW.CN.WiFi.Network.1471780, 2018/06/26,
 //Add for limit speed function
 	void			*cb_next;
 #endif /*VENDOR_EDIT*/
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	unsigned long		_skb_refdst;
 	void			(*destructor)(struct sk_buff *skb);
@@ -681,11 +687,14 @@ struct sk_buff {
 #if defined(CONFIG_NF_CONNTRACK) || defined(CONFIG_NF_CONNTRACK_MODULE)
 	struct nf_conntrack	*nfct;
 #endif
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 //Junyuan.Huang@PSW.CN.WiFi.Network.1471780, 2018/06/26,
 //Add for limit speed function
        struct nf_queue_entry   *nf_queue_entry;
 #endif /*VENDOR_EDIT*/
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
 	struct nf_bridge_info	*nf_bridge;
 #endif
@@ -765,11 +774,14 @@ struct sk_buff {
 	__u8			offload_fwd_mark:1;
 #endif
 	/* 2, 4 or 5 bit hole */
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 //Junyuan.Huang@PSW.CN.WiFi.Network.1471780, 2018/06/26,
 //Add for limit speed function
 	__u8			imq_flags:IMQ_F_BITS;
 #endif /*VENDOR_EDIT*/
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #ifdef CONFIG_NET_SCHED
 	__u16			tc_index;	/* traffic control index */
@@ -930,6 +942,7 @@ void kfree_skb_list(struct sk_buff *segs);
 void skb_tx_error(struct sk_buff *skb);
 void consume_skb(struct sk_buff *skb);
 void  __kfree_skb(struct sk_buff *skb);
+<<<<<<< HEAD
 
 #ifdef VENDOR_EDIT
 //Junyuan.Huang@PSW.CN.WiFi.Network.1471780, 2018/06/26,
@@ -938,6 +951,8 @@ int skb_save_cb(struct sk_buff *skb);
 int skb_restore_cb(struct sk_buff *skb);
 #endif /*VENDOR_EDIT*/
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 extern struct kmem_cache *skbuff_head_cache;
 
 void kfree_skb_partial(struct sk_buff *skb, bool head_stolen);
@@ -1208,8 +1223,12 @@ static inline __u32 skb_get_hash_flowi4(struct sk_buff *skb, const struct flowi4
 	return skb->hash;
 }
 
+<<<<<<< HEAD
 __u32 skb_get_hash_perturb(const struct sk_buff *skb,
 			   const siphash_key_t *perturb);
+=======
+__u32 skb_get_hash_perturb(const struct sk_buff *skb, u32 perturb);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 static inline __u32 skb_get_hash_raw(const struct sk_buff *skb)
 {
@@ -3658,12 +3677,15 @@ static inline void __nf_copy(struct sk_buff *dst, const struct sk_buff *src,
 	if (copy)
 		dst->nfctinfo = src->nfctinfo;
 #endif
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 //Junyuan.Huang@PSW.CN.WiFi.Network.1471780, 2018/06/26,
 //Add for limit speed function
        dst->imq_flags = src->imq_flags;
        dst->nf_queue_entry = src->nf_queue_entry;
 #endif /*VENDOR_EDIT*/
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
 	dst->nf_bridge  = src->nf_bridge;
 	nf_bridge_get(src->nf_bridge);

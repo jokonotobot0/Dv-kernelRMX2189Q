@@ -157,12 +157,15 @@ void __sched __down_read(struct rw_semaphore *sem)
 	for (;;) {
 		if (!waiter.task)
 			break;
+<<<<<<< HEAD
 		//#ifdef VENDOR_EDIT fangpan@Swdp.shanghai,2015/11/12
 		if (hung_long_and_fatal_signal_pending(tsk)) {
 			list_del(&waiter.list);
 			break;
 		}
 		//#endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		schedule();
 		set_task_state(tsk, TASK_UNINTERRUPTIBLE);
 	}
@@ -222,11 +225,14 @@ int __sched __down_write_common(struct rw_semaphore *sem, int state)
 		 */
 		if (sem->count == 0)
 			break;
+<<<<<<< HEAD
 		//#ifdef VENDOR_EDIT fangpan@Swdp.shanghai,2015/11/12
 		if (hung_long_and_fatal_signal_pending(tsk)) {
 			break;
 		}
 		//#endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		if (signal_pending_state(state, current))
 			goto out_nolock;
 		set_task_state(tsk, state);

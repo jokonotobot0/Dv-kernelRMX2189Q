@@ -2157,6 +2157,7 @@ static void fill_extnum_info(struct elfhdr *elf, struct elf_shdr *shdr4extnum,
 	shdr4extnum->sh_info = segs;
 }
 
+<<<<<<< HEAD
 /* yanghao@PSW.Kernel.stability add for the lowmomery or not have order 4 page size
  * will alloc failed and the coredump can't format success 2019/01/14
  */
@@ -2164,6 +2165,8 @@ static void fill_extnum_info(struct elfhdr *elf, struct elf_shdr *shdr4extnum,
 static elf_addr_t *oppo_coredump_addr = NULL;
 #endif /* VENDOR_EDIT end */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * Actual dumper
  *
@@ -2253,6 +2256,7 @@ static int elf_core_dump(struct coredump_params *cprm)
 
 	dataoff = offset = roundup(offset, ELF_EXEC_PAGESIZE);
 
+<<<<<<< HEAD
 	/* yanghao@PSW.Kernel.stability add for the lowmomery or not have order 4 page size
 	 * will alloc failed and the coredump can't format success 2019/01/14
 	 */
@@ -2265,6 +2269,9 @@ static int elf_core_dump(struct coredump_params *cprm)
  	vma_filesz = vmalloc((segs - 1) * sizeof(*vma_filesz));
 #endif /* VENDOR_EDIT end */
 
+=======
+	vma_filesz = kmalloc_array(segs - 1, sizeof(*vma_filesz), GFP_KERNEL);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (!vma_filesz)
 		goto end_coredump;
 
@@ -2352,12 +2359,17 @@ static int elf_core_dump(struct coredump_params *cprm)
 				put_page(page);
 			} else
 				stop = !dump_skip(cprm, PAGE_SIZE);
+<<<<<<< HEAD
 			if (stop) {
 				pr_info("%s: stop:0x%lx, vm_start:0x%lx, vm_end:0x%lx\n",
 					__func__, addr,
 					vma->vm_start, vma->vm_end);
 				goto end_coredump;
 			}
+=======
+			if (stop)
+				goto end_coredump;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		}
 	}
 	dump_truncate(cprm);
@@ -2376,6 +2388,7 @@ end_coredump:
 cleanup:
 	free_note_info(&info);
 	kfree(shdr4extnum);
+<<<<<<< HEAD
 	/* yanghao@PSW.Kernel.stability add for the lowmomery or not have order 4 page size
 	 * will alloc failed and the coredump can't format success 2019/01/14
 	 */
@@ -2388,6 +2401,9 @@ cleanup:
 #else
 	vfree(vma_filesz);
 #endif /* VENDOR_EDIT end */
+=======
+	kfree(vma_filesz);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	kfree(phdr4note);
 	kfree(elf);
 out:
@@ -2398,6 +2414,7 @@ out:
 
 static int __init init_elf_binfmt(void)
 {
+<<<<<<< HEAD
 
 	/* yanghao@PSW.Kernel.stability add for the lowmomery or not have order 4 page size
 	 * will alloc failed and the coredump can't format success 2019/01/14
@@ -2406,12 +2423,15 @@ static int __init init_elf_binfmt(void)
 	oppo_coredump_addr = kmalloc(64*1024, GFP_KERNEL);;
 #endif /* VENDOR_EDIT end */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	register_binfmt(&elf_format);
 	return 0;
 }
 
 static void __exit exit_elf_binfmt(void)
 {
+<<<<<<< HEAD
 
 	/* yanghao@PSW.Kernel.stability add for the lowmomery or not have order 4 page size
 	 * will alloc failed and the coredump can't format success 2019/01/14
@@ -2421,6 +2441,8 @@ static void __exit exit_elf_binfmt(void)
 		kfree(oppo_coredump_addr);
 #endif /* VENDOR_EDIT end */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* Remove the COFF and ELF loaders. */
 	unregister_binfmt(&elf_format);
 }

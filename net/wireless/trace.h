@@ -2212,6 +2212,7 @@ TRACE_EVENT(rdev_tdls_cancel_channel_switch,
 		  WIPHY_PR_ARG, NETDEV_PR_ARG, MAC_PR_ARG(addr))
 );
 
+<<<<<<< HEAD
 TRACE_EVENT(rdev_external_auth,
 	    TP_PROTO(struct wiphy *wiphy, struct net_device *netdev,
 		     struct cfg80211_external_auth_params *params),
@@ -2235,6 +2236,8 @@ TRACE_EVENT(rdev_external_auth,
 		      __entry->bssid, __entry->ssid, __entry->status)
 );
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*************************************************************
  *	     cfg80211 exported functions traces		     *
  *************************************************************/

@@ -19,8 +19,12 @@
 
 #ifdef CONFIG_EDAC_DEBUG
 
+<<<<<<< HEAD
 static int edac_set_debug_level(const char *buf,
 				const struct kernel_param *kp)
+=======
+static int edac_set_debug_level(const char *buf, struct kernel_param *kp)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	unsigned long val;
 	int ret;

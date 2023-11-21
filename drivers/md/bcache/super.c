@@ -804,7 +804,11 @@ static int bcache_device_init(struct bcache_device *d, unsigned block_size,
 	blk_queue_make_request(q, NULL);
 	d->disk->queue			= q;
 	q->queuedata			= d;
+<<<<<<< HEAD
 	q->backing_dev_info->congested_data = d;
+=======
+	q->backing_dev_info.congested_data = d;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	q->limits.max_hw_sectors	= UINT_MAX;
 	q->limits.max_sectors		= UINT_MAX;
 	q->limits.max_segment_size	= UINT_MAX;
@@ -1150,9 +1154,15 @@ static int cached_dev_init(struct cached_dev *dc, unsigned block_size)
 	set_capacity(dc->disk.disk,
 		     dc->bdev->bd_part->nr_sects - dc->sb.data_offset);
 
+<<<<<<< HEAD
 	dc->disk.disk->queue->backing_dev_info->ra_pages =
 		max(dc->disk.disk->queue->backing_dev_info->ra_pages,
 		    q->backing_dev_info->ra_pages);
+=======
+	dc->disk.disk->queue->backing_dev_info.ra_pages =
+		max(dc->disk.disk->queue->backing_dev_info.ra_pages,
+		    q->backing_dev_info.ra_pages);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	bch_cached_dev_request_init(dc);
 	bch_cached_dev_writeback_init(dc);

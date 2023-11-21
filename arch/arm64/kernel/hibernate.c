@@ -50,6 +50,12 @@
  */
 extern int in_suspend;
 
+<<<<<<< HEAD
+=======
+/* Find a symbols alias in the linear map */
+#define LMADDR(x)	phys_to_virt(virt_to_phys(x))
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* Do we need to reset el2? */
 #define el2_reset_needed() (is_hyp_mode_available() && !is_kernel_in_hyp_mode())
 
@@ -99,8 +105,13 @@ static inline void arch_hdr_invariants(struct arch_hibernate_hdr_invariants *i)
 
 int pfn_is_nosave(unsigned long pfn)
 {
+<<<<<<< HEAD
 	unsigned long nosave_begin_pfn = sym_to_pfn(&__nosave_begin);
 	unsigned long nosave_end_pfn = sym_to_pfn(&__nosave_end - 1);
+=======
+	unsigned long nosave_begin_pfn = virt_to_pfn(&__nosave_begin);
+	unsigned long nosave_end_pfn = virt_to_pfn(&__nosave_end - 1);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	return (pfn >= nosave_begin_pfn) && (pfn <= nosave_end_pfn);
 }
@@ -122,12 +133,20 @@ int arch_hibernation_header_save(void *addr, unsigned int max_size)
 		return -EOVERFLOW;
 
 	arch_hdr_invariants(&hdr->invariants);
+<<<<<<< HEAD
 	hdr->ttbr1_el1		= __pa_symbol(swapper_pg_dir);
+=======
+	hdr->ttbr1_el1		= virt_to_phys(swapper_pg_dir);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	hdr->reenter_kernel	= _cpu_resume;
 
 	/* We can't use __hyp_get_vectors() because kvm may still be loaded */
 	if (el2_reset_needed())
+<<<<<<< HEAD
 		hdr->__hyp_stub_vectors = __pa_symbol(__hyp_stub_vectors);
+=======
+		hdr->__hyp_stub_vectors = virt_to_phys(__hyp_stub_vectors);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	else
 		hdr->__hyp_stub_vectors = 0;
 
@@ -470,6 +489,10 @@ int swsusp_arch_resume(void)
 	void *zero_page;
 	size_t exit_size;
 	pgd_t *tmp_pg_dir;
+<<<<<<< HEAD
+=======
+	void *lm_restore_pblist;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	phys_addr_t phys_hibernate_exit;
 	void __noreturn (*hibernate_exit)(phys_addr_t, phys_addr_t, void *,
 					  void *, phys_addr_t, phys_addr_t);
@@ -490,6 +513,15 @@ int swsusp_arch_resume(void)
 		goto out;
 
 	/*
+<<<<<<< HEAD
+=======
+	 * Since we only copied the linear map, we need to find restore_pblist's
+	 * linear map address.
+	 */
+	lm_restore_pblist = LMADDR(restore_pblist);
+
+	/*
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	 * We need a zero page that is zero before & after resume in order to
 	 * to break before make on the ttbr1 page tables.
 	 */
@@ -540,7 +572,11 @@ int swsusp_arch_resume(void)
 	}
 
 	hibernate_exit(virt_to_phys(tmp_pg_dir), resume_hdr.ttbr1_el1,
+<<<<<<< HEAD
 		       resume_hdr.reenter_kernel, restore_pblist,
+=======
+		       resume_hdr.reenter_kernel, lm_restore_pblist,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		       resume_hdr.__hyp_stub_vectors, virt_to_phys(zero_page));
 
 out:

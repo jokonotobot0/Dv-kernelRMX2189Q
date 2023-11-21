@@ -87,7 +87,10 @@
 int sysctl_tcp_tw_reuse __read_mostly;
 int sysctl_tcp_low_latency __read_mostly;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #ifdef CONFIG_TCP_MD5SIG
 static int tcp_v4_md5_hash_hdr(char *md5_hash, const struct tcp_md5sig_key *key,
 			       __be32 daddr, __be32 saddr, const struct tcphdr *th);
@@ -233,7 +236,10 @@ int tcp_v4_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
 	/* OK, now commit destination to socket.  */
 	sk->sk_gso_type = SKB_GSO_TCPV4;
 	sk_setup_caps(sk, &rt->dst);
+<<<<<<< HEAD
 	rt = NULL;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (!tp->write_seq && likely(!tp->repair))
 		tp->write_seq = secure_tcp_sequence_number(inet->inet_saddr,
@@ -243,6 +249,7 @@ int tcp_v4_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
 
 	inet->inet_id = tp->write_seq ^ jiffies;
 
+<<<<<<< HEAD
 	if (tcp_fastopen_defer_connect(sk, &err))
 		return err;
 	if (err)
@@ -250,6 +257,11 @@ int tcp_v4_connect(struct sock *sk, struct sockaddr *uaddr, int addr_len)
 
 	err = tcp_connect(sk);
 
+=======
+	err = tcp_connect(sk);
+
+	rt = NULL;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (err)
 		goto failure;
 
@@ -702,7 +714,10 @@ static void tcp_v4_send_reset(const struct sock *sk, struct sk_buff *skb)
 		     offsetof(struct inet_timewait_sock, tw_bound_dev_if));
 
 	arg.tos = ip_hdr(skb)->tos;
+<<<<<<< HEAD
 	arg.uid = sock_net_uid(net, sk && sk_fullsock(sk) ? sk : NULL);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	local_bh_disable();
 	ip_send_unicast_reply(*this_cpu_ptr(net->ipv4.tcp_sk),
 			      skb, &TCP_SKB_CB(skb)->header.h4.opt,
@@ -723,7 +738,11 @@ out:
    outside socket context is ugly, certainly. What can I do?
  */
 
+<<<<<<< HEAD
 static void tcp_v4_send_ack(const struct sock *sk,
+=======
+static void tcp_v4_send_ack(struct net *net,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			    struct sk_buff *skb, u32 seq, u32 ack,
 			    u32 win, u32 tsval, u32 tsecr, int oif,
 			    struct tcp_md5sig_key *key,
@@ -738,7 +757,10 @@ static void tcp_v4_send_ack(const struct sock *sk,
 #endif
 			];
 	} rep;
+<<<<<<< HEAD
 	struct net *net = sock_net(sk);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct ip_reply_arg arg;
 
 	memset(&rep.th, 0, sizeof(struct tcphdr));
@@ -788,7 +810,10 @@ static void tcp_v4_send_ack(const struct sock *sk,
 	if (oif)
 		arg.bound_dev_if = oif;
 	arg.tos = tos;
+<<<<<<< HEAD
 	arg.uid = sock_net_uid(net, sk_fullsock(sk) ? sk : NULL);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	local_bh_disable();
 	ip_send_unicast_reply(*this_cpu_ptr(net->ipv4.tcp_sk),
 			      skb, &TCP_SKB_CB(skb)->header.h4.opt,
@@ -804,7 +829,11 @@ static void tcp_v4_timewait_ack(struct sock *sk, struct sk_buff *skb)
 	struct inet_timewait_sock *tw = inet_twsk(sk);
 	struct tcp_timewait_sock *tcptw = tcp_twsk(sk);
 
+<<<<<<< HEAD
 	tcp_v4_send_ack(sk, skb,
+=======
+	tcp_v4_send_ack(sock_net(sk), skb,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			tcptw->tw_snd_nxt, tcptw->tw_rcv_nxt,
 			tcptw->tw_rcv_wnd >> tw->tw_rcv_wscale,
 			tcp_time_stamp + tcptw->tw_ts_offset,
@@ -832,7 +861,11 @@ static void tcp_v4_reqsk_send_ack(const struct sock *sk, struct sk_buff *skb,
 	 * exception of <SYN> segments, MUST be right-shifted by
 	 * Rcv.Wind.Shift bits:
 	 */
+<<<<<<< HEAD
 	tcp_v4_send_ack(sk, skb, seq,
+=======
+	tcp_v4_send_ack(sock_net(sk), skb, seq,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			tcp_rsk(req)->rcv_nxt,
 			req->rsk_rcv_wnd >> inet_rsk(req)->rcv_wscale,
 			tcp_time_stamp,
@@ -1544,7 +1577,11 @@ bool tcp_prequeue(struct sock *sk, struct sk_buff *skb)
 
 		tp->ucopy.memory = 0;
 	} else if (skb_queue_len(&tp->ucopy.prequeue) == 1) {
+<<<<<<< HEAD
 		wake_up_interruptible_poll(sk_sleep(sk),
+=======
+		wake_up_interruptible_sync_poll(sk_sleep(sk),
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 					   POLLIN | POLLRDNORM | POLLRDBAND);
 		if (!inet_csk_ack_scheduled(sk))
 			inet_csk_reset_xmit_timer(sk, ICSK_TIME_DACK,
@@ -1659,7 +1696,10 @@ lookup:
 	if (!sk)
 		goto no_tcp_socket;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 process:
 	if (sk->sk_state == TCP_TIME_WAIT)
 		goto do_time_wait;
@@ -1687,9 +1727,13 @@ process:
 		 */
 		sock_hold(sk);
 		refcounted = true;
+<<<<<<< HEAD
 		nsk = NULL;
 		if (!tcp_filter(sk, skb))
 			nsk = tcp_check_req(sk, skb, req, false);
+=======
+		nsk = tcp_check_req(sk, skb, req, false);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		if (!nsk) {
 			reqsk_put(req);
 			goto discard_and_relse;

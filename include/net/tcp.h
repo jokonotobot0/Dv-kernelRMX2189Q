@@ -108,7 +108,10 @@ void tcp_time_wait(struct sock *sk, int state, int timeo);
 				 * current initial RTO.
 				 */
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define TCP_SYNACK_RETRIES 5	/* This is how may retries are done
 				 * when passive opening a connection.
 				 * This is corresponding to 31secs of
@@ -274,12 +277,16 @@ extern int sysctl_tcp_autocorking;
 extern int sysctl_tcp_invalid_ratelimit;
 extern int sysctl_tcp_pacing_ss_ratio;
 extern int sysctl_tcp_pacing_ca_ratio;
+<<<<<<< HEAD
 extern int sysctl_tcp_default_init_rwnd;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 extern atomic_long_t tcp_memory_allocated;
 extern struct percpu_counter tcp_sockets_allocated;
 extern int tcp_memory_pressure;
 
+<<<<<<< HEAD
 
 #ifdef VENDOR_EDIT
 //Mengqing.Zhao@PSW.CN.WiFi.Network.internet.1394484, 2019/04/02,
@@ -292,6 +299,8 @@ extern int sysctl_tcp_ts_control[2];
 extern int sysctl_tcp_info_print;
 #endif /* VENDOR_EDIT */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* optimized version of sk_under_memory_pressure() for TCP sockets */
 static inline bool tcp_under_memory_pressure(const struct sock *sk)
 {
@@ -1524,9 +1533,12 @@ struct sock *tcp_try_fastopen(struct sock *sk, struct sk_buff *skb,
 			      struct tcp_fastopen_cookie *foc,
 			      struct dst_entry *dst);
 void tcp_fastopen_init_key_once(bool publish);
+<<<<<<< HEAD
 bool tcp_fastopen_cookie_check(struct sock *sk, u16 *mss,
 			     struct tcp_fastopen_cookie *cookie);
 bool tcp_fastopen_defer_connect(struct sock *sk, int *err);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define TCP_FASTOPEN_KEY_LENGTH 16
 
 static inline void tcp_init_send_head(struct sock *sk)
@@ -1541,8 +1553,11 @@ struct tcp_fastopen_context {
 	struct rcu_head		rcu;
 };
 
+<<<<<<< HEAD
 static inline void tcp_init_send_head(struct sock *sk);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* write queue abstraction */
 static inline void tcp_write_queue_purge(struct sock *sk)
 {
@@ -1550,7 +1565,10 @@ static inline void tcp_write_queue_purge(struct sock *sk)
 
 	while ((skb = __skb_dequeue(&sk->sk_write_queue)) != NULL)
 		sk_wmem_free_skb(sk, skb);
+<<<<<<< HEAD
 	tcp_init_send_head(sk);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	sk_mem_reclaim(sk);
 	tcp_clear_all_retrans_hints(tcp_sk(sk));
 	tcp_init_send_head(sk);
@@ -1629,6 +1647,13 @@ static inline struct sk_buff *tcp_rtx_queue_tail(const struct sock *sk)
 {
 	struct sk_buff *skb = tcp_send_head(sk);
 
+<<<<<<< HEAD
+=======
+	/* empty retransmit queue, for example due to zero window */
+	if (skb == tcp_write_queue_head(sk))
+		return NULL;
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return skb ? tcp_write_queue_prev(sk, skb) : tcp_write_queue_tail(sk);
 }
 

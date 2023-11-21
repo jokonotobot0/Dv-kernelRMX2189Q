@@ -262,6 +262,7 @@ config PWM_LPSS_PLATFORM
 	  To compile this driver as a module, choose M here: the module
 	  will be called pwm-lpss-platform.
 
+<<<<<<< HEAD
 config PWM_MEDIATEK
         tristate "MediaTek PWM support"
         depends on ARCH_MEDIATEK || COMPILE_TEST
@@ -272,6 +273,8 @@ config PWM_MEDIATEK
           To compile this driver as a module, choose M here: the module
           will be called pwm-mediatek.
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 config PWM_MESON
 	tristate "Amlogic Meson PWM driver"
 	depends on ARCH_MESON

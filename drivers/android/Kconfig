@@ -9,7 +9,11 @@ if ANDROID
 
 config ANDROID_BINDER_IPC
 	bool "Android Binder IPC Driver"
+<<<<<<< HEAD
 	depends on MMU && !M68K
+=======
+	depends on MMU
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	default n
 	---help---
 	  Binder is used in Android for both communication between processes,
@@ -19,6 +23,7 @@ config ANDROID_BINDER_IPC
 	  Android process, using Binder to identify, invoke and pass arguments
 	  between said processes.
 
+<<<<<<< HEAD
 config ANDROID_BINDER_DEVICES
 	string "Android Binder devices"
 	depends on ANDROID_BINDER_IPC
@@ -34,6 +39,12 @@ config ANDROID_BINDER_DEVICES
 config ANDROID_BINDER_IPC_32BIT
 	bool
 	default n
+=======
+config ANDROID_BINDER_IPC_32BIT
+	bool
+	depends on !64BIT && ANDROID_BINDER_IPC
+	default y
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	---help---
 	  The Binder API has been changed to support both 32 and 64bit
 	  applications in a mixed environment.
@@ -43,6 +54,7 @@ config ANDROID_BINDER_IPC_32BIT
 
 	  Note that enabling this will break newer Android user-space.
 
+<<<<<<< HEAD
 config ANDROID_BINDER_IPC_SELFTEST
 	bool "Android Binder IPC Driver Selftest"
 	depends on ANDROID_BINDER_IPC
@@ -53,6 +65,8 @@ config ANDROID_BINDER_IPC_SELFTEST
 	  exhaustively with combinations of various buffer sizes and
 	  alignments.
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 endif # if ANDROID
 
 endmenu

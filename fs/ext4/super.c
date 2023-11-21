@@ -38,7 +38,10 @@
 #include <linux/log2.h>
 #include <linux/crc16.h>
 #include <linux/cleancache.h>
+<<<<<<< HEAD
 #include <linux/hie.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <asm/uaccess.h>
 
 #include <linux/kthread.h>
@@ -823,6 +826,7 @@ static void dump_orphan_list(struct super_block *sb, struct ext4_sb_info *sbi)
 	}
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_QUOTA
 static int ext4_quota_off(struct super_block *sb, int type);
 
@@ -840,6 +844,8 @@ static inline void ext4_quota_off_umount(struct super_block *sb)
 }
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static void ext4_put_super(struct super_block *sb)
 {
 	struct ext4_sb_info *sbi = EXT4_SB(sb);
@@ -847,12 +853,17 @@ static void ext4_put_super(struct super_block *sb)
 	int aborted = 0;
 	int i, err;
 
+<<<<<<< HEAD
 #if defined(VENDOR_EDIT) && defined(CONFIG_EXT4_ASYNC_DISCARD_SUPPORT)
 //yh@PSW.BSP.Storage.EXT4, 2018-11-26 add for ext4 async discard suppot
 	destroy_discard_cmd_control(sbi);
 #endif
 	ext4_unregister_li_request(sb);
 	ext4_quota_off_umount(sb);
+=======
+	ext4_unregister_li_request(sb);
+	dquot_disable(sb, -1, DQUOT_USAGE_ENABLED | DQUOT_LIMITS_ENABLED);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	flush_workqueue(sbi->rsv_conversion_wq);
 	destroy_workqueue(sbi->rsv_conversion_wq);
@@ -1050,7 +1061,13 @@ void ext4_clear_inode(struct inode *inode)
 		jbd2_free_inode(EXT4_I(inode)->jinode);
 		EXT4_I(inode)->jinode = NULL;
 	}
+<<<<<<< HEAD
 	fscrypt_put_encryption_info(inode);
+=======
+#ifdef CONFIG_EXT4_FS_ENCRYPTION
+	fscrypt_put_encryption_info(inode, NULL);
+#endif
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static struct inode *ext4_nfs_get_inode(struct super_block *sb,
@@ -1133,6 +1150,7 @@ static int ext4_get_context(struct inode *inode, void *ctx, size_t len)
 				 EXT4_XATTR_NAME_ENCRYPTION_CONTEXT, ctx, len);
 }
 
+<<<<<<< HEAD
 static int ext4_set_context(struct inode *inode, const void *ctx, size_t len,
 							void *fs_data)
 {
@@ -1156,28 +1174,59 @@ static int ext4_set_context(struct inode *inode, const void *ctx, size_t len,
 					    EXT4_XATTR_INDEX_ENCRYPTION,
 					    EXT4_XATTR_NAME_ENCRYPTION_CONTEXT,
 					    ctx, len, 0);
+=======
+static int ext4_key_prefix(struct inode *inode, u8 **key)
+{
+	*key = EXT4_SB(inode->i_sb)->key_prefix;
+	return EXT4_SB(inode->i_sb)->key_prefix_size;
+}
+
+static int ext4_prepare_context(struct inode *inode)
+{
+	return ext4_convert_inline_data(inode);
+}
+
+static int ext4_set_context(struct inode *inode, const void *ctx, size_t len,
+							void *fs_data)
+{
+	handle_t *handle;
+	int res, res2;
+
+	/* fs_data is null when internally used. */
+	if (fs_data) {
+		res  = ext4_xattr_set(inode, EXT4_XATTR_INDEX_ENCRYPTION,
+				EXT4_XATTR_NAME_ENCRYPTION_CONTEXT, ctx,
+				len, 0);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		if (!res) {
 			ext4_set_inode_flag(inode, EXT4_INODE_ENCRYPT);
 			ext4_clear_inode_state(inode,
 					EXT4_STATE_MAY_INLINE_DATA);
+<<<<<<< HEAD
 			/*
 			 * Update inode->i_flags - S_ENCRYPTED will be enabled,
 			 * S_DAX may be disabled
 			 */
 			ext4_set_inode_flags(inode);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		}
 		return res;
 	}
 
+<<<<<<< HEAD
 	res = dquot_initialize(inode);
 	if (res)
 		return res;
 retry:
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	handle = ext4_journal_start(inode, EXT4_HT_MISC,
 			ext4_jbd2_credits_xattr(inode));
 	if (IS_ERR(handle))
 		return PTR_ERR(handle);
 
+<<<<<<< HEAD
 	res = ext4_xattr_set_handle(handle, inode, EXT4_XATTR_INDEX_ENCRYPTION,
 				    EXT4_XATTR_NAME_ENCRYPTION_CONTEXT,
 				    ctx, len, 0);
@@ -1188,24 +1237,39 @@ retry:
 		 * S_DAX may be disabled
 		 */
 		ext4_set_inode_flags(inode);
+=======
+	res = ext4_xattr_set(inode, EXT4_XATTR_INDEX_ENCRYPTION,
+			EXT4_XATTR_NAME_ENCRYPTION_CONTEXT, ctx,
+			len, 0);
+	if (!res) {
+		ext4_set_inode_flag(inode, EXT4_INODE_ENCRYPT);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		res = ext4_mark_inode_dirty(handle, inode);
 		if (res)
 			EXT4_ERROR_INODE(inode, "Failed to mark inode dirty");
 	}
 	res2 = ext4_journal_stop(handle);
+<<<<<<< HEAD
 
 	if (res == -ENOSPC && ext4_should_retry_alloc(inode->i_sb, &retries))
 		goto retry;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (!res)
 		res = res2;
 	return res;
 }
 
+<<<<<<< HEAD
 static bool ext4_dummy_context(struct inode *inode)
+=======
+static int ext4_dummy_context(struct inode *inode)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	return DUMMY_ENCRYPTION_ENABLED(EXT4_SB(inode->i_sb));
 }
 
+<<<<<<< HEAD
 static const struct fscrypt_operations ext4_cryptops = {
 	.key_prefix		= "ext4:",
 	.get_context		= ext4_get_context,
@@ -1213,6 +1277,27 @@ static const struct fscrypt_operations ext4_cryptops = {
 	.dummy_context		= ext4_dummy_context,
 	.empty_dir		= ext4_empty_dir,
 	.max_namelen		= EXT4_NAME_LEN,
+=======
+static unsigned ext4_max_namelen(struct inode *inode)
+{
+	return S_ISLNK(inode->i_mode) ? inode->i_sb->s_blocksize :
+		EXT4_NAME_LEN;
+}
+
+static struct fscrypt_operations ext4_cryptops = {
+	.get_context		= ext4_get_context,
+	.key_prefix		= ext4_key_prefix,
+	.prepare_context	= ext4_prepare_context,
+	.set_context		= ext4_set_context,
+	.dummy_context		= ext4_dummy_context,
+	.is_encrypted		= ext4_encrypted_inode,
+	.empty_dir		= ext4_empty_dir,
+	.max_namelen		= ext4_max_namelen,
+};
+#else
+static struct fscrypt_operations ext4_cryptops = {
+	.is_encrypted		= ext4_encrypted_inode,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 #endif
 
@@ -1227,6 +1312,10 @@ static int ext4_mark_dquot_dirty(struct dquot *dquot);
 static int ext4_write_info(struct super_block *sb, int type);
 static int ext4_quota_on(struct super_block *sb, int type, int format_id,
 			 struct path *path);
+<<<<<<< HEAD
+=======
+static int ext4_quota_off(struct super_block *sb, int type);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int ext4_quota_on_mount(struct super_block *sb, int type);
 static ssize_t ext4_quota_read(struct super_block *sb, int type, char *data,
 			       size_t len, loff_t off);
@@ -1315,10 +1404,13 @@ enum {
 	Opt_nomblk_io_submit, Opt_block_validity, Opt_noblock_validity,
 	Opt_inode_readahead_blks, Opt_journal_ioprio,
 	Opt_dioread_nolock, Opt_dioread_lock,
+<<<<<<< HEAD
 #if defined(VENDOR_EDIT) && defined(CONFIG_EXT4_ASYNC_DISCARD_SUPPORT)
 //yh@PSW.BSP.Storage.EXT4, 2018-11-26 add for ext4 async discard suppot
 	Opt_async_discard, Opt_noasync_discard,
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	Opt_discard, Opt_nodiscard, Opt_init_itable, Opt_noinit_itable,
 	Opt_max_dir_size_kb, Opt_nojournal_checksum,
 };
@@ -1397,11 +1489,14 @@ static const match_table_t tokens = {
 	{Opt_dioread_lock, "dioread_lock"},
 	{Opt_discard, "discard"},
 	{Opt_nodiscard, "nodiscard"},
+<<<<<<< HEAD
 #if defined(VENDOR_EDIT) && defined(CONFIG_EXT4_ASYNC_DISCARD_SUPPORT)
 //yh@PSW.BSP.Storage.EXT4, 2018-11-26 add for ext4 async discard suppot
 	{Opt_async_discard, "async_discard"},
 	{Opt_noasync_discard, "noasync_discard"},
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	{Opt_init_itable, "init_itable=%u"},
 	{Opt_init_itable, "init_itable"},
 	{Opt_noinit_itable, "noinit_itable"},
@@ -1540,11 +1635,14 @@ static const struct mount_opts {
 	 MOPT_EXT4_ONLY | MOPT_SET},
 	{Opt_dioread_lock, EXT4_MOUNT_DIOREAD_NOLOCK,
 	 MOPT_EXT4_ONLY | MOPT_CLEAR},
+<<<<<<< HEAD
 #if defined(VENDOR_EDIT) && defined(CONFIG_EXT4_ASYNC_DISCARD_SUPPORT)
 //yh@PSW.BSP.Storage.EXT4, 2018-11-26 add for ext4 async discard suppot
 	{Opt_async_discard, EXT4_MOUNT_ASYNC_DISCARD, MOPT_SET},
 	{Opt_noasync_discard, EXT4_MOUNT_ASYNC_DISCARD, MOPT_CLEAR},
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	{Opt_discard, EXT4_MOUNT_DISCARD, MOPT_SET},
 	{Opt_nodiscard, EXT4_MOUNT_DISCARD, MOPT_CLEAR},
 	{Opt_delalloc, EXT4_MOUNT_DELALLOC,
@@ -3606,6 +3704,7 @@ static int ext4_fill_super(struct super_block *sb, void *data, int silent)
 	if (!parse_options((char *) data, sb, &journal_devnum,
 			   &journal_ioprio, 0))
 		goto failed_mount;
+<<<<<<< HEAD
 #if defined(VENDOR_EDIT) && defined(CONFIG_EXT4_ASYNC_DISCARD_SUPPORT)
 //yh@PSW.BSP.Storage.EXT4, 2019-02-15 add for ext4 async discard suppot
 	if (test_opt(sb, ASYNC_DISCARD)&&test_opt(sb,DISCARD)) {
@@ -3613,6 +3712,9 @@ static int ext4_fill_super(struct super_block *sb, void *data, int silent)
         ext4_msg(sb, KERN_WARNING, "mount option discard/async_discard conflict, use async_discard default");        
     }
 #endif
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (test_opt(sb, DATA_FLAGS) == EXT4_MOUNT_JOURNAL_DATA) {
 		printk_once(KERN_WARNING "EXT4-fs: Warning: mounting "
 			    "with data=journal disables delayed "
@@ -4019,9 +4121,13 @@ static int ext4_fill_super(struct super_block *sb, void *data, int silent)
 	sb->s_op = &ext4_sops;
 	sb->s_export_op = &ext4_export_ops;
 	sb->s_xattr = ext4_xattr_handlers;
+<<<<<<< HEAD
 #ifdef CONFIG_EXT4_FS_ENCRYPTION
 	sb->s_cop = &ext4_cryptops;
 #endif
+=======
+	sb->s_cop = &ext4_cryptops;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #ifdef CONFIG_QUOTA
 	sb->dq_op = &ext4_quota_operations;
 	if (ext4_has_feature_quota(sb))
@@ -4313,12 +4419,16 @@ no_journal:
 	} else
 		descr = "out journal";
 
+<<<<<<< HEAD
 	if (test_opt(sb, DISCARD) 
 #if defined(VENDOR_EDIT) && defined(CONFIG_EXT4_ASYNC_DISCARD_SUPPORT)
 //yh@PSW.BSP.Storage.EXT4, 2019-02-16 add for ext4 async discard suppot
         || test_opt(sb, ASYNC_DISCARD)
 #endif
     ) {
+=======
+	if (test_opt(sb, DISCARD)) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		struct request_queue *q = bdev_get_queue(sb->s_bdev);
 		if (!blk_queue_discard(q))
 			ext4_msg(sb, KERN_WARNING,
@@ -4342,6 +4452,7 @@ no_journal:
 	ratelimit_state_init(&sbi->s_msg_ratelimit_state, 5 * HZ, 10);
 
 	kfree(orig_data);
+<<<<<<< HEAD
 #if defined(VENDOR_EDIT) && defined(CONFIG_EXT4_ASYNC_DISCARD_SUPPORT)
 //yh@PSW.BSP.Storage.EXT4, 2018-11-26 add for ext4 async discard suppot
 	if (test_opt(sb, ASYNC_DISCARD)) {
@@ -4351,6 +4462,12 @@ no_journal:
 			ext4_msg(sb, KERN_ERR, "mount creat async discard thread fail");
     }
 	ext4_update_time(sbi);
+=======
+#ifdef CONFIG_EXT4_FS_ENCRYPTION
+	memcpy(sbi->key_prefix, EXT4_KEY_DESC_PREFIX,
+				EXT4_KEY_DESC_PREFIX_SIZE);
+	sbi->key_prefix_size = EXT4_KEY_DESC_PREFIX_SIZE;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif
 	return 0;
 
@@ -5459,6 +5576,7 @@ static int ext4_quota_on(struct super_block *sb, int type, int format_id,
 		if (err)
 			return err;
 	}
+<<<<<<< HEAD
 
 	lockdep_set_quota_inode(path->dentry->d_inode, I_DATA_SEM_QUOTA);
 	err = dquot_quota_on(sb, type, format_id, path);
@@ -5486,6 +5604,13 @@ static int ext4_quota_on(struct super_block *sb, int type, int format_id,
 unlock_inode:
 		inode_unlock(inode);
 	}
+=======
+	lockdep_set_quota_inode(path->dentry->d_inode, I_DATA_SEM_QUOTA);
+	err = dquot_quota_on(sb, type, format_id, path);
+	if (err)
+		lockdep_set_quota_inode(path->dentry->d_inode,
+					     I_DATA_SEM_NORMAL);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return err;
 }
 
@@ -5562,13 +5687,17 @@ static int ext4_quota_off(struct super_block *sb, int type)
 {
 	struct inode *inode = sb_dqopt(sb)->files[type];
 	handle_t *handle;
+<<<<<<< HEAD
 	int err;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/* Force all delayed allocation blocks to be allocated.
 	 * Caller already holds s_umount sem */
 	if (test_opt(sb, DELALLOC))
 		sync_filesystem(sb);
 
+<<<<<<< HEAD
 	if (!inode || !igrab(inode))
 		goto out;
 
@@ -5596,6 +5725,20 @@ out_put:
 	lockdep_set_quota_inode(inode, I_DATA_SEM_NORMAL);
 	iput(inode);
 	return err;
+=======
+	if (!inode)
+		goto out;
+
+	/* Update modification times of quota files when userspace can
+	 * start looking at them */
+	handle = ext4_journal_start(inode, EXT4_HT_QUOTA, 1);
+	if (IS_ERR(handle))
+		goto out;
+	inode->i_mtime = inode->i_ctime = CURRENT_TIME;
+	ext4_mark_inode_dirty(handle, inode);
+	ext4_journal_stop(handle);
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 out:
 	return dquot_quota_off(sb, type);
 }
@@ -5783,6 +5926,7 @@ static struct file_system_type ext4_fs_type = {
 };
 MODULE_ALIAS_FS("ext4");
 
+<<<<<<< HEAD
 #ifdef CONFIG_EXT4_ENCRYPTION
 int ext4_set_bio_ctx(struct inode *inode,
 	struct bio *bio)
@@ -5821,6 +5965,8 @@ int ext4_set_bio_ctx(struct inode *inode, struct bio *bio)
 }
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* Shared across all ext4 file systems */
 wait_queue_head_t ext4__ioend_wq[EXT4_WQ_HASH_SZ];
 
@@ -5866,10 +6012,13 @@ static int __init ext4_init_fs(void)
 	if (err)
 		goto out;
 
+<<<<<<< HEAD
 #ifdef CONFIG_EXT4_ENCRYPTION
 	hie_register_fs(&ext4_hie);
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return 0;
 out:
 	unregister_as_ext2();

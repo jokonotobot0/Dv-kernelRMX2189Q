@@ -68,4 +68,8 @@ static int __init mtk_pinctrl_init(void)
 {
 	return platform_driver_register(&mtk_pinctrl_driver);
 }
+<<<<<<< HEAD
 arch_initcall(mtk_pinctrl_init);
+=======
+device_initcall(mtk_pinctrl_init);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

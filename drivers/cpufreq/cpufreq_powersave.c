@@ -22,10 +22,14 @@ static void cpufreq_gov_powersave_limits(struct cpufreq_policy *policy)
 	__cpufreq_driver_target(policy, policy->min, CPUFREQ_RELATION_L);
 }
 
+<<<<<<< HEAD
 #ifndef CONFIG_CPU_FREQ_DEFAULT_GOV_POWERSAVE
 static
 #endif
 struct cpufreq_governor cpufreq_gov_powersave = {
+=======
+static struct cpufreq_governor cpufreq_gov_powersave = {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	.name		= "powersave",
 	.limits		= cpufreq_gov_powersave_limits,
 	.owner		= THIS_MODULE,

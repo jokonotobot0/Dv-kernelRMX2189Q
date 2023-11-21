@@ -241,7 +241,11 @@ static struct xfrm_algo_desc aalg_list[] = {
 
 	.uinfo = {
 		.auth = {
+<<<<<<< HEAD
 			.icv_truncbits = 128,
+=======
+			.icv_truncbits = 96,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			.icv_fullbits = 256,
 		}
 	},

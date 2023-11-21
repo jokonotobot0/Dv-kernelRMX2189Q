@@ -200,7 +200,10 @@ const char * const *v4l2_ctrl_get_menu(u32 id)
 	static const char * const mpeg_video_bitrate_mode[] = {
 		"Variable Bitrate",
 		"Constant Bitrate",
+<<<<<<< HEAD
 		"Constant Quality",
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		NULL
 	};
 	static const char * const mpeg_stream_type[] = {
@@ -340,6 +343,7 @@ const char * const *v4l2_ctrl_get_menu(u32 id)
 		"5.1",
 		NULL,
 	};
+<<<<<<< HEAD
 	static const char * const mpeg_h265_level[] = {
 		"Main 1",
 		"High 1",
@@ -369,6 +373,8 @@ const char * const *v4l2_ctrl_get_menu(u32 id)
 		"High 6.2",
 		NULL,
 	};
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	static const char * const h264_loop_filter[] = {
 		"Enabled",
 		"Disabled",
@@ -395,12 +401,15 @@ const char * const *v4l2_ctrl_get_menu(u32 id)
 		"Multiview High",
 		NULL,
 	};
+<<<<<<< HEAD
 	static const char * const h265_profile[] = {
 		"Main",
 		"Main10",
 		"Still Image",
 		NULL,
 	};
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	static const char * const vui_sar_idc[] = {
 		"Unspecified",
 		"1:1",
@@ -582,14 +591,20 @@ const char * const *v4l2_ctrl_get_menu(u32 id)
 		return entropy_mode;
 	case V4L2_CID_MPEG_VIDEO_H264_LEVEL:
 		return mpeg_h264_level;
+<<<<<<< HEAD
 	case V4L2_CID_MPEG_VIDEO_H265_TIER_LEVEL:
 		return mpeg_h265_level;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	case V4L2_CID_MPEG_VIDEO_H264_LOOP_FILTER_MODE:
 		return h264_loop_filter;
 	case V4L2_CID_MPEG_VIDEO_H264_PROFILE:
 		return h264_profile;
+<<<<<<< HEAD
 	case V4L2_CID_MPEG_VIDEO_H265_PROFILE:
 		return h265_profile;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	case V4L2_CID_MPEG_VIDEO_H264_VUI_SAR_IDC:
 		return vui_sar_idc;
 	case V4L2_CID_MPEG_VIDEO_H264_SEI_FP_ARRANGEMENT_TYPE:
@@ -757,14 +772,20 @@ const char *v4l2_ctrl_get_name(u32 id)
 	case V4L2_CID_MPEG_VIDEO_H264_ENTROPY_MODE:		return "H264 Entropy Mode";
 	case V4L2_CID_MPEG_VIDEO_H264_I_PERIOD:			return "H264 I-Frame Period";
 	case V4L2_CID_MPEG_VIDEO_H264_LEVEL:			return "H264 Level";
+<<<<<<< HEAD
 	case V4L2_CID_MPEG_VIDEO_H265_TIER_LEVEL:
 		return "H265 Level";
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	case V4L2_CID_MPEG_VIDEO_H264_LOOP_FILTER_ALPHA:	return "H264 Loop Filter Alpha Offset";
 	case V4L2_CID_MPEG_VIDEO_H264_LOOP_FILTER_BETA:		return "H264 Loop Filter Beta Offset";
 	case V4L2_CID_MPEG_VIDEO_H264_LOOP_FILTER_MODE:		return "H264 Loop Filter Mode";
 	case V4L2_CID_MPEG_VIDEO_H264_PROFILE:			return "H264 Profile";
+<<<<<<< HEAD
 	case V4L2_CID_MPEG_VIDEO_H265_PROFILE:
 		return "H265 Profile";
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	case V4L2_CID_MPEG_VIDEO_H264_VUI_EXT_SAR_HEIGHT:	return "Vertical Size of SAR";
 	case V4L2_CID_MPEG_VIDEO_H264_VUI_EXT_SAR_WIDTH:	return "Horizontal Size of SAR";
 	case V4L2_CID_MPEG_VIDEO_H264_VUI_SAR_ENABLE:		return "Aspect Ratio VUI Enable";
@@ -971,6 +992,7 @@ const char *v4l2_ctrl_get_name(u32 id)
 	case V4L2_CID_DETECT_MD_GLOBAL_THRESHOLD: return "MD Global Threshold";
 	case V4L2_CID_DETECT_MD_THRESHOLD_GRID:	return "MD Threshold Grid";
 	case V4L2_CID_DETECT_MD_REGION_GRID:	return "MD Region Grid";
+<<<<<<< HEAD
 
 	/* Mediatek control */
 	case V4L2_CID_MPEG_MTK_FRAME_INTERVAL:	return "Video frame interval";
@@ -988,6 +1010,8 @@ const char *v4l2_ctrl_get_name(u32 id)
 	case V4L2_CID_MPEG_MTK_FIX_BUFFERS:	return "Video fix buffers";
 	case V4L2_CID_MPEG_MTK_FIX_BUFFERS_SVP:
 		return "Video fix buffers for svp";
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	default:
 		return NULL;
 	}
@@ -1001,6 +1025,7 @@ void v4l2_ctrl_fill(u32 id, const char **name, enum v4l2_ctrl_type *type,
 	*flags = 0;
 
 	switch (id) {
+<<<<<<< HEAD
 	case V4L2_CID_MPEG_MTK_FRAME_INTERVAL:
 	case V4L2_CID_MPEG_MTK_ERRORMB_MAP:
 	case V4L2_CID_MPEG_MTK_ASPECT_RATIO:
@@ -1024,6 +1049,8 @@ void v4l2_ctrl_fill(u32 id, const char **name, enum v4l2_ctrl_type *type,
 		*type = V4L2_CTRL_TYPE_STRING;
 		*flags |= V4L2_CTRL_FLAG_WRITE_ONLY;
 		break;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	case V4L2_CID_AUDIO_MUTE:
 	case V4L2_CID_AUDIO_LOUDNESS:
 	case V4L2_CID_AUTO_WHITE_BALANCE:
@@ -1125,10 +1152,15 @@ void v4l2_ctrl_fill(u32 id, const char **name, enum v4l2_ctrl_type *type,
 	case V4L2_CID_MPEG_VIDEO_MULTI_SLICE_MODE:
 	case V4L2_CID_MPEG_VIDEO_H264_ENTROPY_MODE:
 	case V4L2_CID_MPEG_VIDEO_H264_LEVEL:
+<<<<<<< HEAD
 	case V4L2_CID_MPEG_VIDEO_H265_TIER_LEVEL:
 	case V4L2_CID_MPEG_VIDEO_H264_LOOP_FILTER_MODE:
 	case V4L2_CID_MPEG_VIDEO_H264_PROFILE:
 	case V4L2_CID_MPEG_VIDEO_H265_PROFILE:
+=======
+	case V4L2_CID_MPEG_VIDEO_H264_LOOP_FILTER_MODE:
+	case V4L2_CID_MPEG_VIDEO_H264_PROFILE:
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	case V4L2_CID_MPEG_VIDEO_H264_VUI_SAR_IDC:
 	case V4L2_CID_MPEG_VIDEO_H264_SEI_FP_ARRANGEMENT_TYPE:
 	case V4L2_CID_MPEG_VIDEO_H264_FMO_MAP_TYPE:

@@ -18,9 +18,12 @@
 #include <linux/usb/ch9.h>
 #include <linux/usb/gadget.h>
 
+<<<<<<< HEAD
 #ifdef CONFIG_USB_CONFIGFS_UEVENT
 #include "serial.h"
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /**
  * usb_gadget_get_string - fill out a string descriptor 
@@ -62,6 +65,7 @@ usb_gadget_get_string (struct usb_gadget_strings *table, int id, u8 *buf)
 		return -EINVAL;
 
 	/* string descriptors have length, tag, then UTF16-LE text */
+<<<<<<< HEAD
 #ifdef CONFIG_USB_CONFIGFS_UEVENT
 	if ((id == serial_idx) && (serial_string[0] != '\0')) {
 		len = min_t(size_t, 126, strlen(serial_string));
@@ -78,6 +82,11 @@ usb_gadget_get_string (struct usb_gadget_strings *table, int id, u8 *buf)
 	len = utf8s_to_utf16s(s->s, len, UTF16_LITTLE_ENDIAN,
 			(wchar_t *) &buf[2], 126);
 #endif
+=======
+	len = min ((size_t) 126, strlen (s->s));
+	len = utf8s_to_utf16s(s->s, len, UTF16_LITTLE_ENDIAN,
+			(wchar_t *) &buf[2], 126);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (len < 0)
 		return -EINVAL;
 	buf [0] = (len + 1) * 2;

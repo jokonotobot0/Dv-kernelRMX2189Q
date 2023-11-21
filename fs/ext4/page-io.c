@@ -24,6 +24,10 @@
 #include <linux/slab.h>
 #include <linux/mm.h>
 #include <linux/backing-dev.h>
+<<<<<<< HEAD
+=======
+#include <linux/fscrypto.h>
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #include "ext4_jbd2.h"
 #include "xattr.h"
@@ -341,7 +345,10 @@ void ext4_io_submit(struct ext4_io_submit *io)
 		int io_op_flags = io->io_wbc->sync_mode == WB_SYNC_ALL ?
 				  WRITE_SYNC : 0;
 		bio_set_op_attrs(io->io_bio, REQ_OP_WRITE, io_op_flags);
+<<<<<<< HEAD
 		ext4_set_bio_ctx(io->inode, bio);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		submit_bio(io->io_bio);
 	}
 	io->io_bio = NULL;
@@ -353,7 +360,10 @@ void ext4_io_submit_init(struct ext4_io_submit *io,
 	io->io_wbc = wbc;
 	io->io_bio = NULL;
 	io->io_end = NULL;
+<<<<<<< HEAD
 	io->inode = NULL;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static int io_submit_init_bio(struct ext4_io_submit *io,
@@ -389,7 +399,10 @@ submit_and_retry:
 		ret = io_submit_init_bio(io, bh);
 		if (ret)
 			return ret;
+<<<<<<< HEAD
 		io->inode = inode;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 	ret = bio_add_page(io->io_bio, page, bh->b_size, bh_offset(bh));
 	if (ret != bh->b_size)
@@ -467,13 +480,17 @@ int ext4_bio_write_page(struct ext4_io_submit *io,
 
 	bh = head = page_buffers(page);
 
+<<<<<<< HEAD
 	if (fscrypt_is_hw_encrypt(inode))
 		goto submit_buf;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (ext4_encrypted_inode(inode) && S_ISREG(inode->i_mode) &&
 	    nr_to_submit) {
 		gfp_t gfp_flags = GFP_NOFS;
 
+<<<<<<< HEAD
 		/*
 		 * Since bounce page allocation uses a mempool, we can only use
 		 * a waiting mask (i.e. request guaranteed allocation) on the
@@ -494,6 +511,18 @@ int ext4_bio_write_page(struct ext4_io_submit *io,
 				else
 					gfp_flags |= __GFP_NOFAIL;
 				congestion_wait(BLK_RW_ASYNC, HZ/50);
+=======
+	retry_encrypt:
+		data_page = fscrypt_encrypt_page(inode, page, gfp_flags);
+		if (IS_ERR(data_page)) {
+			ret = PTR_ERR(data_page);
+			if (ret == -ENOMEM && wbc->sync_mode == WB_SYNC_ALL) {
+				if (io->io_bio) {
+					ext4_io_submit(io);
+					congestion_wait(BLK_RW_ASYNC, HZ/50);
+				}
+				gfp_flags |= __GFP_NOFAIL;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 				goto retry_encrypt;
 			}
 			data_page = NULL;
@@ -501,7 +530,10 @@ int ext4_bio_write_page(struct ext4_io_submit *io,
 		}
 	}
 
+<<<<<<< HEAD
 submit_buf:
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* Now submit buffers to write */
 	do {
 		if (!buffer_async_write(bh))

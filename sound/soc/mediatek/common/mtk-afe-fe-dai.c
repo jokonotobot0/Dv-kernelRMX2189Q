@@ -14,11 +14,15 @@
  * GNU General Public License for more details.
  */
 
+<<<<<<< HEAD
 #include <linux/io.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <linux/module.h>
 #include <linux/pm_runtime.h>
 #include <linux/regmap.h>
 #include <sound/soc.h>
+<<<<<<< HEAD
 #include <sound/pcm_params.h>
 
 #include "mtk-afe-fe-dai.h"
@@ -45,6 +49,14 @@
 #define AFE_BASE_END_OFFSET 8
 
 int mtk_regmap_update_bits(struct regmap *map, int reg,
+=======
+#include "mtk-afe-fe-dai.h"
+#include "mtk-base-afe.h"
+
+#define AFE_BASE_END_OFFSET 8
+
+static int mtk_regmap_update_bits(struct regmap *map, int reg,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			   unsigned int mask,
 			   unsigned int val)
 {
@@ -53,7 +65,11 @@ int mtk_regmap_update_bits(struct regmap *map, int reg,
 	return regmap_update_bits(map, reg, mask, val);
 }
 
+<<<<<<< HEAD
 int mtk_regmap_write(struct regmap *map, int reg, unsigned int val)
+=======
+static int mtk_regmap_write(struct regmap *map, int reg, unsigned int val)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	if (reg < 0)
 		return 0;
@@ -64,7 +80,11 @@ int mtk_afe_fe_startup(struct snd_pcm_substream *substream,
 		       struct snd_soc_dai *dai)
 {
 	struct snd_soc_pcm_runtime *rtd = substream->private_data;
+<<<<<<< HEAD
 	struct mtk_base_afe *afe = snd_soc_dai_get_drvdata(dai);
+=======
+	struct mtk_base_afe *afe = snd_soc_platform_get_drvdata(rtd->platform);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct snd_pcm_runtime *runtime = substream->runtime;
 	int memif_num = rtd->cpu_dai->id;
 	struct mtk_base_afe_memif *memif = &afe->memif[memif_num];
@@ -149,6 +169,7 @@ int mtk_afe_fe_hw_params(struct snd_pcm_substream *substream,
 			 struct snd_soc_dai *dai)
 {
 	struct snd_soc_pcm_runtime *rtd = substream->private_data;
+<<<<<<< HEAD
 	struct mtk_base_afe *afe = snd_soc_dai_get_drvdata(dai);
 	int id = rtd->cpu_dai->id;
 	struct mtk_base_afe_memif *memif = &afe->memif[id];
@@ -296,6 +317,55 @@ BYPASS_AFE_FE_ALLOCATE_MEM:
 	afe_pcm_ipi_to_dsp(AUDIO_DSP_TASK_PCM_HWPARAM,
 			   substream, params, dai, afe);
 #endif
+=======
+	struct mtk_base_afe *afe = snd_soc_platform_get_drvdata(rtd->platform);
+	struct mtk_base_afe_memif *memif = &afe->memif[rtd->cpu_dai->id];
+	int msb_at_bit33 = 0;
+	int ret, fs = 0;
+
+	ret = snd_pcm_lib_malloc_pages(substream, params_buffer_bytes(params));
+	if (ret < 0)
+		return ret;
+
+	msb_at_bit33 = upper_32_bits(substream->runtime->dma_addr) ? 1 : 0;
+	memif->phys_buf_addr = lower_32_bits(substream->runtime->dma_addr);
+	memif->buffer_size = substream->runtime->dma_bytes;
+
+	/* start */
+	mtk_regmap_write(afe->regmap, memif->data->reg_ofs_base,
+			 memif->phys_buf_addr);
+	/* end */
+	mtk_regmap_write(afe->regmap,
+			 memif->data->reg_ofs_base + AFE_BASE_END_OFFSET,
+			 memif->phys_buf_addr + memif->buffer_size - 1);
+
+	/* set MSB to 33-bit */
+	mtk_regmap_update_bits(afe->regmap, memif->data->msb_reg,
+			       1 << memif->data->msb_shift,
+			       msb_at_bit33 << memif->data->msb_shift);
+
+	/* set channel */
+	if (memif->data->mono_shift >= 0) {
+		unsigned int mono = (params_channels(params) == 1) ? 1 : 0;
+
+		mtk_regmap_update_bits(afe->regmap, memif->data->mono_reg,
+				       1 << memif->data->mono_shift,
+				       mono << memif->data->mono_shift);
+	}
+
+	/* set rate */
+	if (memif->data->fs_shift < 0)
+		return 0;
+
+	fs = afe->memif_fs(substream, params_rate(params));
+
+	if (fs < 0)
+		return -EINVAL;
+
+	mtk_regmap_update_bits(afe->regmap, memif->data->fs_reg,
+			       memif->data->fs_maskbit << memif->data->fs_shift,
+			       fs << memif->data->fs_shift);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	return 0;
 }
@@ -304,6 +374,7 @@ EXPORT_SYMBOL_GPL(mtk_afe_fe_hw_params);
 int mtk_afe_fe_hw_free(struct snd_pcm_substream *substream,
 		       struct snd_soc_dai *dai)
 {
+<<<<<<< HEAD
 	struct snd_soc_pcm_runtime *rtd = substream->private_data;
 	struct mtk_base_afe *afe = snd_soc_dai_get_drvdata(dai);
 	struct mtk_base_afe_memif *memif = &afe->memif[rtd->cpu_dai->id];
@@ -349,6 +420,9 @@ int mtk_afe_fe_hw_free(struct snd_pcm_substream *substream,
 	return snd_pcm_lib_free_pages(substream);
 #endif
 #endif
+=======
+	return snd_pcm_lib_free_pages(substream);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 EXPORT_SYMBOL_GPL(mtk_afe_fe_hw_free);
 
@@ -357,27 +431,45 @@ int mtk_afe_fe_trigger(struct snd_pcm_substream *substream, int cmd,
 {
 	struct snd_soc_pcm_runtime *rtd = substream->private_data;
 	struct snd_pcm_runtime * const runtime = substream->runtime;
+<<<<<<< HEAD
 	struct mtk_base_afe *afe = snd_soc_dai_get_drvdata(dai);
 	int id = rtd->cpu_dai->id;
 	struct mtk_base_afe_memif *memif = &afe->memif[id];
+=======
+	struct mtk_base_afe *afe = snd_soc_platform_get_drvdata(rtd->platform);
+	struct mtk_base_afe_memif *memif = &afe->memif[rtd->cpu_dai->id];
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct mtk_base_afe_irq *irqs = &afe->irqs[memif->irq_usage];
 	const struct mtk_base_irq_data *irq_data = irqs->irq_data;
 	unsigned int counter = runtime->period_size;
 	int fs;
+<<<<<<< HEAD
 	int ret;
 
 	dev_dbg(afe->dev, "%s(), %s, cmd %d\n",
 		__func__, memif->data->name, cmd);
+=======
+
+	dev_dbg(afe->dev, "%s %s cmd=%d\n", __func__, memif->data->name, cmd);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	switch (cmd) {
 	case SNDRV_PCM_TRIGGER_START:
 	case SNDRV_PCM_TRIGGER_RESUME:
+<<<<<<< HEAD
 		ret = mtk_memif_set_enable(afe, id);
 		if (ret) {
 			dev_err(afe->dev, "%s(), error, id %d, memif enable, ret %d\n",
 				__func__, id, ret);
 			return ret;
 		}
+=======
+		if (memif->data->enable_shift >= 0)
+			mtk_regmap_update_bits(afe->regmap,
+					       memif->data->enable_reg,
+					       1 << memif->data->enable_shift,
+					       1 << memif->data->enable_shift);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 		/* set irq counter */
 		mtk_regmap_update_bits(afe->regmap, irq_data->irq_cnt_reg,
@@ -404,12 +496,17 @@ int mtk_afe_fe_trigger(struct snd_pcm_substream *substream, int cmd,
 		return 0;
 	case SNDRV_PCM_TRIGGER_STOP:
 	case SNDRV_PCM_TRIGGER_SUSPEND:
+<<<<<<< HEAD
 		ret = mtk_memif_set_disable(afe, id);
 		if (ret) {
 			dev_err(afe->dev, "%s(), error, id %d, memif enable, ret %d\n",
 				__func__, id, ret);
 		}
 
+=======
+		mtk_regmap_update_bits(afe->regmap, memif->data->enable_reg,
+				       1 << memif->data->enable_shift, 0);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		/* disable interrupt */
 		mtk_regmap_update_bits(afe->regmap, irq_data->irq_en_reg,
 				       1 << irq_data->irq_en_shift,
@@ -417,7 +514,11 @@ int mtk_afe_fe_trigger(struct snd_pcm_substream *substream, int cmd,
 		/* and clear pending IRQ */
 		mtk_regmap_write(afe->regmap, irq_data->irq_clr_reg,
 				 1 << irq_data->irq_clr_shift);
+<<<<<<< HEAD
 		return ret;
+=======
+		return 0;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	default:
 		return -EINVAL;
 	}
@@ -428,6 +529,7 @@ int mtk_afe_fe_prepare(struct snd_pcm_substream *substream,
 		       struct snd_soc_dai *dai)
 {
 	struct snd_soc_pcm_runtime *rtd  = substream->private_data;
+<<<<<<< HEAD
 	struct mtk_base_afe *afe = snd_soc_dai_get_drvdata(dai);
 	int id = rtd->cpu_dai->id;
 
@@ -442,6 +544,32 @@ int mtk_afe_fe_prepare(struct snd_pcm_substream *substream,
 	afe_pcm_ipi_to_dsp(AUDIO_DSP_TASK_PCM_PREPARE,
 			   substream, NULL, dai, afe);
 #endif
+=======
+	struct mtk_base_afe *afe = snd_soc_platform_get_drvdata(rtd->platform);
+	struct mtk_base_afe_memif *memif = &afe->memif[rtd->cpu_dai->id];
+	int hd_audio = 0;
+
+	/* set hd mode */
+	switch (substream->runtime->format) {
+	case SNDRV_PCM_FORMAT_S16_LE:
+		hd_audio = 0;
+		break;
+	case SNDRV_PCM_FORMAT_S32_LE:
+		hd_audio = 1;
+		break;
+	case SNDRV_PCM_FORMAT_S24_LE:
+		hd_audio = 1;
+		break;
+	default:
+		dev_err(afe->dev, "%s() error: unsupported format %d\n",
+			__func__, substream->runtime->format);
+		break;
+	}
+
+	mtk_regmap_update_bits(afe->regmap, memif->data->hd_reg,
+			       1 << memif->data->hd_shift,
+			       hd_audio << memif->data->hd_shift);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	return 0;
 }
@@ -537,6 +665,7 @@ int mtk_afe_dai_resume(struct snd_soc_dai *dai)
 }
 EXPORT_SYMBOL_GPL(mtk_afe_dai_resume);
 
+<<<<<<< HEAD
 int mtk_memif_set_enable(struct mtk_base_afe *afe, int id)
 {
 	struct mtk_base_afe_memif *memif = &afe->memif[id];
@@ -751,6 +880,8 @@ int mtk_memif_set_pbuf_size(struct mtk_base_afe *afe,
 }
 EXPORT_SYMBOL_GPL(mtk_memif_set_pbuf_size);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 MODULE_DESCRIPTION("Mediatek simple fe dai operator");
 MODULE_AUTHOR("Garlic Tseng <garlic.tseng@mediatek.com>");
 MODULE_LICENSE("GPL v2");

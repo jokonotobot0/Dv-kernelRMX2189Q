@@ -305,6 +305,7 @@ config ARM_ARCH_TIMER_EVTSTREAM
 	  This must be disabled for hardware validation purposes to detect any
 	  hardware anomalies of missing events.
 
+<<<<<<< HEAD
 config ARM_ARCH_TIMER_VCT_ACCESS
 	bool "Support for ARM architected timer virtual counter access in userspace"
 	default !ARM64
@@ -313,6 +314,8 @@ config ARM_ARCH_TIMER_VCT_ACCESS
 	  This option enables support for reading the ARM architected timer's
 	  virtual counter in userspace.
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 config FSL_ERRATUM_A008585
 	bool "Workaround for Freescale/NXP Erratum A-008585"
 	default y
@@ -416,6 +419,7 @@ config MTK_TIMER
 	help
 	  Support for Mediatek timer driver.
 
+<<<<<<< HEAD
 config MTK_TIMER_SYSTIMER
 	bool "Mediatek sys-timer driver" if COMPILE_TEST
 	depends on GENERIC_CLOCKEVENTS && HAS_IOMEM && !MTK_TIEMR
@@ -438,6 +442,8 @@ config MTK_TIMER_APXGPT
 	  resolve some issue that gpt interrupt masked.
 	  add important debug info.
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 config SYS_SUPPORTS_SH_MTU2
         bool
 

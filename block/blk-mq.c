@@ -1713,6 +1713,13 @@ static void blk_mq_init_cpu_queues(struct request_queue *q,
 		INIT_LIST_HEAD(&__ctx->rq_list);
 		__ctx->queue = q;
 
+<<<<<<< HEAD
+=======
+		/* If the cpu isn't online, the cpu is mapped to first hctx */
+		if (!cpu_online(i))
+			continue;
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		hctx = blk_mq_map_queue(q, i);
 
 		/*
@@ -1746,11 +1753,22 @@ static void blk_mq_map_swqueue(struct request_queue *q,
 	 * Map software to hardware queues
 	 */
 	for_each_possible_cpu(i) {
+<<<<<<< HEAD
 		ctx = per_cpu_ptr(q->queue_ctx, i);
 		hctx = blk_mq_map_queue(q, i);
 
 		if (cpumask_test_cpu(i, online_mask))
 			cpumask_set_cpu(i, hctx->cpumask);
+=======
+		/* If the cpu isn't online, the cpu is mapped to first hctx */
+		if (!cpumask_test_cpu(i, online_mask))
+			continue;
+
+		ctx = per_cpu_ptr(q->queue_ctx, i);
+		hctx = blk_mq_map_queue(q, i);
+
+		cpumask_set_cpu(i, hctx->cpumask);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		ctx->index_hw = hctx->nr_ctx;
 		hctx->ctxs[hctx->nr_ctx++] = ctx;
 	}
@@ -1786,6 +1804,7 @@ static void blk_mq_map_swqueue(struct request_queue *q,
 
 		/*
 		 * Initialize batch roundrobin counts
+<<<<<<< HEAD
 		 * Set next_cpu for only those hctxs that have an online CPU
 		 * in their cpumask field. For hctxs that belong to few online
 		 * and few offline CPUs, this will always provide one CPU from
@@ -1796,6 +1815,11 @@ static void blk_mq_map_swqueue(struct request_queue *q,
 			hctx->next_cpu = cpumask_first(hctx->cpumask);
 			hctx->next_cpu_batch = BLK_MQ_CPU_WORK_BATCH;
 		}
+=======
+		 */
+		hctx->next_cpu = cpumask_first(hctx->cpumask);
+		hctx->next_cpu_batch = BLK_MQ_CPU_WORK_BATCH;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 }
 
@@ -1910,9 +1934,13 @@ static void blk_mq_realloc_hw_ctxs(struct blk_mq_tag_set *set,
 	blk_mq_sysfs_unregister(q);
 
 	/* protect against switching io scheduler  */
+<<<<<<< HEAD
 	lockdep_off();
 	mutex_lock(&q->sysfs_lock);
 	lockdep_on();
+=======
+	mutex_lock(&q->sysfs_lock);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	for (i = 0; i < set->nr_hw_queues; i++) {
 		int node;
 
@@ -1962,9 +1990,13 @@ static void blk_mq_realloc_hw_ctxs(struct blk_mq_tag_set *set,
 		}
 	}
 	q->nr_hw_queues = i;
+<<<<<<< HEAD
 	lockdep_off();
 	mutex_unlock(&q->sysfs_lock);
 	lockdep_on();
+=======
+	mutex_unlock(&q->sysfs_lock);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	blk_mq_sysfs_register(q);
 }
 
@@ -2078,6 +2110,7 @@ static void blk_mq_queue_reinit(struct request_queue *q,
 	blk_mq_sysfs_register(q);
 }
 
+<<<<<<< HEAD
 static int blk_mq_queue_reinit_dead(unsigned int cpu)
 {
 	struct request_queue *q;
@@ -2092,6 +2125,52 @@ static int blk_mq_queue_reinit_dead(unsigned int cpu)
 	}
 	mutex_unlock(&all_q_mutex);
 
+=======
+/*
+ * New online cpumask which is going to be set in this hotplug event.
+ * Declare this cpumasks as global as cpu-hotplug operation is invoked
+ * one-by-one and dynamically allocating this could result in a failure.
+ */
+static struct cpumask cpuhp_online_new;
+
+static void blk_mq_queue_reinit_work(void)
+{
+	struct request_queue *q;
+
+	mutex_lock(&all_q_mutex);
+	/*
+	 * We need to freeze and reinit all existing queues.  Freezing
+	 * involves synchronous wait for an RCU grace period and doing it
+	 * one by one may take a long time.  Start freezing all queues in
+	 * one swoop and then wait for the completions so that freezing can
+	 * take place in parallel.
+	 */
+	list_for_each_entry(q, &all_q_list, all_q_node)
+		blk_mq_freeze_queue_start(q);
+	list_for_each_entry(q, &all_q_list, all_q_node) {
+		blk_mq_freeze_queue_wait(q);
+
+		/*
+		 * timeout handler can't touch hw queue during the
+		 * reinitialization
+		 */
+		del_timer_sync(&q->timeout);
+	}
+
+	list_for_each_entry(q, &all_q_list, all_q_node)
+		blk_mq_queue_reinit(q, &cpuhp_online_new);
+
+	list_for_each_entry(q, &all_q_list, all_q_node)
+		blk_mq_unfreeze_queue(q);
+
+	mutex_unlock(&all_q_mutex);
+}
+
+static int blk_mq_queue_reinit_dead(unsigned int cpu)
+{
+	cpumask_copy(&cpuhp_online_new, cpu_online_mask);
+	blk_mq_queue_reinit_work();
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return 0;
 }
 
@@ -2113,6 +2192,7 @@ static int blk_mq_queue_reinit_dead(unsigned int cpu)
  */
 static int blk_mq_queue_reinit_prepare(unsigned int cpu)
 {
+<<<<<<< HEAD
 	struct request_queue *q;
 	struct blk_mq_hw_ctx *hctx;
 	int i;
@@ -2124,6 +2204,11 @@ static int blk_mq_queue_reinit_prepare(unsigned int cpu)
 		}
 	}
 	mutex_unlock(&all_q_mutex);
+=======
+	cpumask_copy(&cpuhp_online_new, cpu_online_mask);
+	cpumask_set_cpu(cpu, &cpuhp_online_new);
+	blk_mq_queue_reinit_work();
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return 0;
 }
 

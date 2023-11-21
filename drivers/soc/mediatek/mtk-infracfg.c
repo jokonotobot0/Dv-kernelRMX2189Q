@@ -17,6 +17,12 @@
 #include <linux/soc/mediatek/infracfg.h>
 #include <asm/processor.h>
 
+<<<<<<< HEAD
+=======
+#define INFRA_TOPAXI_PROTECTEN		0x0220
+#define INFRA_TOPAXI_PROTECTSTA1	0x0228
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /**
  * mtk_infracfg_set_bus_protection - enable bus protection
  * @regmap: The infracfg regmap
@@ -86,6 +92,7 @@ int mtk_infracfg_clear_bus_protection(struct regmap *infracfg, u32 mask)
 
 	return 0;
 }
+<<<<<<< HEAD
 
 /**
  * mtk_infracfg_set_bus_protection_ext - enable bus protection
@@ -173,3 +180,5 @@ int mtk_infracfg_clear_bus_protection_ext(struct regmap *infracfg, u32 mask,
 
 	return 0;
 }
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

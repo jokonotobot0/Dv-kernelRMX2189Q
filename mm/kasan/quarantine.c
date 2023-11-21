@@ -25,7 +25,10 @@
 #include <linux/printk.h>
 #include <linux/shrinker.h>
 #include <linux/slab.h>
+<<<<<<< HEAD
 #include <linux/srcu.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <linux/string.h>
 #include <linux/types.h>
 
@@ -87,9 +90,30 @@ static void qlist_move_all(struct qlist_head *from, struct qlist_head *to)
 	qlist_init(from);
 }
 
+<<<<<<< HEAD
 #define QUARANTINE_PERCPU_SIZE (1 << 20)
 #define QUARANTINE_BATCHES \
 	(1024 > 4 * CONFIG_NR_CPUS ? 1024 : 4 * CONFIG_NR_CPUS)
+=======
+static void qlist_move(struct qlist_head *from, struct qlist_node *last,
+		struct qlist_head *to, size_t size)
+{
+	if (unlikely(last == from->tail)) {
+		qlist_move_all(from, to);
+		return;
+	}
+	if (qlist_empty(to))
+		to->head = from->head;
+	else
+		to->tail->next = from->head;
+	to->tail = last;
+	from->head = last->next;
+	last->next = NULL;
+	from->bytes -= size;
+	to->bytes += size;
+}
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /*
  * The object quarantine consists of per-cpu queues and a global queue,
@@ -97,6 +121,7 @@ static void qlist_move_all(struct qlist_head *from, struct qlist_head *to)
  */
 static DEFINE_PER_CPU(struct qlist_head, cpu_quarantine);
 
+<<<<<<< HEAD
 /* Round-robin FIFO array of batches. */
 static struct qlist_head global_quarantine[QUARANTINE_BATCHES];
 static int quarantine_head;
@@ -114,6 +139,13 @@ static unsigned long quarantine_max_size;
  * Usually equal to QUARANTINE_PERCPU_SIZE unless we have too much RAM.
  */
 static unsigned long quarantine_batch_size;
+=======
+static struct qlist_head global_quarantine;
+static DEFINE_SPINLOCK(quarantine_lock);
+
+/* Maximum size of the global queue. */
+static unsigned long quarantine_size;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /*
  * The fraction of physical memory the quarantine is allowed to occupy.
@@ -122,6 +154,12 @@ static unsigned long quarantine_batch_size;
  */
 #define QUARANTINE_FRACTION 32
 
+<<<<<<< HEAD
+=======
+#define QUARANTINE_LOW_SIZE (READ_ONCE(quarantine_size) * 3 / 4)
+#define QUARANTINE_PERCPU_SIZE (1 << 20)
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static struct kmem_cache *qlink_to_cache(struct qlist_node *qlink)
 {
 	return virt_to_head_page(qlink)->slab_cache;
@@ -175,6 +213,7 @@ void quarantine_put(struct kasan_free_meta *info, struct kmem_cache *cache)
 	struct qlist_head *q;
 	struct qlist_head temp = QLIST_INIT;
 
+<<<<<<< HEAD
 	/*
 	 * Note: irq must be disabled until after we move the batch to the
 	 * global quarantine. Otherwise quarantine_remove_cache() can miss
@@ -183,10 +222,13 @@ void quarantine_put(struct kasan_free_meta *info, struct kmem_cache *cache)
 	 * beginning which ensures that it either sees the objects in per-cpu
 	 * lists or in the global quarantine.
 	 */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	local_irq_save(flags);
 
 	q = this_cpu_ptr(&cpu_quarantine);
 	qlist_put(q, &info->quarantine_link, cache->size);
+<<<<<<< HEAD
 	if (unlikely(q->bytes > QUARANTINE_PERCPU_SIZE)) {
 		qlist_move_all(q, &temp);
 
@@ -207,10 +249,23 @@ void quarantine_put(struct kasan_free_meta *info, struct kmem_cache *cache)
 	}
 
 	local_irq_restore(flags);
+=======
+	if (unlikely(q->bytes > QUARANTINE_PERCPU_SIZE))
+		qlist_move_all(q, &temp);
+
+	local_irq_restore(flags);
+
+	if (unlikely(!qlist_empty(&temp))) {
+		spin_lock_irqsave(&quarantine_lock, flags);
+		qlist_move_all(&temp, &global_quarantine);
+		spin_unlock_irqrestore(&quarantine_lock, flags);
+	}
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 void quarantine_reduce(void)
 {
+<<<<<<< HEAD
 	size_t total_size, new_quarantine_size, percpu_quarantines;
 	unsigned long flags;
 	int srcu_idx;
@@ -230,12 +285,25 @@ void quarantine_reduce(void)
 	 * expected case).
 	 */
 	srcu_idx = srcu_read_lock(&remove_cache_srcu);
+=======
+	size_t new_quarantine_size, percpu_quarantines;
+	unsigned long flags;
+	struct qlist_head to_free = QLIST_INIT;
+	size_t size_to_free = 0;
+	struct qlist_node *last;
+
+	if (likely(READ_ONCE(global_quarantine.bytes) <=
+		   READ_ONCE(quarantine_size)))
+		return;
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	spin_lock_irqsave(&quarantine_lock, flags);
 
 	/*
 	 * Update quarantine size in case of hotplug. Allocate a fraction of
 	 * the installed memory to quarantine minus per-cpu queue limits.
 	 */
+<<<<<<< HEAD
 	total_size = (READ_ONCE(totalram_pages) << PAGE_SHIFT) /
 		QUARANTINE_FRACTION;
 	percpu_quarantines = QUARANTINE_PERCPU_SIZE * num_online_cpus();
@@ -253,11 +321,34 @@ void quarantine_reduce(void)
 		if (quarantine_head == QUARANTINE_BATCHES)
 			quarantine_head = 0;
 	}
+=======
+	new_quarantine_size = (READ_ONCE(totalram_pages) << PAGE_SHIFT) /
+		QUARANTINE_FRACTION;
+	percpu_quarantines = QUARANTINE_PERCPU_SIZE * num_online_cpus();
+	new_quarantine_size = (new_quarantine_size < percpu_quarantines) ?
+		0 : new_quarantine_size - percpu_quarantines;
+	WRITE_ONCE(quarantine_size, new_quarantine_size);
+
+	last = global_quarantine.head;
+	while (last) {
+		struct kmem_cache *cache = qlink_to_cache(last);
+
+		size_to_free += cache->size;
+		if (!last->next || size_to_free >
+		    global_quarantine.bytes - QUARANTINE_LOW_SIZE)
+			break;
+		last = last->next;
+	}
+	qlist_move(&global_quarantine, last, &to_free, size_to_free);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	spin_unlock_irqrestore(&quarantine_lock, flags);
 
 	qlist_free_all(&to_free, NULL);
+<<<<<<< HEAD
 	srcu_read_unlock(&remove_cache_srcu, srcu_idx);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static void qlist_move_cache(struct qlist_head *from,
@@ -295,6 +386,7 @@ static void per_cpu_remove_cache(void *arg)
 	qlist_free_all(&to_free, cache);
 }
 
+<<<<<<< HEAD
 /* Free all quarantined objects belonging to cache. */
 void quarantine_remove_cache(struct kmem_cache *cache)
 {
@@ -325,4 +417,18 @@ void quarantine_remove_cache(struct kmem_cache *cache)
 	qlist_free_all(&to_free, cache);
 
 	synchronize_srcu(&remove_cache_srcu);
+=======
+void quarantine_remove_cache(struct kmem_cache *cache)
+{
+	unsigned long flags;
+	struct qlist_head to_free = QLIST_INIT;
+
+	on_each_cpu(per_cpu_remove_cache, cache, 1);
+
+	spin_lock_irqsave(&quarantine_lock, flags);
+	qlist_move_cache(&global_quarantine, &to_free, cache);
+	spin_unlock_irqrestore(&quarantine_lock, flags);
+
+	qlist_free_all(&to_free, cache);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }

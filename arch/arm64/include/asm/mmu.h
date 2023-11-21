@@ -16,9 +16,13 @@
 #ifndef __ASM_MMU_H
 #define __ASM_MMU_H
 
+<<<<<<< HEAD
 
 #define USER_ASID_FLAG	(UL(1) << 48)
 #define TTBR_ASID_MASK	(UL(0xffff) << 48)
+=======
+#define USER_ASID_FLAG	(UL(1) << 48)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #ifndef __ASSEMBLY__
 

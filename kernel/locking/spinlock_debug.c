@@ -5,7 +5,10 @@
  * This file contains the spinlock/rwlock implementations for
  * DEBUG_SPINLOCK.
  */
+<<<<<<< HEAD
 #define pr_fmt(fmt)	"spinlock_debug: " fmt
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #include <linux/spinlock.h>
 #include <linux/nmi.h>
@@ -13,6 +16,7 @@
 #include <linux/debug_locks.h>
 #include <linux/delay.h>
 #include <linux/export.h>
+<<<<<<< HEAD
 #include "sched.h"
 
 #ifdef CONFIG_MTK_AEE_FEATURE
@@ -91,6 +95,8 @@ static bool is_critical_lock_held(void)
 
 	return false;
 }
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 void __raw_spin_lock_init(raw_spinlock_t *lock, const char *name,
 			  struct lock_class_key *key)
@@ -106,7 +112,10 @@ void __raw_spin_lock_init(raw_spinlock_t *lock, const char *name,
 	lock->magic = SPINLOCK_MAGIC;
 	lock->owner = SPINLOCK_OWNER_INIT;
 	lock->owner_cpu = -1;
+<<<<<<< HEAD
 	lock->name = name;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 EXPORT_SYMBOL(__raw_spin_lock_init);
@@ -135,10 +144,17 @@ static void spin_dump(raw_spinlock_t *lock, const char *msg)
 
 	if (lock->owner && lock->owner != SPINLOCK_OWNER_INIT)
 		owner = lock->owner;
+<<<<<<< HEAD
 	pr_info("BUG: spinlock %s on CPU#%d, %s/%d\n",
 		msg, raw_smp_processor_id(),
 		current->comm, task_pid_nr(current));
 	pr_info(" lock: %pS, .magic: %08x, .owner: %s/%d, "
+=======
+	printk(KERN_EMERG "BUG: spinlock %s on CPU#%d, %s/%d\n",
+		msg, raw_smp_processor_id(),
+		current->comm, task_pid_nr(current));
+	printk(KERN_EMERG " lock: %pS, .magic: %08x, .owner: %s/%d, "
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			".owner_cpu: %d\n",
 		lock, lock->magic,
 		owner ? owner->comm : "<none>",
@@ -149,12 +165,16 @@ static void spin_dump(raw_spinlock_t *lock, const char *msg)
 
 static void spin_bug(raw_spinlock_t *lock, const char *msg)
 {
+<<<<<<< HEAD
 	char aee_str[50];
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (!debug_locks_off())
 		return;
 
 	spin_dump(lock, msg);
+<<<<<<< HEAD
 	snprintf(aee_str, sizeof(aee_str), "%s: [%s]\n", current->comm, msg);
 
 	if (!strcmp(msg, "bad magic") || !strcmp(msg, "already unlocked")
@@ -176,6 +196,8 @@ static void spin_bug(raw_spinlock_t *lock, const char *msg)
 			aee_str, "spinlock debugger\n");
 #endif
 	}
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 #define SPIN_BUG_ON(cond, lock, msg) if (unlikely(cond)) spin_bug(lock, msg)
@@ -183,9 +205,12 @@ static void spin_bug(raw_spinlock_t *lock, const char *msg)
 static inline void
 debug_spin_lock_before(raw_spinlock_t *lock)
 {
+<<<<<<< HEAD
 #ifdef CONFIG_DEBUG_LOCK_ALLOC
 	SPIN_BUG_ON(lock->name == NULL, lock, "uninitialized");
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	SPIN_BUG_ON(lock->magic != SPINLOCK_MAGIC, lock, "bad magic");
 	SPIN_BUG_ON(lock->owner == current, lock, "recursion");
 	SPIN_BUG_ON(lock->owner_cpu == raw_smp_processor_id(),
@@ -194,7 +219,10 @@ debug_spin_lock_before(raw_spinlock_t *lock)
 
 static inline void debug_spin_lock_after(raw_spinlock_t *lock)
 {
+<<<<<<< HEAD
 	lock->lock_t = sched_clock();
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	lock->owner_cpu = raw_smp_processor_id();
 	lock->owner = current;
 }
@@ -210,6 +238,7 @@ static inline void debug_spin_unlock(raw_spinlock_t *lock)
 	lock->owner_cpu = -1;
 }
 
+<<<<<<< HEAD
 #ifdef MTK_LOCK_DEBUG
 #define LOCK_CSD_IN_USE ((void *)-1L)
 static DEFINE_PER_CPU(struct call_single_data, spinlock_debug_csd);
@@ -401,12 +430,15 @@ static void __spin_lock_debug(raw_spinlock_t *lock)
 #endif /* MTK_LOCK_DEBUG */
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * We are now relying on the NMI watchdog to detect lockup instead of doing
  * the detection here with an unfair lock which can cause problem of its own.
  */
 void do_raw_spin_lock(raw_spinlock_t *lock)
 {
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_SCHED_MONITOR
 	mt_trace_lock_spinning_start(lock);
 #endif
@@ -417,6 +449,11 @@ void do_raw_spin_lock(raw_spinlock_t *lock)
 #ifdef CONFIG_MTK_SCHED_MONITOR
 	mt_trace_lock_spinning_end(lock);
 #endif
+=======
+	debug_spin_lock_before(lock);
+	arch_spin_lock(&lock->raw_lock);
+	debug_spin_lock_after(lock);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 int do_raw_spin_trylock(raw_spinlock_t *lock)
@@ -437,7 +474,10 @@ int do_raw_spin_trylock(raw_spinlock_t *lock)
 void do_raw_spin_unlock(raw_spinlock_t *lock)
 {
 	debug_spin_unlock(lock);
+<<<<<<< HEAD
 	lock->unlock_t = sched_clock();
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	arch_spin_unlock(&lock->raw_lock);
 }
 
@@ -446,7 +486,11 @@ static void rwlock_bug(rwlock_t *lock, const char *msg)
 	if (!debug_locks_off())
 		return;
 
+<<<<<<< HEAD
 	pr_info("BUG: rwlock %s on CPU#%d, %s/%d, %p\n",
+=======
+	printk(KERN_EMERG "BUG: rwlock %s on CPU#%d, %s/%d, %p\n",
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		msg, raw_smp_processor_id(), current->comm,
 		task_pid_nr(current), lock);
 	dump_stack();

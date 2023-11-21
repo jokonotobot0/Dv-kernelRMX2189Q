@@ -4,6 +4,7 @@
 
 comment "MMC/SD/SDIO Host Controller Drivers"
 
+<<<<<<< HEAD
 config MMC_MTK_PRO
 	tristate "MediaTek SD/MMC Card Proprietary Interface support"
 	depends on !MMC_MTK
@@ -67,6 +68,8 @@ config MTK_EMMC_HW_CQ
 	  use MTK eMMC hardware Command Queuing scheme.
 	  If unsure, say N.
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 config MMC_ARMMMCI
 	tristate "ARM AMBA Multimedia Card Interface support"
 	depends on ARM_AMBA
@@ -861,6 +864,7 @@ config MMC_SDHCI_BRCMSTB
 	  Broadcom STB SoCs.
 
 	  If unsure, say Y.
+<<<<<<< HEAD
 
 config MMC_MTK_SDIO
 	tristate "MediaTek SDIO Card Interface support"
@@ -872,3 +876,5 @@ config MMC_MTK_SDIO
 	  If unsure, say N.
 
 source "drivers/mmc/host/mediatek/Kconfig"
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

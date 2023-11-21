@@ -35,6 +35,7 @@ config MACH_MT8135
 	default ARCH_MEDIATEK
 
 endif
+<<<<<<< HEAD
 
 config MACH_MT6757
 	bool "MediaTek MT6757"
@@ -241,3 +242,5 @@ config MACH_MT6761
 	  multitasking and multimedia improvements.
 
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

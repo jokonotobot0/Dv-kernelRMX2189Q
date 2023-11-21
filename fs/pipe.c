@@ -28,11 +28,14 @@
 
 #include "internal.h"
 
+<<<<<<< HEAD
 #if defined(CONFIG_MTK_AEE_FEATURE) && \
 	defined(CONFIG_MTK_FD_LEAK_SPECIFIC_DEBUG)
 #include <mt-plat/aee.h>
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * The max size that a non-root user is allowed to grow the pipe. Can
  * be set by root in /proc/sys/fs/pipe-max-size
@@ -835,6 +838,7 @@ static int __do_pipe_flags(int *fd, struct file **files, int flags)
 	audit_fd_pair(fdr, fdw);
 	fd[0] = fdr;
 	fd[1] = fdw;
+<<<<<<< HEAD
 
 #if defined(CONFIG_MTK_AEE_FEATURE) && \
 	defined(CONFIG_MTK_FD_LEAK_SPECIFIC_DEBUG)
@@ -868,6 +872,8 @@ static int __do_pipe_flags(int *fd, struct file **files, int flags)
 		}
 	}
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return 0;
 
  err_fdr:

@@ -702,7 +702,11 @@ static void nv_crtc_prepare(struct drm_crtc *crtc)
 	if (nv_two_heads(dev))
 		NVSetOwner(dev, nv_crtc->index);
 
+<<<<<<< HEAD
 	drm_crtc_vblank_off(crtc);
+=======
+	drm_vblank_pre_modeset(dev, nv_crtc->index);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	funcs->dpms(crtc, DRM_MODE_DPMS_OFF);
 
 	NVBlankScreen(dev, nv_crtc->index, true);
@@ -734,7 +738,11 @@ static void nv_crtc_commit(struct drm_crtc *crtc)
 #endif
 
 	funcs->dpms(crtc, DRM_MODE_DPMS_ON);
+<<<<<<< HEAD
 	drm_crtc_vblank_on(crtc);
+=======
+	drm_vblank_post_modeset(dev, nv_crtc->index);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static void nv_crtc_destroy(struct drm_crtc *crtc)

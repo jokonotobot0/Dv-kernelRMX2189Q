@@ -370,6 +370,7 @@ static inline vm_flags_t calc_vm_may_flags(unsigned long prot)
 	       _calc_vm_trans(prot, PROT_EXEC,  VM_MAYEXEC);
 }
 
+<<<<<<< HEAD
 static int ashmem_vmfile_mmap(struct file *file, struct vm_area_struct *vma)
 {
 	/* do not allow to mmap ashmem backing shmem file directly */
@@ -387,6 +388,10 @@ ashmem_vmfile_get_unmapped_area(struct file *file, unsigned long addr,
 static int ashmem_mmap(struct file *file, struct vm_area_struct *vma)
 {
 	static struct file_operations vmfile_fops;
+=======
+static int ashmem_mmap(struct file *file, struct vm_area_struct *vma)
+{
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct ashmem_area *asma = file->private_data;
 	int ret = 0;
 
@@ -427,6 +432,7 @@ static int ashmem_mmap(struct file *file, struct vm_area_struct *vma)
 		}
 		vmfile->f_mode |= FMODE_LSEEK;
 		asma->file = vmfile;
+<<<<<<< HEAD
 		/*
 		 * override mmap operation of the vmfile so that it can't be
 		 * remapped which would lead to creation of a new vma with no
@@ -451,6 +457,27 @@ static int ashmem_mmap(struct file *file, struct vm_area_struct *vma)
 		vma->vm_file = asma->file;
 	}
 
+=======
+	}
+	get_file(asma->file);
+
+	/*
+	 * XXX - Reworked to use shmem_zero_setup() instead of
+	 * shmem_set_file while we're in staging. -jstultz
+	 */
+	if (vma->vm_flags & VM_SHARED) {
+		ret = shmem_zero_setup(vma);
+		if (ret) {
+			fput(asma->file);
+			goto out;
+		}
+	}
+
+	if (vma->vm_file)
+		fput(vma->vm_file);
+	vma->vm_file = asma->file;
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 out:
 	mutex_unlock(&ashmem_mutex);
 	return ret;
@@ -487,9 +514,15 @@ ashmem_shrink_scan(struct shrinker *shrink, struct shrink_control *sc)
 		loff_t start = range->pgstart * PAGE_SIZE;
 		loff_t end = (range->pgend + 1) * PAGE_SIZE;
 
+<<<<<<< HEAD
 		range->asma->file->f_op->fallocate(range->asma->file,
 				FALLOC_FL_PUNCH_HOLE | FALLOC_FL_KEEP_SIZE,
 				start, end - start);
+=======
+		vfs_fallocate(range->asma->file,
+			      FALLOC_FL_PUNCH_HOLE | FALLOC_FL_KEEP_SIZE,
+			      start, end - start);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		range->purged = ASHMEM_WAS_PURGED;
 		lru_del(range);
 

@@ -147,6 +147,7 @@ DEFINE_EVENT(cpu, cpu_frequency,
 	TP_ARGS(frequency, cpu_id)
 );
 
+<<<<<<< HEAD
 TRACE_EVENT(cpu_frequency_limits,
 
 	TP_PROTO(unsigned int max_freq, unsigned int min_freq,
@@ -179,6 +180,8 @@ DEFINE_EVENT(cpu, cpu_capacity,
 	TP_ARGS(capacity, cpu_id)
 );
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 TRACE_EVENT(device_pm_callback_start,
 
 	TP_PROTO(struct device *dev, const char *pm_ops, int event),
@@ -332,6 +335,7 @@ DEFINE_EVENT(clock, clock_set_rate,
 	TP_ARGS(name, state, cpu_id)
 );
 
+<<<<<<< HEAD
 TRACE_EVENT(clock_set_parent,
 
 	TP_PROTO(const char *name, const char *parent_name),
@@ -351,6 +355,8 @@ TRACE_EVENT(clock_set_parent,
 	TP_printk("%s parent=%s", __get_str(name), __get_str(parent_name))
 );
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * The power domain events are used for power domains transitions
  */
@@ -388,6 +394,7 @@ DEFINE_EVENT(power_domain, power_domain_target,
  */
 DECLARE_EVENT_CLASS(pm_qos_request,
 
+<<<<<<< HEAD
 	TP_PROTO(int pm_qos_class, s32 value, char *owner),
 
 	TP_ARGS(pm_qos_class, value, owner),
@@ -396,41 +403,78 @@ DECLARE_EVENT_CLASS(pm_qos_request,
 		__field(int,                    pm_qos_class)
 		__field(s32,                    value)
 		__string(owner,                 owner)
+=======
+	TP_PROTO(int pm_qos_class, s32 value),
+
+	TP_ARGS(pm_qos_class, value),
+
+	TP_STRUCT__entry(
+		__field( int,                    pm_qos_class   )
+		__field( s32,                    value          )
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	),
 
 	TP_fast_assign(
 		__entry->pm_qos_class = pm_qos_class;
 		__entry->value = value;
+<<<<<<< HEAD
 		__assign_str(owner, owner);
 	),
 
 	TP_printk("pm_qos_class=%s value=%d owner=%s",
+=======
+	),
+
+	TP_printk("pm_qos_class=%s value=%d",
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		  __print_symbolic(__entry->pm_qos_class,
 			{ PM_QOS_CPU_DMA_LATENCY,	"CPU_DMA_LATENCY" },
 			{ PM_QOS_NETWORK_LATENCY,	"NETWORK_LATENCY" },
 			{ PM_QOS_NETWORK_THROUGHPUT,	"NETWORK_THROUGHPUT" }),
+<<<<<<< HEAD
 		  __entry->value, __get_str(owner))
+=======
+		  __entry->value)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 );
 
 DEFINE_EVENT(pm_qos_request, pm_qos_add_request,
 
+<<<<<<< HEAD
 	TP_PROTO(int pm_qos_class, s32 value, char *owner),
 
 	TP_ARGS(pm_qos_class, value, owner)
+=======
+	TP_PROTO(int pm_qos_class, s32 value),
+
+	TP_ARGS(pm_qos_class, value)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 );
 
 DEFINE_EVENT(pm_qos_request, pm_qos_update_request,
 
+<<<<<<< HEAD
 	TP_PROTO(int pm_qos_class, s32 value, char *owner),
 
 	TP_ARGS(pm_qos_class, value, owner)
+=======
+	TP_PROTO(int pm_qos_class, s32 value),
+
+	TP_ARGS(pm_qos_class, value)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 );
 
 DEFINE_EVENT(pm_qos_request, pm_qos_remove_request,
 
+<<<<<<< HEAD
 	TP_PROTO(int pm_qos_class, s32 value, char *owner),
 
 	TP_ARGS(pm_qos_class, value, owner)
+=======
+	TP_PROTO(int pm_qos_class, s32 value),
+
+	TP_ARGS(pm_qos_class, value)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 );
 
 TRACE_EVENT(pm_qos_update_request_timeout,

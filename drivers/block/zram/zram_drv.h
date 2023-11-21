@@ -21,6 +21,25 @@
 
 #include "zcomp.h"
 
+<<<<<<< HEAD
+=======
+/*-- Configurable parameters */
+
+/*
+ * Pages that compress to size greater than this are stored
+ * uncompressed in memory.
+ */
+static const size_t max_zpage_size = PAGE_SIZE / 4 * 3;
+
+/*
+ * NOTE: max_zpage_size must be less than or equal to:
+ *   ZS_MAX_ALLOC_SIZE. Otherwise, zs_malloc() would
+ * always return failure.
+ */
+
+/*-- End of configurable params */
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define SECTOR_SHIFT		9
 #define SECTORS_PER_PAGE_SHIFT	(PAGE_SHIFT - SECTOR_SHIFT)
 #define SECTORS_PER_PAGE	(1 << SECTORS_PER_PAGE_SHIFT)
@@ -31,7 +50,11 @@
 
 
 /*
+<<<<<<< HEAD
  * The lower ZRAM_FLAG_SHIFT bits of table.flags is for
+=======
+ * The lower ZRAM_FLAG_SHIFT bits of table.value is for
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  * object size (excluding header), the higher bits is for
  * zram_pageflags.
  *
@@ -42,6 +65,7 @@
  */
 #define ZRAM_FLAG_SHIFT 24
 
+<<<<<<< HEAD
 /* Flags for zram pages (table[page_no].flags) */
 enum zram_pageflags {
 	/* zram slot is locked */
@@ -51,6 +75,13 @@ enum zram_pageflags {
 	ZRAM_UNDER_WB,	/* page is under writeback */
 	ZRAM_HUGE,	/* Incompressible page */
 	ZRAM_IDLE,	/* not accessed page since last idle marking */
+=======
+/* Flags for zram pages (table[page_no].value) */
+enum zram_pageflags {
+	/* Page consists entirely of zeros */
+	ZRAM_ZERO = ZRAM_FLAG_SHIFT,
+	ZRAM_ACCESS,	/* page is now accessed */
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	__NR_ZRAM_PAGEFLAGS,
 };
@@ -59,6 +90,7 @@ enum zram_pageflags {
 
 /* Allocated for each disk page */
 struct zram_table_entry {
+<<<<<<< HEAD
 	union {
 		unsigned long handle;
 		unsigned long element;
@@ -67,6 +99,10 @@ struct zram_table_entry {
 #ifdef CONFIG_ZRAM_MEMORY_TRACKING
 	ktime_t ac_time;
 #endif
+=======
+	unsigned long handle;
+	unsigned long value;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 struct zram_stats {
@@ -77,6 +113,7 @@ struct zram_stats {
 	atomic64_t failed_writes;	/* can happen when memory is too low */
 	atomic64_t invalid_io;	/* non-page-aligned I/O requests */
 	atomic64_t notify_free;	/* no. of swap slot free notifications */
+<<<<<<< HEAD
 	atomic64_t same_pages;		/* no. of same element filled pages */
 	atomic64_t huge_pages;		/* no. of huge pages */
 	atomic64_t pages_stored;	/* no. of pages currently stored */
@@ -93,6 +130,21 @@ struct zram_stats {
 struct zram {
 	struct zram_table_entry *table;
 	struct zs_pool *mem_pool;
+=======
+	atomic64_t zero_pages;		/* no. of zero filled pages */
+	atomic64_t pages_stored;	/* no. of pages currently stored */
+	atomic_long_t max_used_pages;	/* no. of maximum pages stored */
+	atomic64_t writestall;		/* no. of write slow paths */
+};
+
+struct zram_meta {
+	struct zram_table_entry *table;
+	struct zs_pool *mem_pool;
+};
+
+struct zram {
+	struct zram_meta *meta;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct zcomp *comp;
 	struct gendisk *disk;
 	/* Prevent concurrent execution of device init */
@@ -103,6 +155,12 @@ struct zram {
 	unsigned long limit_pages;
 
 	struct zram_stats stats;
+<<<<<<< HEAD
+=======
+	atomic_t refcount; /* refcount for zram_meta */
+	/* wait all IO under all of cpu are done */
+	wait_queue_head_t io_done;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/*
 	 * This is the limit on amount of *uncompressed* worth of data
 	 * we can store in a disk.
@@ -113,6 +171,7 @@ struct zram {
 	 * zram is claimed so open request will be failed
 	 */
 	bool claim; /* Protected by bdev->bd_mutex */
+<<<<<<< HEAD
 	struct file *backing_dev;
 #ifdef CONFIG_ZRAM_WRITEBACK
 	spinlock_t wb_limit_lock;
@@ -131,4 +190,7 @@ struct zram {
 /* mlog */
 unsigned long zram_mlog(void);
 
+=======
+};
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif

@@ -838,15 +838,30 @@ retry:
 		struct page **pages = NULL, **data_pages;
 		mempool_t *pool = NULL;	/* Becomes non-null if mempool used */
 		struct page *page;
+<<<<<<< HEAD
+=======
+		int want;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		u64 offset = 0, len = 0;
 
 		max_pages = max_pages_ever;
 
 get_more_pages:
 		first = -1;
+<<<<<<< HEAD
 		pvec_pages = pagevec_lookup_range_tag(&pvec, mapping, &index,
 						end, PAGECACHE_TAG_DIRTY);
 		dout("pagevec_lookup_range_tag got %d\n", pvec_pages);
+=======
+		want = min(end - index,
+			   min((pgoff_t)PAGEVEC_SIZE,
+			       max_pages - (pgoff_t)locked_pages) - 1)
+			+ 1;
+		pvec_pages = pagevec_lookup_tag(&pvec, mapping, &index,
+						PAGECACHE_TAG_DIRTY,
+						want);
+		dout("pagevec_lookup_tag got %d\n", pvec_pages);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		if (!pvec_pages && !locked_pages)
 			break;
 		for (i = 0; i < pvec_pages && locked_pages < max_pages; i++) {
@@ -864,6 +879,15 @@ get_more_pages:
 				unlock_page(page);
 				break;
 			}
+<<<<<<< HEAD
+=======
+			if (!wbc->range_cyclic && page->index > end) {
+				dout("end of range %p\n", page);
+				done = 1;
+				unlock_page(page);
+				break;
+			}
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			if (strip_unit_end && (page->index > strip_unit_end)) {
 				dout("end of strip unit %p\n", page);
 				unlock_page(page);

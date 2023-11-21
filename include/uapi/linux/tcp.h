@@ -116,7 +116,10 @@ enum {
 #define TCP_SAVE_SYN		27	/* Record SYN headers for new connections */
 #define TCP_SAVED_SYN		28	/* Get SYN headers recorded for connection */
 #define TCP_REPAIR_WINDOW	29	/* Get/set window parameters */
+<<<<<<< HEAD
 #define TCP_FASTOPEN_CONNECT	30	/* Attempt FastOpen with connect */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 struct tcp_repair_opt {
 	__u32	opt_code;

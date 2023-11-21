@@ -396,8 +396,13 @@ aoeblk_gdalloc(void *vp)
 	WARN_ON(d->gd);
 	WARN_ON(d->flags & DEVFL_UP);
 	blk_queue_max_hw_sectors(q, BLK_DEF_MAX_SECTORS);
+<<<<<<< HEAD
 	q->backing_dev_info->name = "aoe";
 	q->backing_dev_info->ra_pages = READ_AHEAD / PAGE_SIZE;
+=======
+	q->backing_dev_info.name = "aoe";
+	q->backing_dev_info.ra_pages = READ_AHEAD / PAGE_SIZE;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	d->bufpool = mp;
 	d->blkq = gd->queue = q;
 	q->queuedata = d;

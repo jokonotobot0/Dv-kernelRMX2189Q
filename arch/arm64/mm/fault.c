@@ -49,7 +49,11 @@ struct fault_info {
 	const char *name;
 };
 
+<<<<<<< HEAD
 static struct fault_info fault_info[];
+=======
+static const struct fault_info fault_info[];
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 static inline const struct fault_info *esr_to_fault_info(unsigned int esr)
 {
@@ -299,11 +303,16 @@ out:
 	return fault;
 }
 
+<<<<<<< HEAD
 static inline bool is_permission_fault(unsigned int esr, struct pt_regs *regs)
+=======
+static inline bool is_permission_fault(unsigned int esr)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	unsigned int ec       = ESR_ELx_EC(esr);
 	unsigned int fsc_type = esr & ESR_ELx_FSC_TYPE;
 
+<<<<<<< HEAD
 	if (ec != ESR_ELx_EC_DABT_CUR && ec != ESR_ELx_EC_IABT_CUR)
 		return false;
 
@@ -312,6 +321,10 @@ static inline bool is_permission_fault(unsigned int esr, struct pt_regs *regs)
 			(regs->pstate & PSR_PAN_BIT);
 	else
 		return fsc_type == ESR_ELx_FSC_PERM;
+=======
+	return (ec == ESR_ELx_EC_DABT_CUR && fsc_type == ESR_ELx_FSC_PERM) ||
+	       (ec == ESR_ELx_EC_IABT_CUR && fsc_type == ESR_ELx_FSC_PERM);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static bool is_el0_instruction_abort(unsigned int esr)
@@ -351,7 +364,11 @@ static int __kprobes do_page_fault(unsigned long addr, unsigned int esr,
 		mm_flags |= FAULT_FLAG_WRITE;
 	}
 
+<<<<<<< HEAD
 	if (addr < TASK_SIZE && is_permission_fault(esr, regs)) {
+=======
+	if (is_permission_fault(esr) && (addr < TASK_SIZE)) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		/* regs->orig_addr_limit may be 0 if we entered from EL0 */
 		if (regs->orig_addr_limit == KERNEL_DS)
 			die("Accessing user space memory with fs=KERNEL_DS", regs, esr);
@@ -520,7 +537,11 @@ static int do_bad(unsigned long addr, unsigned int esr, struct pt_regs *regs)
 	return 1;
 }
 
+<<<<<<< HEAD
 static struct fault_info fault_info[] = {
+=======
+static const struct fault_info fault_info[] = {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	{ do_bad,		SIGBUS,  0,		"ttbr address size fault"	},
 	{ do_bad,		SIGBUS,  0,		"level 1 address size fault"	},
 	{ do_bad,		SIGBUS,  0,		"level 2 address size fault"	},
@@ -684,7 +705,11 @@ void __init hook_debug_fault_code(int nr,
 				  int (*fn)(unsigned long, unsigned int, struct pt_regs *),
 				  int sig, int code, const char *name)
 {
+<<<<<<< HEAD
 	WARN_ON(nr < 0 || nr >= ARRAY_SIZE(debug_fault_info));
+=======
+	BUG_ON(nr < 0 || nr >= ARRAY_SIZE(debug_fault_info));
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	debug_fault_info[nr].fn		= fn;
 	debug_fault_info[nr].sig	= sig;
@@ -692,6 +717,7 @@ void __init hook_debug_fault_code(int nr,
 	debug_fault_info[nr].name	= name;
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_MEDIATEK_SOLUTION
 void hook_fault_code(int nr,
 		     int (*fn)(unsigned long, unsigned int, struct pt_regs *),
@@ -707,6 +733,8 @@ void hook_fault_code(int nr,
 #endif
 
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 asmlinkage int __exception do_debug_exception(unsigned long addr_if_watchpoint,
 					      unsigned int esr,
 					      struct pt_regs *regs)

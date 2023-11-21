@@ -105,7 +105,11 @@ static struct fq_flow *fq_flow_classify(struct fq *fq,
 
 	lockdep_assert_held(&fq->lock);
 
+<<<<<<< HEAD
 	hash = skb_get_hash_perturb(skb, &fq->perturbation);
+=======
+	hash = skb_get_hash_perturb(skb, fq->perturbation);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	idx = reciprocal_scale(hash, fq->flows_cnt);
 	flow = &fq->flows[idx];
 
@@ -252,7 +256,11 @@ static int fq_init(struct fq *fq, int flows_cnt)
 	INIT_LIST_HEAD(&fq->backlogs);
 	spin_lock_init(&fq->lock);
 	fq->flows_cnt = max_t(u32, flows_cnt, 1);
+<<<<<<< HEAD
 	get_random_bytes(&fq->perturbation, sizeof(fq->perturbation));
+=======
+	fq->perturbation = prandom_u32();
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	fq->quantum = 300;
 	fq->limit = 8192;
 	fq->memory_limit = 16 << 20; /* 16 MBytes */

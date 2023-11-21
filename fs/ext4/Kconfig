@@ -112,6 +112,7 @@ config EXT4_FS_ENCRYPTION
 	bool
 	default y
 	depends on EXT4_ENCRYPTION
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 #jason.tang@TECH.BSP.Kernel.Storage, 2019-10-25, enable EXT4_FSYNC
 config EXT4_FSYNC
@@ -127,6 +128,8 @@ config EXT4_ASYNC_DISCARD_SUPPORT
 	default n
 	depends on EXT4_FS
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 config EXT4_DEBUG
 	bool "EXT4 debugging support"

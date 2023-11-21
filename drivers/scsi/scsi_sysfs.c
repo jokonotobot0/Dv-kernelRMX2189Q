@@ -1229,6 +1229,7 @@ int scsi_sysfs_add_sdev(struct scsi_device *sdev)
 	device_enable_async_suspend(&sdev->sdev_gendev);
 	scsi_autopm_get_target(starget);
 	pm_runtime_set_active(&sdev->sdev_gendev);
+<<<<<<< HEAD
 
 	/*
 	 * MTK PATCH:
@@ -1236,6 +1237,9 @@ int scsi_sysfs_add_sdev(struct scsi_device *sdev)
 	 */
 	if (!sdev->use_rpm_auto)
 		pm_runtime_forbid(&sdev->sdev_gendev);
+=======
+	pm_runtime_forbid(&sdev->sdev_gendev);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	pm_runtime_enable(&sdev->sdev_gendev);
 	scsi_autopm_put_target(starget);
 

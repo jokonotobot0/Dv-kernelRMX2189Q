@@ -455,6 +455,7 @@ int mmc_switch_status_error(struct mmc_host *host, u32 status)
 	return 0;
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_EMMC_HW_CQ
 /**
  *	mmc_prepare_switch - helper; prepare to modify EXT_CSD register
@@ -496,6 +497,8 @@ int __mmc_switch_cmdq_mode(struct mmc_command *cmd, u8 set, u8 index, u8 value,
 EXPORT_SYMBOL(__mmc_switch_cmdq_mode);
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /**
  *	__mmc_switch - modify EXT_CSD register
  *	@card: the MMC card associated with the data transfer
@@ -838,6 +841,7 @@ int mmc_can_ext_csd(struct mmc_card *card)
 {
 	return (card && card->csd.mmca_vsn > CSD_SPEC_VER_3);
 }
+<<<<<<< HEAD
 
 #ifdef CONFIG_MTK_EMMC_HW_CQ
 int mmc_discard_queue(struct mmc_host *host, u32 tasks)
@@ -858,3 +862,5 @@ int mmc_discard_queue(struct mmc_host *host, u32 tasks)
 }
 EXPORT_SYMBOL(mmc_discard_queue);
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

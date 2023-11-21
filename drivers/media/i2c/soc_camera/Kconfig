@@ -6,6 +6,7 @@ config SOC_CAMERA_IMX074
 	help
 	  This driver supports IMX074 cameras from Sony
 
+<<<<<<< HEAD
 config SOC_CAMERA_MAX9286
 	tristate "max9286 support"
 	depends on SOC_CAMERA && I2C
@@ -15,6 +16,8 @@ config SOC_CAMERA_MAX9286
 	  The driver is base on V4l2 framework and it can detect how many
 	  camera links and lock status to initialize MAX9286.
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 config SOC_CAMERA_MT9M001
 	tristate "mt9m001 support"
 	depends on SOC_CAMERA && I2C

@@ -19,7 +19,10 @@
 
 #include <linux/cpu.h>
 #include <linux/cpufreq.h>
+<<<<<<< HEAD
 #include <linux/cpufreq_times.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <linux/delay.h>
 #include <linux/device.h>
 #include <linux/init.h>
@@ -30,9 +33,12 @@
 #include <linux/suspend.h>
 #include <linux/syscore_ops.h>
 #include <linux/tick.h>
+<<<<<<< HEAD
 #ifdef CONFIG_SMP
 #include <linux/sched.h>
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <trace/events/power.h>
 
 static LIST_HEAD(cpufreq_policy_list);
@@ -121,6 +127,7 @@ bool have_governor_per_policy(void)
 }
 EXPORT_SYMBOL_GPL(have_governor_per_policy);
 
+<<<<<<< HEAD
 bool cpufreq_driver_is_slow(void)
 {
 #ifdef CONFIG_MTK_TINYSYS_SSPM_SUPPORT
@@ -131,6 +138,8 @@ bool cpufreq_driver_is_slow(void)
 }
 EXPORT_SYMBOL_GPL(cpufreq_driver_is_slow);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 struct kobject *get_governor_parent_kobj(struct cpufreq_policy *policy)
 {
 	if (have_governor_per_policy())
@@ -228,6 +237,7 @@ unsigned int cpufreq_generic_get(unsigned int cpu)
 }
 EXPORT_SYMBOL_GPL(cpufreq_generic_get);
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 struct list_head *get_cpufreq_policy_list(void)
 {
@@ -236,6 +246,8 @@ struct list_head *get_cpufreq_policy_list(void)
 EXPORT_SYMBOL(get_cpufreq_policy_list);
 #endif /* VENDOR_EDIT */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /**
  * cpufreq_cpu_get: returns policy for a cpu and marks it busy.
  *
@@ -323,6 +335,7 @@ static void adjust_jiffies(unsigned long val, struct cpufreq_freqs *ci)
 #endif
 }
 
+<<<<<<< HEAD
 /*********************************************************************
  *               FREQUENCY INVARIANT CPU CAPACITY                    *
  *********************************************************************/
@@ -489,6 +502,8 @@ unsigned long cpufreq_scale_min_freq_capacity(struct sched_domain *sd, int cpu)
 	return per_cpu(min_freq_scale, cpu);
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static void __cpufreq_notify_transition(struct cpufreq_policy *policy,
 		struct cpufreq_freqs *freqs, unsigned int state)
 {
@@ -527,7 +542,10 @@ static void __cpufreq_notify_transition(struct cpufreq_policy *policy,
 			 (unsigned long)freqs->new, (unsigned long)freqs->cpu);
 		trace_cpu_frequency(freqs->new, freqs->cpu);
 		cpufreq_stats_record_transition(policy, freqs->new);
+<<<<<<< HEAD
 		cpufreq_times_record_transition(policy, freqs->new);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		srcu_notifier_call_chain(&cpufreq_transition_notifier_list,
 				CPUFREQ_POSTCHANGE, freqs);
 		if (likely(policy) && likely(policy->cpu == freqs->cpu))
@@ -567,9 +585,12 @@ static void cpufreq_notify_post_transition(struct cpufreq_policy *policy,
 void cpufreq_freq_transition_begin(struct cpufreq_policy *policy,
 		struct cpufreq_freqs *freqs)
 {
+<<<<<<< HEAD
 #ifdef CONFIG_SMP
 	int cpu;
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/*
 	 * Catch double invocations of _begin() which lead to self-deadlock.
@@ -597,6 +618,7 @@ wait:
 
 	spin_unlock(&policy->transition_lock);
 
+<<<<<<< HEAD
 	scale_freq_capacity(policy->cpus, freqs->new, policy->cpuinfo.max_freq);
 	mtk_scale_freq_capacity(policy, freqs);
 #ifdef CONFIG_SMP
@@ -604,6 +626,8 @@ wait:
 		trace_cpu_capacity(capacity_curr_of(cpu), cpu);
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	cpufreq_notify_transition(policy, freqs, CPUFREQ_PRECHANGE);
 }
 EXPORT_SYMBOL_GPL(cpufreq_freq_transition_begin);
@@ -1457,7 +1481,10 @@ static int cpufreq_online(unsigned int cpu)
 			goto out_exit_policy;
 
 		cpufreq_stats_create_table(policy);
+<<<<<<< HEAD
 		cpufreq_times_create_policy(policy);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		blocking_notifier_call_chain(&cpufreq_policy_notifier_list,
 				CPUFREQ_CREATE_POLICY, policy);
 
@@ -2022,6 +2049,7 @@ EXPORT_SYMBOL(cpufreq_unregister_notifier);
 unsigned int cpufreq_driver_fast_switch(struct cpufreq_policy *policy,
 					unsigned int target_freq)
 {
+<<<<<<< HEAD
 	int ret;
 	target_freq = clamp_val(target_freq, policy->min, policy->max);
 
@@ -2030,6 +2058,11 @@ unsigned int cpufreq_driver_fast_switch(struct cpufreq_policy *policy,
 		cpufreq_times_record_transition(policy, ret);
 
 	return ret;
+=======
+	target_freq = clamp_val(target_freq, policy->min, policy->max);
+
+	return cpufreq_driver->fast_switch(policy, target_freq);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 EXPORT_SYMBOL_GPL(cpufreq_driver_fast_switch);
 
@@ -2406,12 +2439,17 @@ static int cpufreq_set_policy(struct cpufreq_policy *policy,
 	blocking_notifier_call_chain(&cpufreq_policy_notifier_list,
 			CPUFREQ_NOTIFY, new_policy);
 
+<<<<<<< HEAD
 	scale_max_freq_capacity(policy->cpus, policy->max);
 	scale_min_freq_capacity(policy->cpus, policy->min);
 
 	policy->min = new_policy->min;
 	policy->max = new_policy->max;
 	trace_cpu_frequency_limits(policy->max, policy->min, policy->cpu);
+=======
+	policy->min = new_policy->min;
+	policy->max = new_policy->max;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	policy->cached_target_freq = UINT_MAX;
 

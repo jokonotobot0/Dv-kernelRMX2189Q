@@ -45,7 +45,10 @@
 #include <linux/cleancache.h>
 
 #include "ext4.h"
+<<<<<<< HEAD
 #include <trace/events/android_fs.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 static inline bool ext4_bio_encrypted(struct bio *bio)
 {
@@ -56,6 +59,7 @@ static inline bool ext4_bio_encrypted(struct bio *bio)
 #endif
 }
 
+<<<<<<< HEAD
 static void
 ext4_trace_read_completion(struct bio *bio)
 {
@@ -67,6 +71,8 @@ ext4_trace_read_completion(struct bio *bio)
 					      bio->bi_iter.bi_size);
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * I/O completion handler for multipage BIOs.
  *
@@ -84,6 +90,7 @@ static void mpage_end_io(struct bio *bio)
 	struct bio_vec *bv;
 	int i;
 
+<<<<<<< HEAD
 	if (trace_android_fs_dataread_start_enabled())
 		ext4_trace_read_completion(bio);
 
@@ -92,15 +99,24 @@ static void mpage_end_io(struct bio *bio)
 		goto uptodate;
 	}
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (ext4_bio_encrypted(bio)) {
 		if (bio->bi_error) {
 			fscrypt_release_ctx(bio->bi_private);
 		} else {
+<<<<<<< HEAD
 			fscrypt_enqueue_decrypt_bio(bio->bi_private, bio);
 			return;
 		}
 	}
 uptodate:
+=======
+			fscrypt_decrypt_bio_pages(bio->bi_private, bio);
+			return;
+		}
+	}
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	bio_for_each_segment_all(bv, bio, i) {
 		struct page *page = bv->bv_page;
 
@@ -116,6 +132,7 @@ uptodate:
 	bio_put(bio);
 }
 
+<<<<<<< HEAD
 static void
 ext4_submit_bio_read(struct bio *bio)
 {
@@ -140,6 +157,8 @@ ext4_submit_bio_read(struct bio *bio)
 	submit_bio(bio);
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 int ext4_mpage_readpages(struct address_space *mapping,
 			 struct list_head *pages, struct page *page,
 			 unsigned nr_pages)
@@ -280,16 +299,24 @@ int ext4_mpage_readpages(struct address_space *mapping,
 		 */
 		if (bio && (last_block_in_bio != blocks[0] - 1)) {
 		submit_and_realloc:
+<<<<<<< HEAD
 			ext4_set_bio_ctx(inode, bio);
 			ext4_submit_bio_read(bio);
+=======
+			submit_bio(bio);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			bio = NULL;
 		}
 		if (bio == NULL) {
 			struct fscrypt_ctx *ctx = NULL;
 
 			if (ext4_encrypted_inode(inode) &&
+<<<<<<< HEAD
 			    S_ISREG(inode->i_mode) &&
 			    !fscrypt_is_hw_encrypt(inode)) {
+=======
+			    S_ISREG(inode->i_mode)) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 				ctx = fscrypt_get_ctx(inode, GFP_NOFS);
 				if (IS_ERR(ctx))
 					goto set_error_page;
@@ -315,16 +342,24 @@ int ext4_mpage_readpages(struct address_space *mapping,
 		if (((map.m_flags & EXT4_MAP_BOUNDARY) &&
 		     (relative_block == map.m_len)) ||
 		    (first_hole != blocks_per_page)) {
+<<<<<<< HEAD
 			ext4_set_bio_ctx(inode, bio);
 			ext4_submit_bio_read(bio);
+=======
+			submit_bio(bio);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			bio = NULL;
 		} else
 			last_block_in_bio = blocks[blocks_per_page - 1];
 		goto next_page;
 	confused:
 		if (bio) {
+<<<<<<< HEAD
 			ext4_set_bio_ctx(inode, bio);
 			ext4_submit_bio_read(bio);
+=======
+			submit_bio(bio);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			bio = NULL;
 		}
 		if (!PageUptodate(page))
@@ -336,9 +371,14 @@ int ext4_mpage_readpages(struct address_space *mapping,
 			put_page(page);
 	}
 	BUG_ON(pages && !list_empty(pages));
+<<<<<<< HEAD
 	if (bio) {
 		ext4_set_bio_ctx(inode, bio);
 		ext4_submit_bio_read(bio);
 	}
+=======
+	if (bio)
+		submit_bio(bio);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return 0;
 }

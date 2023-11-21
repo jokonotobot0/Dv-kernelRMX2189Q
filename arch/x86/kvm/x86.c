@@ -5823,12 +5823,22 @@ restart:
 		unsigned long rflags = kvm_x86_ops->get_rflags(vcpu);
 		toggle_interruptibility(vcpu, ctxt->interruptibility);
 		vcpu->arch.emulate_regs_need_sync_to_vcpu = false;
+<<<<<<< HEAD
 		kvm_rip_write(vcpu, ctxt->eip);
 		if (r == EMULATE_DONE && ctxt->tf)
 			kvm_vcpu_do_singlestep(vcpu, &r);
 		if (!ctxt->have_exception ||
 		    exception_type(ctxt->exception.vector) == EXCPT_TRAP)
 			__kvm_set_rflags(vcpu, ctxt->eflags);
+=======
+		if (!ctxt->have_exception ||
+		    exception_type(ctxt->exception.vector) == EXCPT_TRAP) {
+			kvm_rip_write(vcpu, ctxt->eip);
+			if (r == EMULATE_DONE && ctxt->tf)
+				kvm_vcpu_do_singlestep(vcpu, &r);
+			__kvm_set_rflags(vcpu, ctxt->eflags);
+		}
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 		/*
 		 * For STI, interrupts are shadowed; so KVM_REQ_EVENT will

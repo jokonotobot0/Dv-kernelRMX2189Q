@@ -39,12 +39,15 @@
 
 #define RAMOOPS_KERNMSG_HDR "===="
 #define MIN_MEM_SIZE 4096UL
+<<<<<<< HEAD
 #ifdef __aarch64__
 #ifdef memcpy
 #undef memcpy
 #endif
 #define memcpy memcpy_toio
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 static ulong record_size = MIN_MEM_SIZE;
 module_param(record_size, ulong, 0400);
@@ -63,8 +66,13 @@ static ulong ramoops_pmsg_size = MIN_MEM_SIZE;
 module_param_named(pmsg_size, ramoops_pmsg_size, ulong, 0400);
 MODULE_PARM_DESC(pmsg_size, "size of user space message log");
 
+<<<<<<< HEAD
 static ulong mem_address;
 module_param(mem_address, ulong, 0400);
+=======
+static unsigned long long mem_address;
+module_param(mem_address, ullong, 0400);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 MODULE_PARM_DESC(mem_address,
 		"start of reserved RAM used to store oops/panic logs");
 
@@ -73,6 +81,7 @@ module_param(mem_size, ulong, 0400);
 MODULE_PARM_DESC(mem_size,
 		"size of reserved RAM used to store oops/panic logs");
 
+<<<<<<< HEAD
 void pstore_set_addr_size(unsigned int addr, unsigned int size,
 		unsigned int console_size, unsigned int pmsg_size)
 {
@@ -82,6 +91,8 @@ void pstore_set_addr_size(unsigned int addr, unsigned int size,
 	ramoops_pmsg_size = pmsg_size;
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static unsigned int mem_type;
 module_param(mem_type, uint, 0600);
 MODULE_PARM_DESC(mem_type,
@@ -104,7 +115,10 @@ struct ramoops_context {
 	struct persistent_ram_zone *cprz;
 	struct persistent_ram_zone *fprz;
 	struct persistent_ram_zone *mprz;
+<<<<<<< HEAD
 	struct persistent_ram_zone *bprz; /* simple lockless buffer console */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	phys_addr_t phys_addr;
 	unsigned long size;
 	unsigned int memtype;
@@ -121,7 +135,10 @@ struct ramoops_context {
 	unsigned int console_read_cnt;
 	unsigned int ftrace_read_cnt;
 	unsigned int pmsg_read_cnt;
+<<<<<<< HEAD
 	unsigned int bconsole_read_cnt;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct pstore_info pstore;
 };
 
@@ -136,7 +153,10 @@ static int ramoops_pstore_open(struct pstore_info *psi)
 	cxt->console_read_cnt = 0;
 	cxt->ftrace_read_cnt = 0;
 	cxt->pmsg_read_cnt = 0;
+<<<<<<< HEAD
 	cxt->bconsole_read_cnt = 0;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return 0;
 }
 
@@ -237,11 +257,14 @@ static ssize_t ramoops_pstore_read(u64 *id, enum pstore_type_id *type,
 	if (!prz_ok(prz))
 		prz = ramoops_get_next_prz(&cxt->cprz, &cxt->console_read_cnt,
 					   1, id, type, PSTORE_TYPE_CONSOLE, 0);
+<<<<<<< HEAD
 	if (!prz_ok(prz)) {
 		prz = ramoops_get_next_prz(&cxt->bprz, &cxt->bconsole_read_cnt,
 					   1, id, type, PSTORE_TYPE_CONSOLE, 0);
 		*id = 2;
 	}
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (!prz_ok(prz))
 		prz = ramoops_get_next_prz(&cxt->fprz, &cxt->ftrace_read_cnt,
 					   1, id, type, PSTORE_TYPE_FTRACE, 0);
@@ -301,6 +324,7 @@ static int notrace ramoops_pstore_write_buf(enum pstore_type_id type,
 	size_t hlen;
 
 	if (type == PSTORE_TYPE_CONSOLE) {
+<<<<<<< HEAD
 		if (reason == 0) {
 			if (!cxt->cprz)
 				return -ENOMEM;
@@ -310,6 +334,11 @@ static int notrace ramoops_pstore_write_buf(enum pstore_type_id type,
 				return -ENOMEM;
 			persistent_ram_write(cxt->bprz, buf, size);
 		}
+=======
+		if (!cxt->cprz)
+			return -ENOMEM;
+		persistent_ram_write(cxt->cprz, buf, size);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		return 0;
 	} else if (type == PSTORE_TYPE_FTRACE) {
 		if (!cxt->fprz)
@@ -579,12 +608,15 @@ static int ramoops_parse_dt(struct platform_device *pdev,
 	return 0;
 }
 
+<<<<<<< HEAD
 void notrace ramoops_console_write_buf(const char *buf, size_t size)
 {
 	struct ramoops_context *cxt = &oops_cxt;
 	persistent_ram_write(cxt->cprz, buf, size);
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int ramoops_probe(struct platform_device *pdev)
 {
 	struct device *dev = &pdev->dev;
@@ -638,12 +670,18 @@ static int ramoops_probe(struct platform_device *pdev)
 	cxt->dump_oops = pdata->dump_oops;
 	cxt->ecc_info = pdata->ecc_info;
 
+<<<<<<< HEAD
 	pr_notice("pstore:address is 0x%lx, size is 0x%lx, console_size is 0x%zx, pmsg_size is 0x%zx\n",
 			(unsigned long)cxt->phys_addr, cxt->size,
 			cxt->console_size, cxt->pmsg_size);
 	paddr = cxt->phys_addr;
 
 	dump_mem_sz = cxt->size - cxt->console_size * 2 - cxt->ftrace_size
+=======
+	paddr = cxt->phys_addr;
+
+	dump_mem_sz = cxt->size - cxt->console_size - cxt->ftrace_size
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			- cxt->pmsg_size;
 	err = ramoops_init_przs(dev, cxt, &paddr, dump_mem_sz);
 	if (err)
@@ -654,11 +692,14 @@ static int ramoops_probe(struct platform_device *pdev)
 	if (err)
 		goto fail_init_cprz;
 
+<<<<<<< HEAD
 	err = ramoops_init_prz(dev, cxt, &cxt->bprz, &paddr,
 			       cxt->console_size, 0);
 	if (err)
 		goto fail_init_bprz;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	err = ramoops_init_prz(dev, cxt, &cxt->fprz, &paddr, cxt->ftrace_size,
 			       LINUX_VERSION_CODE);
 	if (err)
@@ -726,8 +767,11 @@ fail_clear:
 fail_init_mprz:
 	persistent_ram_free(cxt->fprz);
 fail_init_fprz:
+<<<<<<< HEAD
 	persistent_ram_free(cxt->bprz);
 fail_init_bprz:
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	persistent_ram_free(cxt->cprz);
 fail_init_cprz:
 	ramoops_free_przs(cxt);

@@ -589,6 +589,7 @@ void __bio_clone_fast(struct bio *bio, struct bio *bio_src)
 	bio->bi_opf = bio_src->bi_opf;
 	bio->bi_iter = bio_src->bi_iter;
 	bio->bi_io_vec = bio_src->bi_io_vec;
+<<<<<<< HEAD
 	bio->bi_crypt_ctx = bio_src->bi_crypt_ctx;
 
 #if defined(CONFIG_MTK_HW_FDE)
@@ -599,6 +600,8 @@ void __bio_clone_fast(struct bio *bio, struct bio *bio_src)
 	bio->bi_hw_fde = bio_src->bi_hw_fde;
 	bio->bi_key_idx = bio_src->bi_key_idx;
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	bio_clone_blkcg_association(bio, bio_src);
 }
@@ -915,9 +918,12 @@ void bio_advance(struct bio *bio, unsigned bytes)
 		bio_integrity_advance(bio, bytes);
 
 	bio_advance_iter(bio, &bio->bi_iter, bytes);
+<<<<<<< HEAD
 
 	/* also advance bc_iv for HIE */
 	bio->bi_crypt_ctx.bc_iv += (bytes >> PAGE_SHIFT);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 EXPORT_SYMBOL(bio_advance);
 
@@ -1344,7 +1350,11 @@ struct bio *bio_map_user_iov(struct request_queue *q,
 
 			if (len <= 0)
 				break;
+<<<<<<< HEAD
 
+=======
+			
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			if (bytes > len)
 				bytes = len;
 
@@ -2057,6 +2067,7 @@ void bio_clone_blkcg_association(struct bio *dst, struct bio *src)
 
 #endif /* CONFIG_BLK_CGROUP */
 
+<<<<<<< HEAD
 unsigned long bio_bc_iv_get(struct bio *bio)
 {
 	if (bio_bcf_test(bio, BC_IV_CTX))
@@ -2073,6 +2084,8 @@ unsigned long bio_bc_iv_get(struct bio *bio)
 }
 EXPORT_SYMBOL_GPL(bio_bc_iv_get);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static void __init biovec_init_slabs(void)
 {
 	int i;

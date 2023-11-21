@@ -17,6 +17,7 @@ enum {
 	PM_QOS_NETWORK_THROUGHPUT,
 	PM_QOS_MEMORY_BANDWIDTH,
 
+<<<<<<< HEAD
 	PM_QOS_CPU_MEMORY_BANDWIDTH,
 	PM_QOS_GPU_MEMORY_BANDWIDTH,
 	PM_QOS_MM_MEMORY_BANDWIDTH,
@@ -42,6 +43,8 @@ enum {
 	PM_QOS_VMDLA_OPP,
 	PM_QOS_ISP_HRT_BANDWIDTH,
 	PM_QOS_APU_MEMORY_BANDWIDTH,
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* insert new class ID */
 	PM_QOS_NUM_CLASSES,
 };
@@ -59,6 +62,7 @@ enum pm_qos_flags_status {
 #define PM_QOS_NETWORK_LAT_DEFAULT_VALUE	(2000 * USEC_PER_SEC)
 #define PM_QOS_NETWORK_THROUGHPUT_DEFAULT_VALUE	0
 #define PM_QOS_MEMORY_BANDWIDTH_DEFAULT_VALUE	0
+<<<<<<< HEAD
 #define PM_QOS_CPU_MEMORY_BANDWIDTH_DEFAULT_VALUE	0
 #define PM_QOS_GPU_MEMORY_BANDWIDTH_DEFAULT_VALUE	0
 #define PM_QOS_MM_MEMORY_BANDWIDTH_DEFAULT_VALUE	0
@@ -74,22 +78,33 @@ enum pm_qos_flags_status {
 #define PM_QOS_ISP_HRT_BANDWIDTH_DEFAULT_VALUE 0
 #define PM_QOS_APU_MEMORY_BANDWIDTH_DEFAULT_VALUE	0
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define PM_QOS_RESUME_LATENCY_DEFAULT_VALUE	0
 #define PM_QOS_LATENCY_TOLERANCE_DEFAULT_VALUE	0
 #define PM_QOS_LATENCY_TOLERANCE_NO_CONSTRAINT	(-1)
 #define PM_QOS_LATENCY_ANY			((s32)(~(__u32)0 >> 1))
+<<<<<<< HEAD
 #define PM_QOS_VVPU_OPP_DEFAULT_VALUE			3
 #define PM_QOS_VMDLA_OPP_DEFAULT_VALUE			3
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #define PM_QOS_FLAG_NO_POWER_OFF	(1 << 0)
 #define PM_QOS_FLAG_REMOTE_WAKEUP	(1 << 1)
 
 struct pm_qos_request {
+<<<<<<< HEAD
 	struct list_head list_node;
 	struct plist_node node;
 	int pm_qos_class;
 	struct delayed_work work; /* for pm_qos_update_request_timeout */
 	char owner[20];
+=======
+	struct plist_node node;
+	int pm_qos_class;
+	struct delayed_work work; /* for pm_qos_update_request_timeout */
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 struct pm_qos_flags_request {
@@ -125,13 +140,19 @@ enum pm_qos_type {
  * types linux supports for 32 bit quantites
  */
 struct pm_qos_constraints {
+<<<<<<< HEAD
 	struct list_head req_list;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct plist_head list;
 	s32 target_value;	/* Do not change to 64 bit */
 	s32 default_value;
 	s32 no_constraint_value;
 	enum pm_qos_type type;
+<<<<<<< HEAD
 	struct mutex qos_lock;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct blocking_notifier_head *notifiers;
 };
 

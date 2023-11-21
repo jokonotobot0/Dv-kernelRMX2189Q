@@ -3263,7 +3263,11 @@ static int init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
 	if (!adapter->regs) {
 		dev_err(&pdev->dev, "cannot map device registers\n");
 		err = -ENOMEM;
+<<<<<<< HEAD
 		goto out_free_adapter;
+=======
+		goto out_free_adapter_nofail;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 
 	adapter->pdev = pdev;
@@ -3381,6 +3385,12 @@ out_free_dev:
 		if (adapter->port[i])
 			free_netdev(adapter->port[i]);
 
+<<<<<<< HEAD
+=======
+out_free_adapter_nofail:
+	kfree_skb(adapter->nofail_skb);
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 out_free_adapter:
 	kfree(adapter);
 

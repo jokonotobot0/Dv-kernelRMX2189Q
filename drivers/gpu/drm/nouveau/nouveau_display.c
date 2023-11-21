@@ -456,11 +456,19 @@ nouveau_display_fini(struct drm_device *dev)
 	struct nouveau_display *disp = nouveau_display(dev);
 	struct nouveau_drm *drm = nouveau_drm(dev);
 	struct drm_connector *connector;
+<<<<<<< HEAD
 	struct drm_crtc *crtc;
 
 	/* Make sure that drm and hw vblank irqs get properly disabled. */
 	drm_for_each_crtc(crtc, dev)
 		drm_crtc_vblank_off(crtc);
+=======
+	int head;
+
+	/* Make sure that drm and hw vblank irqs get properly disabled. */
+	for (head = 0; head < dev->mode_config.num_crtc; head++)
+		drm_vblank_off(dev, head);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/* disable flip completion events */
 	nvif_notify_put(&drm->flip);
@@ -677,7 +685,11 @@ nouveau_display_resume(struct drm_device *dev, bool runtime)
 {
 	struct nouveau_drm *drm = nouveau_drm(dev);
 	struct drm_crtc *crtc;
+<<<<<<< HEAD
 	int ret;
+=======
+	int ret, head;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/* re-pin fb/cursors */
 	list_for_each_entry(crtc, &dev->mode_config.crtc_list, head) {
@@ -722,6 +734,13 @@ nouveau_display_resume(struct drm_device *dev, bool runtime)
 
 	drm_helper_resume_force_mode(dev);
 
+<<<<<<< HEAD
+=======
+	/* Make sure that drm and hw vblank irqs get resumed if needed. */
+	for (head = 0; head < dev->mode_config.num_crtc; head++)
+		drm_vblank_on(dev, head);
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	list_for_each_entry(crtc, &dev->mode_config.crtc_list, head) {
 		struct nouveau_crtc *nv_crtc = nouveau_crtc(crtc);
 

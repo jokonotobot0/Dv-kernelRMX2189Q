@@ -20,6 +20,7 @@
 
 struct clk;
 
+<<<<<<< HEAD
 /*
  * define pwr status information.
  * including offsets/mask.
@@ -30,6 +31,8 @@ struct pwr_status {
 	u32 mask;
 };
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 struct mtk_clk_gate {
 	struct clk_hw	hw;
 	struct regmap	*regmap;
@@ -37,8 +40,11 @@ struct mtk_clk_gate {
 	int		clr_ofs;
 	int		sta_ofs;
 	u8		bit;
+<<<<<<< HEAD
 	struct pwr_status	*pwr_stat;
 	struct regmap	*pwr_regmap;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 static inline struct mtk_clk_gate *to_mtk_clk_gate(struct clk_hw *hw)
@@ -48,8 +54,11 @@ static inline struct mtk_clk_gate *to_mtk_clk_gate(struct clk_hw *hw)
 
 extern const struct clk_ops mtk_clk_gate_ops_setclr;
 extern const struct clk_ops mtk_clk_gate_ops_setclr_inv;
+<<<<<<< HEAD
 extern const struct clk_ops mtk_clk_gate_ops_no_setclr;
 extern const struct clk_ops mtk_clk_gate_ops_no_setclr_inv;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 struct clk *mtk_clk_register_gate(
 		const char *name,
@@ -59,8 +68,12 @@ struct clk *mtk_clk_register_gate(
 		int clr_ofs,
 		int sta_ofs,
 		u8 bit,
+<<<<<<< HEAD
 		const struct clk_ops *ops,
 		struct pwr_status *pwr_stat,
 		struct regmap *pwr_regmap);
+=======
+		const struct clk_ops *ops);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #endif /* __DRV_CLK_GATE_H */

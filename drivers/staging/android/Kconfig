@@ -16,7 +16,10 @@ config ASHMEM
 
 config ANDROID_LOW_MEMORY_KILLER
 	bool "Android Low Memory Killer"
+<<<<<<< HEAD
 	depends on !MTK_ENABLE_AGO
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	---help---
 	  Registers processes to be killed when low memory conditions, this is useful
 	  as there is no particular swap space on android.
@@ -25,6 +28,7 @@ config ANDROID_LOW_MEMORY_KILLER
 	  scripts (/init.rc), and it defines priority values with minimum free memory size
 	  for each priority.
 
+<<<<<<< HEAD
 config ANDROID_LOW_MEMORY_KILLER_AUTODETECT_OOM_ADJ_VALUES
 	bool "Android Low Memory Killer: detect oom_adj values"
 	depends on ANDROID_LOW_MEMORY_KILLER
@@ -73,6 +77,10 @@ source "drivers/staging/android/ion/Kconfig"
 
 source "drivers/staging/android/fiq_debugger/Kconfig"
 
+=======
+source "drivers/staging/android/ion/Kconfig"
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 endif # if ANDROID
 
 endmenu

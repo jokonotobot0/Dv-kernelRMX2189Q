@@ -22,7 +22,10 @@
 
 #include <linux/cpufreq.h>
 #include <linux/sched.h>
+<<<<<<< HEAD
 #include <linux/sched/loadavg.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <linux/module.h>
 #include <linux/timer.h>
 #include <linux/workqueue.h>
@@ -49,7 +52,11 @@ static int calc_freq(struct spu_gov_info_struct *info)
 	cpu = info->policy->cpu;
 	busy_spus = atomic_read(&cbe_spu_info[cpu_to_node(cpu)].busy_spus);
 
+<<<<<<< HEAD
 	info->busy_spus = calc_load(info->busy_spus, EXP, busy_spus * FIXED_1);
+=======
+	CALC_LOAD(info->busy_spus, EXP, busy_spus * FIXED_1);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	pr_debug("cpu %d: busy_spus=%d, info->busy_spus=%ld\n",
 			cpu, busy_spus, info->busy_spus);
 

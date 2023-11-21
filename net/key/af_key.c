@@ -196,6 +196,7 @@ static int pfkey_release(struct socket *sock)
 	return 0;
 }
 
+<<<<<<< HEAD
 static int pfkey_broadcast_one(struct sk_buff *skb, gfp_t allocation,
 			       struct sock *sk)
 {
@@ -213,6 +214,32 @@ static int pfkey_broadcast_one(struct sk_buff *skb, gfp_t allocation,
 		err = 0;
 	}
 
+=======
+static int pfkey_broadcast_one(struct sk_buff *skb, struct sk_buff **skb2,
+			       gfp_t allocation, struct sock *sk)
+{
+	int err = -ENOBUFS;
+
+	sock_hold(sk);
+	if (*skb2 == NULL) {
+		if (atomic_read(&skb->users) != 1) {
+			*skb2 = skb_clone(skb, allocation);
+		} else {
+			*skb2 = skb;
+			atomic_inc(&skb->users);
+		}
+	}
+	if (*skb2 != NULL) {
+		if (atomic_read(&sk->sk_rmem_alloc) <= sk->sk_rcvbuf) {
+			skb_set_owner_r(*skb2, sk);
+			skb_queue_tail(&sk->sk_receive_queue, *skb2);
+			sk->sk_data_ready(sk);
+			*skb2 = NULL;
+			err = 0;
+		}
+	}
+	sock_put(sk);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return err;
 }
 
@@ -227,6 +254,10 @@ static int pfkey_broadcast(struct sk_buff *skb, gfp_t allocation,
 {
 	struct netns_pfkey *net_pfkey = net_generic(net, pfkey_net_id);
 	struct sock *sk;
+<<<<<<< HEAD
+=======
+	struct sk_buff *skb2 = NULL;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	int err = -ESRCH;
 
 	/* XXX Do we need something like netlink_overrun?  I think
@@ -245,7 +276,11 @@ static int pfkey_broadcast(struct sk_buff *skb, gfp_t allocation,
 		 * socket.
 		 */
 		if (pfk->promisc)
+<<<<<<< HEAD
 			pfkey_broadcast_one(skb, GFP_ATOMIC, sk);
+=======
+			pfkey_broadcast_one(skb, &skb2, GFP_ATOMIC, sk);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 		/* the exact target will be processed later */
 		if (sk == one_sk)
@@ -260,7 +295,11 @@ static int pfkey_broadcast(struct sk_buff *skb, gfp_t allocation,
 				continue;
 		}
 
+<<<<<<< HEAD
 		err2 = pfkey_broadcast_one(skb, GFP_ATOMIC, sk);
+=======
+		err2 = pfkey_broadcast_one(skb, &skb2, GFP_ATOMIC, sk);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 		/* Error is cleared after successful sending to at least one
 		 * registered KM */
@@ -270,8 +309,14 @@ static int pfkey_broadcast(struct sk_buff *skb, gfp_t allocation,
 	rcu_read_unlock();
 
 	if (one_sk != NULL)
+<<<<<<< HEAD
 		err = pfkey_broadcast_one(skb, allocation, one_sk);
 
+=======
+		err = pfkey_broadcast_one(skb, &skb2, allocation, one_sk);
+
+	kfree_skb(skb2);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	kfree_skb(skb);
 	return err;
 }
@@ -1381,7 +1426,11 @@ static int pfkey_getspi(struct sock *sk, struct sk_buff *skb, const struct sadb_
 	}
 
 	if (!x)
+<<<<<<< HEAD
 		x = xfrm_find_acq(net, &dummy_mark, mode, reqid, 0, proto, xdaddr, xsaddr, 1, family);
+=======
+		x = xfrm_find_acq(net, &dummy_mark, mode, reqid, proto, xdaddr, xsaddr, 1, family);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (x == NULL)
 		return -ENOENT;
@@ -2416,7 +2465,11 @@ static int pfkey_spddelete(struct sock *sk, struct sk_buff *skb, const struct sa
 			return err;
 	}
 
+<<<<<<< HEAD
 	xp = xfrm_policy_bysel_ctx(net, DUMMY_MARK, 0, XFRM_POLICY_TYPE_MAIN,
+=======
+	xp = xfrm_policy_bysel_ctx(net, DUMMY_MARK, XFRM_POLICY_TYPE_MAIN,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 				   pol->sadb_x_policy_dir - 1, &sel, pol_ctx,
 				   1, &err);
 	security_xfrm_policy_free(pol_ctx);
@@ -2669,7 +2722,11 @@ static int pfkey_spdget(struct sock *sk, struct sk_buff *skb, const struct sadb_
 		return -EINVAL;
 
 	delete = (hdr->sadb_msg_type == SADB_X_SPDDELETE2);
+<<<<<<< HEAD
 	xp = xfrm_policy_byid(net, DUMMY_MARK, 0, XFRM_POLICY_TYPE_MAIN,
+=======
+	xp = xfrm_policy_byid(net, DUMMY_MARK, XFRM_POLICY_TYPE_MAIN,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			      dir, pol->sadb_x_policy_id, delete, &err);
 	if (xp == NULL)
 		return -ENOENT;

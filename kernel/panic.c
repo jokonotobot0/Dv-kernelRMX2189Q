@@ -26,6 +26,7 @@
 #include <linux/nmi.h>
 #include <linux/console.h>
 #include <linux/bug.h>
+<<<<<<< HEAD
 #include <soc/oppo/oppo_project.h>
 
 #ifdef VENDOR_EDIT
@@ -61,6 +62,11 @@ int is_kernel_panic = 0;
 bool is_triggering_panic = false;
 bool is_triggering_hwt = false;
 #endif  /*VENDOR_EDIT*/
+=======
+
+#define PANIC_TIMER_STEP 100
+#define PANIC_BLINK_SPD 18
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 int panic_on_oops = CONFIG_PANIC_ON_OOPS_VALUE;
 static unsigned long tainted_mask;
@@ -95,6 +101,7 @@ void __weak panic_smp_self_stop(void)
 		cpu_relax();
 }
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 //Liang.Zhang@PSW.TECH.BOOTUP, 2018/11/12, Add for monitor kernel panic
 void deal_fatal_err(void)
@@ -123,6 +130,8 @@ void deal_fatal_err(void)
 }
 #endif  /*VENDOR_EDIT*/
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * Stop ourselves in NMI context if another CPU has already panicked. Arch code
  * may override this to prepare for crash dumping, e.g. save regs info.
@@ -180,6 +189,7 @@ void nmi_panic(struct pt_regs *regs, const char *msg)
 }
 EXPORT_SYMBOL(nmi_panic);
 
+<<<<<<< HEAD
 
 #ifdef VENDOR_EDIT
 //Zhang Jiashu@PSW.AD.Performance,2019/10/03,Add for flushing device cache before goto dump mode!
@@ -195,6 +205,8 @@ void flush_cache_on_panic(void)
 }
 #endif  /*VENDOR_EDIT*/
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /**
  *	panic - halt the system
  *	@fmt: The text string to print
@@ -211,6 +223,7 @@ void panic(const char *fmt, ...)
 	int state = 0;
 	int old_cpu, this_cpu;
 	bool _crash_kexec_post_notifiers = crash_kexec_post_notifiers;
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
     // Kun.Hu@TECH.BSP.Stability.PHOENIX_PROJECT 2019/06/11, Add for phoenix project
     kernel_panic_happened++;
@@ -223,6 +236,9 @@ void panic(const char *fmt, ...)
 		}
 	}
 #endif  /*VENDOR_EDIT*/
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/*
 	 * Disable local interrupts. This will prevent panic_smp_self_stop
 	 * from deadlocking the first cpu that invokes the panic, since
@@ -334,11 +350,14 @@ void panic(const char *fmt, ...)
 	if (!panic_blink)
 		panic_blink = no_blink;
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 	/* Bin.Li@EXP.BSP.bootloader.bootflow, 2017/05/24, Modify for add interface reboot reason */
 	is_kernel_panic = 1;
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (panic_timeout > 0) {
 		/*
 		 * Delay timeout seconds before rebooting the machine.
@@ -564,11 +583,14 @@ int oops_may_print(void)
  */
 void oops_enter(void)
 {
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 	/* Bin.Li@EXP.BSP.bootloader.bootflow, 2017/05/24, Modify for add interface reboot reason */
 	is_kernel_panic = 1;
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	tracing_off();
 	/* can't trust the integrity of the kernel anymore: */
 	debug_locks_off();
@@ -695,11 +717,16 @@ EXPORT_SYMBOL(warn_slowpath_null);
  */
 __visible void __stack_chk_fail(void)
 {
+<<<<<<< HEAD
 /*
 	panic("stack-protector: Kernel stack is corrupted in: %pB\n",
 		__builtin_return_address(0));
 */
 	BUG();
+=======
+	panic("stack-protector: Kernel stack is corrupted in: %p\n",
+		__builtin_return_address(0));
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 EXPORT_SYMBOL(__stack_chk_fail);
 

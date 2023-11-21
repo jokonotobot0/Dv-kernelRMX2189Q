@@ -47,6 +47,10 @@
 #include <linux/sched.h>
 
 extern const struct bug_entry __start___bug_table[], __stop___bug_table[];
+<<<<<<< HEAD
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static inline unsigned long bug_addr(const struct bug_entry *bug)
 {
 #ifndef CONFIG_GENERIC_BUG_RELATIVE_POINTERS
@@ -133,6 +137,10 @@ const struct bug_entry *find_bug(unsigned long bugaddr)
 	for (bug = __start___bug_table; bug < __stop___bug_table; ++bug)
 		if (bugaddr == bug_addr(bug))
 			return bug;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return module_find_bug(bugaddr);
 }
 
@@ -175,7 +183,11 @@ enum bug_trap_type report_bug(unsigned long bugaddr, struct pt_regs *regs)
 	if (file)
 		pr_crit("kernel BUG at %s:%u!\n", file, line);
 	else
+<<<<<<< HEAD
 		pr_crit("Kernel BUG at %pB [verbose debug info unavailable]\n",
+=======
+		pr_crit("Kernel BUG at %p [verbose debug info unavailable]\n",
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			(void *)bugaddr);
 
 	return BUG_TRAP_TYPE_BUG;

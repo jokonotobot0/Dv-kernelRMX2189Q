@@ -3830,8 +3830,13 @@ retry:
 	if (wbc->sync_mode == WB_SYNC_ALL)
 		tag_pages_for_writeback(mapping, index, end);
 	while (!done && !nr_to_write_done && (index <= end) &&
+<<<<<<< HEAD
 	       (nr_pages = pagevec_lookup_range_tag(&pvec, mapping, &index, end,
 			tag))) {
+=======
+	       (nr_pages = pagevec_lookup_tag(&pvec, mapping, &index, tag,
+			min(end - index, (pgoff_t)PAGEVEC_SIZE-1) + 1))) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		unsigned i;
 
 		scanned = 1;
@@ -3841,6 +3846,14 @@ retry:
 			if (!PagePrivate(page))
 				continue;
 
+<<<<<<< HEAD
+=======
+			if (!wbc->range_cyclic && page->index > end) {
+				done = 1;
+				break;
+			}
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			spin_lock(&mapping->private_lock);
 			if (!PagePrivate(page)) {
 				spin_unlock(&mapping->private_lock);
@@ -3973,8 +3986,13 @@ retry:
 		tag_pages_for_writeback(mapping, index, end);
 	done_index = index;
 	while (!done && !nr_to_write_done && (index <= end) &&
+<<<<<<< HEAD
 			(nr_pages = pagevec_lookup_range_tag(&pvec, mapping,
 						&index, end, tag))) {
+=======
+	       (nr_pages = pagevec_lookup_tag(&pvec, mapping, &index, tag,
+			min(end - index, (pgoff_t)PAGEVEC_SIZE-1) + 1))) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		unsigned i;
 
 		scanned = 1;
@@ -3999,6 +4017,15 @@ retry:
 				continue;
 			}
 
+<<<<<<< HEAD
+=======
+			if (!wbc->range_cyclic && page->index > end) {
+				done = 1;
+				unlock_page(page);
+				continue;
+			}
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			if (wbc->sync_mode != WB_SYNC_NONE) {
 				if (PageWriteback(page))
 					flush_fn(data);

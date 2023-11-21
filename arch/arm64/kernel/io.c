@@ -25,7 +25,12 @@
  */
 void __memcpy_fromio(void *to, const volatile void __iomem *from, size_t count)
 {
+<<<<<<< HEAD
 	while (count && !IS_ALIGNED((unsigned long)from, 8)) {
+=======
+	while (count && (!IS_ALIGNED((unsigned long)from, 8) ||
+			 !IS_ALIGNED((unsigned long)to, 8))) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		*(u8 *)to = __raw_readb(from);
 		from++;
 		to++;
@@ -53,22 +58,36 @@ EXPORT_SYMBOL(__memcpy_fromio);
  */
 void __memcpy_toio(volatile void __iomem *to, const void *from, size_t count)
 {
+<<<<<<< HEAD
 	while (count && !IS_ALIGNED((unsigned long)to, 8)) {
 		__raw_writeb(*(u8 *)from, to);
+=======
+	while (count && (!IS_ALIGNED((unsigned long)to, 8) ||
+			 !IS_ALIGNED((unsigned long)from, 8))) {
+		__raw_writeb(*(volatile u8 *)from, to);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		from++;
 		to++;
 		count--;
 	}
 
 	while (count >= 8) {
+<<<<<<< HEAD
 		__raw_writeq(*(u64 *)from, to);
+=======
+		__raw_writeq(*(volatile u64 *)from, to);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		from += 8;
 		to += 8;
 		count -= 8;
 	}
 
 	while (count) {
+<<<<<<< HEAD
 		__raw_writeb(*(u8 *)from, to);
+=======
+		__raw_writeb(*(volatile u8 *)from, to);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		from++;
 		to++;
 		count--;

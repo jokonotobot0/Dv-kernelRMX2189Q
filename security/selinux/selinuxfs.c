@@ -41,7 +41,10 @@
 #include "objsec.h"
 #include "conditional.h"
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* Policy capability filenames */
 static char *policycap_names[] = {
 	"network_peer_controls",
@@ -1479,7 +1482,11 @@ static const struct file_operations sel_avc_cache_stats_ops = {
 static int sel_make_avc_files(struct dentry *dir)
 {
 	int i;
+<<<<<<< HEAD
 	static const struct tree_descr files[] = {
+=======
+	static struct tree_descr files[] = {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		{ "cache_threshold",
 		  &sel_avc_cache_threshold_ops, S_IRUGO|S_IWUSR },
 		{ "hash_stats", &sel_avc_hash_stats_ops, S_IRUGO },
@@ -1788,7 +1795,11 @@ static int sel_fill_super(struct super_block *sb, void *data, int silent)
 	struct inode *inode;
 	struct inode_security_struct *isec;
 
+<<<<<<< HEAD
 	static const struct tree_descr selinux_files[] = {
+=======
+	static struct tree_descr selinux_files[] = {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		[SEL_LOAD] = {"load", &sel_load_ops, S_IRUSR|S_IWUSR},
 		[SEL_ENFORCE] = {"enforce", &sel_enforce_ops, S_IRUGO|S_IWUSR},
 		[SEL_CONTEXT] = {"context", &transaction_ops, S_IRUGO|S_IWUGO},

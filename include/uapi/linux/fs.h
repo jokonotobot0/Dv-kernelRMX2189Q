@@ -237,8 +237,11 @@ struct fsxattr {
 #define FICLONERANGE	_IOW(0x94, 13, struct file_clone_range)
 #define FIDEDUPERANGE	_IOWR(0x94, 54, struct file_dedupe_range)
 
+<<<<<<< HEAD
 #define FIDTRIM	_IOWR('f', 128, struct fstrim_range)	/* Deep discard trim */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define	FS_IOC_GETFLAGS			_IOR('f', 1, long)
 #define	FS_IOC_SETFLAGS			_IOW('f', 2, long)
 #define	FS_IOC_GETVERSION		_IOR('v', 1, long)
@@ -257,6 +260,7 @@ struct fsxattr {
 /* Policy provided via an ioctl on the topmost directory */
 #define FS_KEY_DESCRIPTOR_SIZE	8
 
+<<<<<<< HEAD
 #define FS_POLICY_FLAGS_PAD_4		0x00
 #define FS_POLICY_FLAGS_PAD_8		0x01
 #define FS_POLICY_FLAGS_PAD_16		0x02
@@ -279,18 +283,25 @@ struct fsxattr {
 #define FS_ENCRYPTION_MODE_PRIVATE		127
 
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 struct fscrypt_policy {
 	__u8 version;
 	__u8 contents_encryption_mode;
 	__u8 filenames_encryption_mode;
 	__u8 flags;
 	__u8 master_key_descriptor[FS_KEY_DESCRIPTOR_SIZE];
+<<<<<<< HEAD
 };
+=======
+} __packed;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #define FS_IOC_SET_ENCRYPTION_POLICY	_IOR('f', 19, struct fscrypt_policy)
 #define FS_IOC_GET_ENCRYPTION_PWSALT	_IOW('f', 20, __u8[16])
 #define FS_IOC_GET_ENCRYPTION_POLICY	_IOW('f', 21, struct fscrypt_policy)
 
+<<<<<<< HEAD
 /* Parameters for passing an encryption key into the kernel keyring */
 #define FS_KEY_DESC_PREFIX		"fscrypt:"
 #define FS_KEY_DESC_PREFIX_SIZE		8
@@ -304,6 +315,8 @@ struct fscrypt_key {
 	__u32 size;
 };
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * Inode flags (FS_IOC_GETFLAGS / FS_IOC_SETFLAGS)
  *

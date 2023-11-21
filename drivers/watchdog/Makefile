@@ -216,4 +216,7 @@ obj-$(CONFIG_MAX77620_WATCHDOG) += max77620_wdt.o
 obj-$(CONFIG_ZIIRAVE_WATCHDOG) += ziirave_wdt.o
 obj-$(CONFIG_SOFT_WATCHDOG) += softdog.o
 obj-$(CONFIG_MENF21BMC_WATCHDOG) += menf21bmc_wdt.o
+<<<<<<< HEAD
 obj-$(CONFIG_MTK_WATCHDOG) += mediatek/
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

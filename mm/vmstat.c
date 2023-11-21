@@ -947,12 +947,15 @@ const char * const vmstat_text[] = {
 #endif
 	"nr_free_cma",
 
+<<<<<<< HEAD
 
 #ifdef VENDOR_EDIT
 /*Huacai.Zhou@PSW.BSP.Kernel.MM, 2018-09-25, add ion cached account*/
 	"nr_ioncache_pages",
 #endif /*VENDOR_EDIT*/
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* Node-based counters */
 	"nr_inactive_anon",
 	"nr_active_anon",
@@ -964,7 +967,10 @@ const char * const vmstat_text[] = {
 	"nr_pages_scanned",
 	"workingset_refault",
 	"workingset_activate",
+<<<<<<< HEAD
 	"workingset_restore",
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	"workingset_nodereclaim",
 	"nr_anon_pages",
 	"nr_mapped",
@@ -1003,7 +1009,10 @@ const char * const vmstat_text[] = {
 
 	"pgfault",
 	"pgmajfault",
+<<<<<<< HEAD
 	"pgfmfault",
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	"pglazyfreed",
 
 	"pgrefill",
@@ -1093,12 +1102,15 @@ const char * const vmstat_text[] = {
 	"vmacache_find_calls",
 	"vmacache_find_hits",
 #endif
+<<<<<<< HEAD
 
 #ifdef CONFIG_ZONE_MOVABLE_CMA
 	"zmc_lru_migrated",
 	"zmc_lru_migration_nomem",
 #endif /* CONFIG_ZONE_MOVABLE_CMA */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif /* CONFIG_VM_EVENTS_COUNTERS */
 };
 #endif /* CONFIG_PROC_FS || CONFIG_SYSFS || CONFIG_NUMA */
@@ -1598,9 +1610,28 @@ int vmstat_refresh(struct ctl_table *table, int write,
 	for (i = 0; i < NR_VM_ZONE_STAT_ITEMS; i++) {
 		val = atomic_long_read(&vm_zone_stat[i]);
 		if (val < 0) {
+<<<<<<< HEAD
 			pr_warn("%s: %s %ld\n",
 				__func__, vmstat_text[i], val);
 			err = -EINVAL;
+=======
+			switch (i) {
+			case NR_PAGES_SCANNED:
+				/*
+				 * This is often seen to go negative in
+				 * recent kernels, but not to go permanently
+				 * negative.  Whilst it would be nicer not to
+				 * have exceptions, rooting them out would be
+				 * another task, of rather low priority.
+				 */
+				break;
+			default:
+				pr_warn("%s: %s %ld\n",
+					__func__, vmstat_text[i], val);
+				err = -EINVAL;
+				break;
+			}
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		}
 	}
 	if (err)

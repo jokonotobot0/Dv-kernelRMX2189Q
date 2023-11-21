@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 // SPDX-License-Identifier: GPL-2.0-only
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * Radio tuning for RTL8225 on RTL8187
  *
@@ -11,6 +14,13 @@
  * Magic delays, register offsets, and phy value tables below are
  * taken from the original r8187 driver sources.  Thanks to Realtek
  * for their support!
+<<<<<<< HEAD
+=======
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  */
 
 #include <linux/usb.h>
@@ -28,7 +38,11 @@ u8 rtl818x_ioread8_idx(struct rtl8187_priv *priv,
 	usb_control_msg(priv->udev, usb_rcvctrlpipe(priv->udev, 0),
 			RTL8187_REQ_GET_REG, RTL8187_REQT_READ,
 			(unsigned long)addr, idx & 0x03,
+<<<<<<< HEAD
 			&priv->io_dmabuf->bits8, sizeof(val), 500);
+=======
+			&priv->io_dmabuf->bits8, sizeof(val), HZ / 2);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	val = priv->io_dmabuf->bits8;
 	mutex_unlock(&priv->io_mutex);
@@ -45,7 +59,11 @@ u16 rtl818x_ioread16_idx(struct rtl8187_priv *priv,
 	usb_control_msg(priv->udev, usb_rcvctrlpipe(priv->udev, 0),
 			RTL8187_REQ_GET_REG, RTL8187_REQT_READ,
 			(unsigned long)addr, idx & 0x03,
+<<<<<<< HEAD
 			&priv->io_dmabuf->bits16, sizeof(val), 500);
+=======
+			&priv->io_dmabuf->bits16, sizeof(val), HZ / 2);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	val = priv->io_dmabuf->bits16;
 	mutex_unlock(&priv->io_mutex);
@@ -62,7 +80,11 @@ u32 rtl818x_ioread32_idx(struct rtl8187_priv *priv,
 	usb_control_msg(priv->udev, usb_rcvctrlpipe(priv->udev, 0),
 			RTL8187_REQ_GET_REG, RTL8187_REQT_READ,
 			(unsigned long)addr, idx & 0x03,
+<<<<<<< HEAD
 			&priv->io_dmabuf->bits32, sizeof(val), 500);
+=======
+			&priv->io_dmabuf->bits32, sizeof(val), HZ / 2);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	val = priv->io_dmabuf->bits32;
 	mutex_unlock(&priv->io_mutex);
@@ -79,7 +101,11 @@ void rtl818x_iowrite8_idx(struct rtl8187_priv *priv,
 	usb_control_msg(priv->udev, usb_sndctrlpipe(priv->udev, 0),
 			RTL8187_REQ_SET_REG, RTL8187_REQT_WRITE,
 			(unsigned long)addr, idx & 0x03,
+<<<<<<< HEAD
 			&priv->io_dmabuf->bits8, sizeof(val), 500);
+=======
+			&priv->io_dmabuf->bits8, sizeof(val), HZ / 2);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	mutex_unlock(&priv->io_mutex);
 }
@@ -93,7 +119,11 @@ void rtl818x_iowrite16_idx(struct rtl8187_priv *priv,
 	usb_control_msg(priv->udev, usb_sndctrlpipe(priv->udev, 0),
 			RTL8187_REQ_SET_REG, RTL8187_REQT_WRITE,
 			(unsigned long)addr, idx & 0x03,
+<<<<<<< HEAD
 			&priv->io_dmabuf->bits16, sizeof(val), 500);
+=======
+			&priv->io_dmabuf->bits16, sizeof(val), HZ / 2);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	mutex_unlock(&priv->io_mutex);
 }
@@ -107,7 +137,11 @@ void rtl818x_iowrite32_idx(struct rtl8187_priv *priv,
 	usb_control_msg(priv->udev, usb_sndctrlpipe(priv->udev, 0),
 			RTL8187_REQ_SET_REG, RTL8187_REQT_WRITE,
 			(unsigned long)addr, idx & 0x03,
+<<<<<<< HEAD
 			&priv->io_dmabuf->bits32, sizeof(val), 500);
+=======
+			&priv->io_dmabuf->bits32, sizeof(val), HZ / 2);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	mutex_unlock(&priv->io_mutex);
 }
@@ -183,7 +217,11 @@ static void rtl8225_write_8051(struct ieee80211_hw *dev, u8 addr, __le16 data)
 	usb_control_msg(priv->udev, usb_sndctrlpipe(priv->udev, 0),
 			RTL8187_REQ_SET_REG, RTL8187_REQT_WRITE,
 			addr, 0x8225, &priv->io_dmabuf->bits16, sizeof(data),
+<<<<<<< HEAD
 			500);
+=======
+			HZ / 2);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	mutex_unlock(&priv->io_mutex);
 
@@ -606,6 +644,13 @@ static const u8 rtl8225z2_tx_power_cck[] = {
 	0x26, 0x25, 0x21, 0x1b, 0x14, 0x0d, 0x06, 0x03
 };
 
+<<<<<<< HEAD
+=======
+static const u8 rtl8225z2_tx_power_ofdm[] = {
+	0x42, 0x00, 0x40, 0x00, 0x40
+};
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static const u8 rtl8225z2_tx_gain_cck_ofdm[] = {
 	0x00, 0x01, 0x02, 0x03, 0x04, 0x05,
 	0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b,
@@ -681,7 +726,14 @@ static void rtl8225z2_b_rf_set_tx_power(struct ieee80211_hw *dev, int channel)
 	cck_power = priv->channels[channel - 1].hw_value & 0xF;
 	ofdm_power = priv->channels[channel - 1].hw_value >> 4;
 
+<<<<<<< HEAD
 	cck_power += (priv->hw_rev == RTL8187BvB) ? 0 : 7;
+=======
+	if (cck_power > 15)
+		cck_power = (priv->hw_rev == RTL8187BvB) ? 15 : 22;
+	else
+		cck_power += (priv->hw_rev == RTL8187BvB) ? 0 : 7;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	cck_power += priv->txpwr_base & 0xF;
 	cck_power = min(cck_power, (u8)35);
 

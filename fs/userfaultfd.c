@@ -464,6 +464,10 @@ static int userfaultfd_release(struct inode *inode, struct file *file)
 	/* len == 0 means wake all */
 	struct userfaultfd_wake_range range = { .len = 0, };
 	unsigned long new_flags;
+<<<<<<< HEAD
+=======
+	bool still_valid;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	ACCESS_ONCE(ctx->released) = true;
 
@@ -479,8 +483,12 @@ static int userfaultfd_release(struct inode *inode, struct file *file)
 	 * taking the mmap_sem for writing.
 	 */
 	down_write(&mm->mmap_sem);
+<<<<<<< HEAD
 	if (!mmget_still_valid(mm))
 		goto skip_mm;
+=======
+	still_valid = mmget_still_valid(mm);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	prev = NULL;
 	for (vma = mm->mmap; vma; vma = vma->vm_next) {
 		cond_resched();
@@ -491,6 +499,7 @@ static int userfaultfd_release(struct inode *inode, struct file *file)
 			continue;
 		}
 		new_flags = vma->vm_flags & ~(VM_UFFD_MISSING | VM_UFFD_WP);
+<<<<<<< HEAD
 		prev = vma_merge(mm, prev, vma->vm_start, vma->vm_end,
 				 new_flags, vma->anon_vma,
 				 vma->vm_file, vma->vm_pgoff,
@@ -505,6 +514,22 @@ static int userfaultfd_release(struct inode *inode, struct file *file)
 		vma->vm_userfaultfd_ctx = NULL_VM_UFFD_CTX;
 	}
 skip_mm:
+=======
+		if (still_valid) {
+			prev = vma_merge(mm, prev, vma->vm_start, vma->vm_end,
+					 new_flags, vma->anon_vma,
+					 vma->vm_file, vma->vm_pgoff,
+					 vma_policy(vma),
+					 NULL_VM_UFFD_CTX);
+			if (prev)
+				vma = prev;
+			else
+				prev = vma;
+		}
+		vma->vm_flags = new_flags;
+		vma->vm_userfaultfd_ctx = NULL_VM_UFFD_CTX;
+	}
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	up_write(&mm->mmap_sem);
 	mmput(mm);
 wakeup:
@@ -838,6 +863,7 @@ static int userfaultfd_register(struct userfaultfd_ctx *ctx,
 			goto out_unlock;
 
 		/*
+<<<<<<< HEAD
 		 * UFFDIO_COPY will fill file holes even without
 		 * PROT_WRITE. This check enforces that if this is a
 		 * MAP_SHARED, the process has write permission to the backing
@@ -850,6 +876,8 @@ static int userfaultfd_register(struct userfaultfd_ctx *ctx,
 			goto out_unlock;
 
 		/*
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		 * Check that this vma isn't already owned by a
 		 * different userfaultfd. We can't allow more than one
 		 * userfaultfd to own a single vma simultaneously or we
@@ -874,7 +902,10 @@ static int userfaultfd_register(struct userfaultfd_ctx *ctx,
 		BUG_ON(vma->vm_ops);
 		BUG_ON(vma->vm_userfaultfd_ctx.ctx &&
 		       vma->vm_userfaultfd_ctx.ctx != ctx);
+<<<<<<< HEAD
 		WARN_ON(!(vma->vm_flags & VM_MAYWRITE));
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 		/*
 		 * Nothing to do: this vma is already registered into this
@@ -892,8 +923,12 @@ static int userfaultfd_register(struct userfaultfd_ctx *ctx,
 		prev = vma_merge(mm, prev, start, vma_end, new_flags,
 				 vma->anon_vma, vma->vm_file, vma->vm_pgoff,
 				 vma_policy(vma),
+<<<<<<< HEAD
 				 ((struct vm_userfaultfd_ctx){ ctx }),
 				 vma_get_anon_name(vma));
+=======
+				 ((struct vm_userfaultfd_ctx){ ctx }));
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		if (prev) {
 			vma = prev;
 			goto next;
@@ -1017,7 +1052,10 @@ static int userfaultfd_unregister(struct userfaultfd_ctx *ctx,
 		cond_resched();
 
 		BUG_ON(vma->vm_ops);
+<<<<<<< HEAD
 		WARN_ON(!(vma->vm_flags & VM_MAYWRITE));
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 		/*
 		 * Nothing to do: this vma is already registered into this
@@ -1034,8 +1072,12 @@ static int userfaultfd_unregister(struct userfaultfd_ctx *ctx,
 		prev = vma_merge(mm, prev, start, vma_end, new_flags,
 				 vma->anon_vma, vma->vm_file, vma->vm_pgoff,
 				 vma_policy(vma),
+<<<<<<< HEAD
 				 NULL_VM_UFFD_CTX,
 				 vma_get_anon_name(vma));
+=======
+				 NULL_VM_UFFD_CTX);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		if (prev) {
 			vma = prev;
 			goto next;

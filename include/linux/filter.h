@@ -531,10 +531,18 @@ static inline bool bpf_prog_was_classic(const struct bpf_prog *prog)
 #ifdef CONFIG_DEBUG_SET_MODULE_RONX
 static inline void bpf_prog_lock_ro(struct bpf_prog *fp)
 {
+<<<<<<< HEAD
+=======
+	set_memory_ro((unsigned long)fp, fp->pages);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static inline void bpf_prog_unlock_ro(struct bpf_prog *fp)
 {
+<<<<<<< HEAD
+=======
+	set_memory_rw((unsigned long)fp, fp->pages);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 #else
 static inline void bpf_prog_lock_ro(struct bpf_prog *fp)

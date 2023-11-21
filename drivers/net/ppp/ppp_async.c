@@ -770,7 +770,11 @@ process_input_packet(struct asyncppp *ap)
 {
 	struct sk_buff *skb;
 	unsigned char *p;
+<<<<<<< HEAD
 	unsigned int len, fcs;
+=======
+	unsigned int len, fcs, proto;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	skb = ap->rpkt;
 	if (ap->state & (SC_TOSS | SC_ESCAPE))
@@ -799,6 +803,7 @@ process_input_packet(struct asyncppp *ap)
 			goto err;
 		p = skb_pull(skb, 2);
 	}
+<<<<<<< HEAD
 
 	/* If protocol field is not compressed, it can be LCP packet */
 	if (!(p[0] & 0x01)) {
@@ -807,6 +812,16 @@ process_input_packet(struct asyncppp *ap)
 		if (skb->len < 2)
 			goto err;
 		proto = (p[0] << 8) + p[1];
+=======
+	proto = p[0];
+	if (proto & 1) {
+		/* protocol is compressed */
+		skb_push(skb, 1)[0] = 0;
+	} else {
+		if (skb->len < 2)
+			goto err;
+		proto = (proto << 8) + p[1];
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		if (proto == PPP_LCP)
 			async_lcp_peek(ap, p, skb->len, 1);
 	}

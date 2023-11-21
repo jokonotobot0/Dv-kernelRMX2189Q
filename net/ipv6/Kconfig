@@ -289,6 +289,7 @@ config IPV6_PIMSM_V2
 	  Support for IPv6 PIM multicast routing protocol PIM-SMv2.
 	  If unsure, say N.
 
+<<<<<<< HEAD
 config MTK_IPV6_VZW
 	bool "IPV6: RS triggering to extend route lifetime"
 	depends on IPV6
@@ -298,4 +299,6 @@ config MTK_IPV6_VZW
 	  for extending ipv6 route lifetime. the feature is developed to meet
 	  VzW's demandings and should be disabled by default.
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 endif # IPV6

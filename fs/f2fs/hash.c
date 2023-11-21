@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 // SPDX-License-Identifier: GPL-2.0
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * fs/f2fs/hash.c
  *
@@ -8,6 +11,13 @@
  * Portions of this code from linux/fs/ext3/hash.c
  *
  * Copyright (C) 2002 by Theodore Ts'o
+<<<<<<< HEAD
+=======
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  */
 #include <linux/types.h>
 #include <linux/fs.h>

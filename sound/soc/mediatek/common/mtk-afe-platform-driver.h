@@ -17,6 +17,7 @@
 #ifndef _MTK_AFE_PLATFORM_DRIVER_H_
 #define _MTK_AFE_PLATFORM_DRIVER_H_
 
+<<<<<<< HEAD
 extern const struct snd_pcm_ops mtk_afe_pcm_ops;
 extern const struct snd_soc_platform_driver mtk_afe_pcm_platform;
 
@@ -33,5 +34,9 @@ int mtk_afe_combine_sub_dai(struct mtk_base_afe *afe);
 int mtk_afe_add_sub_dai_control(struct snd_soc_platform *platform);
 
 unsigned int word_size_align(unsigned int in_size);
+=======
+extern const struct snd_soc_platform_driver mtk_afe_pcm_platform;
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif
 

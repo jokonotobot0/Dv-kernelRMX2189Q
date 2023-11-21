@@ -258,6 +258,7 @@ struct held_lock {
 	unsigned int hardirqs_off:1;
 	unsigned int references:12;					/* 32 bits */
 	unsigned int pin_count;
+<<<<<<< HEAD
 
 	/* MTK_LOCK_DEBUG_HELD_LOCK */
 #define HELD_LOCK_STACK_TRACE_DEPTH 24
@@ -265,6 +266,8 @@ struct held_lock {
 	unsigned long entries[HELD_LOCK_STACK_TRACE_DEPTH];
 	/* MTK_LOCK_MONITOR */
 	unsigned long long timestamp;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 /*
@@ -563,6 +566,7 @@ do {									\
 	lock_acquire(&(lock)->dep_map, 0, 0, 0, 1, NULL, _THIS_IP_);	\
 	lock_release(&(lock)->dep_map, 0, _THIS_IP_);			\
 } while (0)
+<<<<<<< HEAD
 
 /*
  * might_lock_read() is only invoked by might_fault() and the
@@ -578,6 +582,8 @@ do {									\
  * the false alarms caused by the new lock dependency.
  */
 #if 0
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 # define might_lock_read(lock) 						\
 do {									\
 	typecheck(struct lockdep_map *, &(lock)->dep_map);		\
@@ -585,9 +591,12 @@ do {									\
 	lock_release(&(lock)->dep_map, 0, _THIS_IP_);			\
 } while (0)
 #else
+<<<<<<< HEAD
 # define might_lock_read(lock) do { } while (0)
 #endif
 #else
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 # define might_lock(lock) do { } while (0)
 # define might_lock_read(lock) do { } while (0)
 #endif

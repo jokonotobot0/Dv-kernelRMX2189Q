@@ -368,7 +368,10 @@ struct page *__read_swap_cache_async(swp_entry_t entry, gfp_t gfp_mask,
 			/*
 			 * Initiate read into locked page and return.
 			 */
+<<<<<<< HEAD
 			SetPageWorkingset(new_page);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			lru_cache_add_anon(new_page);
 			*new_page_allocated = true;
 			return new_page;

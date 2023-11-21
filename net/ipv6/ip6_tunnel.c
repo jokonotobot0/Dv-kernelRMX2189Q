@@ -1275,7 +1275,10 @@ ip4ip6_tnl_xmit(struct sk_buff *skb, struct net_device *dev)
 			fl6.flowi6_mark = skb->mark;
 	}
 
+<<<<<<< HEAD
 	fl6.flowi6_uid = sock_net_uid(dev_net(dev), NULL);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	dsfield = INET_ECN_encapsulate(dsfield, ipv4_get_dsfield(iph));
 
 	if (iptunnel_handle_offloads(skb, SKB_GSO_IPXIP6))
@@ -1363,7 +1366,10 @@ ip6ip6_tnl_xmit(struct sk_buff *skb, struct net_device *dev)
 			fl6.flowi6_mark = skb->mark;
 	}
 
+<<<<<<< HEAD
 	fl6.flowi6_uid = sock_net_uid(dev_net(dev), NULL);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	dsfield = INET_ECN_encapsulate(dsfield, ipv6_get_dsfield(ipv6h));
 
 	if (iptunnel_handle_offloads(skb, SKB_GSO_IPXIP6))

@@ -55,7 +55,10 @@ struct fence_cb;
  * of the time.
  *
  * FENCE_FLAG_SIGNALED_BIT - fence is already signaled
+<<<<<<< HEAD
  * FENCE_FLAG_TIMESTAMP_BIT - timestamp recorded for fence signaling
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  * FENCE_FLAG_ENABLE_SIGNAL_BIT - enable_signaling might have been called*
  * FENCE_FLAG_USER_BITS - start of the unused bits, can be used by the
  * implementer of the fence for its own purposes. Can be used in different
@@ -85,7 +88,10 @@ struct fence {
 
 enum fence_flag_bits {
 	FENCE_FLAG_SIGNALED_BIT,
+<<<<<<< HEAD
 	FENCE_FLAG_TIMESTAMP_BIT,
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	FENCE_FLAG_ENABLE_SIGNAL_BIT,
 	FENCE_FLAG_USER_BITS, /* must always be last member */
 };
@@ -110,7 +116,10 @@ struct fence_cb {
  * @get_driver_name: returns the driver name.
  * @get_timeline_name: return the name of the context this fence belongs to.
  * @enable_signaling: enable software signaling of fence.
+<<<<<<< HEAD
  * @disable_signaling: disable software signaling of fence (optional).
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  * @signaled: [optional] peek whether the fence is signaled, can be null.
  * @wait: custom wait implementation, or fence_default_wait.
  * @release: [optional] called on destruction of fence, can be null
@@ -170,7 +179,10 @@ struct fence_ops {
 	const char * (*get_driver_name)(struct fence *fence);
 	const char * (*get_timeline_name)(struct fence *fence);
 	bool (*enable_signaling)(struct fence *fence);
+<<<<<<< HEAD
 	void (*disable_signaling)(struct fence *fence);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	bool (*signaled)(struct fence *fence);
 	signed long (*wait)(struct fence *fence, bool intr, signed long timeout);
 	void (*release)(struct fence *fence);
@@ -187,6 +199,7 @@ void fence_release(struct kref *kref);
 void fence_free(struct fence *fence);
 
 /**
+<<<<<<< HEAD
  * fence_put - decreases refcount of the fence
  * @fence:	[in]	fence to reduce refcount of
  */
@@ -197,6 +210,8 @@ static inline void fence_put(struct fence *fence)
 }
 
 /**
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  * fence_get - increases refcount of the fence
  * @fence:	[in]	fence to increase refcount of
  *
@@ -224,6 +239,7 @@ static inline struct fence *fence_get_rcu(struct fence *fence)
 }
 
 /**
+<<<<<<< HEAD
  * fence_get_rcu_safe  - acquire a reference to an RCU tracked fence
  * @fence:	[in]	pointer to fence to increase refcount of
  *
@@ -267,6 +283,15 @@ static inline struct fence *fence_get_rcu_safe(struct fence * __rcu *fencep)
 
 		fence_put(fence);
 	} while (1);
+=======
+ * fence_put - decreases refcount of the fence
+ * @fence:	[in]	fence to reduce refcount of
+ */
+static inline void fence_put(struct fence *fence)
+{
+	if (fence)
+		kref_put(&fence->refcount, fence_release);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 int fence_signal(struct fence *fence);
@@ -276,7 +301,10 @@ int fence_add_callback(struct fence *fence, struct fence_cb *cb,
 		       fence_func_t func);
 bool fence_remove_callback(struct fence *fence, struct fence_cb *cb);
 void fence_enable_sw_signaling(struct fence *fence);
+<<<<<<< HEAD
 void fence_enable_sw_signaling_nolock(struct fence *fence);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /**
  * fence_is_signaled_locked - Return an indication if the fence is signaled yet.

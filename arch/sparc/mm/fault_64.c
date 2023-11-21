@@ -152,7 +152,11 @@ show_signal_msg(struct pt_regs *regs, int sig, int code,
 	if (!printk_ratelimit())
 		return;
 
+<<<<<<< HEAD
 	printk("%s%s[%d]: segfault at %lx ip %px (rpc %px) sp %px error %x",
+=======
+	printk("%s%s[%d]: segfault at %lx ip %p (rpc %p) sp %p error %x",
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	       task_pid_nr(tsk) > 1 ? KERN_INFO : KERN_EMERG,
 	       tsk->comm, task_pid_nr(tsk), address,
 	       (void *)regs->tpc, (void *)regs->u_regs[UREG_I7],

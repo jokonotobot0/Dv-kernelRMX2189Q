@@ -71,6 +71,7 @@ extern void __flush_dcache_area(void *addr, size_t len);
 extern void __clean_dcache_area_poc(void *addr, size_t len);
 extern void __clean_dcache_area_pou(void *addr, size_t len);
 extern long __flush_cache_user_range(unsigned long start, unsigned long end);
+<<<<<<< HEAD
 extern void __flush_dcache_user_area(void *addr, size_t len);
 extern void __clean_dcache_user_area(void *addr, size_t len);
 extern void __inval_dcache_user_area(void *addr, size_t len);
@@ -80,6 +81,8 @@ static inline void __inval_dcache_area(void *addr, size_t len)
 {
 	__inval_cache_range((unsigned long)addr, (unsigned long)addr + len);
 }
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 static inline void flush_cache_mm(struct mm_struct *mm)
 {

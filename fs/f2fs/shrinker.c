@@ -1,10 +1,20 @@
+<<<<<<< HEAD
 // SPDX-License-Identifier: GPL-2.0
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * f2fs shrinker support
  *   the basic infra was copied from fs/ubifs/shrinker.c
  *
  * Copyright (c) 2015 Motorola Mobility
  * Copyright (c) 2015 Jaegeuk Kim <jaegeuk@kernel.org>
+<<<<<<< HEAD
+=======
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  */
 #include <linux/fs.h>
 #include <linux/f2fs_fs.h>
@@ -18,16 +28,26 @@ static unsigned int shrinker_run_no;
 
 static unsigned long __count_nat_entries(struct f2fs_sb_info *sbi)
 {
+<<<<<<< HEAD
 	long count = NM_I(sbi)->nat_cnt - NM_I(sbi)->dirty_nat_cnt;
 
 	return count > 0 ? count : 0;
+=======
+	return NM_I(sbi)->nat_cnt - NM_I(sbi)->dirty_nat_cnt;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static unsigned long __count_free_nids(struct f2fs_sb_info *sbi)
 {
+<<<<<<< HEAD
 	long count = NM_I(sbi)->nid_cnt[FREE_NID] - MAX_FREE_NIDS;
 
 	return count > 0 ? count : 0;
+=======
+	if (NM_I(sbi)->fcnt > MAX_FREE_NIDS)
+		return NM_I(sbi)->fcnt - MAX_FREE_NIDS;
+	return 0;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static unsigned long __count_extent_cache(struct f2fs_sb_info *sbi)
@@ -106,11 +126,19 @@ unsigned long f2fs_shrink_scan(struct shrinker *shrink,
 
 		/* shrink clean nat cache entries */
 		if (freed < nr)
+<<<<<<< HEAD
 			freed += f2fs_try_to_free_nats(sbi, nr - freed);
 
 		/* shrink free nids cache entries */
 		if (freed < nr)
 			freed += f2fs_try_to_free_nids(sbi, nr - freed);
+=======
+			freed += try_to_free_nats(sbi, nr - freed);
+
+		/* shrink free nids cache entries */
+		if (freed < nr)
+			freed += try_to_free_nids(sbi, nr - freed);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 		spin_lock(&f2fs_list_lock);
 		p = p->next;

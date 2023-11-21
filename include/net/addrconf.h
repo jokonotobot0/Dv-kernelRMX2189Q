@@ -244,8 +244,11 @@ static inline bool ipv6_is_mld(struct sk_buff *skb, int nexthdr, int offset)
 void addrconf_prefix_rcv(struct net_device *dev,
 			 u8 *opt, int len, bool sllao);
 
+<<<<<<< HEAD
 u32 addrconf_rt_table(const struct net_device *dev, u32 default_table);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  *	anycast prototypes (anycast.c)
  */

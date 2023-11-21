@@ -324,11 +324,18 @@ static int __meminit online_page_ext(unsigned long start_pfn,
 		VM_BUG_ON(!node_state(nid, N_ONLINE));
 	}
 
+<<<<<<< HEAD
 	for (pfn = start; !fail && pfn < end; pfn++) {
 		if (!pfn_present(pfn))
 			continue;
 		fail = init_section_page_ext(pfn, nid);
 		pfn = ALIGN(pfn, PAGES_PER_SECTION);
+=======
+	for (pfn = start; !fail && pfn < end; pfn += PAGES_PER_SECTION) {
+		if (!pfn_present(pfn))
+			continue;
+		fail = init_section_page_ext(pfn, nid);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 	if (!fail)
 		return 0;
@@ -404,7 +411,11 @@ void __init page_ext_init(void)
 		 * scan [start_pfn, the biggest section's pfn < end_pfn) here.
 		 */
 		for (pfn = start_pfn; pfn < end_pfn;
+<<<<<<< HEAD
 			pfn++) {
+=======
+			pfn = ALIGN(pfn + 1, PAGES_PER_SECTION)) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 			if (!pfn_valid(pfn))
 				continue;
@@ -420,8 +431,11 @@ void __init page_ext_init(void)
 				continue;
 			if (init_section_page_ext(pfn, nid))
 				goto oom;
+<<<<<<< HEAD
 
 			pfn = ALIGN(pfn, PAGES_PER_SECTION);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		}
 	}
 	hotplug_memory_notifier(page_ext_callback, 0);

@@ -21,7 +21,10 @@
 #include <net/ipv6.h>
 #include <net/ip6_fib.h>
 #include <net/flow.h>
+<<<<<<< HEAD
 #include <net/gro_cells.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #include <linux/interrupt.h>
 
@@ -137,7 +140,10 @@ struct xfrm_state {
 	struct xfrm_id		id;
 	struct xfrm_selector	sel;
 	struct xfrm_mark	mark;
+<<<<<<< HEAD
 	u32			if_id;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	u32			tfcpad;
 
 	u32			genid;
@@ -157,7 +163,10 @@ struct xfrm_state {
 		int		header_len;
 		int		trailer_len;
 		u32		extra_flags;
+<<<<<<< HEAD
 		struct xfrm_mark	smark;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	} props;
 
 	struct xfrm_lifetime_cfg lft;
@@ -277,6 +286,7 @@ struct xfrm_replay {
 	int	(*overflow)(struct xfrm_state *x, struct sk_buff *skb);
 };
 
+<<<<<<< HEAD
 struct xfrm_if_cb {
 	struct xfrm_if	*(*decode_session)(struct sk_buff *skb);
 };
@@ -284,6 +294,8 @@ struct xfrm_if_cb {
 void xfrm_if_register_cb(const struct xfrm_if_cb *ifcb);
 void xfrm_if_unregister_cb(void);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 struct net_device;
 struct xfrm_type;
 struct xfrm_dst;
@@ -294,12 +306,19 @@ struct xfrm_policy_afinfo {
 	struct dst_entry	*(*dst_lookup)(struct net *net,
 					       int tos, int oif,
 					       const xfrm_address_t *saddr,
+<<<<<<< HEAD
 					       const xfrm_address_t *daddr,
 					       u32 mark);
 	int			(*get_saddr)(struct net *net, int oif,
 					     xfrm_address_t *saddr,
 					     xfrm_address_t *daddr,
 					     u32 mark);
+=======
+					       const xfrm_address_t *daddr);
+	int			(*get_saddr)(struct net *net, int oif,
+					     xfrm_address_t *saddr,
+					     xfrm_address_t *daddr);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	void			(*decode_session)(struct sk_buff *skb,
 						  struct flowi *fl,
 						  int reverse);
@@ -543,7 +562,10 @@ struct xfrm_policy {
 	atomic_t		genid;
 	u32			priority;
 	u32			index;
+<<<<<<< HEAD
 	u32			if_id;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct xfrm_mark	mark;
 	struct xfrm_selector	selector;
 	struct xfrm_lifetime_cfg lft;
@@ -977,6 +999,7 @@ static inline void xfrm_dst_destroy(struct xfrm_dst *xdst)
 
 void xfrm_dst_ifdown(struct dst_entry *dst, struct net_device *dev);
 
+<<<<<<< HEAD
 struct xfrm_if_parms {
 	char name[IFNAMSIZ];	/* name of XFRM device */
 	int link;		/* ifindex of underlying L2 interface */
@@ -993,6 +1016,8 @@ struct xfrm_if {
 	struct gro_cells gro_cells;
 };
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 struct sec_path {
 	atomic_t		refcnt;
 	int			len;
@@ -1192,12 +1217,21 @@ void xfrm_garbage_collect(struct net *net);
 
 static inline void xfrm_sk_free_policy(struct sock *sk) {}
 static inline int xfrm_sk_clone_policy(struct sock *sk, const struct sock *osk) { return 0; }
+<<<<<<< HEAD
 static inline int xfrm6_route_forward(struct sk_buff *skb) { return 1; }
 static inline int xfrm4_route_forward(struct sk_buff *skb) { return 1; }
 static inline int xfrm6_policy_check(struct sock *sk, int dir, struct sk_buff *skb)
 {
 	return 1;
 }
+=======
+static inline int xfrm6_route_forward(struct sk_buff *skb) { return 1; }  
+static inline int xfrm4_route_forward(struct sk_buff *skb) { return 1; } 
+static inline int xfrm6_policy_check(struct sock *sk, int dir, struct sk_buff *skb)
+{ 
+	return 1; 
+} 
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static inline int xfrm4_policy_check(struct sock *sk, int dir, struct sk_buff *skb)
 {
 	return 1;
@@ -1284,7 +1318,11 @@ __xfrm6_state_addr_check(const struct xfrm_state *x,
 {
 	if (ipv6_addr_equal((struct in6_addr *)daddr, (struct in6_addr *)&x->id.daddr) &&
 	    (ipv6_addr_equal((struct in6_addr *)saddr, (struct in6_addr *)&x->props.saddr) ||
+<<<<<<< HEAD
 	     ipv6_addr_any((struct in6_addr *)saddr) ||
+=======
+	     ipv6_addr_any((struct in6_addr *)saddr) || 
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	     ipv6_addr_any((struct in6_addr *)&x->props.saddr)))
 		return 1;
 	return 0;
@@ -1460,7 +1498,11 @@ struct xfrm_state *xfrm_state_find(const xfrm_address_t *daddr,
 				   struct xfrm_tmpl *tmpl,
 				   struct xfrm_policy *pol, int *err,
 				   unsigned short family);
+<<<<<<< HEAD
 struct xfrm_state *xfrm_stateonly_find(struct net *net, u32 mark, u32 if_id,
+=======
+struct xfrm_state *xfrm_stateonly_find(struct net *net, u32 mark,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 				       xfrm_address_t *daddr,
 				       xfrm_address_t *saddr,
 				       unsigned short family,
@@ -1589,7 +1631,11 @@ int xfrm_user_policy(struct sock *sk, int optname,
 static inline int xfrm_user_policy(struct sock *sk, int optname, u8 __user *optval, int optlen)
 {
  	return -ENOPROTOOPT;
+<<<<<<< HEAD
 }
+=======
+} 
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 static inline int xfrm4_udp_encap_rcv(struct sock *sk, struct sk_buff *skb)
 {
@@ -1607,20 +1653,33 @@ int xfrm_policy_walk(struct net *net, struct xfrm_policy_walk *walk,
 		     void *);
 void xfrm_policy_walk_done(struct xfrm_policy_walk *walk, struct net *net);
 int xfrm_policy_insert(int dir, struct xfrm_policy *policy, int excl);
+<<<<<<< HEAD
 struct xfrm_policy *xfrm_policy_bysel_ctx(struct net *net, u32 mark, u32 if_id,
+=======
+struct xfrm_policy *xfrm_policy_bysel_ctx(struct net *net, u32 mark,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 					  u8 type, int dir,
 					  struct xfrm_selector *sel,
 					  struct xfrm_sec_ctx *ctx, int delete,
 					  int *err);
+<<<<<<< HEAD
 struct xfrm_policy *xfrm_policy_byid(struct net *net, u32 mark, u32 if_id, u8,
 				     int dir, u32 id, int delete, int *err);
+=======
+struct xfrm_policy *xfrm_policy_byid(struct net *net, u32 mark, u8, int dir,
+				     u32 id, int delete, int *err);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 int xfrm_policy_flush(struct net *net, u8 type, bool task_valid);
 void xfrm_policy_hash_rebuild(struct net *net);
 u32 xfrm_get_acqseq(void);
 int verify_spi_info(u8 proto, u32 min, u32 max);
 int xfrm_alloc_spi(struct xfrm_state *x, u32 minspi, u32 maxspi);
 struct xfrm_state *xfrm_find_acq(struct net *net, const struct xfrm_mark *mark,
+<<<<<<< HEAD
 				 u8 mode, u32 reqid, u32 if_id, u8 proto,
+=======
+				 u8 mode, u32 reqid, u8 proto,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 				 const xfrm_address_t *daddr,
 				 const xfrm_address_t *saddr, int create,
 				 unsigned short family);
@@ -1814,6 +1873,7 @@ static inline int xfrm_mark_put(struct sk_buff *skb, const struct xfrm_mark *m)
 	return ret;
 }
 
+<<<<<<< HEAD
 static inline __u32 xfrm_smark_get(__u32 mark, struct xfrm_state *x)
 {
 	struct xfrm_mark *m = &x->props.smark;
@@ -1830,6 +1890,8 @@ static inline int xfrm_if_id_put(struct sk_buff *skb, __u32 if_id)
 	return ret;
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static inline int xfrm_tunnel_check(struct sk_buff *skb, struct xfrm_state *x,
 				    unsigned int family)
 {

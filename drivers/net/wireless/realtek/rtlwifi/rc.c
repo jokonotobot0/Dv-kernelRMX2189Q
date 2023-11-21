@@ -1,5 +1,32 @@
+<<<<<<< HEAD
 // SPDX-License-Identifier: GPL-2.0
 /* Copyright(c) 2009-2012  Realtek Corporation.*/
+=======
+/******************************************************************************
+ *
+ * Copyright(c) 2009-2012  Realtek Corporation.
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of version 2 of the GNU General Public License as
+ * published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ * more details.
+ *
+ * The full GNU General Public License is included in this distribution in the
+ * file called LICENSE.
+ *
+ * Contact Information:
+ * wlanfae <wlanfae@realtek.com>
+ * Realtek Corporation, No. 2, Innovation Road II, Hsinchu Science Park,
+ * Hsinchu 300, Taiwan.
+ *
+ * Larry Finger <Larry.Finger@lwfinger.net>
+ *
+ *****************************************************************************/
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #include "wifi.h"
 #include "base.h"
@@ -20,6 +47,7 @@ static u8 _rtl_rc_get_highest_rix(struct rtl_priv *rtlpriv,
 	struct rtl_phy *rtlphy = &(rtlpriv->phy);
 	struct rtl_sta_info *sta_entry = NULL;
 	u16 wireless_mode = 0;
+<<<<<<< HEAD
 	u8 nss;
 	struct ieee80211_tx_rate rate;
 
@@ -37,6 +65,8 @@ static u8 _rtl_rc_get_highest_rix(struct rtl_priv *rtlpriv,
 		nss = 1;
 		break;
 	}
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/*
 	 *this rate is no use for true rate, firmware
@@ -61,11 +91,16 @@ static u8 _rtl_rc_get_highest_rix(struct rtl_priv *rtlpriv,
 			} else if (wireless_mode == WIRELESS_MODE_G) {
 				return G_MODE_MAX_RIX;
 			} else if (wireless_mode == WIRELESS_MODE_N_24G) {
+<<<<<<< HEAD
 				if (nss == 1)
+=======
+				if (get_rf_type(rtlphy) != RF_2T2R)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 					return N_MODE_MCS7_RIX;
 				else
 					return N_MODE_MCS15_RIX;
 			} else if (wireless_mode == WIRELESS_MODE_AC_24G) {
+<<<<<<< HEAD
 				if (sta->deflink.bandwidth == IEEE80211_STA_RX_BW_20) {
 					ieee80211_rate_set_vht(&rate,
 							       AC_MODE_MCS8_RIX,
@@ -77,17 +112,25 @@ static u8 _rtl_rc_get_highest_rix(struct rtl_priv *rtlpriv,
 							       nss);
 					goto out;
 				}
+=======
+				return AC_MODE_MCS9_RIX;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			}
 			return 0;
 		} else {
 			if (wireless_mode == WIRELESS_MODE_A) {
 				return A_MODE_MAX_RIX;
 			} else if (wireless_mode == WIRELESS_MODE_N_5G) {
+<<<<<<< HEAD
 				if (nss == 1)
+=======
+				if (get_rf_type(rtlphy) != RF_2T2R)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 					return N_MODE_MCS7_RIX;
 				else
 					return N_MODE_MCS15_RIX;
 			} else if (wireless_mode == WIRELESS_MODE_AC_5G) {
+<<<<<<< HEAD
 				if (sta->deflink.bandwidth == IEEE80211_STA_RX_BW_20) {
 					ieee80211_rate_set_vht(&rate,
 							       AC_MODE_MCS8_RIX,
@@ -99,13 +142,19 @@ static u8 _rtl_rc_get_highest_rix(struct rtl_priv *rtlpriv,
 							       nss);
 					goto out;
 				}
+=======
+				return AC_MODE_MCS9_RIX;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			}
 			return 0;
 		}
 	}
+<<<<<<< HEAD
 
 out:
 	return rate.idx;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static void _rtl_rc_rate_set_series(struct rtl_priv *rtlpriv,
@@ -121,20 +170,33 @@ static void _rtl_rc_rate_set_series(struct rtl_priv *rtlpriv,
 	u8 sgi_20 = 0, sgi_40 = 0, sgi_80 = 0;
 
 	if (sta) {
+<<<<<<< HEAD
 		sgi_20 = sta->deflink.ht_cap.cap & IEEE80211_HT_CAP_SGI_20;
 		sgi_40 = sta->deflink.ht_cap.cap & IEEE80211_HT_CAP_SGI_40;
 		sgi_80 = sta->deflink.vht_cap.cap & IEEE80211_VHT_CAP_SHORT_GI_80;
+=======
+		sgi_20 = sta->ht_cap.cap & IEEE80211_HT_CAP_SGI_20;
+		sgi_40 = sta->ht_cap.cap & IEEE80211_HT_CAP_SGI_40;
+		sgi_80 = sta->vht_cap.cap & IEEE80211_VHT_CAP_SHORT_GI_80;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		sta_entry = (struct rtl_sta_info *)sta->drv_priv;
 		wireless_mode = sta_entry->wireless_mode;
 	}
 	rate->count = tries;
 	rate->idx = rix >= 0x00 ? rix : 0x00;
+<<<<<<< HEAD
+=======
+	if (rtlpriv->rtlhal.hw_type == HARDWARE_TYPE_RTL8812AE &&
+	    wireless_mode == WIRELESS_MODE_AC_5G)
+		rate->idx += 0x10;/*2NSS for 8812AE*/
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (!not_data) {
 		if (txrc->short_preamble)
 			rate->flags |= IEEE80211_TX_RC_USE_SHORT_PREAMBLE;
 		if (mac->opmode == NL80211_IFTYPE_AP ||
 			mac->opmode == NL80211_IFTYPE_ADHOC) {
+<<<<<<< HEAD
 			if (sta && (sta->deflink.ht_cap.cap &
 				    IEEE80211_HT_CAP_SUP_WIDTH_20_40))
 				rate->flags |= IEEE80211_TX_RC_40_MHZ_WIDTH;
@@ -145,15 +207,35 @@ static void _rtl_rc_rate_set_series(struct rtl_priv *rtlpriv,
 				rate->flags |= IEEE80211_TX_RC_80_MHZ_WIDTH;
 			else if (mac->bw_40)
 				rate->flags |= IEEE80211_TX_RC_40_MHZ_WIDTH;
+=======
+			if (sta && (sta->ht_cap.cap &
+				    IEEE80211_HT_CAP_SUP_WIDTH_20_40))
+				rate->flags |= IEEE80211_TX_RC_40_MHZ_WIDTH;
+			if (sta && (sta->vht_cap.vht_supported))
+				rate->flags |= IEEE80211_TX_RC_80_MHZ_WIDTH;
+		} else {
+			if (mac->bw_40)
+				rate->flags |= IEEE80211_TX_RC_40_MHZ_WIDTH;
+			if (mac->bw_80)
+				rate->flags |= IEEE80211_TX_RC_80_MHZ_WIDTH;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		}
 
 		if (sgi_20 || sgi_40 || sgi_80)
 			rate->flags |= IEEE80211_TX_RC_SHORT_GI;
+<<<<<<< HEAD
 		if (sta && sta->deflink.ht_cap.ht_supported &&
 		    (wireless_mode == WIRELESS_MODE_N_5G ||
 		     wireless_mode == WIRELESS_MODE_N_24G))
 			rate->flags |= IEEE80211_TX_RC_MCS;
 		if (sta && sta->deflink.vht_cap.vht_supported &&
+=======
+		if (sta && sta->ht_cap.ht_supported &&
+		    ((wireless_mode == WIRELESS_MODE_N_5G) ||
+		     (wireless_mode == WIRELESS_MODE_N_24G)))
+			rate->flags |= IEEE80211_TX_RC_MCS;
+		if (sta && sta->vht_cap.vht_supported &&
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		    (wireless_mode == WIRELESS_MODE_AC_5G ||
 		     wireless_mode == WIRELESS_MODE_AC_24G ||
 		     wireless_mode == WIRELESS_MODE_AC_ONLY))
@@ -173,6 +255,12 @@ static void rtl_get_rate(void *ppriv, struct ieee80211_sta *sta,
 	u8 try_per_rate, i, rix;
 	bool not_data = !ieee80211_is_data(fc);
 
+<<<<<<< HEAD
+=======
+	if (rate_control_send_low(sta, priv_sta, txrc))
+		return;
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	rix = _rtl_rc_get_highest_rix(rtlpriv, sta, skb, not_data);
 	try_per_rate = 1;
 	_rtl_rc_rate_set_series(rtlpriv, sta, &rates[0], txrc,
@@ -228,12 +316,20 @@ static void rtl_tx_status(void *ppriv,
 
 	if (sta) {
 		/* Check if aggregation has to be enabled for this tid */
+<<<<<<< HEAD
 		sta_entry = (struct rtl_sta_info *)sta->drv_priv;
 		if (sta->deflink.ht_cap.ht_supported &&
 		    !(skb->protocol == cpu_to_be16(ETH_P_PAE))) {
 			if (ieee80211_is_data_qos(fc)) {
 				u8 tid = rtl_get_tid(skb);
 
+=======
+		sta_entry = (struct rtl_sta_info *) sta->drv_priv;
+		if ((sta->ht_cap.ht_supported) &&
+		    !(skb->protocol == cpu_to_be16(ETH_P_PAE))) {
+			if (ieee80211_is_data_qos(fc)) {
+				u8 tid = rtl_get_tid(skb);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 				if (_rtl_tx_aggr_check(rtlpriv, sta_entry,
 						       tid)) {
 					sta_entry->tids[tid].agg.agg_state =
@@ -261,7 +357,11 @@ static void rtl_rate_update(void *ppriv,
 {
 }
 
+<<<<<<< HEAD
 static void *rtl_rate_alloc(struct ieee80211_hw *hw)
+=======
+static void *rtl_rate_alloc(struct ieee80211_hw *hw, struct dentry *debugfsdir)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	struct rtl_priv *rtlpriv = rtl_priv(hw);
 	return rtlpriv;
@@ -278,9 +378,18 @@ static void *rtl_rate_alloc_sta(void *ppriv,
 	struct rtl_priv *rtlpriv = ppriv;
 	struct rtl_rate_priv *rate_priv;
 
+<<<<<<< HEAD
 	rate_priv = kzalloc(sizeof(*rate_priv), gfp);
 	if (!rate_priv)
 		return NULL;
+=======
+	rate_priv = kzalloc(sizeof(struct rtl_rate_priv), gfp);
+	if (!rate_priv) {
+		RT_TRACE(rtlpriv, COMP_ERR, DBG_EMERG,
+			 "Unable to allocate private rc structure\n");
+		return NULL;
+	}
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	rtlpriv->rate_priv = rate_priv;
 
@@ -291,11 +400,18 @@ static void rtl_rate_free_sta(void *rtlpriv,
 			      struct ieee80211_sta *sta, void *priv_sta)
 {
 	struct rtl_rate_priv *rate_priv = priv_sta;
+<<<<<<< HEAD
 
 	kfree(rate_priv);
 }
 
 static const struct rate_control_ops rtl_rate_ops = {
+=======
+	kfree(rate_priv);
+}
+
+static struct rate_control_ops rtl_rate_ops = {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	.name = "rtl_rc",
 	.alloc = rtl_rate_alloc,
 	.free = rtl_rate_free,

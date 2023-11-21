@@ -613,7 +613,11 @@ void device_add_disk(struct device *parent, struct gendisk *disk)
 	disk_alloc_events(disk);
 
 	/* Register BDI before referencing it from bdev */
+<<<<<<< HEAD
 	bdi = disk->queue->backing_dev_info;
+=======
+	bdi = &disk->queue->backing_dev_info;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	bdi_register_owner(bdi, disk_to_dev(disk));
 
 	blk_register_region(disk_devt(disk), disk->minors, NULL,
@@ -649,13 +653,19 @@ void del_gendisk(struct gendisk *disk)
 			     DISK_PITER_INCL_EMPTY | DISK_PITER_REVERSE);
 	while ((part = disk_part_iter_next(&piter))) {
 		invalidate_partition(disk, part->partno);
+<<<<<<< HEAD
 		bdev_unhash_inode(part_devt(part));
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		delete_partition(disk, part->partno);
 	}
 	disk_part_iter_exit(&piter);
 
 	invalidate_partition(disk, 0);
+<<<<<<< HEAD
 	bdev_unhash_inode(disk_devt(disk));
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	set_capacity(disk, 0);
 	disk->flags &= ~GENHD_FL_UP;
 

@@ -63,7 +63,10 @@ struct dm_verity {
 	sector_t hash_level_block[DM_VERITY_MAX_LEVELS];
 
 	struct dm_verity_fec *fec;	/* forward error correction */
+<<<<<<< HEAD
 	unsigned long *validated_blocks; /* bitset blocks validated */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 struct dm_verity_io {
@@ -127,6 +130,7 @@ extern int verity_hash(struct dm_verity *v, struct shash_desc *desc,
 extern int verity_hash_for_block(struct dm_verity *v, struct dm_verity_io *io,
 				 sector_t block, u8 *digest, bool *is_zero);
 
+<<<<<<< HEAD
 extern void verity_status(struct dm_target *ti, status_type_t type,
 			unsigned status_flags, char *result, unsigned maxlen);
 extern int verity_prepare_ioctl(struct dm_target *ti,
@@ -138,4 +142,6 @@ extern void verity_dtr(struct dm_target *ti);
 extern int verity_ctr(struct dm_target *ti, unsigned argc, char **argv);
 extern int verity_map(struct dm_target *ti, struct bio *bio);
 extern void dm_verity_avb_error_handler(void);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif /* DM_VERITY_H */

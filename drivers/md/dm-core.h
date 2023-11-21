@@ -18,7 +18,10 @@
 #include "dm.h"
 
 #define DM_RESERVED_MAX_IOS		1024
+<<<<<<< HEAD
 #define DM_WAIT_DEV_MAX_TIME		5000
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 struct dm_kobject_holder {
 	struct kobject kobj;

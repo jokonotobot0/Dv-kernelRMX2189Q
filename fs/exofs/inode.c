@@ -377,8 +377,14 @@ err:
  * and will start a new collection. Eventually caller must submit the last
  * segment if present.
  */
+<<<<<<< HEAD
 static int __readpage_strip(struct page_collect *pcol, struct page *page)
 {
+=======
+static int readpage_strip(void *data, struct page *page)
+{
+	struct page_collect *pcol = data;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct inode *inode = pcol->inode;
 	struct exofs_i_info *oi = exofs_i(inode);
 	loff_t i_size = i_size_read(inode);
@@ -469,6 +475,7 @@ fail:
 	return ret;
 }
 
+<<<<<<< HEAD
 static int readpage_strip(struct file *data, struct page *page)
 {
 	struct page_collect *pcol = (struct page_collect *)data;
@@ -476,6 +483,8 @@ static int readpage_strip(struct file *data, struct page *page)
 	return __readpage_strip(pcol, page);
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int exofs_readpages(struct file *file, struct address_space *mapping,
 			   struct list_head *pages, unsigned nr_pages)
 {
@@ -505,7 +514,11 @@ static int _readpage(struct page *page, bool read_4_write)
 	_pcol_init(&pcol, 1, page->mapping->host);
 
 	pcol.read_4_write = read_4_write;
+<<<<<<< HEAD
 	ret = __readpage_strip(&pcol, page);
+=======
+	ret = readpage_strip(&pcol, page);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (ret) {
 		EXOFS_ERR("_readpage => %d\n", ret);
 		return ret;

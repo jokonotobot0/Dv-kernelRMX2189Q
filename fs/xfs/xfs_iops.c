@@ -774,6 +774,10 @@ xfs_setattr_nonsize(
 
 out_cancel:
 	xfs_trans_cancel(tp);
+<<<<<<< HEAD
+=======
+	xfs_iunlock(ip, XFS_ILOCK_EXCL);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 out_dqrele:
 	xfs_qm_dqrele(udqp);
 	xfs_qm_dqrele(gdqp);

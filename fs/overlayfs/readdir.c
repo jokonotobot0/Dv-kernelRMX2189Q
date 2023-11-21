@@ -223,7 +223,11 @@ static int ovl_check_whiteouts(struct dentry *dir, struct ovl_readdir_data *rdd)
 		}
 		inode_unlock(dir->d_inode);
 	}
+<<<<<<< HEAD
 	ovl_revert_creds(old_cred);
+=======
+	revert_creds(old_cred);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	return err;
 }

@@ -43,6 +43,7 @@ extern int proc_dostring(struct ctl_table *, int,
 			 void __user *, size_t *, loff_t *);
 extern int proc_dointvec(struct ctl_table *, int,
 			 void __user *, size_t *, loff_t *);
+<<<<<<< HEAD
 
 #ifdef VENDOR_EDIT
 //Ming.Liu@PSW.CN.WiFi.Network.quality.1065762, 2016/10/09
@@ -51,6 +52,8 @@ extern int proc_do_print_tcpinfo(struct ctl_table *, int,
 			 void __user *, size_t *, loff_t *);
 #endif /* VENDOR_EDIT */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 extern int proc_douintvec(struct ctl_table *, int,
 			 void __user *, size_t *, loff_t *);
 extern int proc_dointvec_minmax(struct ctl_table *, int,

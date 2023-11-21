@@ -1032,7 +1032,10 @@ int sock_getsockopt(struct socket *sock, int level, int optname,
 
 	union {
 		int val;
+<<<<<<< HEAD
 		u64 val64;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		struct linger ling;
 		struct timeval tm;
 	} v;
@@ -1263,6 +1266,7 @@ int sock_getsockopt(struct socket *sock, int level, int optname,
 		v.val = sk->sk_incoming_cpu;
 		break;
 
+<<<<<<< HEAD
 
 	case SO_COOKIE:
 		lv = sizeof(u64);
@@ -1270,6 +1274,8 @@ int sock_getsockopt(struct socket *sock, int level, int optname,
 			return -EINVAL;
 		v.val64 = sock_gen_cookie(sk);
 		break;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	default:
 		/* We implement the SO_SNDLOWAT etc to not be settable
 		 * (1003.1g 7).
@@ -2372,7 +2378,11 @@ static void sock_def_readable(struct sock *sk)
 	rcu_read_lock();
 	wq = rcu_dereference(sk->sk_wq);
 	if (skwq_has_sleeper(wq))
+<<<<<<< HEAD
 		wake_up_interruptible_poll(&wq->wait, POLLIN | POLLPRI |
+=======
+		wake_up_interruptible_sync_poll(&wq->wait, POLLIN | POLLPRI |
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 						POLLRDNORM | POLLRDBAND);
 	sk_wake_async(sk, SOCK_WAKE_WAITD, POLL_IN);
 	rcu_read_unlock();
@@ -2450,11 +2460,16 @@ void sock_init_data(struct socket *sock, struct sock *sk)
 		sk->sk_type	=	sock->type;
 		sk->sk_wq	=	sock->wq;
 		sock->sk	=	sk;
+<<<<<<< HEAD
 		sk->sk_uid	=	SOCK_INODE(sock)->i_uid;
 	} else {
 		sk->sk_wq	=	NULL;
 		sk->sk_uid	=	make_kuid(sock_net(sk)->user_ns, 0);
 	}
+=======
+	} else
+		sk->sk_wq	=	NULL;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	rwlock_init(&sk->sk_callback_lock);
 	lockdep_set_class_and_name(&sk->sk_callback_lock,

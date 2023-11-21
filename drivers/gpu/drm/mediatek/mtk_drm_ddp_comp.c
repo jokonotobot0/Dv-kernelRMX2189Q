@@ -38,6 +38,14 @@
 
 #define DISP_REG_UFO_START			0x0000
 
+<<<<<<< HEAD
+=======
+#define DISP_COLOR_CFG_MAIN			0x0400
+#define DISP_COLOR_START			0x0c00
+#define DISP_COLOR_WIDTH			0x0c50
+#define DISP_COLOR_HEIGHT			0x0c54
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define DISP_AAL_EN				0x0000
 #define DISP_AAL_SIZE				0x0030
 
@@ -48,6 +56,12 @@
 
 #define LUT_10BIT_MASK				0x03ff
 
+<<<<<<< HEAD
+=======
+#define COLOR_BYPASS_ALL			BIT(7)
+#define COLOR_SEQ_SEL				BIT(13)
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define OD_RELAYMODE				BIT(0)
 
 #define UFO_BYPASS				BIT(2)
@@ -95,6 +109,24 @@ void mtk_dither_set(struct mtk_ddp_comp *comp, unsigned int bpc,
 	}
 }
 
+<<<<<<< HEAD
+=======
+static void mtk_color_config(struct mtk_ddp_comp *comp, unsigned int w,
+			     unsigned int h, unsigned int vrefresh,
+			     unsigned int bpc)
+{
+	writel(w, comp->regs + DISP_COLOR_WIDTH);
+	writel(h, comp->regs + DISP_COLOR_HEIGHT);
+}
+
+static void mtk_color_start(struct mtk_ddp_comp *comp)
+{
+	writel(COLOR_BYPASS_ALL | COLOR_SEQ_SEL,
+	       comp->regs + DISP_COLOR_CFG_MAIN);
+	writel(0x1, comp->regs + DISP_COLOR_START);
+}
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static void mtk_od_config(struct mtk_ddp_comp *comp, unsigned int w,
 			  unsigned int h, unsigned int vrefresh,
 			  unsigned int bpc)
@@ -186,6 +218,14 @@ static const struct mtk_ddp_comp_funcs ddp_gamma = {
 	.stop = mtk_gamma_stop,
 };
 
+<<<<<<< HEAD
+=======
+static const struct mtk_ddp_comp_funcs ddp_color = {
+	.config = mtk_color_config,
+	.start = mtk_color_start,
+};
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static const struct mtk_ddp_comp_funcs ddp_od = {
 	.config = mtk_od_config,
 	.start = mtk_od_start,
@@ -208,17 +248,24 @@ static const char * const mtk_ddp_comp_stem[MTK_DDP_COMP_TYPE_MAX] = {
 	[MTK_DISP_PWM] = "pwm",
 	[MTK_DISP_MUTEX] = "mutex",
 	[MTK_DISP_OD] = "od",
+<<<<<<< HEAD
 	[MTK_DISP_BLS] = "bls",
 };
 
 struct mtk_ddp_comp_match {
 	enum mtk_ddp_comp_id index;
+=======
+};
+
+struct mtk_ddp_comp_match {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	enum mtk_ddp_comp_type type;
 	int alias_id;
 	const struct mtk_ddp_comp_funcs *funcs;
 };
 
 static const struct mtk_ddp_comp_match mtk_ddp_matches[DDP_COMPONENT_ID_MAX] = {
+<<<<<<< HEAD
 	{ DDP_COMPONENT_AAL,		MTK_DISP_AAL,	0, &ddp_aal },
 	{ DDP_COMPONENT_AAL1,		MTK_DISP_AAL,	1, &ddp_aal },
 	{ DDP_COMPONENT_BLS,		MTK_DISP_BLS,	0, NULL },
@@ -246,6 +293,28 @@ static const struct mtk_ddp_comp_match mtk_ddp_matches[DDP_COMPONENT_ID_MAX] = {
 };
 
 enum mtk_ddp_comp_id mtk_ddp_comp_get_id(struct device_node *node,
+=======
+	[DDP_COMPONENT_AAL]	= { MTK_DISP_AAL,	0, &ddp_aal },
+	[DDP_COMPONENT_COLOR0]	= { MTK_DISP_COLOR,	0, &ddp_color },
+	[DDP_COMPONENT_COLOR1]	= { MTK_DISP_COLOR,	1, &ddp_color },
+	[DDP_COMPONENT_DPI0]	= { MTK_DPI,		0, NULL },
+	[DDP_COMPONENT_DSI0]	= { MTK_DSI,		0, NULL },
+	[DDP_COMPONENT_DSI1]	= { MTK_DSI,		1, NULL },
+	[DDP_COMPONENT_GAMMA]	= { MTK_DISP_GAMMA,	0, &ddp_gamma },
+	[DDP_COMPONENT_OD]	= { MTK_DISP_OD,	0, &ddp_od },
+	[DDP_COMPONENT_OVL0]	= { MTK_DISP_OVL,	0, NULL },
+	[DDP_COMPONENT_OVL1]	= { MTK_DISP_OVL,	1, NULL },
+	[DDP_COMPONENT_PWM0]	= { MTK_DISP_PWM,	0, NULL },
+	[DDP_COMPONENT_RDMA0]	= { MTK_DISP_RDMA,	0, NULL },
+	[DDP_COMPONENT_RDMA1]	= { MTK_DISP_RDMA,	1, NULL },
+	[DDP_COMPONENT_RDMA2]	= { MTK_DISP_RDMA,	2, NULL },
+	[DDP_COMPONENT_UFOE]	= { MTK_DISP_UFOE,	0, &ddp_ufoe },
+	[DDP_COMPONENT_WDMA0]	= { MTK_DISP_WDMA,	0, NULL },
+	[DDP_COMPONENT_WDMA1]	= { MTK_DISP_WDMA,	1, NULL },
+};
+
+int mtk_ddp_comp_get_id(struct device_node *node,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			enum mtk_ddp_comp_type comp_type)
 {
 	int id = of_alias_get_id(node, mtk_ddp_comp_stem[comp_type]);
@@ -254,7 +323,11 @@ enum mtk_ddp_comp_id mtk_ddp_comp_get_id(struct device_node *node,
 	for (i = 0; i < ARRAY_SIZE(mtk_ddp_matches); i++) {
 		if (comp_type == mtk_ddp_matches[i].type &&
 		    (id < 0 || id == mtk_ddp_matches[i].alias_id))
+<<<<<<< HEAD
 			return mtk_ddp_matches[i].index;
+=======
+			return i;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 
 	return -EINVAL;
@@ -271,6 +344,7 @@ int mtk_ddp_comp_init(struct device *dev, struct device_node *node,
 	if (comp_id < 0 || comp_id >= DDP_COMPONENT_ID_MAX)
 		return -EINVAL;
 
+<<<<<<< HEAD
 	type = mtk_ddp_matches[comp_id].type;
 
 	comp->id = comp_id;
@@ -282,6 +356,13 @@ int mtk_ddp_comp_init(struct device *dev, struct device_node *node,
 	    comp_id == DDP_COMPONENT_DPI1 ||
 	    comp_id == DDP_COMPONENT_DSI0 ||
 	    comp_id == DDP_COMPONENT_DSI1 ||
+=======
+	comp->id = comp_id;
+	comp->funcs = funcs ?: mtk_ddp_matches[comp_id].funcs;
+
+	if (comp_id == DDP_COMPONENT_DPI0 ||
+	    comp_id == DDP_COMPONENT_DSI0 ||
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	    comp_id == DDP_COMPONENT_PWM0) {
 		comp->regs = NULL;
 		comp->clk = NULL;
@@ -295,6 +376,11 @@ int mtk_ddp_comp_init(struct device *dev, struct device_node *node,
 	if (IS_ERR(comp->clk))
 		comp->clk = NULL;
 
+<<<<<<< HEAD
+=======
+	type = mtk_ddp_matches[comp_id].type;
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* Only DMA capable components need the LARB property */
 	comp->larb_dev = NULL;
 	if (type != MTK_DISP_OVL &&

@@ -366,8 +366,12 @@ is_mcounted_section_name(char const *const txtname)
 		strcmp(".softirqentry.text", txtname) == 0 ||
 		strcmp(".kprobes.text", txtname) == 0 ||
 		strcmp(".cpuidle.text", txtname) == 0 ||
+<<<<<<< HEAD
 		(strncmp(".text.",       txtname, 6) == 0 &&
 		 strcmp(".text..ftrace", txtname) != 0);
+=======
+		strcmp(".text.unlikely", txtname) == 0;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 /* 32 bit and 64 bit are very similar */

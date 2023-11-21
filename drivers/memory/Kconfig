@@ -127,8 +127,13 @@ config JZ4780_NEMC
 	  memory devices such as NAND and SRAM.
 
 config MTK_SMI
+<<<<<<< HEAD
 	bool "MTK SMI"
 	#depends on ARCH_MEDIATEK || COMPILE_TEST
+=======
+	bool
+	depends on ARCH_MEDIATEK || COMPILE_TEST
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	help
 	  This driver is for the Memory Controller module in MediaTek SoCs,
 	  mainly help enable/disable iommu and control the power domain and

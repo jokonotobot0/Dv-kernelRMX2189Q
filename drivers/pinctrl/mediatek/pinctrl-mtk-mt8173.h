@@ -201,7 +201,11 @@ static const struct mtk_desc_pin mtk_pins_mt8173[] = {
 	MTK_PIN(
 		PINCTRL_PIN(16, "IDDIG"),
 		NULL, "mt8173",
+<<<<<<< HEAD
 		MTK_EINT_FUNCTION(1, 16),
+=======
+		MTK_EINT_FUNCTION(0, 16),
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		MTK_FUNCTION(0, "GPIO16"),
 		MTK_FUNCTION(1, "IDDIG"),
 		MTK_FUNCTION(2, "CMFLASH"),

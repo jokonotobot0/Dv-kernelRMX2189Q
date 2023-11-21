@@ -13,7 +13,10 @@ config SH_LCD_MIPI_DSI
 
 source "drivers/char/agp/Kconfig"
 
+<<<<<<< HEAD
 source "drivers/gpu/arm/Kconfig"
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 source "drivers/gpu/vga/Kconfig"
 
 source "drivers/gpu/host1x/Kconfig"

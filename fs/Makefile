@@ -3,9 +3,13 @@
 #
 # 14 Sep 2000, Christoph Hellwig <hch@infradead.org>
 # Rewritten to use lists instead of if-statements.
+<<<<<<< HEAD
 #
 
 subdir-ccflags-y += -I$(srctree)/drivers/misc/mediatek/include
+=======
+# 
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 obj-y :=	open.o read_write.o file_table.o super.o \
 		char_dev.o stat.o exec.o pipe.o namei.o fcntl.o \
@@ -63,7 +67,11 @@ obj-y				+= devpts/
 
 obj-$(CONFIG_PROFILING)		+= dcookies.o
 obj-$(CONFIG_DLM)		+= dlm/
+<<<<<<< HEAD
 
+=======
+ 
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 # Do not add any filesystems before this line
 obj-$(CONFIG_FSCACHE)		+= fscache/
 obj-$(CONFIG_REISERFS_FS)	+= reiserfs/
@@ -85,7 +93,10 @@ obj-$(CONFIG_ISO9660_FS)	+= isofs/
 obj-$(CONFIG_HFSPLUS_FS)	+= hfsplus/ # Before hfs to find wrapped HFS+
 obj-$(CONFIG_HFS_FS)		+= hfs/
 obj-$(CONFIG_ECRYPT_FS)		+= ecryptfs/
+<<<<<<< HEAD
 obj-$(CONFIG_SDCARD_FS)		+= sdcardfs/
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 obj-$(CONFIG_VXFS_FS)		+= freevxfs/
 obj-$(CONFIG_NFS_FS)		+= nfs/
 obj-$(CONFIG_EXPORTFS)		+= exportfs/
@@ -132,9 +143,12 @@ obj-y				+= exofs/ # Multiple modules
 obj-$(CONFIG_CEPH_FS)		+= ceph/
 obj-$(CONFIG_PSTORE)		+= pstore/
 obj-$(CONFIG_EFIVAR_FS)		+= efivarfs/
+<<<<<<< HEAD
 
 
 #ifdef VENDOR_EDIT
 #Xinhua.Song@BSP.Driver, 2015/04/03, Add for exfat filesystem
 obj-$(CONFIG_EXFAT_FS)		+= exfat/
 #endif /*VENDOR_EDIT*/
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

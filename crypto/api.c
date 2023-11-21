@@ -24,7 +24,10 @@
 #include <linux/sched.h>
 #include <linux/slab.h>
 #include <linux/string.h>
+<<<<<<< HEAD
 #include <linux/completion.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include "internal.h"
 
 LIST_HEAD(crypto_alg_list);
@@ -612,6 +615,7 @@ int crypto_has_alg(const char *name, u32 type, u32 mask)
 }
 EXPORT_SYMBOL_GPL(crypto_has_alg);
 
+<<<<<<< HEAD
 void crypto_req_done(struct crypto_async_request *req, int err)
 {
 	struct crypto_wait *wait = req->data;
@@ -624,5 +628,7 @@ void crypto_req_done(struct crypto_async_request *req, int err)
 }
 EXPORT_SYMBOL_GPL(crypto_req_done);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 MODULE_DESCRIPTION("Cryptographic core API");
 MODULE_LICENSE("GPL");

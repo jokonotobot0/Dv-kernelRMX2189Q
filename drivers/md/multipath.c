@@ -169,7 +169,11 @@ static int multipath_congested(struct mddev *mddev, int bits)
 		if (rdev && !test_bit(Faulty, &rdev->flags)) {
 			struct request_queue *q = bdev_get_queue(rdev->bdev);
 
+<<<<<<< HEAD
 			ret |= bdi_congested(q->backing_dev_info, bits);
+=======
+			ret |= bdi_congested(&q->backing_dev_info, bits);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			/* Just like multipath_map, we just check the
 			 * first available device
 			 */

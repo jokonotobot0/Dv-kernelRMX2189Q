@@ -967,6 +967,10 @@ static int read_per_ring_refs(struct xen_blkif_ring *ring, const char *dir)
 	}
 	blkif->nr_ring_pages = nr_grefs;
 
+<<<<<<< HEAD
+=======
+	err = -ENOMEM;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	for (i = 0; i < nr_grefs * XEN_BLKIF_REQS_PER_PAGE; i++) {
 		req = kzalloc(sizeof(*req), GFP_KERNEL);
 		if (!req)
@@ -989,7 +993,11 @@ static int read_per_ring_refs(struct xen_blkif_ring *ring, const char *dir)
 	err = xen_blkif_map(ring, ring_ref, nr_grefs, evtchn);
 	if (err) {
 		xenbus_dev_fatal(dev, err, "mapping ring-ref port %u", evtchn);
+<<<<<<< HEAD
 		return err;
+=======
+		goto fail;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 
 	return 0;
@@ -1009,8 +1017,12 @@ fail:
 		}
 		kfree(req);
 	}
+<<<<<<< HEAD
 	return -ENOMEM;
 
+=======
+	return err;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static int connect_ring(struct backend_info *be)

@@ -76,6 +76,7 @@ int xhci_handshake(void __iomem *ptr, u32 mask, u32 done, int usec)
 	return ret;
 }
 
+<<<<<<< HEAD
 int xhci_handshake_check_state(struct xhci_hcd *xhci,
 		void __iomem *ptr, u32 mask, u32 done, int usec)
 {
@@ -94,6 +95,8 @@ int xhci_handshake_check_state(struct xhci_hcd *xhci,
 	} while (usec > 0);
 	return -ETIMEDOUT;
 }
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * Disable interrupts and begin the xHCI halting process.
  */
@@ -3654,10 +3657,13 @@ void xhci_free_dev(struct usb_hcd *hcd, struct usb_device *udev)
 		pm_runtime_put_noidle(hcd->self.controller);
 #endif
 
+<<<<<<< HEAD
 #if IS_ENABLED(CONFIG_MTK_UAC_POWER_SAVING)
 	xhci->quirks &= ~XHCI_DEV_WITH_SYNC_EP;
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	ret = xhci_check_args(hcd, udev, NULL, 0, true, __func__);
 	/* If the host is halted due to driver unload, we still need to free the
 	 * device.

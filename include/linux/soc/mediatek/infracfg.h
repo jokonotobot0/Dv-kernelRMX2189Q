@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright (C) 2017 MediaTek Inc.
  *
@@ -26,6 +27,11 @@
 #define INFRA_TOPAXI_PROTECTEN1_SET	0x0270
 #define INFRA_TOPAXI_PROTECTEN1_CLR	0x0274
 
+=======
+#ifndef __SOC_MEDIATEK_INFRACFG_H
+#define __SOC_MEDIATEK_INFRACFG_H
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define MT8173_TOP_AXI_PROT_EN_MCI_M2		BIT(0)
 #define MT8173_TOP_AXI_PROT_EN_MM_M0		BIT(1)
 #define MT8173_TOP_AXI_PROT_EN_MM_M1		BIT(2)
@@ -44,6 +50,7 @@
 #define MT8173_TOP_AXI_PROT_EN_MFG_M0		BIT(21)
 #define MT8173_TOP_AXI_PROT_EN_MFG_M1		BIT(22)
 #define MT8173_TOP_AXI_PROT_EN_MFG_SNOOP_OUT	BIT(23)
+<<<<<<< HEAD
 #define MT8173_TOP_AXI_PROT_EN_CA7_ADB		BIT(29)
 #define MT8173_TOP_AXI_PROT_EN_CA15_ADB		BIT(30)
 
@@ -65,12 +72,17 @@
 #define MT8163_TOP_AXI_PROT_EN_MFG_M0		BIT(21)
 #define MT8163_TOP_AXI_PROT_EN_MFG_M1		BIT(22)
 #define MT8163_TOP_AXI_PROT_EN_MFG_SNOOP_OUT	BIT(23)
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 int mtk_infracfg_set_bus_protection(struct regmap *infracfg, u32 mask);
 int mtk_infracfg_clear_bus_protection(struct regmap *infracfg, u32 mask);
 
+<<<<<<< HEAD
 int mtk_infracfg_set_bus_protection_ext(struct regmap *infracfg, u32 mask,
 		u32 reg_set, u32 reg_sta, u32 reg_en);
 int mtk_infracfg_clear_bus_protection_ext(struct regmap *infracfg, u32 mask,
 		u32 reg_clr, u32 reg_sta, u32 reg_en);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif /* __SOC_MEDIATEK_INFRACFG_H */

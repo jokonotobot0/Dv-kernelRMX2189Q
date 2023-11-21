@@ -18,6 +18,7 @@
 
 #include "power.h"
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /* Bin.Li@EXP.BSP.bootloader.bootflow, 2017/05/24, Add for interface reboot reason */
 static char *boot_mode;
@@ -26,6 +27,8 @@ extern void  hal_rtc_clear_spar0_bit8(void);
 static int first_in = 0;
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 DEFINE_MUTEX(pm_mutex);
 
 #ifdef CONFIG_PM_SLEEP
@@ -601,6 +604,7 @@ power_attr(pm_freeze_timeout);
 
 #endif	/* CONFIG_FREEZER*/
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /* Bin.Li@EXP.BSP.bootloader.bootflow, 2017/05/24, Add for interface reboot reason */
 static ssize_t app_boot_show(struct kobject *kobj, struct kobj_attribute *attr,
@@ -632,6 +636,8 @@ static ssize_t app_boot_store(struct kobject *kobj, struct kobj_attribute *attr,
 power_attr(app_boot);
 #endif /* VENDOR_EDIT */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static struct attribute * g[] = {
 	&state_attr.attr,
 #ifdef CONFIG_PM_TRACE
@@ -659,10 +665,13 @@ static struct attribute * g[] = {
 #ifdef CONFIG_FREEZER
 	&pm_freeze_timeout_attr.attr,
 #endif
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /* Bin.Li@EXP.BSP.bootloader.bootflow, 2017/05/24, Add for interface reboot reason */
 	&app_boot_attr.attr,
 #endif /* VENDOR_EDIT */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	NULL,
 };
 

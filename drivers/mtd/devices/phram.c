@@ -266,7 +266,11 @@ static int phram_setup(const char *val)
 	return ret;
 }
 
+<<<<<<< HEAD
 static int phram_param_call(const char *val, const struct kernel_param *kp)
+=======
+static int phram_param_call(const char *val, struct kernel_param *kp)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 #ifdef MODULE
 	return phram_setup(val);

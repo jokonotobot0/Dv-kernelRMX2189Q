@@ -11,11 +11,16 @@
 /*
  * Time out in seconds for disks and Magneto-opticals (which are slower).
  */
+<<<<<<< HEAD
 /* MTK PATCH: Max SCSI cmd timeout = 1.2s * 32QueueDepth ~= 39s */
 #define SD_TIMEOUT		(39 * HZ)
 #define SD_MOD_TIMEOUT		(75 * HZ)
 #define SD_DISCARD_TIMEOUT	(100 * HZ)
 
+=======
+#define SD_TIMEOUT		(30 * HZ)
+#define SD_MOD_TIMEOUT		(75 * HZ)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * Flush timeout is a multiplier over the standard device timeout which is
  * user modifiable via sysfs but initially set to SD_TIMEOUT
@@ -154,6 +159,14 @@ static inline sector_t logical_to_sectors(struct scsi_device *sdev, sector_t blo
 	return blocks << (ilog2(sdev->sector_size) - 9);
 }
 
+<<<<<<< HEAD
+=======
+static inline unsigned int logical_to_bytes(struct scsi_device *sdev, sector_t blocks)
+{
+	return blocks * sdev->sector_size;
+}
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * Look up the DIX operation based on whether the command is read or
  * write and whether dix and dif are enabled.

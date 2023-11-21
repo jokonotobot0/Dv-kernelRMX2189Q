@@ -44,6 +44,7 @@
 #include <linux/hardirq.h>
 #include <linux/jiffies.h>
 #include <linux/workqueue.h>
+<<<<<<< HEAD
 #include <linux/io.h>
 
 #include "internal.h"
@@ -55,6 +56,11 @@
 #define memcpy memcpy_toio
 #endif
 
+=======
+
+#include "internal.h"
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * We defer making "oops" entries appear in pstore - see
  * whether the system is actually still running well enough
@@ -575,7 +581,10 @@ static void pstore_unregister_kmsg(void)
 }
 
 #ifdef CONFIG_PSTORE_CONSOLE
+<<<<<<< HEAD
 /*
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static void pstore_console_write(struct console *con, const char *s, unsigned c)
 {
 	const char *e = s + c;
@@ -600,6 +609,7 @@ static void pstore_console_write(struct console *con, const char *s, unsigned c)
 		c = e - s;
 	}
 }
+<<<<<<< HEAD
 */
 
 static void pstore_simp_console_write(struct console *con, const char *s,
@@ -625,6 +635,12 @@ void pstore_bconsole_write(struct console *con, const char *s, unsigned int c)
 static struct console pstore_console = {
 	.name	= "pstore",
 	.write	= pstore_simp_console_write,
+=======
+
+static struct console pstore_console = {
+	.name	= "pstore",
+	.write	= pstore_console_write,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	.flags	= CON_PRINTBUFFER | CON_ENABLED | CON_ANYTIME,
 	.index	= -1,
 };

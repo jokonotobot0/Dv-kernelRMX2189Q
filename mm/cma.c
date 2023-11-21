@@ -53,6 +53,7 @@ unsigned long cma_get_size(const struct cma *cma)
 	return cma->count << PAGE_SHIFT;
 }
 
+<<<<<<< HEAD
 /* Get all cma range */
 void cma_get_range(phys_addr_t *base, phys_addr_t *size)
 {
@@ -77,6 +78,8 @@ void cma_get_range(phys_addr_t *base, phys_addr_t *size)
 	}
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static unsigned long cma_bitmap_aligned_mask(const struct cma *cma,
 					     unsigned int align_order)
 {
@@ -165,6 +168,7 @@ err:
 	return -EINVAL;
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_ZONE_MOVABLE_CMA
 int cma_alloc_range_ok(struct cma *cma, int count, int align)
 {
@@ -186,6 +190,8 @@ int cma_alloc_range_ok(struct cma *cma, int count, int align)
 }
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int __init cma_init_reserved_areas(void)
 {
 	int i;

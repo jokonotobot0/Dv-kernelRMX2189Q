@@ -169,6 +169,7 @@ static int psci_cpu_off(u32 state)
 {
 	int err;
 	u32 fn;
+<<<<<<< HEAD
 	fn = psci_function_id[PSCI_FN_CPU_OFF];
 #ifdef CONFIG_MTK_FIQ_CACHE
 	do {
@@ -177,6 +178,11 @@ static int psci_cpu_off(u32 state)
 #else
 	err = invoke_psci_fn(fn, state, 0, 0);
 #endif
+=======
+
+	fn = psci_function_id[PSCI_FN_CPU_OFF];
+	err = invoke_psci_fn(fn, state, 0, 0);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return psci_to_linux_errno(err);
 }
 
@@ -256,19 +262,29 @@ static int get_set_conduit_method(struct device_node *np)
 	return 0;
 }
 
+<<<<<<< HEAD
 #if (!defined(CONFIG_MEDIATEK_WATCHDOG) && !defined(CONFIG_MACH_MT8167))
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static void psci_sys_reset(enum reboot_mode reboot_mode, const char *cmd)
 {
 	invoke_psci_fn(PSCI_0_2_FN_SYSTEM_RESET, 0, 0, 0);
 }
+<<<<<<< HEAD
 #endif
 
 #if (!defined(CONFIG_MACH_MT6757) && !defined(CONFIG_MACH_MT8167))
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static void psci_sys_poweroff(void)
 {
 	invoke_psci_fn(PSCI_0_2_FN_SYSTEM_OFF, 0, 0, 0);
 }
+<<<<<<< HEAD
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 static int __init psci_features(u32 psci_func_id)
 {
@@ -568,6 +584,7 @@ static void __init psci_0_2_set_functions(void)
 
 	psci_ops.migrate_info_type = psci_migrate_info_type;
 
+<<<<<<< HEAD
 #if (!defined(CONFIG_MEDIATEK_WATCHDOG) && !defined(CONFIG_MACH_MT8167))
 	arm_pm_restart = psci_sys_reset;
 #endif
@@ -575,6 +592,11 @@ static void __init psci_0_2_set_functions(void)
 #if (!defined(CONFIG_MACH_MT6757) && !defined(CONFIG_MACH_MT8167))
 	pm_power_off = psci_sys_poweroff;
 #endif
+=======
+	arm_pm_restart = psci_sys_reset;
+
+	pm_power_off = psci_sys_poweroff;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 /*

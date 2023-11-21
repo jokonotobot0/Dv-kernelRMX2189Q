@@ -18,7 +18,10 @@
 #include <linux/module.h>
 #include <linux/of.h>
 #include <linux/slab.h>
+<<<<<<< HEAD
 #include <linux/topology.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #include <asm/cpuidle.h>
 
@@ -45,7 +48,11 @@ static int arm_enter_idle_state(struct cpuidle_device *dev,
 	return CPU_PM_CPU_IDLE_ENTER(arm_cpuidle_suspend, idx);
 }
 
+<<<<<<< HEAD
 static struct cpuidle_driver arm_idle_driver __initdata = {
+=======
+static struct cpuidle_driver arm_idle_driver = {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	.name = "arm_idle",
 	.owner = THIS_MODULE,
 	/*
@@ -81,6 +88,7 @@ static const struct of_device_id arm_idle_state_match[] __initconst = {
 static int __init arm_idle_init(void)
 {
 	int cpu, ret;
+<<<<<<< HEAD
 	struct cpuidle_driver *drv;
 	struct cpuidle_device *dev;
 
@@ -117,6 +125,32 @@ static int __init arm_idle_init(void)
 		 * Call arch CPU operations in order to initialize
 		 * idle states suspend back-end specific data
 		 */
+=======
+	struct cpuidle_driver *drv = &arm_idle_driver;
+	struct cpuidle_device *dev;
+
+	/*
+	 * Initialize idle states data, starting at index 1.
+	 * This driver is DT only, if no DT idle states are detected (ret == 0)
+	 * let the driver initialization fail accordingly since there is no
+	 * reason to initialize the idle driver if only wfi is supported.
+	 */
+	ret = dt_init_idle_driver(drv, arm_idle_state_match, 1);
+	if (ret <= 0)
+		return ret ? : -ENODEV;
+
+	ret = cpuidle_register_driver(drv);
+	if (ret) {
+		pr_err("Failed to register cpuidle driver\n");
+		return ret;
+	}
+
+	/*
+	 * Call arch CPU operations in order to initialize
+	 * idle states suspend back-end specific data
+	 */
+	for_each_possible_cpu(cpu) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		ret = arm_cpuidle_init(cpu);
 
 		/*
@@ -128,14 +162,22 @@ static int __init arm_idle_init(void)
 
 		if (ret) {
 			pr_err("CPU %d failed to init idle CPU ops\n", cpu);
+<<<<<<< HEAD
 			goto out_unregister_drv;
+=======
+			goto out_fail;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		}
 
 		dev = kzalloc(sizeof(*dev), GFP_KERNEL);
 		if (!dev) {
 			pr_err("Failed to allocate cpuidle device\n");
 			ret = -ENOMEM;
+<<<<<<< HEAD
 			goto out_unregister_drv;
+=======
+			goto out_fail;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		}
 		dev->cpu = cpu;
 
@@ -143,11 +185,17 @@ static int __init arm_idle_init(void)
 		if (ret) {
 			pr_err("Failed to register cpuidle device for CPU %d\n",
 			       cpu);
+<<<<<<< HEAD
 			goto out_kfree_dev;
+=======
+			kfree(dev);
+			goto out_fail;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		}
 	}
 
 	return 0;
+<<<<<<< HEAD
 
 out_kfree_dev:
 	kfree(dev);
@@ -165,6 +213,17 @@ out_fail:
 		kfree(drv);
 	}
 
+=======
+out_fail:
+	while (--cpu >= 0) {
+		dev = per_cpu(cpuidle_devices, cpu);
+		cpuidle_unregister_device(dev);
+		kfree(dev);
+	}
+
+	cpuidle_unregister_driver(drv);
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return ret;
 }
 device_initcall(arm_idle_init);

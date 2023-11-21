@@ -137,7 +137,10 @@ int drm_universal_plane_init(struct drm_device *dev, struct drm_plane *plane,
 
 	if (drm_core_check_feature(dev, DRIVER_ATOMIC)) {
 		drm_object_attach_property(&plane->base, config->prop_fb_id, 0);
+<<<<<<< HEAD
 		drm_object_attach_property(&plane->base, config->prop_in_fence_fd, -1);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		drm_object_attach_property(&plane->base, config->prop_crtc_id, 0);
 		drm_object_attach_property(&plane->base, config->prop_crtc_x, 0);
 		drm_object_attach_property(&plane->base, config->prop_crtc_y, 0);

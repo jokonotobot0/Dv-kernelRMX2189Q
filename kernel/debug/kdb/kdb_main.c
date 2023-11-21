@@ -18,7 +18,10 @@
 #include <linux/kmsg_dump.h>
 #include <linux/reboot.h>
 #include <linux/sched.h>
+<<<<<<< HEAD
 #include <linux/sched/loadavg.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <linux/sysrq.h>
 #include <linux/smp.h>
 #include <linux/utsname.h>
@@ -2585,11 +2588,23 @@ static int kdb_summary(int argc, const char **argv)
 	}
 	kdb_printf("%02ld:%02ld\n", val.uptime/(60*60), (val.uptime/60)%60);
 
+<<<<<<< HEAD
+=======
+	/* lifted from fs/proc/proc_misc.c::loadavg_read_proc() */
+
+#define LOAD_INT(x) ((x) >> FSHIFT)
+#define LOAD_FRAC(x) LOAD_INT(((x) & (FIXED_1-1)) * 100)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	kdb_printf("load avg   %ld.%02ld %ld.%02ld %ld.%02ld\n",
 		LOAD_INT(val.loads[0]), LOAD_FRAC(val.loads[0]),
 		LOAD_INT(val.loads[1]), LOAD_FRAC(val.loads[1]),
 		LOAD_INT(val.loads[2]), LOAD_FRAC(val.loads[2]));
+<<<<<<< HEAD
 
+=======
+#undef LOAD_INT
+#undef LOAD_FRAC
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* Display in kilobytes */
 #define K(x) ((x) << (PAGE_SHIFT - 10))
 	kdb_printf("\nMemTotal:       %8lu kB\nMemFree:        %8lu kB\n"

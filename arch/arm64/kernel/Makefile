@@ -11,9 +11,12 @@ CFLAGS_REMOVE_insn.o = -pg
 CFLAGS_REMOVE_return_address.o = -pg
 
 CFLAGS_setup.o = -DUTS_MACHINE='"$(UTS_MACHINE)"'
+<<<<<<< HEAD
 ccflags-y += -Idrivers/misc/mediatek/include/
 ccflags-y += -Idrivers/misc/mediatek/mtprof/
 ccflags-y += -Ikernel/sched/
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 # Object file lists.
 arm64-obj-y		:= debug-monitors.o entry.o irq.o fpsimd.o		\
@@ -59,10 +62,16 @@ ifeq ($(CONFIG_KVM),y)
 arm64-obj-$(CONFIG_HARDEN_BRANCH_PREDICTOR)	+= bpi.o
 endif
 
+<<<<<<< HEAD
 KASAN_SANITIZE_stacktrace.o := n
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 obj-y					+= $(arm64-obj-y) vdso/ probes/
 obj-m					+= $(arm64-obj-m)
 head-y					:= head.o
 extra-y					+= $(head-y) vmlinux.lds
+<<<<<<< HEAD
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

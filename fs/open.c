@@ -34,8 +34,13 @@
 
 #include "internal.h"
 
+<<<<<<< HEAD
 int do_truncate2(struct vfsmount *mnt, struct dentry *dentry, loff_t length,
 		unsigned int time_attrs, struct file *filp)
+=======
+int do_truncate(struct dentry *dentry, loff_t length, unsigned int time_attrs,
+	struct file *filp)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	int ret;
 	struct iattr newattrs;
@@ -60,6 +65,7 @@ int do_truncate2(struct vfsmount *mnt, struct dentry *dentry, loff_t length,
 
 	inode_lock(dentry->d_inode);
 	/* Note any delegations or leases have already been broken: */
+<<<<<<< HEAD
 	ret = notify_change2(mnt, dentry, &newattrs, NULL);
 	inode_unlock(dentry->d_inode);
 	return ret;
@@ -69,16 +75,28 @@ int do_truncate(struct dentry *dentry, loff_t length, unsigned int time_attrs,
 {
 	return do_truncate2(NULL, dentry, length, time_attrs, filp);
 }
+=======
+	ret = notify_change(dentry, &newattrs, NULL);
+	inode_unlock(dentry->d_inode);
+	return ret;
+}
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 long vfs_truncate(const struct path *path, loff_t length)
 {
 	struct inode *inode;
+<<<<<<< HEAD
 	struct vfsmount *mnt;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct dentry *upperdentry;
 	long error;
 
 	inode = path->dentry->d_inode;
+<<<<<<< HEAD
 	mnt = path->mnt;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/* For directories it's -EISDIR, for other non-regulars - -EINVAL */
 	if (S_ISDIR(inode->i_mode))
@@ -90,7 +108,11 @@ long vfs_truncate(const struct path *path, loff_t length)
 	if (error)
 		goto out;
 
+<<<<<<< HEAD
 	error = inode_permission2(mnt, inode, MAY_WRITE);
+=======
+	error = inode_permission(inode, MAY_WRITE);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (error)
 		goto mnt_drop_write_and_out;
 
@@ -124,7 +146,11 @@ long vfs_truncate(const struct path *path, loff_t length)
 	if (!error)
 		error = security_path_truncate(path);
 	if (!error)
+<<<<<<< HEAD
 		error = do_truncate2(mnt, path->dentry, length, 0, NULL);
+=======
+		error = do_truncate(path->dentry, length, 0, NULL);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 put_write_and_out:
 	put_write_access(upperdentry->d_inode);
@@ -173,7 +199,10 @@ static long do_sys_ftruncate(unsigned int fd, loff_t length, int small)
 {
 	struct inode *inode;
 	struct dentry *dentry;
+<<<<<<< HEAD
 	struct vfsmount *mnt;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct fd f;
 	int error;
 
@@ -190,7 +219,10 @@ static long do_sys_ftruncate(unsigned int fd, loff_t length, int small)
 		small = 0;
 
 	dentry = f.file->f_path.dentry;
+<<<<<<< HEAD
 	mnt = f.file->f_path.mnt;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	inode = dentry->d_inode;
 	error = -EINVAL;
 	if (!S_ISREG(inode->i_mode) || !(f.file->f_mode & FMODE_WRITE))
@@ -210,7 +242,11 @@ static long do_sys_ftruncate(unsigned int fd, loff_t length, int small)
 	if (!error)
 		error = security_path_truncate(&f.file->f_path);
 	if (!error)
+<<<<<<< HEAD
 		error = do_truncate2(mnt, dentry, length, ATTR_MTIME|ATTR_CTIME, f.file);
+=======
+		error = do_truncate(dentry, length, ATTR_MTIME|ATTR_CTIME, f.file);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	sb_end_write(inode->i_sb);
 out_putf:
 	fdput(f);
@@ -355,8 +391,11 @@ SYSCALL_DEFINE4(fallocate, int, fd, int, mode, loff_t, offset, loff_t, len)
 	return error;
 }
 
+<<<<<<< HEAD
 extern int ksu_handle_faccessat(int *dfd, const char __user **filename_user, int *mode,
 			 int *flags);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * access() needs to use the real uid/gid, not the effective uid/gid.
  * We do this by temporarily clearing all FS-related capabilities and
@@ -364,14 +403,23 @@ extern int ksu_handle_faccessat(int *dfd, const char __user **filename_user, int
  */
 SYSCALL_DEFINE3(faccessat, int, dfd, const char __user *, filename, int, mode)
 {
+<<<<<<< HEAD
 	ksu_handle_faccessat(&dfd, &filename, &mode, NULL);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	const struct cred *old_cred;
 	struct cred *override_cred;
 	struct path path;
 	struct inode *inode;
+<<<<<<< HEAD
 	struct vfsmount *mnt;
 	int res;
 	unsigned int lookup_flags = LOOKUP_FOLLOW;
+=======
+	int res;
+	unsigned int lookup_flags = LOOKUP_FOLLOW;
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (mode & ~S_IRWXO)	/* where's F_OK, X_OK, W_OK, R_OK? */
 		return -EINVAL;
 
@@ -418,7 +466,10 @@ retry:
 		goto out;
 
 	inode = d_backing_inode(path.dentry);
+<<<<<<< HEAD
 	mnt = path.mnt;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if ((mode & MAY_EXEC) && S_ISREG(inode->i_mode)) {
 		/*
@@ -430,7 +481,11 @@ retry:
 			goto out_path_release;
 	}
 
+<<<<<<< HEAD
 	res = inode_permission2(mnt, inode, mode | MAY_ACCESS);
+=======
+	res = inode_permission(inode, mode | MAY_ACCESS);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* SuS v2 requires we report a read only fs too */
 	if (res || !(mode & S_IWOTH) || special_file(inode->i_mode))
 		goto out_path_release;
@@ -474,7 +529,11 @@ retry:
 	if (error)
 		goto out;
 
+<<<<<<< HEAD
 	error = inode_permission2(path.mnt, path.dentry->d_inode, MAY_EXEC | MAY_CHDIR);
+=======
+	error = inode_permission(path.dentry->d_inode, MAY_EXEC | MAY_CHDIR);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (error)
 		goto dput_and_out;
 
@@ -494,7 +553,10 @@ SYSCALL_DEFINE1(fchdir, unsigned int, fd)
 {
 	struct fd f = fdget_raw(fd);
 	struct inode *inode;
+<<<<<<< HEAD
 	struct vfsmount *mnt;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	int error = -EBADF;
 
 	error = -EBADF;
@@ -502,13 +564,20 @@ SYSCALL_DEFINE1(fchdir, unsigned int, fd)
 		goto out;
 
 	inode = file_inode(f.file);
+<<<<<<< HEAD
 	mnt = f.file->f_path.mnt;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	error = -ENOTDIR;
 	if (!S_ISDIR(inode->i_mode))
 		goto out_putf;
 
+<<<<<<< HEAD
 	error = inode_permission2(mnt, inode, MAY_EXEC | MAY_CHDIR);
+=======
+	error = inode_permission(inode, MAY_EXEC | MAY_CHDIR);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (!error)
 		set_fs_pwd(current->fs, &f.file->f_path);
 out_putf:
@@ -527,7 +596,11 @@ retry:
 	if (error)
 		goto out;
 
+<<<<<<< HEAD
 	error = inode_permission2(path.mnt, path.dentry->d_inode, MAY_EXEC | MAY_CHDIR);
+=======
+	error = inode_permission(path.dentry->d_inode, MAY_EXEC | MAY_CHDIR);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (error)
 		goto dput_and_out;
 
@@ -567,7 +640,11 @@ retry_deleg:
 		goto out_unlock;
 	newattrs.ia_mode = (mode & S_IALLUGO) | (inode->i_mode & ~S_IALLUGO);
 	newattrs.ia_valid = ATTR_MODE | ATTR_CTIME;
+<<<<<<< HEAD
 	error = notify_change2(path->mnt, path->dentry, &newattrs, &delegated_inode);
+=======
+	error = notify_change(path->dentry, &newattrs, &delegated_inode);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 out_unlock:
 	inode_unlock(inode);
 	if (delegated_inode) {
@@ -647,7 +724,11 @@ retry_deleg:
 	inode_lock(inode);
 	error = security_path_chown(path, uid, gid);
 	if (!error)
+<<<<<<< HEAD
 		error = notify_change2(path->mnt, path->dentry, &newattrs, &delegated_inode);
+=======
+		error = notify_change(path->dentry, &newattrs, &delegated_inode);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	inode_unlock(inode);
 	if (delegated_inode) {
 		error = break_deleg_wait(&delegated_inode);

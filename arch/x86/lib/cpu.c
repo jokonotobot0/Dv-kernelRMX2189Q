@@ -1,5 +1,9 @@
 #include <linux/types.h>
 #include <linux/export.h>
+<<<<<<< HEAD
+=======
+#include <asm/cpu.h>
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 unsigned int x86_family(unsigned int sig)
 {

@@ -717,9 +717,15 @@ static int raid1_congested(struct mddev *mddev, int bits)
 			 * non-congested targets, it can be removed
 			 */
 			if ((bits & (1 << WB_async_congested)) || 1)
+<<<<<<< HEAD
 				ret |= bdi_congested(q->backing_dev_info, bits);
 			else
 				ret &= bdi_congested(q->backing_dev_info, bits);
+=======
+				ret |= bdi_congested(&q->backing_dev_info, bits);
+			else
+				ret &= bdi_congested(&q->backing_dev_info, bits);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		}
 	}
 	rcu_read_unlock();

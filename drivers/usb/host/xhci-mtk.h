@@ -118,13 +118,19 @@ struct xhci_hcd_mtk {
 	struct usb_hcd *hcd;
 	struct mu3h_sch_bw_info *sch_array;
 	struct mu3c_ippc_regs __iomem *ippc_regs;
+<<<<<<< HEAD
 	bool has_ippc;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	int num_u2_ports;
 	int num_u3_ports;
 	struct regulator *vusb33;
 	struct regulator *vbus;
 	struct clk *sys_clk;	/* sys and mac clock */
+<<<<<<< HEAD
 	struct clk *ref_clk;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct clk *wk_deb_p0;	/* port0's wakeup debounce clock */
 	struct clk *wk_deb_p1;
 	struct regmap *pericfg;
@@ -132,8 +138,11 @@ struct xhci_hcd_mtk {
 	int num_phys;
 	int wakeup_src;
 	bool lpm_support;
+<<<<<<< HEAD
 	bool uses_new_wakeup; /* tmp solution for mt2712 */
 	struct dentry *debugfs_root;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 static inline struct xhci_hcd_mtk *hcd_to_mtk(struct usb_hcd *hcd)
@@ -141,9 +150,12 @@ static inline struct xhci_hcd_mtk *hcd_to_mtk(struct usb_hcd *hcd)
 	return dev_get_drvdata(hcd->self.controller);
 }
 
+<<<<<<< HEAD
 int mtk_xhci_wakelock_lock(struct xhci_hcd_mtk *mtk);
 int mtk_xhci_wakelock_unlock(struct xhci_hcd_mtk *mtk);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #if IS_ENABLED(CONFIG_USB_XHCI_MTK)
 int xhci_mtk_sch_init(struct xhci_hcd_mtk *mtk);
 void xhci_mtk_sch_exit(struct xhci_hcd_mtk *mtk);
@@ -166,6 +178,7 @@ static inline void xhci_mtk_drop_ep_quirk(struct usb_hcd *hcd,
 
 #endif
 
+<<<<<<< HEAD
 #if IS_ENABLED(CONFIG_MTK_UAC_POWER_SAVING)
 enum xhci_mtk_sram_id {
 	/* memmory interfrace */
@@ -213,4 +226,6 @@ void xhci_mtk_allow_sleep(unsigned int sleep_ms, int speed);
 void xhci_mtk_set_sleep(bool enable);
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif		/* _XHCI_MTK_H_ */

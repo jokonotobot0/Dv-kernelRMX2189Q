@@ -733,8 +733,11 @@ static const struct mtk_base_memif_data memif_data[MT8173_AFE_MEMIF_NUM] = {
 		.enable_shift = 1,
 		.msb_reg = AFE_MEMIF_MSB,
 		.msb_shift = 0,
+<<<<<<< HEAD
 		.msb2_reg = -1,
 		.msb2_shift = -1,
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		.agent_disable_reg = -1,
 		.agent_disable_shift = -1,
 	}, {
@@ -753,8 +756,11 @@ static const struct mtk_base_memif_data memif_data[MT8173_AFE_MEMIF_NUM] = {
 		.enable_shift = 2,
 		.msb_reg = AFE_MEMIF_MSB,
 		.msb_shift = 1,
+<<<<<<< HEAD
 		.msb2_reg = -1,
 		.msb2_shift = -1,
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		.agent_disable_reg = -1,
 		.agent_disable_shift = -1,
 	}, {
@@ -773,8 +779,11 @@ static const struct mtk_base_memif_data memif_data[MT8173_AFE_MEMIF_NUM] = {
 		.enable_shift = 3,
 		.msb_reg = AFE_MEMIF_MSB,
 		.msb_shift = 6,
+<<<<<<< HEAD
 		.msb2_reg = -1,
 		.msb2_shift = -1,
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		.agent_disable_reg = -1,
 		.agent_disable_shift = -1,
 	}, {
@@ -793,8 +802,11 @@ static const struct mtk_base_memif_data memif_data[MT8173_AFE_MEMIF_NUM] = {
 		.enable_shift = 4,
 		.msb_reg = AFE_MEMIF_MSB,
 		.msb_shift = 5,
+<<<<<<< HEAD
 		.msb2_reg = -1,
 		.msb2_shift = -1,
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		.agent_disable_reg = -1,
 		.agent_disable_shift = -1,
 	}, {
@@ -813,8 +825,11 @@ static const struct mtk_base_memif_data memif_data[MT8173_AFE_MEMIF_NUM] = {
 		.enable_shift = 6,
 		.msb_reg = AFE_MEMIF_MSB,
 		.msb_shift = 3,
+<<<<<<< HEAD
 		.msb2_reg = -1,
 		.msb2_shift = -1,
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		.agent_disable_reg = -1,
 		.agent_disable_shift = -1,
 	}, {
@@ -833,8 +848,11 @@ static const struct mtk_base_memif_data memif_data[MT8173_AFE_MEMIF_NUM] = {
 		.enable_shift = 7,
 		.msb_reg = AFE_MEMIF_MSB,
 		.msb_shift = 4,
+<<<<<<< HEAD
 		.msb2_reg = -1,
 		.msb2_shift = -1,
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		.agent_disable_reg = -1,
 		.agent_disable_shift = -1,
 	}, {
@@ -853,8 +871,11 @@ static const struct mtk_base_memif_data memif_data[MT8173_AFE_MEMIF_NUM] = {
 		.enable_shift = -1,
 		.msb_reg = AFE_MEMIF_MSB,
 		.msb_shift = 8,
+<<<<<<< HEAD
 		.msb2_reg = -1,
 		.msb2_shift = -1,
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		.agent_disable_reg = -1,
 		.agent_disable_shift = -1,
 	},

@@ -1072,6 +1072,7 @@ got:
 	if (err)
 		goto fail_drop;
 
+<<<<<<< HEAD
 	/*
 	 * Since the encryption xattr will always be unique, create it first so
 	 * that it's less likely to end up in an external xattr block and
@@ -1083,6 +1084,8 @@ got:
 			goto fail_free_drop;
 	}
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	err = ext4_init_acl(handle, inode, dir);
 	if (err)
 		goto fail_free_drop;
@@ -1104,6 +1107,16 @@ got:
 		ei->i_datasync_tid = handle->h_transaction->t_tid;
 	}
 
+<<<<<<< HEAD
+=======
+	if (encrypt) {
+		/* give pointer to avoid set_context with journal ops. */
+		err = fscrypt_inherit_context(dir, inode, &encrypt, true);
+		if (err)
+			goto fail_free_drop;
+	}
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	err = ext4_mark_inode_dirty(handle, inode);
 	if (err) {
 		ext4_std_error(sb, err);

@@ -26,6 +26,7 @@ ifeq ($(CONFIG_ARM64_ERRATUM_843419),y)
   ifeq ($(call ld-option, --fix-cortex-a53-843419),)
 $(warning ld does not support --fix-cortex-a53-843419; kernel may be susceptible to erratum)
   else
+<<<<<<< HEAD
     ifeq ($(call gold-ifversion, -lt, 114000000, y), y)
 $(warning This version of GNU gold may generate incorrect code with --fix-cortex-a53-843419;\
 	see https://sourceware.org/bugzilla/show_bug.cgi?id=21491)
@@ -37,6 +38,10 @@ else
 # Pass --no-fix-cortex-a53-843419 to ensure the erratum fix is disabled
 LDFLAGS	+= --no-fix-cortex-a53-843419
   endif
+=======
+LDFLAGS_vmlinux	+= --fix-cortex-a53-843419
+  endif
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 endif
 
 KBUILD_DEFCONFIG := defconfig
@@ -50,6 +55,7 @@ $(warning LSE atomics not supported by binutils)
   endif
 endif
 
+<<<<<<< HEAD
 ifeq ($(cc-name),clang)
 # This is a workaround for https://bugs.llvm.org/show_bug.cgi?id=30792.
 # TODO: revert when this is fixed in LLVM.
@@ -61,6 +67,11 @@ KBUILD_CFLAGS	+= $(lseinstr)
 KBUILD_CFLAGS	+= -fno-asynchronous-unwind-tables
 KBUILD_CFLAGS	+= $(call cc-option, -mpc-relative-literal-loads)
 KBUILD_CFLAGS	+= -fno-pic
+=======
+KBUILD_CFLAGS	+= -mgeneral-regs-only $(lseinstr)
+KBUILD_CFLAGS	+= -fno-asynchronous-unwind-tables
+KBUILD_CFLAGS	+= $(call cc-option, -mpc-relative-literal-loads)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 KBUILD_AFLAGS	+= $(lseinstr)
 
 ifeq ($(CONFIG_CPU_BIG_ENDIAN), y)
@@ -79,10 +90,13 @@ CHECKFLAGS	+= -D__aarch64__
 
 ifeq ($(CONFIG_ARM64_MODULE_CMODEL_LARGE), y)
 KBUILD_CFLAGS_MODULE	+= -mcmodel=large
+<<<<<<< HEAD
 ifeq ($(CONFIG_LTO_CLANG), y)
 # Code model is not stored in LLVM IR, so we need to pass it also to LLVMgold
 KBUILD_LDFLAGS_MODULE	+= -plugin-opt=-code-model=large
 endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 endif
 
 ifeq ($(CONFIG_ARM64_MODULE_PLTS),y)
@@ -101,10 +115,13 @@ else
 TEXT_OFFSET := 0x00080000
 endif
 
+<<<<<<< HEAD
 ifeq ($(cc-name),clang)
 KBUILD_CFLAGS += $(call cc-disable-warning, asm-operand-widths)
 endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 # KASAN_SHADOW_OFFSET = VA_START + (1 << (VA_BITS - 3)) - (1 << 61)
 # in 32-bit arithmetic
 KASAN_SHADOW_OFFSET := $(shell printf "0x%08x00000000\n" $$(( \
@@ -123,21 +140,28 @@ libs-y		:= arch/arm64/lib/ $(libs-y)
 core-$(CONFIG_EFI_STUB) += $(objtree)/drivers/firmware/efi/libstub/lib.a
 
 # Default target when executing plain make
+<<<<<<< HEAD
 ifeq ($(CONFIG_BUILD_ARM64_APPENDED_DTB_IMAGE),y)
 KBUILD_IMAGE	:= $(subst $\",,$(CONFIG_BUILD_ARM64_APPENDED_KERNEL_IMAGE_NAME))
 else
 KBUILD_IMAGE	:= Image.gz
 endif
 
+=======
+KBUILD_IMAGE	:= Image.gz
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 KBUILD_DTBS	:= dtbs
 
 all:	$(KBUILD_IMAGE) $(KBUILD_DTBS)
 
+<<<<<<< HEAD
 MTK_PLATFORM := $(CONFIG_MTK_PLATFORM:"%"=%)
 MTK_PROJECT := $(CONFIG_ARCH_MTK_PROJECT:"%"=%)
 export MTK_PLATFORM MTK_PROJECT MTK_TARGET_PROJECT
 -include $(srctree)/scripts/drvgen/drvgen.mk
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 boot := arch/arm64/boot
 
 Image: vmlinux
@@ -149,20 +173,31 @@ Image.%: Image
 zinstall install:
 	$(Q)$(MAKE) $(build)=$(boot) $@
 
+<<<<<<< HEAD
 %.dtb: scripts $(DRVGEN_FILE_LIST)
+=======
+%.dtb: scripts
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	$(Q)$(MAKE) $(build)=$(boot)/dts $(boot)/dts/$@
 
 PHONY += dtbs dtbs_install
 
+<<<<<<< HEAD
 dtbs: prepare scripts dtbo_check
+=======
+dtbs: prepare scripts
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	$(Q)$(MAKE) $(build)=$(boot)/dts
 
 dtbs_install:
 	$(Q)$(MAKE) $(dtbinst)=$(boot)/dts
 
+<<<<<<< HEAD
 Image-dtb Image.gz-dtb: vmlinux scripts dtbs
 	$(Q)$(MAKE) $(build)=$(boot) $(boot)/$@
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 PHONY += vdso_install
 vdso_install:
 	$(Q)$(MAKE) $(build)=arch/arm64/kernel/vdso $@

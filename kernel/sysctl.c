@@ -63,6 +63,7 @@
 #include <linux/capability.h>
 #include <linux/binfmts.h>
 #include <linux/sched/sysctl.h>
+<<<<<<< HEAD
 
 #ifdef VENDOR_EDIT
 //Ming.Liu@PSW.CN.WiFi.Network.quality.1065762, 2016/10/09
@@ -70,6 +71,8 @@
 #include <net/tcp.h>
 #endif /* VENDOR_EDIT */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <linux/kexec.h>
 #include <linux/bpf.h>
 #include <linux/mount.h>
@@ -77,11 +80,14 @@
 #include <asm/uaccess.h>
 #include <asm/processor.h>
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /* Hailong.Liu@TECH.Kernel.CPU, 2019/10/24, stat cpu usage on each tick. */
 #include <linux/kernel_stat.h>
 #endif /* VENDOR_EDIT */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #ifdef CONFIG_X86
 #include <asm/nmi.h>
 #include <asm/stacktrace.h>
@@ -117,7 +123,10 @@ extern char core_pattern[];
 extern unsigned int core_pipe_limit;
 #endif
 extern int pid_max;
+<<<<<<< HEAD
 extern int extra_free_kbytes;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 extern int pid_max_min, pid_max_max;
 extern int percpu_pagelist_fraction;
 extern int latencytop_enabled;
@@ -141,6 +150,7 @@ static unsigned long zero_ul;
 static unsigned long one_ul = 1;
 static unsigned long long_max = LONG_MAX;
 static int one_hundred = 100;
+<<<<<<< HEAD
 
 #ifdef VENDOR_EDIT //yixue.ge@PSW.BSP.Kernel.Driver 20170720 add for add direct_vm_swappiness
 extern int direct_vm_swappiness;
@@ -166,15 +176,22 @@ unsigned int ext4_fsync_enable_status = 0;
 unsigned long sysctl_blkdev_issue_flush_count = 0;
 #endif /*VENDOR_EDIT*/
 
+=======
+static int one_thousand = 1000;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #ifdef CONFIG_PRINTK
 static int ten_thousand = 10000;
 #endif
 #ifdef CONFIG_PERF_EVENTS
 static int six_hundred_forty_kb = 640 * 1024;
 #endif
+<<<<<<< HEAD
 static int max_kswapd_threads = MAX_KSWAPD_THREADS;
 
 static int two_hundred_fifty_five = 255;
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* this is needed for the proc_doulongvec_minmax of vm_dirty_bytes */
 static unsigned long dirty_bytes_min = 2 * PAGE_SIZE;
 
@@ -188,10 +205,13 @@ static const int cap_last_cap = CAP_LAST_CAP;
 /*this is needed for proc_doulongvec_minmax of sysctl_hung_task_timeout_secs */
 #ifdef CONFIG_DETECT_HUNG_TASK
 static unsigned long hung_task_timeout_max = (LONG_MAX/HZ);
+<<<<<<< HEAD
 #if defined(VENDOR_EDIT) && defined(CONFIG_DEATH_HEALER)
 /* Wen.Luo@BSP.Kernel.Stability, 2019/01/12, DeathHealer , Foreground background optimization,change max io count */
 static int five = 5;
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif
 
 #ifdef CONFIG_INOTIFY_USER
@@ -320,8 +340,11 @@ static int max_sched_tunable_scaling = SCHED_TUNABLESCALING_END-1;
 #endif /* CONFIG_SMP */
 #endif /* CONFIG_SCHED_DEBUG */
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #ifdef CONFIG_COMPACTION
 static int min_extfrag_threshold;
 static int max_extfrag_threshold = 1000;
@@ -335,6 +358,7 @@ static struct ctl_table kern_table[] = {
 		.mode		= 0644,
 		.proc_handler	= proc_dointvec,
 	},
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /*jason.tang@TECH.BSP.Kernel.Storage, 2019-05-20, add control ext4 fsync*/
 {
@@ -356,6 +380,8 @@ static struct ctl_table kern_table[] = {
 },
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #ifdef CONFIG_SCHED_DEBUG
 	{
 		.procname	= "sched_min_granularity_ns",
@@ -376,6 +402,7 @@ static struct ctl_table kern_table[] = {
 		.extra2		= &max_sched_granularity_ns,
 	},
 	{
+<<<<<<< HEAD
 		.procname	= "sched_sync_hint_enable",
 		.data		= &sysctl_sched_sync_hint_enable,
 		.maxlen		= sizeof(unsigned int),
@@ -438,6 +465,8 @@ static struct ctl_table kern_table[] = {
 		.proc_handler	= proc_dointvec,
 	},
 	{
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		.procname	= "sched_wakeup_granularity_ns",
 		.data		= &sysctl_sched_wakeup_granularity,
 		.maxlen		= sizeof(unsigned int),
@@ -485,6 +514,7 @@ static struct ctl_table kern_table[] = {
 		.mode		= 0644,
 		.proc_handler	= proc_dointvec,
 	},
+<<<<<<< HEAD
 	{
 		.procname	= "sched_big_task_rotation",
 		.data		= &sysctl_sched_rotation_enable,
@@ -494,6 +524,8 @@ static struct ctl_table kern_table[] = {
 		.extra1		= &zero,
 		.extra2		= &one,
 	},
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #ifdef CONFIG_SCHEDSTATS
 	{
 		.procname	= "sched_schedstats",
@@ -589,6 +621,7 @@ static struct ctl_table kern_table[] = {
 		.extra1		= &one,
 	},
 #endif
+<<<<<<< HEAD
 #ifdef CONFIG_SCHED_TUNE
 	{
 		.procname	= "sched_cfs_boost",
@@ -614,6 +647,8 @@ static struct ctl_table kern_table[] = {
 #endif
 
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #ifdef CONFIG_PROVE_LOCKING
 	{
 		.procname	= "prove_locking",
@@ -1248,6 +1283,7 @@ static struct ctl_table kern_table[] = {
 		.proc_handler	= proc_dointvec_minmax,
 		.extra1		= &neg_one,
 	},
+<<<<<<< HEAD
 #if defined(VENDOR_EDIT) && defined(CONFIG_DEATH_HEALER)
 /* fanhui@PhoneSW.BSP, 2016/02/02, DeathHealer, record the hung task killing */
 	{
@@ -1269,6 +1305,8 @@ static struct ctl_table kern_table[] = {
 		.extra1		= &five,
 	},
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif
 #ifdef CONFIG_RT_MUTEXES
 	{
@@ -1402,6 +1440,7 @@ static struct ctl_table kern_table[] = {
 		.extra2		= &one,
 	},
 #endif
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /* Hailong.Liu@TECH.Kernel.CPU, 2019/10/24, stat cpu usage on each tick. */
 	{
@@ -1414,6 +1453,8 @@ static struct ctl_table kern_table[] = {
 		.extra2 	= &one,
 	},
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	{ }
 };
 
@@ -1465,7 +1506,11 @@ static struct ctl_table vm_table[] = {
 		.proc_handler	= overcommit_kbytes_handler,
 	},
 	{
+<<<<<<< HEAD
 		.procname	= "page-cluster",
+=======
+		.procname	= "page-cluster", 
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		.data		= &page_cluster,
 		.maxlen		= sizeof(int),
 		.mode		= 0644,
@@ -1534,6 +1579,7 @@ static struct ctl_table vm_table[] = {
 		.mode           = 0444 /* read-only */,
 		.proc_handler   = pdflush_proc_obsolete,
 	},
+<<<<<<< HEAD
 #ifdef CONFIG_MEMCG
 	{
 		.procname	= "vmpressure_level_med",
@@ -1562,6 +1608,8 @@ static struct ctl_table vm_table[] = {
 		.extra1		= &zero,
 	},
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	{
 		.procname	= "swappiness",
 		.data		= &vm_swappiness,
@@ -1569,6 +1617,7 @@ static struct ctl_table vm_table[] = {
 		.mode		= 0644,
 		.proc_handler	= proc_dointvec_minmax,
 		.extra1		= &zero,
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT //yixue.ge@PSW.BSP.Kernel.Driver 20170720 add for add direct_vm_swappiness
 		.extra2		= &two_hundred,
 #else
@@ -1588,6 +1637,10 @@ static struct ctl_table vm_table[] = {
 	},
 #endif
 
+=======
+		.extra2		= &one_hundred,
+	},
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #ifdef CONFIG_HUGETLB_PAGE
 	{
 		.procname	= "nr_hugepages",
@@ -1648,6 +1701,7 @@ static struct ctl_table vm_table[] = {
 		.procname	= "compact_memory",
 		.data		= &sysctl_compact_memory,
 		.maxlen		= sizeof(int),
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /*Huacai.Zhou@PSW.kernel.mm, 2018-08-20, modify permission for coloros.athena*/
 		.mode		= 0222,
@@ -1655,6 +1709,9 @@ static struct ctl_table vm_table[] = {
 		.mode		= 0200,
 
 #endif /*VENDOR_EDIT*/
+=======
+		.mode		= 0200,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		.proc_handler	= sysctl_compaction_handler,
 	},
 	{
@@ -1695,6 +1752,7 @@ static struct ctl_table vm_table[] = {
 		.extra2		= &one_thousand,
 	},
 	{
+<<<<<<< HEAD
 		.procname	= "kswapd_threads",
 		.data		= &kswapd_threads,
 		.maxlen		= sizeof(kswapd_threads),
@@ -1712,6 +1770,8 @@ static struct ctl_table vm_table[] = {
 		.extra1		= &zero,
 	},
 	{
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		.procname	= "percpu_pagelist_fraction",
 		.data		= &percpu_pagelist_fraction,
 		.maxlen		= sizeof(percpu_pagelist_fraction),
@@ -2034,7 +2094,11 @@ static struct ctl_table fs_table[] = {
 		.mode		= 0555,
 		.child		= inotify_table,
 	},
+<<<<<<< HEAD
 #endif
+=======
+#endif	
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #ifdef CONFIG_EPOLL
 	{
 		.procname	= "epoll",
@@ -2457,12 +2521,20 @@ static int __do_proc_dointvec(void *tbl_data, struct ctl_table *table,
 	int *i, vleft, first = 1, err = 0;
 	size_t left;
 	char *kbuf = NULL, *p;
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (!tbl_data || !table->maxlen || !*lenp || (*ppos && !write)) {
 		*lenp = 0;
 		return 0;
 	}
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	i = (int *) tbl_data;
 	vleft = table->maxlen / sizeof(*i);
 	left = *lenp;
@@ -2557,7 +2629,11 @@ static int do_proc_dointvec(struct ctl_table *table, int write,
  * @ppos: file position
  *
  * Reads/writes up to table->maxlen/sizeof(unsigned int) integer
+<<<<<<< HEAD
  * values from/to the user buffer, treated as an ASCII string.
+=======
+ * values from/to the user buffer, treated as an ASCII string. 
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  *
  * Returns 0 on success.
  */
@@ -2567,6 +2643,7 @@ int proc_dointvec(struct ctl_table *table, int write,
 	return do_proc_dointvec(table, write, buffer, lenp, ppos, NULL, NULL);
 }
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 //Ming.Liu@PSW.CN.WiFi.Network.quality.1065762, 2016/10/09,
 //add for: [monitor tcp info]
@@ -2714,6 +2791,8 @@ put_return:
 }
 #endif /* VENDOR_EDIT */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /**
  * proc_douintvec - read a vector of unsigned integers
  * @table: the sysctl table
@@ -3108,7 +3187,11 @@ static int do_proc_dointvec_ms_jiffies_conv(bool *negp, unsigned long *lvalp,
  * @ppos: file position
  *
  * Reads/writes up to table->maxlen/sizeof(unsigned int) integer
+<<<<<<< HEAD
  * values from/to the user buffer, treated as an ASCII string.
+=======
+ * values from/to the user buffer, treated as an ASCII string. 
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  * The values read are assumed to be in seconds, and are converted into
  * jiffies.
  *
@@ -3130,8 +3213,13 @@ int proc_dointvec_jiffies(struct ctl_table *table, int write,
  * @ppos: pointer to the file position
  *
  * Reads/writes up to table->maxlen/sizeof(unsigned int) integer
+<<<<<<< HEAD
  * values from/to the user buffer, treated as an ASCII string.
  * The values read are assumed to be in 1/USER_HZ seconds, and
+=======
+ * values from/to the user buffer, treated as an ASCII string. 
+ * The values read are assumed to be in 1/USER_HZ seconds, and 
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  * are converted into jiffies.
  *
  * Returns 0 on success.
@@ -3153,8 +3241,13 @@ int proc_dointvec_userhz_jiffies(struct ctl_table *table, int write,
  * @ppos: the current position in the file
  *
  * Reads/writes up to table->maxlen/sizeof(unsigned int) integer
+<<<<<<< HEAD
  * values from/to the user buffer, treated as an ASCII string.
  * The values read are assumed to be in 1/1000 seconds, and
+=======
+ * values from/to the user buffer, treated as an ASCII string. 
+ * The values read are assumed to be in 1/1000 seconds, and 
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  * are converted into jiffies.
  *
  * Returns 0 on success.

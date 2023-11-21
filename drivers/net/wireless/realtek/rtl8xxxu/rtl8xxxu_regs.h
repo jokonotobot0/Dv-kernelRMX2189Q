@@ -1,6 +1,20 @@
+<<<<<<< HEAD
 /* SPDX-License-Identifier: GPL-2.0-only */
 /*
  * Copyright (c) 2014 - 2017 Jes Sorensen <Jes.Sorensen@gmail.com>
+=======
+/*
+ * Copyright (c) 2014 - 2016 Jes Sorensen <Jes.Sorensen@redhat.com>
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of version 2 of the GNU General Public License as
+ * published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  *
  * Register definitions taken from original Realtek rtl8723au driver
  */
@@ -67,10 +81,14 @@
 #define REG_SPS0_CTRL			0x0011
 #define REG_SPS_OCP_CFG			0x0018
 #define REG_8192E_LDOV12_CTRL		0x0014
+<<<<<<< HEAD
 #define REG_SYS_SWR_CTRL2		0x0014
 #define REG_RSV_CTRL			0x001c
 #define  RSV_CTRL_WLOCK_1C		BIT(5)
 #define  RSV_CTRL_DIS_PRST		BIT(6)
+=======
+#define REG_RSV_CTRL			0x001c
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #define REG_RF_CTRL			0x001f
 #define  RF_ENABLE			BIT(0)
@@ -138,7 +156,10 @@
 #define REG_CAL_TIMER			0x003c
 #define REG_ACLK_MON			0x003e
 #define REG_GPIO_MUXCFG			0x0040
+<<<<<<< HEAD
 #define  GPIO_MUXCFG_IO_SEL_ENBT	BIT(5)
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define REG_GPIO_IO_SEL			0x0042
 #define REG_MAC_PINMUX_CFG		0x0043
 #define REG_GPIO_PIN_CTRL		0x0044
@@ -148,6 +169,7 @@
 #define REG_LEDCFG0			0x004c
 #define  LEDCFG0_DPDT_SELECT		BIT(23)
 #define REG_LEDCFG1			0x004d
+<<<<<<< HEAD
 #define  LEDCFG1_HW_LED_CONTROL		BIT(1)
 #define  LEDCFG1_LED_DISABLE		BIT(7)
 #define REG_LEDCFG2			0x004e
@@ -155,6 +177,9 @@
 #define  LEDCFG2_HW_LED_ENABLE		BIT(5)
 #define  LEDCFG2_SW_LED_DISABLE		BIT(3)
 #define  LEDCFG2_SW_LED_CONTROL   	BIT(5)
+=======
+#define REG_LEDCFG2			0x004e
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define  LEDCFG2_DPDT_SELECT		BIT(7)
 #define REG_LEDCFG3			0x004f
 #define REG_LEDCFG			REG_LEDCFG2
@@ -216,8 +241,11 @@
 #define REG_HMBOX_EXT_2			0x008c
 #define REG_HMBOX_EXT_3			0x008e
 
+<<<<<<< HEAD
 #define REG_RSVD_1			0x0097
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* Interrupt registers for 8192e/8723bu/8812 */
 #define REG_HIMR0			0x00b0
 #define	 IMR0_TXCCK			BIT(30)	/* TXRPT interrupt when CCX bit
@@ -286,7 +314,10 @@
 #define REG_BIST_SCAN			0x00d0
 #define REG_BIST_RPT			0x00d4
 #define REG_BIST_ROM_RPT		0x00d8
+<<<<<<< HEAD
 #define REG_RSVD_4			0x00dc
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define REG_USB_SIE_INTF		0x00e0
 #define REG_PCIE_MIO_INTF		0x00e4
 #define REG_PCIE_MIO_INTD		0x00e8
@@ -325,6 +356,10 @@
 #define  SYS_CFG_SPS_SEL		BIT(24) /*  1:LDO regulator mode;
 						    0:Switching regulator mode*/
 #define  SYS_CFG_CHIP_VERSION_MASK	0xf000	/* Bit 12 - 15 */
+<<<<<<< HEAD
+=======
+#define  SYS_CFG_CHIP_VERSION_SHIFT	12
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #define REG_GPIO_OUTSTS			0x00f4	/*  For RTL8723 only. */
 #define  GPIO_EFS_HCI_SEL		(BIT(0) | BIT(1))
@@ -381,11 +416,14 @@
 #define  PBP_PAGE_SIZE_512		0x3
 #define  PBP_PAGE_SIZE_1024		0x4
 
+<<<<<<< HEAD
 /* 8188eu IOL magic */
 #define REG_PKT_BUF_ACCESS_CTRL		0x0106
 #define  PKT_BUF_ACCESS_CTRL_TX		0x69
 #define  PKT_BUF_ACCESS_CTRL_RX		0xa5
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define REG_TRXDMA_CTRL			0x010c
 #define  TRXDMA_CTRL_RXDMA_AGG_EN	BIT(2)
 #define  TRXDMA_CTRL_VOQ_SHIFT		4
@@ -394,12 +432,15 @@
 #define  TRXDMA_CTRL_BKQ_SHIFT		10
 #define  TRXDMA_CTRL_MGQ_SHIFT		12
 #define  TRXDMA_CTRL_HIQ_SHIFT		14
+<<<<<<< HEAD
 #define  TRXDMA_CTRL_VOQ_SHIFT_8192F	4
 #define  TRXDMA_CTRL_VIQ_SHIFT_8192F	7
 #define  TRXDMA_CTRL_BEQ_SHIFT_8192F	10
 #define  TRXDMA_CTRL_BKQ_SHIFT_8192F	13
 #define  TRXDMA_CTRL_MGQ_SHIFT_8192F	16
 #define  TRXDMA_CTRL_HIQ_SHIFT_8192F	19
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define  TRXDMA_QUEUE_LOW		1
 #define  TRXDMA_QUEUE_NORMAL		2
 #define  TRXDMA_QUEUE_HIGH		3
@@ -414,7 +455,10 @@
 #define REG_CPWM			0x012f
 #define REG_FWIMR			0x0130
 #define REG_FWISR			0x0134
+<<<<<<< HEAD
 #define REG_FTIMR			0x0138
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define REG_PKTBUF_DBG_CTRL		0x0140
 #define REG_PKTBUF_DBG_DATA_L		0x0144
 #define REG_PKTBUF_DBG_DATA_H		0x0148
@@ -428,8 +472,11 @@
 #define REG_MBIST_START			0x0174
 #define REG_MBIST_DONE			0x0178
 #define REG_MBIST_FAIL			0x017c
+<<<<<<< HEAD
 /* 8188EU */
 #define REG_32K_CTRL			0x0194
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define REG_C2HEVT_MSG_NORMAL		0x01a0
 /* 8192EU/8723BU/8812 */
 #define REG_C2HEVT_CMD_ID_8723B		0x01ae
@@ -449,7 +496,11 @@
 #define  LLT_OP_READ			(0x2 << 30)
 #define  LLT_OP_MASK			(0x3 << 30)
 
+<<<<<<< HEAD
 #define REG_BB_ACCESS_CTRL		0x01e8
+=======
+#define REG_BB_ACCEESS_CTRL		0x01e8
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define REG_BB_ACCESS_DATA		0x01ec
 
 #define REG_HMBOX_EXT0_8723B		0x01f0
@@ -466,10 +517,13 @@
 
 #define REG_FIFOPAGE			0x0204
 #define REG_TDECTRL			0x0208
+<<<<<<< HEAD
 #define  BIT_BCN_VALID			BIT(16)
 
 #define REG_DWBCN0_CTRL_8188F		REG_TDECTRL
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define REG_TXDMA_OFFSET_CHK		0x020c
 #define  TXDMA_OFFSET_DROP_DATA_EN	BIT(9)
 #define REG_TXDMA_STATUS		0x0210
@@ -481,7 +535,10 @@
 #define  AUTO_LLT_INIT_LLT		BIT(16)
 
 #define REG_DWBCN1_CTRL_8723B		0x0228
+<<<<<<< HEAD
 #define  BIT_SW_BCN_SEL			BIT(20)
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /* 0x0280 ~ 0x02FF	RXDMA Configuration */
 #define REG_RXDMA_AGG_PG_TH		0x0280	/* 0-7 : USB DMA size bits
@@ -498,11 +555,14 @@
 /* Presumably only found on newer chips such as 8723bu */
 #define REG_RX_DMA_CTRL_8723B		0x0286
 #define REG_RXDMA_PRO_8723B		0x0290
+<<<<<<< HEAD
 #define  RXDMA_PRO_DMA_MODE		BIT(1)		/* Set to 0x1. */
 #define  RXDMA_PRO_DMA_BURST_CNT	GENMASK(3, 2)	/* Set to 0x3. */
 #define  RXDMA_PRO_DMA_BURST_SIZE	GENMASK(5, 4)	/* Set to 0x1. */
 
 #define REG_EARLY_MODE_CONTROL_8710B	0x02bc
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #define REG_RF_BB_CMD_ADDR		0x02c0
 #define REG_RF_BB_CMD_DATA		0x02c4
@@ -528,7 +588,10 @@
 #define REG_FWHW_TXQ_CTRL		0x0420
 #define  FWHW_TXQ_CTRL_AMPDU_RETRY	BIT(7)
 #define  FWHW_TXQ_CTRL_XMIT_MGMT_ACK	BIT(12)
+<<<<<<< HEAD
 #define  EN_BCNQ_DL			BIT(22)
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #define REG_HWSEQ_CTRL			0x0423
 #define REG_TXPKTBUF_BCNQ_BDNY		0x0424
@@ -553,8 +616,11 @@
 #define REG_RESPONSE_RATE_SET		0x0440
 #define  RESPONSE_RATE_BITMAP_ALL	0xfffff
 #define  RESPONSE_RATE_RRSR_CCK_ONLY_1M	0xffff1
+<<<<<<< HEAD
 #define  RESPONSE_RATE_RRSR_INIT_2G	0x15f
 #define  RESPONSE_RATE_RRSR_INIT_5G	0x150
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define  RSR_1M				BIT(0)
 #define  RSR_2M				BIT(1)
 #define  RSR_5_5M			BIT(2)
@@ -585,8 +651,11 @@
 #define REG_ARFR1			0x0448
 #define REG_ARFR2			0x044c
 #define REG_ARFR3			0x0450
+<<<<<<< HEAD
 #define REG_CCK_CHECK			0x0454
 #define BIT_BCN_PORT_SEL		BIT(5)
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define REG_AMPDU_MAX_TIME_8723B	0x0456
 #define REG_AGGLEN_LMT			0x0458
 #define REG_AMPDU_MIN_SPACE		0x045c
@@ -611,7 +680,10 @@
 #define REG_STBC_SETTING		0x04c4
 #define REG_QUEUE_CTRL			0x04c6
 #define REG_HT_SINGLE_AMPDU_8723B	0x04c7
+<<<<<<< HEAD
 #define  HT_SINGLE_AMPDU_ENABLE		BIT(7)
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define REG_PROT_MODE_CTRL		0x04c8
 #define REG_MAX_AGGR_NUM		0x04ca
 #define REG_RTS_MAX_AGGR_NUM		0x04cb
@@ -862,7 +934,10 @@
 #define REG_BT_CONTROL_8723BU		0x0764
 #define  BT_CONTROL_BT_GRANT		BIT(12)
 
+<<<<<<< HEAD
 #define REG_PORT_CONTROL_8710B		0x076d
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define REG_WLAN_ACT_CONTROL_8723B	0x076e
 
 #define REG_FPGA0_RF_MODE		0x0800
@@ -966,13 +1041,17 @@
 
 #define REG_FPGA0_XA_LSSI_READBACK	0x08a0	/* Tranceiver LSSI Readback */
 #define REG_FPGA0_XB_LSSI_READBACK	0x08a4
+<<<<<<< HEAD
 #define REG_FPGA0_PSD_REPORT		0x08b4
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define REG_HSPI_XA_READBACK		0x08b8	/* Transceiver A HSPI read */
 #define REG_HSPI_XB_READBACK		0x08bc	/* Transceiver B HSPI read */
 
 #define REG_FPGA1_RF_MODE		0x0900
 
 #define REG_FPGA1_TX_INFO		0x090c
+<<<<<<< HEAD
 #define  FPGA1_TX_ANT_MASK		0x0000000f
 #define  FPGA1_TX_ANT_L_MASK		0x000000f0
 #define  FPGA1_TX_ANT_NON_HT_MASK	0x00000f00
@@ -995,12 +1074,20 @@
 #define REG_RX_DFIR_MOD_97F		0x0948
 #define REG_OFDM_RX_DFIR		0x954
 #define REG_RFE_OPT62			0x0968
+=======
+#define REG_DPDT_CTRL			0x092c	/* 8723BU */
+#define REG_RFE_CTRL_ANTA_SRC		0x0930	/* 8723BU */
+#define REG_RFE_PATH_SELECT		0x0940	/* 8723BU */
+#define REG_RFE_BUFFER			0x0944	/* 8723BU */
+#define REG_S0S1_PATH_SWITCH		0x0948	/* 8723BU */
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #define REG_CCK0_SYSTEM			0x0a00
 #define  CCK0_SIDEBAND			BIT(4)
 
 #define REG_CCK0_AFE_SETTING		0x0a04
 #define  CCK0_AFE_RX_MASK		0x0f000000
+<<<<<<< HEAD
 #define  CCK0_AFE_TX_MASK		0xf0000000
 #define  CCK0_AFE_RX_ANT_A		0
 #define  CCK0_AFE_RX_ANT_B		BIT(26)
@@ -1034,6 +1121,11 @@
 #define REG_AGC_RPT			0xa80
 #define  AGC_RPT_CCK			BIT(7)
 #define REG_CCK0_TX_FILTER3		0x0aac
+=======
+#define  CCK0_AFE_RX_ANT_AB		BIT(24)
+#define  CCK0_AFE_RX_ANT_A		0
+#define  CCK0_AFE_RX_ANT_B		(BIT(24) | BIT(26))
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #define REG_CONFIG_ANT_A		0x0b68
 #define REG_CONFIG_ANT_B		0x0b6c
@@ -1054,9 +1146,12 @@
 
 #define REG_OFDM0_FA_RSTC		0x0c0c
 
+<<<<<<< HEAD
 #define REG_DOWNSAM_FACTOR		0x0c10
 
 #define REG_OFDM0_XA_RX_AFE		0x0c10
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define REG_OFDM0_XA_RX_IQ_IMBALANCE	0x0c14
 #define REG_OFDM0_XB_RX_IQ_IMBALANCE	0x0c1c
 
@@ -1077,7 +1172,11 @@
 
 #define REG_OFDM0_AGC_PARM1		0x0c70
 
+<<<<<<< HEAD
 #define REG_OFDM0_AGC_RSSI_TABLE	0x0c78
+=======
+#define REG_OFDM0_AGCR_SSI_TABLE	0x0c78
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #define REG_OFDM0_XA_TX_IQ_IMBALANCE	0x0c80
 #define REG_OFDM0_XB_TX_IQ_IMBALANCE	0x0c88
@@ -1089,11 +1188,14 @@
 
 #define REG_OFDM0_RX_IQ_EXT_ANTA	0x0ca0
 
+<<<<<<< HEAD
 /* 8188eu */
 #define REG_ANTDIV_PARA1		0x0ca4
 
 #define REG_RXIQB_EXT			0x0ca8
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* 8723bu */
 #define REG_OFDM0_TX_PSDO_NOISE_WEIGHT	0x0ce4
 
@@ -1108,12 +1210,15 @@
 #define  OFDM_LSTF_MASK			0x70000000
 
 #define REG_OFDM1_TRX_PATH_ENABLE	0x0d04
+<<<<<<< HEAD
 #define REG_OFDM1_CFO_TRACKING		0x0d2c
 #define  CFO_TRACKING_ATC_STATUS	BIT(11)
 #define REG_OFDM1_CSI_FIX_MASK1		0x0d40
 #define REG_OFDM1_CSI_FIX_MASK2		0x0d44
 
 #define REG_ANAPWR1			0x0d94
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #define REG_TX_AGC_A_RATE18_06		0x0e00
 #define REG_TX_AGC_A_RATE54_24		0x0e04
@@ -1123,10 +1228,13 @@
 #define REG_TX_AGC_A_MCS11_MCS08	0x0e18
 #define REG_TX_AGC_A_MCS15_MCS12	0x0e1c
 
+<<<<<<< HEAD
 #define REG_NP_ANTA			0x0e20
 
 #define REG_TAP_UPD_97F			0x0e24
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define REG_FPGA0_IQK			0x0e28
 
 #define REG_TX_IQK_TONE_A		0x0e30
@@ -1155,23 +1263,35 @@
 #define REG_RX_CCK			0x0e8c
 
 #define REG_TX_POWER_BEFORE_IQK_A	0x0e94
+<<<<<<< HEAD
 #define REG_IQK_RPT_TXA			0x0e98
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define REG_TX_POWER_AFTER_IQK_A	0x0e9c
 
 #define REG_RX_POWER_BEFORE_IQK_A	0x0ea0
 #define REG_RX_POWER_BEFORE_IQK_A_2	0x0ea4
 #define REG_RX_POWER_AFTER_IQK_A	0x0ea8
+<<<<<<< HEAD
 #define REG_IQK_RPT_RXA			0x0ea8
 #define REG_RX_POWER_AFTER_IQK_A_2	0x0eac
 
 #define REG_TX_POWER_BEFORE_IQK_B	0x0eb4
 #define REG_IQK_RPT_TXB			0x0eb8
+=======
+#define REG_RX_POWER_AFTER_IQK_A_2	0x0eac
+
+#define REG_TX_POWER_BEFORE_IQK_B	0x0eb4
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define REG_TX_POWER_AFTER_IQK_B	0x0ebc
 
 #define REG_RX_POWER_BEFORE_IQK_B	0x0ec0
 #define REG_RX_POWER_BEFORE_IQK_B_2	0x0ec4
 #define REG_RX_POWER_AFTER_IQK_B	0x0ec8
+<<<<<<< HEAD
 #define REG_IQK_RPT_RXB			0x0ec8
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define REG_RX_POWER_AFTER_IQK_B_2	0x0ecc
 
 #define REG_RX_OFDM			0x0ed0
@@ -1182,12 +1302,15 @@
 #define REG_PMPD_ANAEN			0x0eec
 
 #define REG_FW_START_ADDRESS		0x1000
+<<<<<<< HEAD
 #define REG_FW_START_ADDRESS_8192F	0x4000
 
 #define REG_SW_GPIO_SHARE_CTRL_0	0x1038
 #define REG_SW_GPIO_SHARE_CTRL_1	0x103c
 #define REG_GPIO_A0			0x1050
 #define REG_GPIO_B0			0x105b
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #define REG_USB_INFO			0xfe17
 #define REG_USB_HIMR			0xfe38
@@ -1227,8 +1350,11 @@
 						    Unavailable */
 #define  USB_HIMR_ROK			BIT(0)	/*  Receive DMA OK Interrupt */
 
+<<<<<<< HEAD
 #define REG_USB_ACCESS_TIMEOUT		0xfe4c
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define REG_USB_SPECIAL_OPTION		0xfe55
 #define  USB_SPEC_USB_AGG_ENABLE	BIT(3)	/* Enable USB aggregation */
 #define  USB_SPEC_INT_BULK_SELECT	BIT(4)	/* Use interrupt endpoint to
@@ -1254,6 +1380,7 @@
 #define REG_NORMAL_SIE_MAC_ADDR		0xfe70	/* 0xfe70 - 0xfe75 */
 #define REG_NORMAL_SIE_STRING		0xfe80	/* 0xfe80 - 0xfedf */
 
+<<<<<<< HEAD
 /*
  * 8710B register addresses between 0x00 and 0xff must have 0x8000
  * added to them. We take care of that in the rtl8xxxu_read{8,16,32}
@@ -1289,6 +1416,8 @@
 #define REG_SYS_SYSTEM_CFG1_8710B	0x1f4
 #define REG_SYS_SYSTEM_CFG2_8710B	0x1f8
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* RF6052 registers */
 #define RF6052_REG_AC			0x00
 #define RF6052_REG_IQADJ_G1		0x01
@@ -1352,6 +1481,7 @@
 /*
  * NextGen regs: 8723BU
  */
+<<<<<<< HEAD
 #define RF6052_REG_GAIN_P1		0x35
 #define RF6052_REG_T_METER_8723B	0x42
 #define RF6052_REG_UNKNOWN_43		0x43
@@ -1364,3 +1494,13 @@
 #define RF6052_REG_UNKNOWN_ED		0xed
 #define RF6052_REG_WE_LUT		0xef
 #define RF6052_REG_GAIN_CTRL		0xf5
+=======
+#define RF6052_REG_T_METER_8723B	0x42
+#define RF6052_REG_UNKNOWN_43		0x43
+#define RF6052_REG_UNKNOWN_55		0x55
+#define RF6052_REG_UNKNOWN_56		0x56
+#define RF6052_REG_S0S1			0xb0
+#define RF6052_REG_UNKNOWN_DF		0xdf
+#define RF6052_REG_UNKNOWN_ED		0xed
+#define RF6052_REG_WE_LUT		0xef
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

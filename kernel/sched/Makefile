@@ -15,6 +15,7 @@ ifneq ($(CONFIG_SCHED_OMIT_FRAME_POINTER),y)
 CFLAGS_core.o := $(PROFILING) -fno-omit-frame-pointer
 endif
 
+<<<<<<< HEAD
 ccflags-y += -DMET_USER_EVENT_SUPPORT
 obj-y += core.o loadavg.o clock.o cputime.o
 obj-y += idle_task.o fair.o rt.o deadline.o stop_task.o
@@ -30,3 +31,15 @@ obj-$(CONFIG_CPU_FREQ) += cpufreq.o
 obj-$(CONFIG_CPU_FREQ_GOV_SCHEDUTIL) += cpufreq_schedutil.o
 obj-$(CONFIG_CPU_FREQ_GOV_SCHEDPLUS) += cpufreq_schedplus.o
 obj-$(CONFIG_PSI) += psi.o
+=======
+obj-y += core.o loadavg.o clock.o cputime.o
+obj-y += idle_task.o fair.o rt.o deadline.o stop_task.o
+obj-y += wait.o swait.o completion.o idle.o
+obj-$(CONFIG_SMP) += cpupri.o cpudeadline.o
+obj-$(CONFIG_SCHED_AUTOGROUP) += auto_group.o
+obj-$(CONFIG_SCHEDSTATS) += stats.o
+obj-$(CONFIG_SCHED_DEBUG) += debug.o
+obj-$(CONFIG_CGROUP_CPUACCT) += cpuacct.o
+obj-$(CONFIG_CPU_FREQ) += cpufreq.o
+obj-$(CONFIG_CPU_FREQ_GOV_SCHEDUTIL) += cpufreq_schedutil.o
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

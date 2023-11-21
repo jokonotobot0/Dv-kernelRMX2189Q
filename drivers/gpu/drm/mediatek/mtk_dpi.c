@@ -22,11 +22,17 @@
 #include <linux/interrupt.h>
 #include <linux/types.h>
 #include <linux/clk.h>
+<<<<<<< HEAD
 #include <linux/pm_runtime.h>
 
 #include "mtk_dpi_regs.h"
 #include "mtk_drm_ddp_comp.h"
 #include "mtk_drm_crtc.h"
+=======
+
+#include "mtk_dpi_regs.h"
+#include "mtk_drm_ddp_comp.h"
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 enum mtk_dpi_out_bit_num {
 	MTK_DPI_OUT_BIT_NUM_8BITS,
@@ -72,7 +78,10 @@ struct mtk_dpi {
 	struct clk *tvd_clk;
 	int irq;
 	struct drm_display_mode mode;
+<<<<<<< HEAD
 	const struct mtk_dpi_conf *conf;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	enum mtk_dpi_out_color_format color_format;
 	enum mtk_dpi_out_yc_map yc_map;
 	enum mtk_dpi_out_bit_num bit_num;
@@ -117,11 +126,14 @@ struct mtk_dpi_yc_limit {
 	u16 c_bottom;
 };
 
+<<<<<<< HEAD
 struct mtk_dpi_conf {
 	unsigned int (*cal_factor)(int clock);
 	const u32 reg_h_fre_con;
 };
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static void mtk_dpi_mask(struct mtk_dpi *dpi, u32 offset, u32 val, u32 mask)
 {
 	u32 tmp = readl(dpi->regs + offset) & ~mask;
@@ -347,7 +359,11 @@ static void mtk_dpi_config_swap_input(struct mtk_dpi *dpi, bool enable)
 
 static void mtk_dpi_config_2n_h_fre(struct mtk_dpi *dpi)
 {
+<<<<<<< HEAD
 	mtk_dpi_mask(dpi, dpi->conf->reg_h_fre_con, H_FRE_2N, H_FRE_2N);
+=======
+	mtk_dpi_mask(dpi, DPI_H_FRE_CON, H_FRE_2N, H_FRE_2N);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static void mtk_dpi_config_color_format(struct mtk_dpi *dpi,
@@ -440,6 +456,7 @@ static int mtk_dpi_set_display_mode(struct mtk_dpi *dpi,
 	unsigned long pll_rate;
 	unsigned int factor;
 
+<<<<<<< HEAD
 	if (!dpi) {
 		dev_err(dpi->dev, "invalid argument\n");
 		return -EINVAL;
@@ -447,6 +464,18 @@ static int mtk_dpi_set_display_mode(struct mtk_dpi *dpi,
 
 	pix_rate = 1000UL * mode->clock;
 	factor = dpi->conf->cal_factor(mode->clock);
+=======
+	/* let pll_rate can fix the valid range of tvdpll (1G~2GHz) */
+	pix_rate = 1000UL * mode->clock;
+	if (mode->clock <= 27000)
+		factor = 16 * 3;
+	else if (mode->clock <= 84000)
+		factor = 8 * 3;
+	else if (mode->clock <= 167000)
+		factor = 4 * 3;
+	else
+		factor = 2 * 3;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	pll_rate = pix_rate * factor;
 
 	dev_dbg(dpi->dev, "Want PLL %lu Hz, pixel clock %lu Hz\n",
@@ -555,11 +584,14 @@ static void mtk_dpi_encoder_mode_set(struct drm_encoder *encoder,
 static void mtk_dpi_encoder_disable(struct drm_encoder *encoder)
 {
 	struct mtk_dpi *dpi = mtk_dpi_from_encoder(encoder);
+<<<<<<< HEAD
 	int ret;
 
 	ret = pm_runtime_put_sync(dpi->dev);
 	if (ret < 0)
 		DRM_ERROR("Failed to disable power domain: %d\n", ret);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	mtk_dpi_power_off(dpi, DPI_POWER_ENABLE);
 }
@@ -567,11 +599,14 @@ static void mtk_dpi_encoder_disable(struct drm_encoder *encoder)
 static void mtk_dpi_encoder_enable(struct drm_encoder *encoder)
 {
 	struct mtk_dpi *dpi = mtk_dpi_from_encoder(encoder);
+<<<<<<< HEAD
 	int ret;
 
 	ret = pm_runtime_get_sync(dpi->dev);
 	if (ret < 0)
 		DRM_ERROR("Failed to enable power domain: %d\n", ret);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	mtk_dpi_power_on(dpi, DPI_POWER_ENABLE);
 	mtk_dpi_set_display_mode(dpi, &dpi->mode);
@@ -581,10 +616,13 @@ static int mtk_dpi_atomic_check(struct drm_encoder *encoder,
 				struct drm_crtc_state *crtc_state,
 				struct drm_connector_state *conn_state)
 {
+<<<<<<< HEAD
 	struct mtk_drm_crtc *mtk_crtc = container_of(conn_state->crtc,
 						     struct mtk_drm_crtc, base);
 	mtk_crtc->bpc = conn_state->connector->display_info.bpc;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return 0;
 }
 
@@ -636,7 +674,12 @@ static int mtk_dpi_bind(struct device *dev, struct device *master, void *data)
 	}
 	drm_encoder_helper_add(&dpi->encoder, &mtk_dpi_encoder_helper_funcs);
 
+<<<<<<< HEAD
 	dpi->encoder.possible_crtcs = BIT(0) | BIT(1);
+=======
+	/* Currently DPI0 is fixed to be driven by OVL1 */
+	dpi->encoder.possible_crtcs = BIT(1);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	dpi->encoder.bridge->encoder = &dpi->encoder;
 	ret = drm_bridge_attach(dpi->encoder.dev, dpi->encoder.bridge);
@@ -674,6 +717,7 @@ static const struct component_ops mtk_dpi_component_ops = {
 	.unbind = mtk_dpi_unbind,
 };
 
+<<<<<<< HEAD
 static unsigned int mt8173_calculate_factor(int clock)
 {
 	if (clock <= 27000)
@@ -744,6 +788,8 @@ static const struct of_device_id mtk_dpi_of_ids[] = {
 };
 MODULE_DEVICE_TABLE(of, mtk_dpi_of_ids);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int mtk_dpi_probe(struct platform_device *pdev)
 {
 	struct device *dev = &pdev->dev;
@@ -751,6 +797,7 @@ static int mtk_dpi_probe(struct platform_device *pdev)
 	struct resource *mem;
 	struct device_node *ep, *bridge_node = NULL;
 	int comp_id;
+<<<<<<< HEAD
 	const struct of_device_id *match;
 	int ret;
 
@@ -758,12 +805,19 @@ static int mtk_dpi_probe(struct platform_device *pdev)
 	if (!match)
 		return -ENODEV;
 
+=======
+	int ret;
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	dpi = devm_kzalloc(dev, sizeof(*dpi), GFP_KERNEL);
 	if (!dpi)
 		return -ENOMEM;
 
 	dpi->dev = dev;
+<<<<<<< HEAD
 	dpi->conf = (struct mtk_dpi_conf *)match->data;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	mem = platform_get_resource(pdev, IORESOURCE_MEM, 0);
 	dpi->regs = devm_ioremap_resource(dev, mem);
@@ -838,19 +892,33 @@ static int mtk_dpi_probe(struct platform_device *pdev)
 		return ret;
 	}
 
+<<<<<<< HEAD
 	pm_runtime_enable(dev);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return 0;
 }
 
 static int mtk_dpi_remove(struct platform_device *pdev)
 {
 	component_del(&pdev->dev, &mtk_dpi_component_ops);
+<<<<<<< HEAD
 	pm_runtime_disable(&pdev->dev);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+static const struct of_device_id mtk_dpi_of_ids[] = {
+	{ .compatible = "mediatek,mt8173-dpi", },
+	{}
+};
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 struct platform_driver mtk_dpi_driver = {
 	.probe = mtk_dpi_probe,
 	.remove = mtk_dpi_remove,

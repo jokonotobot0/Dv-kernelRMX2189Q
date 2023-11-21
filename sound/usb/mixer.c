@@ -82,6 +82,10 @@ struct mixer_build {
 	unsigned char *buffer;
 	unsigned int buflen;
 	DECLARE_BITMAP(unitbitmap, MAX_ID_ELEMS);
+<<<<<<< HEAD
+=======
+	DECLARE_BITMAP(termbitmap, MAX_ID_ELEMS);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct usb_audio_term oterm;
 	const struct usbmix_name_map *map;
 	const struct usbmix_selector_map *selector_map;
@@ -710,15 +714,35 @@ static int get_term_name(struct mixer_build *state, struct usb_audio_term *iterm
  * parse the source unit recursively until it reaches to a terminal
  * or a branched unit.
  */
+<<<<<<< HEAD
 static int check_input_term(struct mixer_build *state, int id,
+=======
+static int __check_input_term(struct mixer_build *state, int id,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			    struct usb_audio_term *term)
 {
 	int err;
 	void *p1;
+<<<<<<< HEAD
 
 	memset(term, 0, sizeof(*term));
 	while ((p1 = find_audio_control_unit(state, id)) != NULL) {
 		unsigned char *hdr = p1;
+=======
+	unsigned char *hdr;
+
+	memset(term, 0, sizeof(*term));
+	for (;;) {
+		/* a loop in the terminal chain? */
+		if (test_and_set_bit(id, state->termbitmap))
+			return -EINVAL;
+
+		p1 = find_audio_control_unit(state, id);
+		if (!p1)
+			break;
+
+		hdr = p1;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		term->id = id;
 		switch (hdr[2]) {
 		case UAC_INPUT_TERMINAL:
@@ -733,7 +757,11 @@ static int check_input_term(struct mixer_build *state, int id,
 
 				/* call recursively to verify that the
 				 * referenced clock entity is valid */
+<<<<<<< HEAD
 				err = check_input_term(state, d->bCSourceID, term);
+=======
+				err = __check_input_term(state, d->bCSourceID, term);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 				if (err < 0)
 					return err;
 
@@ -765,7 +793,11 @@ static int check_input_term(struct mixer_build *state, int id,
 		case UAC2_CLOCK_SELECTOR: {
 			struct uac_selector_unit_descriptor *d = p1;
 			/* call recursively to retrieve the channel info */
+<<<<<<< HEAD
 			err = check_input_term(state, d->baSourceID[0], term);
+=======
+			err = __check_input_term(state, d->baSourceID[0], term);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			if (err < 0)
 				return err;
 			term->type = d->bDescriptorSubtype << 16; /* virtual type */
@@ -812,6 +844,18 @@ static int check_input_term(struct mixer_build *state, int id,
 	return -ENODEV;
 }
 
+<<<<<<< HEAD
+=======
+
+static int check_input_term(struct mixer_build *state, int id,
+			    struct usb_audio_term *term)
+{
+	memset(term, 0, sizeof(*term));
+	memset(state->termbitmap, 0, sizeof(state->termbitmap));
+	return __check_input_term(state, id, term);
+}
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * Feature Unit
  */
@@ -1694,6 +1738,10 @@ static int parse_audio_mixer_unit(struct mixer_build *state, int unitid,
 	int pin, ich, err;
 
 	if (desc->bLength < 11 || !(input_pins = desc->bNrInPins) ||
+<<<<<<< HEAD
+=======
+	    desc->bLength < sizeof(*desc) + desc->bNrInPins ||
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	    !(num_outs = uac_mixer_unit_bNrChannels(desc))) {
 		usb_audio_err(state->chip,
 			      "invalid MIXER UNIT descriptor %d\n",

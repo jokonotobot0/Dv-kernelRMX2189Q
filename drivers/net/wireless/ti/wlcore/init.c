@@ -549,11 +549,14 @@ static int wl12xx_init_ap_role(struct wl1271 *wl, struct wl12xx_vif *wlvif)
 {
 	int ret;
 
+<<<<<<< HEAD
 	/* Disable filtering */
 	ret = wl1271_acx_group_address_tbl(wl, wlvif, false, NULL, 0);
 	if (ret < 0)
 		return ret;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	ret = wl1271_acx_ap_max_tx_retry(wl, wlvif);
 	if (ret < 0)
 		return ret;

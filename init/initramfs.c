@@ -18,7 +18,10 @@
 #include <linux/dirent.h>
 #include <linux/syscalls.h>
 #include <linux/utime.h>
+<<<<<<< HEAD
 #include <linux/initramfs.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <linux/file.h>
 
 static ssize_t __init xwrite(int fd, const char *p, size_t count)
@@ -607,6 +610,7 @@ static void __init clean_rootfs(void)
 }
 #endif
 
+<<<<<<< HEAD
 static int __initdata do_skip_initramfs;
 
 static int __init skip_initramfs_param(char *str)
@@ -629,6 +633,11 @@ static int __init populate_rootfs(void)
 	}
 
 	err = unpack_to_rootfs(__initramfs_start, __initramfs_size);
+=======
+static int __init populate_rootfs(void)
+{
+	char *err = unpack_to_rootfs(__initramfs_start, __initramfs_size);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (err)
 		panic("%s", err); /* Failed to decompress INTERNAL initramfs */
 	if (initrd_start) {

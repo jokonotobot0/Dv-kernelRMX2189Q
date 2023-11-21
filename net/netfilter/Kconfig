@@ -823,6 +823,7 @@ config NETFILTER_XT_TARGET_LOG
 
 	  To compile it as a module, choose M here.  If unsure, say N.
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 #Junyuan.Huang@PSW.CN.WiFi.Network.1471780, 2018/06/26,
 #Add for limit speed function
@@ -839,6 +840,8 @@ config NETFILTER_XT_TARGET_IMQ
           To compile it as a module, choose M here.  If unsure, say N.
 #endif /* VENDOR_EDIT */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 config NETFILTER_XT_TARGET_MARK
 	tristate '"MARK" target support'
 	depends on NETFILTER_ADVANCED
@@ -1332,8 +1335,11 @@ config NETFILTER_XT_MATCH_OWNER
 	based on who created the socket: the user or group. It is also
 	possible to check whether a socket actually exists.
 
+<<<<<<< HEAD
 	Conflicts with '"quota, tag, uid" match'
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 config NETFILTER_XT_MATCH_POLICY
 	tristate 'IPsec "policy" match support'
 	depends on XFRM
@@ -1377,6 +1383,7 @@ config NETFILTER_XT_MATCH_QUOTA
 	  If you want to compile it as a module, say M here and read
 	  <file:Documentation/kbuild/modules.txt>.  If unsure, say `N'.
 
+<<<<<<< HEAD
 config NETFILTER_XT_MATCH_QUOTA2
 	tristate '"quota2" match support'
 	depends on NETFILTER_ADVANCED
@@ -1400,6 +1407,8 @@ config NETFILTER_XT_MATCH_QUOTA2_LOG
 
 	  If unsure, say `N'.
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 config NETFILTER_XT_MATCH_RATEEST
 	tristate '"rateest" match support'
 	depends on NETFILTER_ADVANCED

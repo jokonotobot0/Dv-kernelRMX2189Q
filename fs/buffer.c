@@ -44,11 +44,18 @@
 #include <linux/mpage.h>
 #include <linux/bit_spinlock.h>
 #include <trace/events/block.h>
+<<<<<<< HEAD
 #include <linux/hie.h>
 
 static int fsync_buffers_list(spinlock_t *lock, struct list_head *list);
 static int submit_bh_wbc_crypt(struct inode *inode, int op, int op_flags,
 			 struct buffer_head *bh, unsigned long bio_flags,
+=======
+
+static int fsync_buffers_list(spinlock_t *lock, struct list_head *list);
+static int submit_bh_wbc(int op, int op_flags, struct buffer_head *bh,
+			 unsigned long bio_flags,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			 struct writeback_control *wbc);
 
 #define BH_ENTRY(list) list_entry((list), struct buffer_head, b_assoc_buffers)
@@ -1084,10 +1091,13 @@ static struct buffer_head *
 __getblk_slow(struct block_device *bdev, sector_t block,
 	     unsigned size, gfp_t gfp)
 {
+<<<<<<< HEAD
 #ifdef CONFIG_ZONE_MOVABLE_CMA
 	/* __GFP_MOVABLE is not allowed for buffer_head */
 	gfp &= ~__GFP_MOVABLE;
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* Size must be multiple of hard sectorsize */
 	if (unlikely(size & (bdev_logical_block_size(bdev)-1) ||
 			(size < 512 || size > PAGE_SIZE))) {
@@ -1792,8 +1802,12 @@ int __block_write_full_page(struct inode *inode, struct page *page,
 	do {
 		struct buffer_head *next = bh->b_this_page;
 		if (buffer_async_write(bh)) {
+<<<<<<< HEAD
 			submit_bh_wbc_crypt(inode, REQ_OP_WRITE,
 				write_flags, bh, 0, wbc);
+=======
+			submit_bh_wbc(REQ_OP_WRITE, write_flags, bh, 0, wbc);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			nr_underway++;
 		}
 		bh = next;
@@ -1847,8 +1861,12 @@ recover:
 		struct buffer_head *next = bh->b_this_page;
 		if (buffer_async_write(bh)) {
 			clear_buffer_dirty(bh);
+<<<<<<< HEAD
 			submit_bh_wbc_crypt(inode, REQ_OP_WRITE,
 				write_flags, bh, 0, wbc);
+=======
+			submit_bh_wbc(REQ_OP_WRITE, write_flags, bh, 0, wbc);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			nr_underway++;
 		}
 		bh = next;
@@ -3066,9 +3084,14 @@ void guard_bio_eod(int op, struct bio *bio)
 	}
 }
 
+<<<<<<< HEAD
 int submit_bh_wbc_crypt(struct inode *inode, int op, int op_flags,
 			struct buffer_head *bh, unsigned long bio_flags,
 			struct writeback_control *wbc)
+=======
+static int submit_bh_wbc(int op, int op_flags, struct buffer_head *bh,
+			 unsigned long bio_flags, struct writeback_control *wbc)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	struct bio *bio;
 
@@ -3105,9 +3128,12 @@ int submit_bh_wbc_crypt(struct inode *inode, int op, int op_flags,
 	bio->bi_private = bh;
 	bio->bi_flags |= bio_flags;
 
+<<<<<<< HEAD
 	if (inode)
 		hie_set_bio_crypt_context(inode, bio);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* Take care of bh's that straddle the end of the device */
 	guard_bio_eod(op, bio);
 
@@ -3124,6 +3150,7 @@ int submit_bh_wbc_crypt(struct inode *inode, int op, int op_flags,
 int _submit_bh(int op, int op_flags, struct buffer_head *bh,
 	       unsigned long bio_flags)
 {
+<<<<<<< HEAD
 	return submit_bh_wbc_crypt(NULL, op, op_flags, bh, bio_flags, NULL);
 }
 EXPORT_SYMBOL_GPL(_submit_bh);
@@ -3138,6 +3165,15 @@ EXPORT_SYMBOL(submit_bh_crypt);
 int submit_bh(int op, int op_flags, struct buffer_head *bh)
 {
 	return submit_bh_wbc_crypt(NULL, op, op_flags, bh, 0, NULL);
+=======
+	return submit_bh_wbc(op, op_flags, bh, bio_flags, NULL);
+}
+EXPORT_SYMBOL_GPL(_submit_bh);
+
+int submit_bh(int op, int op_flags,  struct buffer_head *bh)
+{
+	return submit_bh_wbc(op, op_flags, bh, 0, NULL);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 EXPORT_SYMBOL(submit_bh);
 
@@ -3167,8 +3203,12 @@ EXPORT_SYMBOL(submit_bh);
  * All of the buffers must be for the same device, and must also be a
  * multiple of the current approved size for the device.
  */
+<<<<<<< HEAD
 void ll_rw_block_crypt(struct inode *inode, int op, int op_flags, int nr,
 		       struct buffer_head *bhs[])
+=======
+void ll_rw_block(int op, int op_flags,  int nr, struct buffer_head *bhs[])
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	int i;
 
@@ -3181,26 +3221,37 @@ void ll_rw_block_crypt(struct inode *inode, int op, int op_flags, int nr,
 			if (test_clear_buffer_dirty(bh)) {
 				bh->b_end_io = end_buffer_write_sync;
 				get_bh(bh);
+<<<<<<< HEAD
 				submit_bh_crypt(inode, op, op_flags, bh);
+=======
+				submit_bh(op, op_flags, bh);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 				continue;
 			}
 		} else {
 			if (!buffer_uptodate(bh)) {
 				bh->b_end_io = end_buffer_read_sync;
 				get_bh(bh);
+<<<<<<< HEAD
 				submit_bh_crypt(inode, op, op_flags, bh);
+=======
+				submit_bh(op, op_flags, bh);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 				continue;
 			}
 		}
 		unlock_buffer(bh);
 	}
 }
+<<<<<<< HEAD
 EXPORT_SYMBOL(ll_rw_block_crypt);
 
 void ll_rw_block(int op, int op_flags, int nr, struct buffer_head *bhs[])
 {
 	ll_rw_block_crypt(NULL, op, op_flags, nr, bhs);
 }
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 EXPORT_SYMBOL(ll_rw_block);
 
 void write_dirty_buffer(struct buffer_head *bh, int op_flags)
@@ -3476,7 +3527,17 @@ int bh_uptodate_or_lock(struct buffer_head *bh)
 }
 EXPORT_SYMBOL(bh_uptodate_or_lock);
 
+<<<<<<< HEAD
 int bh_submit_read_crypt(struct inode *inode, struct buffer_head *bh)
+=======
+/**
+ * bh_submit_read - Submit a locked buffer for reading
+ * @bh: struct buffer_head
+ *
+ * Returns zero on success and -EIO on error.
+ */
+int bh_submit_read(struct buffer_head *bh)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	BUG_ON(!buffer_locked(bh));
 
@@ -3487,12 +3548,17 @@ int bh_submit_read_crypt(struct inode *inode, struct buffer_head *bh)
 
 	get_bh(bh);
 	bh->b_end_io = end_buffer_read_sync;
+<<<<<<< HEAD
 	submit_bh_crypt(inode, REQ_OP_READ, 0, bh);
+=======
+	submit_bh(REQ_OP_READ, 0, bh);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	wait_on_buffer(bh);
 	if (buffer_uptodate(bh))
 		return 0;
 	return -EIO;
 }
+<<<<<<< HEAD
 EXPORT_SYMBOL(bh_submit_read_crypt);
 
 /**
@@ -3505,6 +3571,8 @@ int bh_submit_read(struct buffer_head *bh)
 {
 	return bh_submit_read_crypt(NULL, bh);
 }
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 EXPORT_SYMBOL(bh_submit_read);
 
 void __init buffer_init(void)

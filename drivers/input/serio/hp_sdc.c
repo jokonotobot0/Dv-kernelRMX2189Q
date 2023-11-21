@@ -887,8 +887,13 @@ static int __init hp_sdc_init(void)
 			"HP SDC NMI", &hp_sdc))
 		goto err2;
 
+<<<<<<< HEAD
 	pr_info(PREFIX "HP SDC at 0x%08lx, IRQ %d (NMI IRQ %d)\n",
 	       hp_sdc.base_io, hp_sdc.irq, hp_sdc.nmi);
+=======
+	printk(KERN_INFO PREFIX "HP SDC at 0x%p, IRQ %d (NMI IRQ %d)\n",
+	       (void *)hp_sdc.base_io, hp_sdc.irq, hp_sdc.nmi);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	hp_sdc_status_in8();
 	hp_sdc_data_in8();

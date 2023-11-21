@@ -33,7 +33,10 @@
 #include <linux/ratelimit.h>
 #include <linux/pm_runtime.h>
 #include <linux/blk-cgroup.h>
+<<<<<<< HEAD
 #include <mt-plat/mtk_blocktag.h> /* MTK PATCH */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #define CREATE_TRACE_POINTS
 #include <trace/events/block.h>
@@ -41,8 +44,11 @@
 #include "blk.h"
 #include "blk-mq.h"
 
+<<<<<<< HEAD
 #include <linux/math64.h>
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 EXPORT_TRACEPOINT_SYMBOL_GPL(block_bio_remap);
 EXPORT_TRACEPOINT_SYMBOL_GPL(block_rq_remap);
 EXPORT_TRACEPOINT_SYMBOL_GPL(block_bio_complete);
@@ -76,7 +82,11 @@ static void blk_clear_congested(struct request_list *rl, int sync)
 	 * flip its congestion state for events on other blkcgs.
 	 */
 	if (rl == &rl->q->root_rl)
+<<<<<<< HEAD
 		clear_wb_congested(rl->q->backing_dev_info->wb.congested, sync);
+=======
+		clear_wb_congested(rl->q->backing_dev_info.wb.congested, sync);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif
 }
 
@@ -87,7 +97,11 @@ static void blk_set_congested(struct request_list *rl, int sync)
 #else
 	/* see blk_clear_congested() */
 	if (rl == &rl->q->root_rl)
+<<<<<<< HEAD
 		set_wb_congested(rl->q->backing_dev_info->wb.congested, sync);
+=======
+		set_wb_congested(rl->q->backing_dev_info.wb.congested, sync);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif
 }
 
@@ -106,15 +120,37 @@ void blk_queue_congestion_threshold(struct request_queue *q)
 	q->nr_congestion_off = nr;
 }
 
+<<<<<<< HEAD
+=======
+/**
+ * blk_get_backing_dev_info - get the address of a queue's backing_dev_info
+ * @bdev:	device
+ *
+ * Locates the passed device's request queue and returns the address of its
+ * backing_dev_info.  This function can only be called if @bdev is opened
+ * and the return value is never NULL.
+ */
+struct backing_dev_info *blk_get_backing_dev_info(struct block_device *bdev)
+{
+	struct request_queue *q = bdev_get_queue(bdev);
+
+	return &q->backing_dev_info;
+}
+EXPORT_SYMBOL(blk_get_backing_dev_info);
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 void blk_rq_init(struct request_queue *q, struct request *rq)
 {
 	memset(rq, 0, sizeof(*rq));
 
 	INIT_LIST_HEAD(&rq->queuelist);
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /*Huacai.Zhou@PSW.BSP.Kernel.Performance, 2018-04-28, add foreground task io opt*/
 	INIT_LIST_HEAD(&rq->fg_list);
 #endif /*VENDOR_EDIT*/
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	INIT_LIST_HEAD(&rq->timeout_list);
 	rq->cpu = -1;
 	rq->q = q;
@@ -575,7 +611,11 @@ void blk_cleanup_queue(struct request_queue *q)
 	blk_flush_integrity();
 
 	/* @q won't process any more request, flush async actions */
+<<<<<<< HEAD
 	del_timer_sync(&q->backing_dev_info->laptop_mode_wb_timer);
+=======
+	del_timer_sync(&q->backing_dev_info.laptop_mode_wb_timer);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	blk_sync_queue(q);
 
 	if (q->mq_ops)
@@ -587,7 +627,11 @@ void blk_cleanup_queue(struct request_queue *q)
 		q->queue_lock = &q->__queue_lock;
 	spin_unlock_irq(lock);
 
+<<<<<<< HEAD
 	bdi_unregister(q->backing_dev_info);
+=======
+	bdi_unregister(&q->backing_dev_info);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/* @q is and will stay empty, shutdown and put */
 	blk_put_queue(q);
@@ -678,6 +722,7 @@ static void blk_rq_timed_out_timer(unsigned long data)
 	kblockd_schedule_work(&q->timeout_work);
 }
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /*Huacai.Zhou@PSW.BSP.Kernel.Performance, 2018-04-28, add foreground task io opt*/
 #define FG_CNT_DEF 20
@@ -686,6 +731,12 @@ static void blk_rq_timed_out_timer(unsigned long data)
 struct request_queue *blk_alloc_queue_node(gfp_t gfp_mask, int node_id)
 {
 	struct request_queue *q;
+=======
+struct request_queue *blk_alloc_queue_node(gfp_t gfp_mask, int node_id)
+{
+	struct request_queue *q;
+	int err;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	q = kmem_cache_alloc_node(blk_requestq_cachep,
 				gfp_mask | __GFP_ZERO, node_id);
@@ -700,6 +751,7 @@ struct request_queue *blk_alloc_queue_node(gfp_t gfp_mask, int node_id)
 	if (!q->bio_split)
 		goto fail_id;
 
+<<<<<<< HEAD
 	q->backing_dev_info = bdi_alloc_node(gfp_mask, node_id);
 		if (!(q->backing_dev_info))
 			goto fail_split;
@@ -718,14 +770,30 @@ struct request_queue *blk_alloc_queue_node(gfp_t gfp_mask, int node_id)
 	q->node = node_id;
 
 	setup_timer(&q->backing_dev_info->laptop_mode_wb_timer,
+=======
+	q->backing_dev_info.ra_pages =
+			(VM_MAX_READAHEAD * 1024) / PAGE_SIZE;
+	q->backing_dev_info.capabilities = BDI_CAP_CGROUP_WRITEBACK;
+	q->backing_dev_info.name = "block";
+	q->node = node_id;
+
+	err = bdi_init(&q->backing_dev_info);
+	if (err)
+		goto fail_split;
+
+	setup_timer(&q->backing_dev_info.laptop_mode_wb_timer,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		    laptop_mode_timer_fn, (unsigned long) q);
 	setup_timer(&q->timeout, blk_rq_timed_out_timer, (unsigned long) q);
 	INIT_WORK(&q->timeout_work, NULL);
 	INIT_LIST_HEAD(&q->queue_head);
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /*Huacai.Zhou@PSW.BSP.Kernel.Performance, 2018-04-28, add foreground task io opt*/
 	INIT_LIST_HEAD(&q->fg_head);
 #endif /*VENDOR_EDIT*/
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	INIT_LIST_HEAD(&q->timeout_list);
 	INIT_LIST_HEAD(&q->icq_list);
 #ifdef CONFIG_BLK_CGROUP
@@ -772,7 +840,11 @@ struct request_queue *blk_alloc_queue_node(gfp_t gfp_mask, int node_id)
 fail_ref:
 	percpu_ref_exit(&q->q_usage_counter);
 fail_bdi:
+<<<<<<< HEAD
 	bdi_put(q->backing_dev_info);
+=======
+	bdi_destroy(&q->backing_dev_info);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 fail_split:
 	bioset_free(q->bio_split);
 fail_id:
@@ -1199,7 +1271,11 @@ fail_elvpriv:
 	 * disturb iosched and blkcg but weird is bettern than dead.
 	 */
 	printk_ratelimited(KERN_WARNING "%s: dev %s: request aux data allocation failed, iosched may be disturbed\n",
+<<<<<<< HEAD
 			   __func__, dev_name(q->backing_dev_info->dev));
+=======
+			   __func__, dev_name(q->backing_dev_info.dev));
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	rq->cmd_flags &= ~REQ_ELVPRIV;
 	rq->elv.icq = NULL;
@@ -1356,6 +1432,7 @@ void blk_requeue_request(struct request_queue *q, struct request *rq)
 	if (rq->cmd_flags & REQ_QUEUED)
 		blk_queue_end_tag(q, rq);
 
+<<<<<<< HEAD
 	/*
 	 * MTK PATCH:
 	 * Remove REQ_DEV_STARTED to make sure future possible abort handler
@@ -1363,6 +1440,8 @@ void blk_requeue_request(struct request_queue *q, struct request *rq)
 	 */
 	rq->cmd_flags &= ~REQ_DEV_STARTED;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	BUG_ON(blk_queued_rq(rq));
 
 	elv_requeue_request(q, rq);
@@ -2091,6 +2170,7 @@ out:
 }
 EXPORT_SYMBOL(generic_make_request);
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /*Huacai.Zhou@PSW.BSP.Kernel.Performance, 2018-04-28, add foreground task io opt*/
 #define SYSTEM_APP_UID 1000
@@ -2160,6 +2240,8 @@ static bool high_prio_for_task(struct task_struct *t)
 }
 #endif /*VENDOR_EDIT*/
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /**
  * submit_bio - submit a bio to the block device layer for I/O
  * @bio: The &struct bio which describes the I/O
@@ -2190,9 +2272,12 @@ blk_qc_t submit_bio(struct bio *bio)
 			count_vm_events(PGPGIN, count);
 		}
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_BLOCK_TAG
 		mtk_btag_pidlog_submit_bio(bio);
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		if (unlikely(block_dump)) {
 			char b[BDEVNAME_SIZE];
 			printk(KERN_DEBUG "%s(%d): %s block %Lu on %s (%u sectors)\n",
@@ -2203,11 +2288,15 @@ blk_qc_t submit_bio(struct bio *bio)
 				count);
 		}
 	}
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /*Huacai.Zhou@PSW.BSP.Kernel.Performance, 2018-04-28, add foreground task io opt*/
 	if (high_prio_for_task(current))
 		bio->bi_opf |= REQ_FG;
 #endif
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return generic_make_request(bio);
 }
 EXPORT_SYMBOL(submit_bio);
@@ -2442,6 +2531,7 @@ void blk_account_io_start(struct request *rq, bool new_io)
 	part_stat_unlock();
 }
 
+<<<<<<< HEAD
 /* MTK PATCH */
 #ifdef CONFIG_MTK_BLK_RW_PROFILING
 u32 read_counter[RW_ARRAY_SIZE] = {0};
@@ -2497,6 +2587,8 @@ int mtk_trace_block_rq_get_rw_counter_clr(void)
 }
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /**
  * blk_peek_request - peek at the top of a request queue
  * @q: request queue to peek at
@@ -2517,6 +2609,10 @@ struct request *blk_peek_request(struct request_queue *q)
 {
 	struct request *rq;
 	int ret;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	while ((rq = __elv_next_request(q)) != NULL) {
 
 		rq = blk_pm_peek_request(q, rq);
@@ -2599,12 +2695,15 @@ struct request *blk_peek_request(struct request_queue *q)
 		}
 	}
 
+<<<<<<< HEAD
 /* MTK PATCH */
 #ifdef CONFIG_MTK_BLK_RW_PROFILING
 	if (rq)
 		mtk_trace_block_rq(q, rq);
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return rq;
 }
 EXPORT_SYMBOL(blk_peek_request);
@@ -2617,11 +2716,14 @@ void blk_dequeue_request(struct request *rq)
 	BUG_ON(ELV_ON_HASH(rq));
 
 	list_del_init(&rq->queuelist);
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /*Huacai.Zhou@PSW.BSP.Kernel.Performance, 2018-04-28, add foreground task io opt*/
 	if (sysctl_fg_io_opt && (rq->cmd_flags & REQ_FG))
 		list_del_init(&rq->fg_list);
 #endif /*VENDOR_EDIT*/
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/*
 	 * the time frame between a request being removed from the lists
@@ -2630,11 +2732,14 @@ void blk_dequeue_request(struct request *rq)
 	 */
 	if (blk_account_rq(rq)) {
 		q->in_flight[rq_is_sync(rq)]++;
+<<<<<<< HEAD
 #if defined(VENDOR_EDIT) && defined(CONFIG_OPPO_HEALTHINFO)
 // jiheng.xie@PSW.Tech.BSP.Performance, 2019/03/11
 // Add for ioqueue
 		ohm_ioqueue_add_inflight(q, rq);
 #endif /*VENDOR_EDIT*/
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		set_io_start_time_ns(rq);
 	}
 }
@@ -2882,7 +2987,11 @@ void blk_finish_request(struct request *req, int error)
 	BUG_ON(blk_queued_rq(req));
 
 	if (unlikely(laptop_mode) && req->cmd_type == REQ_TYPE_FS)
+<<<<<<< HEAD
 		laptop_io_completion(req->q->backing_dev_info);
+=======
+		laptop_io_completion(&req->q->backing_dev_info);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	blk_delete_timer(req);
 
@@ -3729,6 +3838,7 @@ int __init blk_dev_init(void)
 
 	return 0;
 }
+<<<<<<< HEAD
 
 /*
  * Blk IO latency support. We want this to be as cheap as possible, so doing
@@ -3778,3 +3888,5 @@ blk_latency_hist_show(char* name, struct io_latency_state *s, char *buf,
 	return bytes_written;
 }
 EXPORT_SYMBOL(blk_latency_hist_show);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

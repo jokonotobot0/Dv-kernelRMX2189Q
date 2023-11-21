@@ -25,13 +25,17 @@ proc-y	+= softirqs.o
 proc-y	+= namespaces.o
 proc-y	+= self.o
 proc-y	+= thread_self.o
+<<<<<<< HEAD
 proc-$(CONFIG_PROC_UID)  += uid.o
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 proc-$(CONFIG_PROC_SYSCTL)	+= proc_sysctl.o
 proc-$(CONFIG_NET)		+= proc_net.o
 proc-$(CONFIG_PROC_KCORE)	+= kcore.o
 proc-$(CONFIG_PROC_VMCORE)	+= vmcore.o
 proc-$(CONFIG_PRINTK)	+= kmsg.o
 proc-$(CONFIG_PROC_PAGE_MONITOR)	+= page.o
+<<<<<<< HEAD
 
 ifeq ($(ODM_WT_EDIT),yes)
 # Hui.Yuan@ODM_WT.System.Kernel.Security,2020/03/25,Add for uniqueno display in factory mode
@@ -47,3 +51,5 @@ proc-$(CONFIG_OPPO_FG_OPT)	+= fg_uid.o
 #Hailong.Liu@TECH.Kernel.CPU, 2019/10/24, stat cpu usage on each tick.
 proc-y	+= task_cpustats.o
 #endif /* VENDOR_EDIT */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

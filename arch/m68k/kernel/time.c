@@ -14,7 +14,10 @@
 #include <linux/export.h>
 #include <linux/module.h>
 #include <linux/sched.h>
+<<<<<<< HEAD
 #include <linux/sched/loadavg.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <linux/kernel.h>
 #include <linux/param.h>
 #include <linux/string.h>

@@ -66,9 +66,13 @@ do_wait_for_common(struct completion *x,
 
 		__add_wait_queue_tail_exclusive(&x->wait, &wait);
 		do {
+<<<<<<< HEAD
 			//#ifdef VENDOR_EDIT fangpan@Swdp.shanghai,2015/11/12
 			if (signal_pending_state(state, current) || hung_long_and_fatal_signal_pending(current)) {
 			//#endif
+=======
+			if (signal_pending_state(state, current)) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 				timeout = -ERESTARTSYS;
 				break;
 			}

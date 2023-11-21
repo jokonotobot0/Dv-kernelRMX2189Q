@@ -47,7 +47,10 @@
 #include <linux/prefetch.h>
 #include <linux/printk.h>
 #include <linux/dax.h>
+<<<<<<< HEAD
 #include <linux/psi.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #include <asm/tlbflush.h>
 #include <asm/div64.h>
@@ -109,6 +112,7 @@ struct scan_control {
 
 	/* Number of pages freed so far during a call to shrink_zones() */
 	unsigned long nr_reclaimed;
+<<<<<<< HEAD
 
 #if defined(VENDOR_EDIT) && defined(CONFIG_PROCESS_RECLAIM)
 	/* Kui.Zhang@PSW.BSP.Kernel.Performance, 2018-11-07,
@@ -131,6 +135,9 @@ struct scan_control {
 int kswapd_threads = DEF_KSWAPD_THREADS_PER_NODE;
 int kswapd_threads_current = DEF_KSWAPD_THREADS_PER_NODE;
 
+=======
+};
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #ifdef ARCH_HAS_PREFETCH
 #define prefetch_prev_lru_page(_page, _base, _field)			\
@@ -164,6 +171,7 @@ int kswapd_threads_current = DEF_KSWAPD_THREADS_PER_NODE;
  * From 0 .. 100.  Higher means more swappy.
  */
 int vm_swappiness = 60;
+<<<<<<< HEAD
 
 #ifdef VENDOR_EDIT //yixue.ge@psw.bsp.kernel 20170720 add for add direct_vm_swappiness
 /*
@@ -172,6 +180,8 @@ int vm_swappiness = 60;
 int direct_vm_swappiness = 60;
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * The total number of pages which are beyond the high watermark within all
  * zones.
@@ -974,7 +984,11 @@ static unsigned long shrink_page_list(struct list_head *page_list,
 				      unsigned long *ret_nr_congested,
 				      unsigned long *ret_nr_writeback,
 				      unsigned long *ret_nr_immediate,
+<<<<<<< HEAD
 				      bool skip_reference_check)
+=======
+				      bool force_reclaim)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	LIST_HEAD(ret_pages);
 	LIST_HEAD(free_pages);
@@ -992,11 +1006,16 @@ static unsigned long shrink_page_list(struct list_head *page_list,
 		struct address_space *mapping;
 		struct page *page;
 		int may_enter_fs;
+<<<<<<< HEAD
 		enum page_references references = PAGEREF_RECLAIM;
+=======
+		enum page_references references = PAGEREF_RECLAIM_CLEAN;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		bool dirty, writeback;
 		bool lazyfree = false;
 		int ret = SWAP_SUCCESS;
 
+<<<<<<< HEAD
 #if defined(VENDOR_EDIT) && defined(CONFIG_PROCESS_RECLAIM)
 		/* Kui.Zhang@PSW.BSP.Kernel.Performance, 2018-12-25, check whether the
 		 * reclaim process should cancel*/
@@ -1004,6 +1023,8 @@ static unsigned long shrink_page_list(struct list_head *page_list,
 			break;
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		cond_resched();
 
 		page = lru_to_page(page_list);
@@ -1123,7 +1144,11 @@ static unsigned long shrink_page_list(struct list_head *page_list,
 			}
 		}
 
+<<<<<<< HEAD
 		if (!skip_reference_check)
+=======
+		if (!force_reclaim)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			references = page_check_references(page, sc);
 
 		switch (references) {
@@ -1163,6 +1188,7 @@ static unsigned long shrink_page_list(struct list_head *page_list,
 		 * processes. Try to unmap it here.
 		 */
 		if (page_mapped(page) && mapping) {
+<<<<<<< HEAD
 #if defined(VENDOR_EDIT) && defined(CONFIG_PROCESS_RECLAIM)
 			/* Kui.Zhang@PSW.TEC.Kernel.Performance. 2019/01/16,
 			 * Support the new interface
@@ -1176,6 +1202,11 @@ static unsigned long shrink_page_list(struct list_head *page_list,
 				(ttu_flags | TTU_BATCH_FLUSH | TTU_LZFREE) :
 				(ttu_flags | TTU_BATCH_FLUSH))) {
 #endif
+=======
+			switch (ret = try_to_unmap(page, lazyfree ?
+				(ttu_flags | TTU_BATCH_FLUSH | TTU_LZFREE) :
+				(ttu_flags | TTU_BATCH_FLUSH))) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			case SWAP_FAIL:
 				goto activate_locked;
 			case SWAP_AGAIN:
@@ -1195,6 +1226,7 @@ static unsigned long shrink_page_list(struct list_head *page_list,
 			 * avoid risk of stack overflow but only writeback
 			 * if many dirty pages have been encountered.
 			 */
+<<<<<<< HEAD
 #if defined(VENDOR_EDIT) && defined(CONFIG_PROCESS_RECLAIM)
 			/* Kui.Zhang@PSW.TEC.Kernel.Performance, 2019/01/16,
 			 * zone is NULL while called from process reclaim
@@ -1208,6 +1240,11 @@ static unsigned long shrink_page_list(struct list_head *page_list,
 					(!current_is_kswapd() ||
 					 !test_bit(PGDAT_DIRTY, &pgdat->flags))) {
 #endif
+=======
+			if (page_is_file_cache(page) &&
+					(!current_is_kswapd() ||
+					 !test_bit(PGDAT_DIRTY, &pgdat->flags))) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 				/*
 				 * Immediately reclaim when written back.
 				 * Similar in principal to deactivate_page()
@@ -1323,6 +1360,7 @@ free_it:
 		 * appear not as the counts should be low
 		 */
 		list_add(&page->lru, &free_pages);
+<<<<<<< HEAD
 #if defined(VENDOR_EDIT) && defined(CONFIG_PROCESS_RECLAIM)
 		/* Kui.Zhang@PSW.TEC.Kernel.Performance, 2019-01-15,
 		 * If pagelist are from multiple zones, we should decrease
@@ -1332,6 +1370,8 @@ free_it:
 			dec_node_page_state(page, NR_ISOLATED_ANON +
 					page_is_file_cache(page));
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		continue;
 
 cull_mlocked:
@@ -1398,6 +1438,7 @@ unsigned long reclaim_clean_pages_from_list(struct zone *zone,
 	return ret;
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_PROCESS_RECLAIM
 unsigned long reclaim_pages(struct list_head *page_list)
 {
@@ -1449,6 +1490,8 @@ unsigned long reclaim_pages(struct list_head *page_list)
 }
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * Attempt to remove the specified page from its LRU.  Only take this page
  * if it is of the appropriate PageActive status.  Pages which are being
@@ -1691,6 +1734,7 @@ int isolate_lru_page(struct page *page)
 	int ret = -EBUSY;
 
 	VM_BUG_ON_PAGE(!page_count(page), page);
+<<<<<<< HEAD
 #if defined(VENDOR_EDIT) && defined(CONFIG_PROCESS_RECLAIM)
 	/* Kui.Zhang@PSW.TEC.Kernel.Performance, 2019-01-08,
 	 * Because process reclaim is doing page by
@@ -1701,6 +1745,9 @@ int isolate_lru_page(struct page *page)
 #else
 	WARN_RATELIMIT(PageTail(page), "trying to isolate tail page");
 #endif
+=======
+	WARN_RATELIMIT(PageTail(page), "trying to isolate tail page");
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (PageLRU(page)) {
 		struct zone *zone = page_zone(page);
@@ -2130,7 +2177,10 @@ static void shrink_active_list(unsigned long nr_to_scan,
 		}
 
 		ClearPageActive(page);	/* we are de-activating */
+<<<<<<< HEAD
 		SetPageWorkingset(page);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		list_add(&page->lru, &l_inactive);
 	}
 
@@ -2201,6 +2251,7 @@ static bool inactive_list_is_low(struct lruvec *lruvec, bool file,
 	active = lruvec_lru_size(lruvec, active_lru, sc->reclaim_idx);
 
 	gb = (inactive + active) >> (30 - PAGE_SHIFT);
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /*Huacai.Zhou@PSW.BSP.Kernel.MM, 2018-04-28, fix direct reclaim slow issue*/
 	if (gb && file)
@@ -2209,6 +2260,10 @@ static bool inactive_list_is_low(struct lruvec *lruvec, bool file,
 	if (gb)
 		inactive_ratio = int_sqrt(10 * gb);
 #endif /*VENDOR_EDIT*/
+=======
+	if (gb)
+		inactive_ratio = int_sqrt(10 * gb);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	else
 		inactive_ratio = 1;
 
@@ -2227,6 +2282,7 @@ static unsigned long shrink_list(enum lru_list lru, unsigned long nr_to_scan,
 	return shrink_inactive_list(nr_to_scan, lruvec, sc, lru);
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_GMO_RAM_OPTIMIZE
 /* threshold of swapin and out */
 static unsigned int swpinout_threshold = 12000;
@@ -2275,6 +2331,8 @@ static bool swap_is_allowed(void)
 }
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 enum scan_balance {
 	SCAN_EQUAL,
 	SCAN_FRACT,
@@ -2325,19 +2383,26 @@ static void get_scan_count(struct lruvec *lruvec, struct mem_cgroup *memcg,
 		if (!mem_cgroup_online(memcg))
 			force_scan = true;
 	}
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT //yixue.ge@psw.bsp.kernel.driver 20170810 modify for reserver some zram disk size
 	else
 		swappiness = direct_vm_swappiness;
 #endif		
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (!global_reclaim(sc))
 		force_scan = true;
 
 	/* If we have no swap space, do not bother scanning anon pages. */
+<<<<<<< HEAD
 #ifndef VENDOR_EDIT //yixue.ge@psw.bsp.kernel.driver 20170810 modify for reserver some zram disk size
 	if (!sc->may_swap || mem_cgroup_get_nr_swap_pages(memcg) <= 0) {
 #else
 	if (!sc->may_swap || (mem_cgroup_get_nr_swap_pages(memcg) <= total_swap_pages>>6)) {
 #endif
+=======
+	if (!sc->may_swap || mem_cgroup_get_nr_swap_pages(memcg) <= 0) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		scan_balance = SCAN_FILE;
 		goto out;
 	}
@@ -2517,6 +2582,7 @@ out:
 	}
 }
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /*Huacai.Zhou@PSW.BSP.Kernel.MM 20171227 modify for filelru first */
 #define for_each_evictable_lru_file(lru) for (lru = LRU_INACTIVE_FILE; lru <= LRU_ACTIVE_FILE; lru++)
@@ -2535,6 +2601,8 @@ module_param_named(swap_max_ratio, swap_max_ratio, uint, S_IRUGO | S_IWUSR);
 static int scan_anon_priority = 4;
 module_param_named(scan_anon_prio, scan_anon_priority, int, 0644);
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * This is a basic per-node page freer.  Used by both kswapd and direct reclaim.
  */
@@ -2556,6 +2624,7 @@ static void shrink_node_memcg(struct pglist_data *pgdat, struct mem_cgroup *memc
 	/* Record the original scan target for proportional adjustments later */
 	memcpy(targets, nr, sizeof(nr));
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_GMO_RAM_OPTIMIZE
 	/*
 	 * sc->priority: 12, 11, 10,  9
@@ -2579,6 +2648,8 @@ static void shrink_node_memcg(struct pglist_data *pgdat, struct mem_cgroup *memc
 	}
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/*
 	 * Global reclaiming within direct reclaim at DEF_PRIORITY is a normal
 	 * event that can occur when there is little memory pressure e.g.
@@ -2599,6 +2670,7 @@ static void shrink_node_memcg(struct pglist_data *pgdat, struct mem_cgroup *memc
 		unsigned long nr_anon, nr_file, percentage;
 		unsigned long nr_scanned;
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /*Huacai.Zhou@PSW.BSP.Kernel.MM 20171227 modify for filelru first */
 		for_each_evictable_lru_file(lru) {
@@ -2620,6 +2692,8 @@ static void shrink_node_memcg(struct pglist_data *pgdat, struct mem_cgroup *memc
 			}
 		}
 #else		
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		for_each_evictable_lru(lru) {
 			if (nr[lru]) {
 				nr_to_scan = min(nr[lru], SWAP_CLUSTER_MAX);
@@ -2629,7 +2703,10 @@ static void shrink_node_memcg(struct pglist_data *pgdat, struct mem_cgroup *memc
 							    lruvec, sc);
 			}
 		}
+<<<<<<< HEAD
 #endif /*VENDOR_EDIT*/
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 		cond_resched();
 
@@ -2945,12 +3022,15 @@ static void shrink_zones(struct zonelist *zonelist, struct scan_control *sc)
 
 	for_each_zone_zonelist_nodemask(zone, z, zonelist,
 					sc->reclaim_idx, sc->nodemask) {
+<<<<<<< HEAD
 
 		/* If no reclaimable pages, just skip ZONE_MOVABLE_CMA zones. */
 		if (IS_ZONE_MOVABLE_CMA_ZONE(zone))
 			if (zone_reclaimable_pages(zone) == 0)
 				continue;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		/*
 		 * Take care memory controller reclaiming has small influence
 		 * to global LRU.
@@ -3243,11 +3323,14 @@ unsigned long try_to_free_pages(struct zonelist *zonelist, int order,
 		.may_unmap = 1,
 		.may_swap = 1,
 	};
+<<<<<<< HEAD
 	
 #ifdef VENDOR_EDIT
 /*Huacai.Zhou@PSW.BSP.Kernel.MM 2018-08-30 increase nr_to_reclaim*/
 	sc.nr_to_reclaim = SWAP_CLUSTER_MAX  <<  swap_max_ratio;
 #endif /*VENDOR_EDIT*/
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/*
 	 * Do not enter reclaim if fatal signal was delivered while throttled.
@@ -3316,7 +3399,10 @@ unsigned long try_to_free_mem_cgroup_pages(struct mem_cgroup *memcg,
 {
 	struct zonelist *zonelist;
 	unsigned long nr_reclaimed;
+<<<<<<< HEAD
 	unsigned long pflags;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	int nid;
 	struct scan_control sc = {
 		.nr_to_reclaim = max(nr_pages, SWAP_CLUSTER_MAX),
@@ -3344,6 +3430,7 @@ unsigned long try_to_free_mem_cgroup_pages(struct mem_cgroup *memcg,
 					    sc.gfp_mask,
 					    sc.reclaim_idx);
 
+<<<<<<< HEAD
 	psi_memstall_enter(&pflags);
 	current->flags |= PF_MEMALLOC;
 
@@ -3351,6 +3438,11 @@ unsigned long try_to_free_mem_cgroup_pages(struct mem_cgroup *memcg,
 
 	current->flags &= ~PF_MEMALLOC;
 	psi_memstall_leave(&pflags);
+=======
+	current->flags |= PF_MEMALLOC;
+	nr_reclaimed = do_try_to_free_pages(zonelist, &sc);
+	current->flags &= ~PF_MEMALLOC;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	trace_mm_vmscan_memcg_reclaim_end(nr_reclaimed);
 
@@ -3382,6 +3474,7 @@ static bool zone_balanced(struct zone *zone, int order, int classzone_idx)
 {
 	unsigned long mark = high_wmark_pages(zone);
 
+<<<<<<< HEAD
 	if (IS_ZONE_MOVABLE_CMA_ZONE(zone)) {
 		unsigned long reclaimable = zone_reclaimable_pages(zone);
 
@@ -3399,6 +3492,8 @@ static bool zone_balanced(struct zone *zone, int order, int classzone_idx)
 			return true;
 	}
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (!zone_watermark_ok_safe(zone, order, mark, classzone_idx))
 		return false;
 
@@ -3477,6 +3572,7 @@ static bool kswapd_shrink_node(pg_data_t *pgdat,
 		if (!managed_zone(zone))
 			continue;
 
+<<<<<<< HEAD
 		/*
 		 * Reclaim the number of pages in ZONE_MOVABLE/ZONE_NORMAL to be
 		 * up to zone_reclaimable_pages(zone) if there is fewer
@@ -3488,6 +3584,9 @@ static bool kswapd_shrink_node(pg_data_t *pgdat,
 		else
 			sc->nr_to_reclaim += max(high_wmark_pages(zone),
 					SWAP_CLUSTER_MAX);
+=======
+		sc->nr_to_reclaim += max(high_wmark_pages(zone), SWAP_CLUSTER_MAX);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 
 	/*
@@ -3527,7 +3626,10 @@ static int balance_pgdat(pg_data_t *pgdat, int order, int classzone_idx)
 	int i;
 	unsigned long nr_soft_reclaimed;
 	unsigned long nr_soft_scanned;
+<<<<<<< HEAD
 	unsigned long pflags;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct zone *zone;
 	struct scan_control sc = {
 		.gfp_mask = GFP_KERNEL,
@@ -3537,8 +3639,11 @@ static int balance_pgdat(pg_data_t *pgdat, int order, int classzone_idx)
 		.may_unmap = 1,
 		.may_swap = 1,
 	};
+<<<<<<< HEAD
 
 	psi_memstall_enter(&pflags);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	count_vm_event(PAGEOUTRUN);
 
 	do {
@@ -3643,7 +3748,10 @@ static int balance_pgdat(pg_data_t *pgdat, int order, int classzone_idx)
 		pgdat->kswapd_failures++;
 
 out:
+<<<<<<< HEAD
 	psi_memstall_leave(&pflags);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/*
 	 * Return the order kswapd stopped reclaiming at as
 	 * prepare_kswapd_sleep() takes it into account. If another caller
@@ -3908,8 +4016,12 @@ unsigned long shrink_all_memory(unsigned long nr_to_reclaim)
 static int cpu_callback(struct notifier_block *nfb, unsigned long action,
 			void *hcpu)
 {
+<<<<<<< HEAD
 	int nid, hid;
 	int nr_threads = kswapd_threads_current;
+=======
+	int nid;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (action == CPU_ONLINE || action == CPU_ONLINE_FROZEN) {
 		for_each_node_state(nid, N_MEMORY) {
@@ -3918,17 +4030,24 @@ static int cpu_callback(struct notifier_block *nfb, unsigned long action,
 
 			mask = cpumask_of_node(pgdat->node_id);
 
+<<<<<<< HEAD
 			if (cpumask_any_and(cpu_online_mask, mask) < nr_cpu_ids) {
 	            for (hid = 0; hid < nr_threads; hid++) {
 				    /* One of our CPUs online: restore mask */
 				    set_cpus_allowed_ptr(pgdat->kswapd[hid], mask);
 	            }
 	        }
+=======
+			if (cpumask_any_and(cpu_online_mask, mask) < nr_cpu_ids)
+				/* One of our CPUs online: restore mask */
+				set_cpus_allowed_ptr(pgdat->kswapd, mask);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		}
 	}
 	return NOTIFY_OK;
 }
 
+<<<<<<< HEAD
 
 static void update_kswapd_threads_node(int nid)
 {
@@ -3989,6 +4108,8 @@ void update_kswapd_threads(void)
 }
 
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * This kswapd start function will be called by init and node-hot-add.
  * On node-hot-add, kswapd will moved to proper cpus if cpus are hot-added.
@@ -3997,6 +4118,7 @@ int kswapd_run(int nid)
 {
 	pg_data_t *pgdat = NODE_DATA(nid);
 	int ret = 0;
+<<<<<<< HEAD
 	int hid, nr_threads;
 
 	if (pgdat->kswapd[0])
@@ -4016,6 +4138,20 @@ int kswapd_run(int nid)
 	}
 	kswapd_threads_current = nr_threads;
 
+=======
+
+	if (pgdat->kswapd)
+		return 0;
+
+	pgdat->kswapd = kthread_run(kswapd, pgdat, "kswapd%d", nid);
+	if (IS_ERR(pgdat->kswapd)) {
+		/* failure at boot is fatal */
+		BUG_ON(system_state == SYSTEM_BOOTING);
+		pr_err("Failed to start kswapd on node %d\n", nid);
+		ret = PTR_ERR(pgdat->kswapd);
+		pgdat->kswapd = NULL;
+	}
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return ret;
 }
 
@@ -4025,6 +4161,7 @@ int kswapd_run(int nid)
  */
 void kswapd_stop(int nid)
 {
+<<<<<<< HEAD
     struct task_struct *kswapd;
 	int hid;
 	int nr_threads = kswapd_threads_current;
@@ -4035,6 +4172,13 @@ void kswapd_stop(int nid)
 			kthread_stop(kswapd);
 			NODE_DATA(nid)->kswapd[hid] = NULL;
 		}
+=======
+	struct task_struct *kswapd = NODE_DATA(nid)->kswapd;
+
+	if (kswapd) {
+		kthread_stop(kswapd);
+		NODE_DATA(nid)->kswapd = NULL;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 }
 
@@ -4294,6 +4438,7 @@ void check_move_unevictable_pages(struct page **pages, int nr_pages)
 	}
 }
 #endif /* CONFIG_SHMEM */
+<<<<<<< HEAD
 
 #if defined(VENDOR_EDIT) && defined(CONFIG_PROCESS_RECLAIM)
 /* Kui.Zhang@PSW.BSP.Kernel.Performance, 2018-12-25, reclaim the memory of the task*/
@@ -4340,3 +4485,5 @@ unsigned long reclaim_pages_from_list(struct list_head *page_list,
 	return nr_reclaimed;
 }
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

@@ -732,6 +732,7 @@ static void avc_audit_post_callback(struct audit_buffer *ab, void *a)
 	if (ad->selinux_audit_data->denied) {
 		audit_log_format(ab, " permissive=%u",
 				 ad->selinux_audit_data->result ? 0 : 1);
+<<<<<<< HEAD
 #if defined(CONFIG_MTK_SELINUX_AEE_WARNING) &&\
 	defined(MTK_SELINUX_WARNING_ENABLE)
 		{
@@ -748,6 +749,8 @@ static void avc_audit_post_callback(struct audit_buffer *ab, void *a)
 			}
 		}
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 }
 
@@ -1008,7 +1011,10 @@ static noinline int avc_denied(u32 ssid, u32 tsid,
 	return 0;
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * The avc extended permissions logic adds an additional 256 bits of
  * permissions to an avc node when extended permissions for that node are
@@ -1031,7 +1037,10 @@ int avc_has_extended_perms(u32 ssid, u32 tsid, u16 tclass, u32 requested,
 	struct avc_xperms_node *xp_node;
 	int rc = 0, rc2;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	xp_node = &local_xp_node;
 	BUG_ON(!requested);
 
@@ -1161,7 +1170,10 @@ int avc_has_perm(u32 ssid, u32 tsid, u16 tclass,
 	struct av_decision avd;
 	int rc, rc2;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	rc = avc_has_perm_noaudit(ssid, tsid, tclass, requested, 0, &avd);
 
 	rc2 = avc_audit(ssid, tsid, tclass, requested, &avd, rc, auditdata, 0);

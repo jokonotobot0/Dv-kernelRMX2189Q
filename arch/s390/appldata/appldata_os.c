@@ -17,12 +17,22 @@
 #include <linux/kernel_stat.h>
 #include <linux/netdevice.h>
 #include <linux/sched.h>
+<<<<<<< HEAD
 #include <linux/sched/loadavg.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <asm/appldata.h>
 #include <asm/smp.h>
 
 #include "appldata.h"
 
+<<<<<<< HEAD
+=======
+
+#define LOAD_INT(x) ((x) >> FSHIFT)
+#define LOAD_FRAC(x) LOAD_INT(((x) & (FIXED_1-1)) * 100)
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * OS data
  *

@@ -1672,7 +1672,11 @@ static int btrfs_congested_fn(void *congested_data, int bdi_bits)
 	list_for_each_entry_rcu(device, &info->fs_devices->devices, dev_list) {
 		if (!device->bdev)
 			continue;
+<<<<<<< HEAD
 		bdi = device->bdev->bd_bdi;
+=======
+		bdi = blk_get_backing_dev_info(device->bdev);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		if (bdi_congested(bdi, bdi_bits)) {
 			ret = 1;
 			break;

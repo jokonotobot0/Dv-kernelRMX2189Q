@@ -33,6 +33,7 @@ void snd_usb_handle_sync_urb(struct snd_usb_endpoint *ep,
 			     struct snd_usb_endpoint *sender,
 			     const struct urb *urb);
 
+<<<<<<< HEAD
 #define USB_AUDIO_DATA_OUT 0
 #define USB_AUDIO_DATA_IN 1
 #define USB_AUDIO_DATA_SYNC 2
@@ -48,4 +49,6 @@ static inline void *mtk_usb_alloc_sram(int id, size_t size,
 };
 static inline void mtk_usb_free_sram(int id) {};
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif /* __USBAUDIO_ENDPOINT_H */

@@ -5100,7 +5100,11 @@ static struct kobject *md_probe(dev_t dev, int *part, void *data)
 	return NULL;
 }
 
+<<<<<<< HEAD
 static int add_named_array(const char *val, const struct kernel_param *kp)
+=======
+static int add_named_array(const char *val, struct kernel_param *kp)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	/* val must be "md_*" where * is not all digits.
 	 * We allocate an array with a large free minor number, and
@@ -5317,8 +5321,13 @@ int md_run(struct mddev *mddev)
 			queue_flag_set_unlocked(QUEUE_FLAG_NONROT, mddev->queue);
 		else
 			queue_flag_clear_unlocked(QUEUE_FLAG_NONROT, mddev->queue);
+<<<<<<< HEAD
 		mddev->queue->backing_dev_info->congested_data = mddev;
 		mddev->queue->backing_dev_info->congested_fn = md_congested;
+=======
+		mddev->queue->backing_dev_info.congested_data = mddev;
+		mddev->queue->backing_dev_info.congested_fn = md_congested;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 	if (pers->sync_request) {
 		if (mddev->kobj.sd &&
@@ -5673,7 +5682,11 @@ static int do_md_stop(struct mddev *mddev, int mode,
 
 		__md_stop_writes(mddev);
 		__md_stop(mddev);
+<<<<<<< HEAD
 		mddev->queue->backing_dev_info->congested_fn = NULL;
+=======
+		mddev->queue->backing_dev_info.congested_fn = NULL;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 		/* tell userspace to handle 'inactive' */
 		sysfs_notify_dirent_safe(mddev->sysfs_state);
@@ -8999,11 +9012,19 @@ static __exit void md_exit(void)
 subsys_initcall(md_init);
 module_exit(md_exit)
 
+<<<<<<< HEAD
 static int get_ro(char *buffer, const struct kernel_param *kp)
 {
 	return sprintf(buffer, "%d", start_readonly);
 }
 static int set_ro(const char *val, const struct kernel_param *kp)
+=======
+static int get_ro(char *buffer, struct kernel_param *kp)
+{
+	return sprintf(buffer, "%d", start_readonly);
+}
+static int set_ro(const char *val, struct kernel_param *kp)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	return kstrtouint(val, 10, (unsigned int *)&start_readonly);
 }

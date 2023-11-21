@@ -26,7 +26,10 @@
 #include <linux/mm.h>
 #include <linux/fcntl.h>
 #include <linux/socket.h>
+<<<<<<< HEAD
 #include <linux/sock_diag.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <linux/in.h>
 #include <linux/inet.h>
 #include <linux/netdevice.h>
@@ -79,10 +82,13 @@ int sk_filter_trim_cap(struct sock *sk, struct sk_buff *skb, unsigned int cap)
 	if (skb_pfmemalloc(skb) && !sock_flag(sk, SOCK_MEMALLOC))
 		return -ENOMEM;
 
+<<<<<<< HEAD
 	err = BPF_CGROUP_RUN_PROG_INET_INGRESS(sk, skb);
 	if (err)
 		return err;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	err = security_sock_rcv_skb(sk, skb);
 	if (err)
 		return err;
@@ -90,12 +96,16 @@ int sk_filter_trim_cap(struct sock *sk, struct sk_buff *skb, unsigned int cap)
 	rcu_read_lock();
 	filter = rcu_dereference(sk->sk_filter);
 	if (filter) {
+<<<<<<< HEAD
 		struct sock *save_sk = skb->sk;
 		unsigned int pkt_len;
 
 		skb->sk = sk;
 		pkt_len = bpf_prog_run_save_cb(filter->prog, skb);
 		skb->sk = save_sk;
+=======
+		unsigned int pkt_len = bpf_prog_run_save_cb(filter->prog, skb);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		err = pkt_len ? pskb_trim(skb, max(cap, pkt_len)) : -EPERM;
 	}
 	rcu_read_unlock();
@@ -1711,9 +1721,12 @@ static int __bpf_redirect(struct sk_buff *skb, struct net_device *dev,
 	case ARPHRD_IPGRE:
 	case ARPHRD_VOID:
 	case ARPHRD_NONE:
+<<<<<<< HEAD
 #ifdef ARPHRD_RAWIP
 	case ARPHRD_RAWIP:
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		return __bpf_redirect_no_mac(skb, dev, flags);
 	default:
 		return __bpf_redirect_common(skb, dev, flags);
@@ -2546,6 +2559,7 @@ static const struct bpf_func_proto bpf_xdp_event_output_proto = {
 	.arg5_type	= ARG_CONST_STACK_SIZE,
 };
 
+<<<<<<< HEAD
 BPF_CALL_1(bpf_get_socket_cookie, struct sk_buff *, skb)
 {
 	return skb->sk ? sock_gen_cookie(skb->sk) : 0;
@@ -2576,6 +2590,8 @@ static const struct bpf_func_proto bpf_get_socket_uid_proto = {
 	.arg1_type      = ARG_PTR_TO_CTX,
 };
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static const struct bpf_func_proto *
 sk_filter_func_proto(enum bpf_func_id func_id)
 {
@@ -2597,10 +2613,13 @@ sk_filter_func_proto(enum bpf_func_id func_id)
 	case BPF_FUNC_trace_printk:
 		if (capable(CAP_SYS_ADMIN))
 			return bpf_get_trace_printk_proto();
+<<<<<<< HEAD
 	case BPF_FUNC_get_socket_cookie:
 		return &bpf_get_socket_cookie_proto;
 	case BPF_FUNC_get_socket_uid:
 		return &bpf_get_socket_uid_proto;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	default:
 		return NULL;
 	}
@@ -2678,6 +2697,7 @@ xdp_func_proto(enum bpf_func_id func_id)
 	}
 }
 
+<<<<<<< HEAD
 static const struct bpf_func_proto *
 cg_skb_func_proto(enum bpf_func_id func_id)
 {
@@ -2689,6 +2709,8 @@ cg_skb_func_proto(enum bpf_func_id func_id)
 	}
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static bool __is_valid_access(int off, int size, enum bpf_access_type type)
 {
 	if (off < 0 || off >= sizeof(struct __sk_buff))
@@ -3051,12 +3073,15 @@ static const struct bpf_verifier_ops xdp_ops = {
 	.convert_ctx_access	= xdp_convert_ctx_access,
 };
 
+<<<<<<< HEAD
 static const struct bpf_verifier_ops cg_skb_ops = {
 	.get_func_proto		= cg_skb_func_proto,
 	.is_valid_access	= sk_filter_is_valid_access,
 	.convert_ctx_access	= sk_filter_convert_ctx_access,
 };
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static struct bpf_prog_type_list sk_filter_type __read_mostly = {
 	.ops	= &sk_filter_ops,
 	.type	= BPF_PROG_TYPE_SOCKET_FILTER,
@@ -3077,18 +3102,24 @@ static struct bpf_prog_type_list xdp_type __read_mostly = {
 	.type	= BPF_PROG_TYPE_XDP,
 };
 
+<<<<<<< HEAD
 static struct bpf_prog_type_list cg_skb_type __read_mostly = {
 	.ops	= &cg_skb_ops,
 	.type	= BPF_PROG_TYPE_CGROUP_SKB,
 };
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int __init register_sk_filter_ops(void)
 {
 	bpf_register_prog_type(&sk_filter_type);
 	bpf_register_prog_type(&sched_cls_type);
 	bpf_register_prog_type(&sched_act_type);
 	bpf_register_prog_type(&xdp_type);
+<<<<<<< HEAD
 	bpf_register_prog_type(&cg_skb_type);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	return 0;
 }

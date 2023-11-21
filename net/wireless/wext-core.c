@@ -958,6 +958,7 @@ static int wireless_process_ioctl(struct net *net, struct ifreq *ifr,
 			return private(dev, iwr, cmd, info, handler);
 	}
 	/* Old driver API : call driver ioctl handler */
+<<<<<<< HEAD
 	if (dev->netdev_ops->ndo_do_ioctl) {
 #ifdef CONFIG_COMPAT
 		if (info->flags & IW_REQUEST_FLAG_COMPAT) {
@@ -985,6 +986,10 @@ static int wireless_process_ioctl(struct net *net, struct ifreq *ifr,
 #endif
 		return dev->netdev_ops->ndo_do_ioctl(dev, ifr, cmd);
 	}
+=======
+	if (dev->netdev_ops->ndo_do_ioctl)
+		return dev->netdev_ops->ndo_do_ioctl(dev, ifr, cmd);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return -EOPNOTSUPP;
 }
 

@@ -458,17 +458,28 @@ static void cpu_stopper_thread(unsigned int cpu)
 {
 	struct cpu_stopper *stopper = &per_cpu(cpu_stopper, cpu);
 	struct cpu_stop_work *work;
+<<<<<<< HEAD
 	unsigned long flags;
 
 repeat:
 	work = NULL;
 	raw_spin_lock_irqsave(&stopper->lock, flags);
+=======
+
+repeat:
+	work = NULL;
+	raw_spin_lock_irq(&stopper->lock);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (!list_empty(&stopper->works)) {
 		work = list_first_entry(&stopper->works,
 					struct cpu_stop_work, list);
 		list_del_init(&work->list);
 	}
+<<<<<<< HEAD
 	raw_spin_unlock_irqrestore(&stopper->lock, flags);
+=======
+	raw_spin_unlock_irq(&stopper->lock);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (work) {
 		cpu_stop_fn_t fn = work->fn;
@@ -598,6 +609,7 @@ int stop_machine(cpu_stop_fn_t fn, void *data, const struct cpumask *cpus)
 }
 EXPORT_SYMBOL_GPL(stop_machine);
 
+<<<<<<< HEAD
 int cpu_park(int cpu)
 {
 	struct cpu_stopper *stopper = &per_cpu(cpu_stopper, cpu);
@@ -634,6 +646,8 @@ int stop_one_cpu_dispatch(unsigned int cpu, cpu_stop_fn_t fn, void *arg,
 }
 EXPORT_SYMBOL_GPL(stop_one_cpu_dispatch);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /**
  * stop_machine_from_inactive_cpu - stop_machine() from inactive CPU
  * @fn: the function to run

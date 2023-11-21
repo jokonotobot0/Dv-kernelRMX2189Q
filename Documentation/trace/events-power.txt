@@ -25,7 +25,10 @@ cpufreq.
 
 cpu_idle		"state=%lu cpu_id=%lu"
 cpu_frequency		"state=%lu cpu_id=%lu"
+<<<<<<< HEAD
 cpu_frequency_limits	"min=%lu max=%lu cpu_id=%lu"
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 A suspend event is used to indicate the system going in and out of the
 suspend mode:

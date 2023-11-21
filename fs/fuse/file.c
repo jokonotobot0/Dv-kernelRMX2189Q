@@ -841,9 +841,15 @@ struct fuse_fill_data {
 	unsigned nr_pages;
 };
 
+<<<<<<< HEAD
 static int fuse_readpages_fill(struct file *_data, struct page *page)
 {
 	struct fuse_fill_data *data = (struct fuse_fill_data *)_data;
+=======
+static int fuse_readpages_fill(void *_data, struct page *page)
+{
+	struct fuse_fill_data *data = _data;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct fuse_req *req = data->req;
 	struct inode *inode = data->inode;
 	struct fuse_conn *fc = get_fuse_conn(inode);

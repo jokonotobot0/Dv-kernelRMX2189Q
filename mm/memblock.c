@@ -59,6 +59,7 @@ static int memblock_can_resize __initdata_memblock;
 static int memblock_memory_in_slab __initdata_memblock = 0;
 static int memblock_reserved_in_slab __initdata_memblock = 0;
 
+<<<<<<< HEAD
 #if defined(CONFIG_MTK_MEMCFG) && defined(CONFIG_MTK_ENG_BUILD)
 struct memblock_record memblock_record[MAX_MEMBLOCK_RECORD];
 struct memblock_stack_trace memblock_stack_trace[MAX_MEMBLOCK_RECORD];
@@ -77,6 +78,8 @@ inline void init_memblock_stack_trace(struct memblock_stack_trace *mst,
 }
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 ulong __init_memblock choose_memblock_flags(void)
 {
 	return system_has_some_mirror ? MEMBLOCK_MIRROR : MEMBLOCK_NONE;
@@ -726,7 +729,10 @@ static int __init_memblock memblock_remove_range(struct memblock_type *type,
 
 int __init_memblock memblock_remove(phys_addr_t base, phys_addr_t size)
 {
+<<<<<<< HEAD
 	kmemleak_free_part(__va(base), size);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return memblock_remove_range(&memblock.memory, base, size);
 }
 
@@ -742,6 +748,7 @@ int __init_memblock memblock_free(phys_addr_t base, phys_addr_t size)
 	return memblock_remove_range(&memblock.reserved, base, size);
 }
 
+<<<<<<< HEAD
 static int __init_memblock memblock_reserve_region(phys_addr_t base,
 						   phys_addr_t size,
 						   int nid,
@@ -782,6 +789,16 @@ static int __init_memblock memblock_reserve_region(phys_addr_t base,
 int __init_memblock memblock_reserve(phys_addr_t base, phys_addr_t size)
 {
 	return memblock_reserve_region(base, size, MAX_NUMNODES, 0);
+=======
+int __init_memblock memblock_reserve(phys_addr_t base, phys_addr_t size)
+{
+	memblock_dbg("memblock_reserve: [%#016llx-%#016llx] flags %#02lx %pF\n",
+		     (unsigned long long)base,
+		     (unsigned long long)base + size - 1,
+		     0UL, (void *)_RET_IP_);
+
+	return memblock_add_range(&memblock.reserved, base, size, MAX_NUMNODES, 0);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 /**
@@ -975,7 +992,11 @@ void __init_memblock __next_mem_range(u64 *idx, int nid, ulong flags,
 			r = &type_b->regions[idx_b];
 			r_start = idx_b ? r[-1].base + r[-1].size : 0;
 			r_end = idx_b < type_b->cnt ?
+<<<<<<< HEAD
 				r->base : (phys_addr_t)ULLONG_MAX;
+=======
+				r->base : ULLONG_MAX;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 			/*
 			 * if idx_b advanced past idx_a,
@@ -1091,7 +1112,11 @@ void __init_memblock __next_mem_range_rev(u64 *idx, int nid, ulong flags,
 			r = &type_b->regions[idx_b];
 			r_start = idx_b ? r[-1].base + r[-1].size : 0;
 			r_end = idx_b < type_b->cnt ?
+<<<<<<< HEAD
 				r->base : (phys_addr_t)ULLONG_MAX;
+=======
+				r->base : ULLONG_MAX;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			/*
 			 * if idx_b advanced past idx_a,
 			 * break out to advance idx_a

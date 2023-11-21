@@ -62,6 +62,7 @@ int lg2ff_init(struct hid_device *hid)
 {
 	struct lg2ff_device *lg2ff;
 	struct hid_report *report;
+<<<<<<< HEAD
 	struct hid_input *hidinput;
 	struct input_dev *dev;
 	int error;
@@ -73,6 +74,13 @@ int lg2ff_init(struct hid_device *hid)
 	hidinput = list_entry(hid->inputs.next, struct hid_input, list);
 	dev = hidinput->input;
 
+=======
+	struct hid_input *hidinput = list_entry(hid->inputs.next,
+						struct hid_input, list);
+	struct input_dev *dev = hidinput->input;
+	int error;
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* Check that the report looks ok */
 	report = hid_validate_values(hid, HID_OUTPUT_REPORT, 0, 0, 7);
 	if (!report)

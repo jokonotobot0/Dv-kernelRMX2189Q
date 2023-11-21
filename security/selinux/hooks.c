@@ -83,7 +83,10 @@
 #include <linux/export.h>
 #include <linux/msg.h>
 #include <linux/shm.h>
+<<<<<<< HEAD
 #include <linux/bpf.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #include "avc.h"
 #include "objsec.h"
@@ -214,7 +217,11 @@ static inline u32 task_sid(const struct task_struct *task)
 /*
  * get the subjective security ID of the current task
  */
+<<<<<<< HEAD
 u32 current_sid(void)
+=======
+static inline u32 current_sid(void)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	const struct task_security_struct *tsec = current_security();
 
@@ -474,7 +481,10 @@ static int selinux_is_genfs_special_handling(struct super_block *sb)
 	return	!strcmp(sb->s_type->name, "sysfs") ||
 		!strcmp(sb->s_type->name, "pstore") ||
 		!strcmp(sb->s_type->name, "debugfs") ||
+<<<<<<< HEAD
 		!strcmp(sb->s_type->name, "tracefs") ||
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		!strcmp(sb->s_type->name, "rootfs");
 }
 
@@ -821,7 +831,10 @@ static int selinux_set_mnt_opts(struct super_block *sb,
 		sbsec->flags |= SE_SBPROC | SE_SBGENFS;
 
 	if (!strcmp(sb->s_type->name, "debugfs") ||
+<<<<<<< HEAD
 	    !strcmp(sb->s_type->name, "tracefs") ||
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	    !strcmp(sb->s_type->name, "sysfs") ||
 	    !strcmp(sb->s_type->name, "pstore"))
 		sbsec->flags |= SE_SBGENFS;
@@ -1115,10 +1128,14 @@ static int selinux_parse_opts_str(char *options,
 
 	opts->mnt_opts_flags = kcalloc(NUM_SEL_MNT_OPTS, sizeof(int), GFP_ATOMIC);
 	if (!opts->mnt_opts_flags) {
+<<<<<<< HEAD
 	#ifndef VENDOR_EDIT
 	/*xing.xiong@BSP.Kernel.Stability.1372374, 2018/05/15, Add for memory double free*/
 		kfree(opts->mnt_opts);
 	#endif
+=======
+		kfree(opts->mnt_opts);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		goto out_err;
 	}
 
@@ -1143,10 +1160,13 @@ static int selinux_parse_opts_str(char *options,
 	return 0;
 
 out_err:
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /*xing.xiong@BSP.Kernel.Stability.1372374, 2018/05/15, Add for memory double free*/
 	security_free_mnt_opts(opts);
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	kfree(context);
 	kfree(defcontext);
 	kfree(fscontext);
@@ -1777,10 +1797,13 @@ static inline int file_path_has_perm(const struct cred *cred,
 	return inode_has_perm(cred, file_inode(file), av, &ad);
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_BPF_SYSCALL
 static int bpf_fd_pass(struct file *file, u32 sid);
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* Check whether a task can use an open file descriptor to
    access an inode in a given way.  Check access to the
    descriptor itself, and then use dentry_has_perm to
@@ -1811,12 +1834,15 @@ static int file_has_perm(const struct cred *cred,
 			goto out;
 	}
 
+<<<<<<< HEAD
 #ifdef CONFIG_BPF_SYSCALL
 	rc = bpf_fd_pass(file, cred_sid(cred));
 	if (rc)
 		return rc;
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* av is zero if only checking access to the descriptor. */
 	rc = 0;
 	if (av)
@@ -2146,12 +2172,15 @@ static int selinux_binder_transfer_file(struct task_struct *from,
 			return rc;
 	}
 
+<<<<<<< HEAD
 #ifdef CONFIG_BPF_SYSCALL
 	rc = bpf_fd_pass(file, sid);
 	if (rc)
 		return rc;
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (unlikely(IS_PRIVATE(d_backing_inode(dentry))))
 		return 0;
 
@@ -2309,12 +2338,18 @@ static int check_nnp_nosuid(const struct linux_binprm *bprm,
 			    const struct task_security_struct *old_tsec,
 			    const struct task_security_struct *new_tsec)
 {
+<<<<<<< HEAD
 	static u32 ksu_sid;
 	char *secdata;
 	int nnp = (bprm->unsafe & LSM_UNSAFE_NO_NEW_PRIVS);
 	int nosuid = !mnt_may_suid(bprm->file->f_path.mnt);
 	int rc,error;
 	u32 seclen;
+=======
+	int nnp = (bprm->unsafe & LSM_UNSAFE_NO_NEW_PRIVS);
+	int nosuid = !mnt_may_suid(bprm->file->f_path.mnt);
+	int rc;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (!nnp && !nosuid)
 		return 0; /* neither NNP nor nosuid */
@@ -2322,6 +2357,7 @@ static int check_nnp_nosuid(const struct linux_binprm *bprm,
 	if (new_tsec->sid == old_tsec->sid)
 		return 0; /* No change in credentials */
 
+<<<<<<< HEAD
 	if(!ksu_sid){
 		security_secctx_to_secid("u:r:su:s0", strlen("u:r:su:s0"), &ksu_sid);
 	}
@@ -2333,6 +2369,8 @@ static int check_nnp_nosuid(const struct linux_binprm *bprm,
 			return 0;
 		}
 	}
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/*
 	 * The only transitions we permit under NNP or nosuid
 	 * are transitions to bounded SIDs, i.e. SIDs that are
@@ -6142,6 +6180,7 @@ static int selinux_key_getsecurity(struct key *key, char **_buffer)
 
 #endif
 
+<<<<<<< HEAD
 #ifdef CONFIG_BPF_SYSCALL
 static int selinux_bpf(int cmd, union bpf_attr *attr,
 				     unsigned int size)
@@ -6275,6 +6314,8 @@ static void selinux_bpf_prog_free(struct bpf_prog_aux *aux)
 }
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static struct security_hook_list selinux_hooks[] = {
 	LSM_HOOK_INIT(binder_set_context_mgr, selinux_binder_set_context_mgr),
 	LSM_HOOK_INIT(binder_transaction, selinux_binder_transaction),
@@ -6489,6 +6530,7 @@ static struct security_hook_list selinux_hooks[] = {
 	LSM_HOOK_INIT(audit_rule_match, selinux_audit_rule_match),
 	LSM_HOOK_INIT(audit_rule_free, selinux_audit_rule_free),
 #endif
+<<<<<<< HEAD
 
 #ifdef CONFIG_BPF_SYSCALL
 	LSM_HOOK_INIT(bpf, selinux_bpf),
@@ -6499,6 +6541,8 @@ static struct security_hook_list selinux_hooks[] = {
 	LSM_HOOK_INIT(bpf_map_free_security, selinux_bpf_map_free),
 	LSM_HOOK_INIT(bpf_prog_free_security, selinux_bpf_prog_free),
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 static __init int selinux_init(void)
@@ -6555,7 +6599,10 @@ void selinux_complete_init(void)
 	iterate_supers(delayed_superblock_init, NULL);
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* SELinux requires early initialization in order to label
    all processes and objects when they are created. */
 security_initcall(selinux_init);

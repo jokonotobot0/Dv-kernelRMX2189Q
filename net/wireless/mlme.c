@@ -345,11 +345,14 @@ int cfg80211_mlme_deauth(struct cfg80211_registered_device *rdev,
 	     !ether_addr_equal(wdev->current_bss->pub.bssid, bssid)))
 		return 0;
 
+<<<<<<< HEAD
 	if (ether_addr_equal(wdev->disconnect_bssid, bssid) ||
 	    (wdev->current_bss &&
 	     ether_addr_equal(wdev->current_bss->pub.bssid, bssid)))
 		wdev->conn_owner_nlportid = 0;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return rdev_deauth(rdev, dev, &req);
 }
 

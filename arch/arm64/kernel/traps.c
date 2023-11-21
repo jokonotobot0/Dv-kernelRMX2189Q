@@ -33,19 +33,28 @@
 #include <linux/syscalls.h>
 
 #include <asm/atomic.h>
+<<<<<<< HEAD
 #include <asm/barrier.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <asm/bug.h>
 #include <asm/debug-monitors.h>
 #include <asm/esr.h>
 #include <asm/insn.h>
 #include <asm/traps.h>
+<<<<<<< HEAD
 #include <asm/stack_pointer.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <asm/stacktrace.h>
 #include <asm/exception.h>
 #include <asm/system_misc.h>
 #include <asm/sysreg.h>
+<<<<<<< HEAD
 #include <mt-plat/aee.h>
 #include <sched.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 static const char *handler[]= {
 	"Synchronous Abort",
@@ -151,9 +160,12 @@ static void dump_backtrace(struct pt_regs *regs, struct task_struct *tsk)
 	if (!tsk)
 		tsk = current;
 
+<<<<<<< HEAD
 	if (!try_get_task_stack(tsk))
 		return;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/*
 	 * Switching between stacks is valid when tracing current and in
 	 * non-preemptible context.
@@ -167,9 +179,12 @@ static void dump_backtrace(struct pt_regs *regs, struct task_struct *tsk)
 		frame.fp = (unsigned long)__builtin_frame_address(0);
 		frame.sp = current_stack_pointer;
 		frame.pc = (unsigned long)dump_backtrace;
+<<<<<<< HEAD
 	} else if (tsk == task_rq(tsk)->curr) {
 		pr_notice("Do not dump other cpus' running task\n");
 		return;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	} else {
 		/*
 		 * task blocked in __switch_to
@@ -222,8 +237,11 @@ static void dump_backtrace(struct pt_regs *regs, struct task_struct *tsk)
 				 stack + sizeof(struct pt_regs));
 		}
 	}
+<<<<<<< HEAD
 
 	put_task_stack(tsk);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 void show_stack(struct task_struct *tsk, unsigned long *sp)
@@ -239,9 +257,16 @@ void show_stack(struct task_struct *tsk, unsigned long *sp)
 #endif
 #define S_SMP " SMP"
 
+<<<<<<< HEAD
 static int __die(const char *str, int err, struct pt_regs *regs)
 {
 	struct task_struct *tsk = current;
+=======
+static int __die(const char *str, int err, struct thread_info *thread,
+		 struct pt_regs *regs)
+{
+	struct task_struct *tsk = thread->task;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	static int die_counter;
 	int ret;
 
@@ -256,8 +281,12 @@ static int __die(const char *str, int err, struct pt_regs *regs)
 	print_modules();
 	__show_regs(regs);
 	pr_emerg("Process %.*s (pid: %d, stack limit = 0x%p)\n",
+<<<<<<< HEAD
 		 TASK_COMM_LEN, tsk->comm, task_pid_nr(tsk),
 		 end_of_stack(tsk));
+=======
+		 TASK_COMM_LEN, tsk->comm, task_pid_nr(tsk), thread + 1);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (!user_mode(regs)) {
 		dump_mem(KERN_EMERG, "Stack: ", regs->sp,
@@ -280,6 +309,7 @@ void die(const char *str, struct pt_regs *regs, int err)
 	int ret;
 	unsigned long flags;
 
+<<<<<<< HEAD
 	int cpu = -1;
 	static int die_owner = -1;
 
@@ -305,14 +335,23 @@ void die(const char *str, struct pt_regs *regs, int err)
 		}
 	}
 	die_owner = cpu;
+=======
+	raw_spin_lock_irqsave(&die_lock, flags);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	oops_enter();
 
 	console_verbose();
 	bust_spinlocks(1);
+<<<<<<< HEAD
 	ret = __die(str, err, regs);
 
 	if (regs && kexec_should_crash(current))
+=======
+	ret = __die(str, err, thread, regs);
+
+	if (regs && kexec_should_crash(thread->task))
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		crash_kexec(regs);
 
 	bust_spinlocks(0);
@@ -475,10 +514,16 @@ int cpu_enable_cache_maint_trap(void *__unused)
 }
 
 #define __user_cache_maint(insn, address, res)			\
+<<<<<<< HEAD
 	if (address >= user_addr_max()) {			\
 		res = -EFAULT;					\
 	} else {						\
 		uaccess_ttbr0_enable();				\
+=======
+	if (address >= user_addr_max())				\
+		res = -EFAULT;					\
+	else							\
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		asm volatile (					\
 			"1:	" insn ", %1\n"			\
 			"	mov	%w0, #0\n"		\
@@ -490,9 +535,13 @@ int cpu_enable_cache_maint_trap(void *__unused)
 			"	.popsection\n"			\
 			_ASM_EXTABLE(1b, 3b)			\
 			: "=r" (res)				\
+<<<<<<< HEAD
 			: "r" (address), "i" (-EFAULT));	\
 		uaccess_ttbr0_disable();			\
 	}
+=======
+			: "r" (address), "i" (-EFAULT) )
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 static void user_cache_maint_handler(unsigned int esr, struct pt_regs *regs)
 {
@@ -535,6 +584,7 @@ static void ctr_read_handler(unsigned int esr, struct pt_regs *regs)
 	regs->pc += 4;
 }
 
+<<<<<<< HEAD
 static void cntvct_read_handler(unsigned int esr, struct pt_regs *regs)
 {
 	int rt = (esr & ESR_ELx_SYS64_ISS_RT_MASK) >> ESR_ELx_SYS64_ISS_RT_SHIFT;
@@ -554,6 +604,8 @@ static void cntfrq_read_handler(unsigned int esr, struct pt_regs *regs)
 	regs->pc += 4;
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 struct sys64_hook {
 	unsigned int esr_mask;
 	unsigned int esr_val;
@@ -572,6 +624,7 @@ static struct sys64_hook sys64_hooks[] = {
 		.esr_val = ESR_ELx_SYS64_ISS_SYS_CTR_READ,
 		.handler = ctr_read_handler,
 	},
+<<<<<<< HEAD
 	{
 		/* Trap read access to CNTVCT_EL0 */
 		.esr_mask = ESR_ELx_SYS64_ISS_SYS_OP_MASK,
@@ -584,6 +637,8 @@ static struct sys64_hook sys64_hooks[] = {
 		.esr_val = ESR_ELx_SYS64_ISS_SYS_CNTFRQ,
 		.handler = cntfrq_read_handler,
 	},
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	{},
 };
 
@@ -669,6 +724,7 @@ const char *esr_get_class_string(u32 esr)
 	return esr_class_str[ESR_ELx_EC(esr)];
 }
 
+<<<<<<< HEAD
 
 #ifdef CONFIG_MEDIATEK_SOLUTION
 static void (*async_abort_handler)(struct pt_regs *regs, void *);
@@ -685,6 +741,8 @@ int register_async_abort_handler(void (*fn)(struct pt_regs *regs, void *),
 #endif
 
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * bad_mode handles the impossible case in the exception vector. This is always
  * fatal.

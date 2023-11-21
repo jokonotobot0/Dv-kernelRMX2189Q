@@ -15,7 +15,10 @@ config ARM64
 	select ARCH_HAS_SG_CHAIN
 	select ARCH_HAS_TICK_BROADCAST if GENERIC_CLOCKEVENTS_BROADCAST
 	select ARCH_USE_CMPXCHG_LOCKREF
+<<<<<<< HEAD
 	select ARCH_SUPPORTS_LTO_CLANG
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	select ARCH_SUPPORTS_ATOMIC_RMW
 	select ARCH_SUPPORTS_NUMA_BALANCING
 	select ARCH_WANT_COMPAT_IPC_PARSE_VERSION
@@ -110,7 +113,10 @@ config ARM64
 	select POWER_SUPPLY
 	select SPARSE_IRQ
 	select SYSCTL_EXCEPTION_TRACE
+<<<<<<< HEAD
 	select THREAD_INFO_IN_TASK
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	help
 	  ARM 64-bit (AArch64) Linux support.
 
@@ -216,12 +222,15 @@ config NEED_DMA_MAP_STATE
 config NEED_SG_DMA_LENGTH
 	def_bool y
 
+<<<<<<< HEAD
 #ChenYong@Rom.Framework,2019/01/15, use for kevent upload
 config OPPO_KEVENT_UPLOAD
 	def_bool y
 
 #ifdef VENDOR_EDIT
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 config SMP
 	def_bool y
 
@@ -425,7 +434,11 @@ config ARM64_ERRATUM_845719
 
 config ARM64_ERRATUM_843419
 	bool "Cortex-A53: 843419: A load or store might access an incorrect address"
+<<<<<<< HEAD
 	default y if !LTO_CLANG
+=======
+	default y
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	select ARM64_MODULE_CMODEL_LARGE if MODULES
 	help
 	  This option links the kernel with '--fix-cortex-a53-843419' and
@@ -435,6 +448,7 @@ config ARM64_ERRATUM_843419
 
 	  If unsure, say Y.
 
+<<<<<<< HEAD
 config ARM64_ERRATUM_855873
 	bool "Cortex-A53: 855873: An eviction might overtake a cache clean operation"
 	default y
@@ -443,6 +457,19 @@ config ARM64_ERRATUM_855873
 	  erratum 855873 on Cortex-A53 parts up to r0p4.
 	  Because of this erratum, the processor might issue an eviction and
 	  an L2 cache clean operation to the interconnect in the wrong order.
+=======
+config ARM64_ERRATUM_1024718
+	bool "Cortex-A55: 1024718: Update of DBM/AP bits without break before make might result in incorrect update"
+	default y
+	help
+	  This option adds work around for Arm Cortex-A55 Erratum 1024718.
+
+	  Affected Cortex-A55 cores (r0p0, r0p1, r1p0) could cause incorrect
+	  update of the hardware dirty bit when the DBM/AP bits are updated
+	  without a break-before-make. The work around is to disable the usage
+	  of hardware DBM locally on the affected cores. CPUs not affected by
+	  erratum will continue to use the feature.
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	  If unsure, say Y.
 
@@ -754,7 +781,11 @@ config FORCE_MAX_ZONEORDER
 
 config UNMAP_KERNEL_AT_EL0
 	bool "Unmap kernel when running in userspace (aka \"KAISER\")" if EXPERT
+<<<<<<< HEAD
 	default n
+=======
+	default y
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	help
 	  Speculation attacks against some high-performance processors can
 	  be used to bypass MMU permission checks and leak kernel data to
@@ -857,6 +888,7 @@ config SETEND_EMULATION
 	  If unsure, say Y
 endif
 
+<<<<<<< HEAD
 config ARM64_SW_TTBR0_PAN
 	bool "Emulate Privileged Access Never using TTBR0_EL1 switching"
 	help
@@ -865,6 +897,8 @@ config ARM64_SW_TTBR0_PAN
 	  zeroed area and reserved ASID. The user access routines
 	  restore the valid TTBR0_EL1 temporarily.
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 menu "ARMv8.1 architectural features"
 
 config ARM64_HW_AFDBM
@@ -912,7 +946,11 @@ config ARM64_LSE_ATOMICS
 
 config ARM64_VHE
 	bool "Enable support for Virtualization Host Extensions (VHE)"
+<<<<<<< HEAD
 	default n
+=======
+	default y
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	help
 	  Virtualization Host Extensions (VHE) allow the kernel to run
 	  directly at EL2 (instead of EL1) on processors that support
@@ -990,7 +1028,11 @@ config RANDOMIZE_BASE
 
 config RANDOMIZE_MODULE_REGION_FULL
 	bool "Randomize the module region independently from the core kernel"
+<<<<<<< HEAD
 	depends on RANDOMIZE_BASE && !DYNAMIC_FTRACE && !LTO_CLANG
+=======
+	depends on RANDOMIZE_BASE && !DYNAMIC_FTRACE
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	default y
 	help
 	  Randomizes the location of the module region without considering the
@@ -1024,6 +1066,7 @@ config CMDLINE
 	  entering them here. As a minimum, you should specify the the
 	  root device (e.g. root=/dev/nfs).
 
+<<<<<<< HEAD
 choice
 	prompt "Kernel command line type" if CMDLINE != ""
 	default CMDLINE_FROM_BOOTLOADER
@@ -1041,6 +1084,8 @@ config CMDLINE_EXTEND
 	  The command-line arguments provided by the boot loader will be
 	  appended to the default kernel command string.
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 config CMDLINE_FORCE
 	bool "Always use the default kernel command string"
 	help
@@ -1048,7 +1093,10 @@ config CMDLINE_FORCE
 	  loader passes other arguments to the kernel.
 	  This is useful if you cannot or don't want to change the
 	  command-line options your boot loader passes to the kernel.
+<<<<<<< HEAD
 endchoice
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 config EFI_STUB
 	bool
@@ -1081,6 +1129,7 @@ config DMI
 	  However, even with this option, the resultant kernel should
 	  continue to boot on existing non-UEFI platforms.
 
+<<<<<<< HEAD
 config BUILD_ARM64_APPENDED_DTB_IMAGE
 	bool "Build a concatenated Image.gz/dtb by default"
 	depends on OF
@@ -1131,6 +1180,8 @@ config BUILD_ARM64_DTB_OVERLAY_IMAGE_NAMES
 	help
 	  Space separated list of names of dtbs to append when
 	  building a concatenated overlay image
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 endmenu
 
 menu "Userspace binary formats"

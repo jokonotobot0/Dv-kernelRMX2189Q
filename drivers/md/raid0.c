@@ -35,7 +35,11 @@ static int raid0_congested(struct mddev *mddev, int bits)
 	for (i = 0; i < raid_disks && !ret ; i++) {
 		struct request_queue *q = bdev_get_queue(devlist[i]->bdev);
 
+<<<<<<< HEAD
 		ret |= bdi_congested(q->backing_dev_info, bits);
+=======
+		ret |= bdi_congested(&q->backing_dev_info, bits);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 	return ret;
 }
@@ -415,8 +419,13 @@ static int raid0_run(struct mddev *mddev)
 		 */
 		int stripe = mddev->raid_disks *
 			(mddev->chunk_sectors << 9) / PAGE_SIZE;
+<<<<<<< HEAD
 		if (mddev->queue->backing_dev_info->ra_pages < 2 * stripe)
 			mddev->queue->backing_dev_info->ra_pages = 2 * stripe;
+=======
+		if (mddev->queue->backing_dev_info.ra_pages < 2* stripe)
+			mddev->queue->backing_dev_info.ra_pages = 2* stripe;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 
 	dump_zones(mddev);

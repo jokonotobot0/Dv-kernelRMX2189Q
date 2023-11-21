@@ -1,6 +1,33 @@
+<<<<<<< HEAD
 // SPDX-License-Identifier: GPL-2.0
 /* Copyright(c) 2009-2013  Realtek Corporation.*/
 
+=======
+/******************************************************************************
+ *
+ * Copyright(c) 2009-2013  Realtek Corporation.
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of version 2 of the GNU General Public License as
+ * published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ * more details.
+ *
+ * The full GNU General Public License is included in this distribution in the
+ * file called LICENSE.
+ *
+ * Contact Information:
+ * wlanfae <wlanfae@realtek.com>
+ * Realtek Corporation, No. 2, Innovation Road II, Hsinchu Science Park,
+ * Hsinchu 300, Taiwan.
+ *
+ * Larry Finger <Larry.Finger@lwfinger.net>
+ *
+ *****************************************************************************/
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include "../wifi.h"
 #include <linux/vmalloc.h>
 #include <linux/module.h>
@@ -10,6 +37,7 @@
 
 static struct rtl_btc_ops rtl_btc_operation = {
 	.btc_init_variables = rtl_btc_init_variables,
+<<<<<<< HEAD
 	.btc_init_variables_wifi_only = rtl_btc_init_variables_wifi_only,
 	.btc_deinit_variables = rtl_btc_deinit_variables,
 	.btc_init_hal_vars = rtl_btc_init_hal_vars,
@@ -20,16 +48,27 @@ static struct rtl_btc_ops rtl_btc_operation = {
 	.btc_lps_notify = rtl_btc_lps_notify,
 	.btc_scan_notify = rtl_btc_scan_notify,
 	.btc_scan_notify_wifi_only = rtl_btc_scan_notify_wifi_only,
+=======
+	.btc_init_hal_vars = rtl_btc_init_hal_vars,
+	.btc_init_hw_config = rtl_btc_init_hw_config,
+	.btc_ips_notify = rtl_btc_ips_notify,
+	.btc_lps_notify = rtl_btc_lps_notify,
+	.btc_scan_notify = rtl_btc_scan_notify,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	.btc_connect_notify = rtl_btc_connect_notify,
 	.btc_mediastatus_notify = rtl_btc_mediastatus_notify,
 	.btc_periodical = rtl_btc_periodical,
 	.btc_halt_notify = rtl_btc_halt_notify,
 	.btc_btinfo_notify = rtl_btc_btinfo_notify,
+<<<<<<< HEAD
 	.btc_btmpinfo_notify = rtl_btc_btmpinfo_notify,
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	.btc_is_limited_dig = rtl_btc_is_limited_dig,
 	.btc_is_disable_edca_turbo = rtl_btc_is_disable_edca_turbo,
 	.btc_is_bt_disabled = rtl_btc_is_bt_disabled,
 	.btc_special_packet_notify = rtl_btc_special_packet_notify,
+<<<<<<< HEAD
 	.btc_switch_band_notify = rtl_btc_switch_band_notify,
 	.btc_switch_band_notify_wifi_only = rtl_btc_switch_band_notify_wifionly,
 	.btc_record_pwr_mode = rtl_btc_record_pwr_mode,
@@ -165,10 +204,18 @@ void rtl_btc_init_variables_wifi_only(struct rtl_priv *rtlpriv)
 void rtl_btc_deinit_variables(struct rtl_priv *rtlpriv)
 {
 	rtl_btc_free_variable(rtlpriv);
+=======
+};
+
+void rtl_btc_init_variables(struct rtl_priv *rtlpriv)
+{
+	exhalbtc_initlize_variables(rtlpriv);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 void rtl_btc_init_hal_vars(struct rtl_priv *rtlpriv)
 {
+<<<<<<< HEAD
 	/* move ant_num, bt_type and single_ant_path to
 	 * exhalbtc_bind_bt_coex_withadapter()
 	 */
@@ -209,10 +256,41 @@ void rtl_btc_init_hw_config_wifi_only(struct rtl_priv *rtlpriv)
 		return;
 
 	exhalbtc_init_hw_config_wifi_only(wifionly_cfg);
+=======
+	u8 ant_num;
+	u8 bt_exist;
+	u8 bt_type;
+
+	ant_num = rtl_get_hwpg_ant_num(rtlpriv);
+	RT_TRACE(rtlpriv, COMP_INIT, DBG_DMESG,
+		 "%s, antNum is %d\n", __func__, ant_num);
+
+	bt_exist = rtl_get_hwpg_bt_exist(rtlpriv);
+	RT_TRACE(rtlpriv, COMP_INIT, DBG_DMESG,
+		 "%s, bt_exist is %d\n", __func__, bt_exist);
+	exhalbtc_set_bt_exist(bt_exist);
+
+	bt_type = rtl_get_hwpg_bt_type(rtlpriv);
+	RT_TRACE(rtlpriv, COMP_INIT, DBG_DMESG, "%s, bt_type is %d\n",
+		 __func__, bt_type);
+	exhalbtc_set_chip_type(bt_type);
+
+	if (rtlpriv->cfg->mod_params->ant_sel == 1)
+		exhalbtc_set_ant_num(rtlpriv, BT_COEX_ANT_TYPE_DETECTED, 1);
+	else
+		exhalbtc_set_ant_num(rtlpriv, BT_COEX_ANT_TYPE_PG, ant_num);
+}
+
+void rtl_btc_init_hw_config(struct rtl_priv *rtlpriv)
+{
+	exhalbtc_init_hw_config(&gl_bt_coexist);
+	exhalbtc_init_coex_dm(&gl_bt_coexist);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 void rtl_btc_ips_notify(struct rtl_priv *rtlpriv, u8 type)
 {
+<<<<<<< HEAD
 	struct btc_coexist *btcoexist = rtl_btc_coexist(rtlpriv);
 
 	if (!btcoexist)
@@ -227,20 +305,28 @@ void rtl_btc_ips_notify(struct rtl_priv *rtlpriv, u8 type)
 		exhalbtc_scan_notify(btcoexist, 1);
 		exhalbtc_scan_notify(btcoexist, 0);
 	}
+=======
+	exhalbtc_ips_notify(&gl_bt_coexist, type);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 void rtl_btc_lps_notify(struct rtl_priv *rtlpriv, u8 type)
 {
+<<<<<<< HEAD
 	struct btc_coexist *btcoexist = rtl_btc_coexist(rtlpriv);
 
 	if (!btcoexist)
 		return;
 
 	exhalbtc_lps_notify(btcoexist, type);
+=======
+	exhalbtc_lps_notify(&gl_bt_coexist, type);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 void rtl_btc_scan_notify(struct rtl_priv *rtlpriv, u8 scantype)
 {
+<<<<<<< HEAD
 	struct btc_coexist *btcoexist = rtl_btc_coexist(rtlpriv);
 
 	if (!btcoexist)
@@ -259,31 +345,43 @@ void rtl_btc_scan_notify_wifi_only(struct rtl_priv *rtlpriv, u8 scantype)
 		return;
 
 	exhalbtc_scan_notify_wifi_only(wifionly_cfg, is_5g);
+=======
+	exhalbtc_scan_notify(&gl_bt_coexist, scantype);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 void rtl_btc_connect_notify(struct rtl_priv *rtlpriv, u8 action)
 {
+<<<<<<< HEAD
 	struct btc_coexist *btcoexist = rtl_btc_coexist(rtlpriv);
 
 	if (!btcoexist)
 		return;
 
 	exhalbtc_connect_notify(btcoexist, action);
+=======
+	exhalbtc_connect_notify(&gl_bt_coexist, action);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 void rtl_btc_mediastatus_notify(struct rtl_priv *rtlpriv,
 				enum rt_media_status mstatus)
 {
+<<<<<<< HEAD
 	struct btc_coexist *btcoexist = rtl_btc_coexist(rtlpriv);
 
 	if (!btcoexist)
 		return;
 
 	exhalbtc_mediastatus_notify(btcoexist, mstatus);
+=======
+	exhalbtc_mediastatus_notify(&gl_bt_coexist, mstatus);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 void rtl_btc_periodical(struct rtl_priv *rtlpriv)
 {
+<<<<<<< HEAD
 	struct btc_coexist *btcoexist = rtl_btc_coexist(rtlpriv);
 
 	if (!btcoexist)
@@ -301,10 +399,20 @@ void rtl_btc_halt_notify(struct rtl_priv *rtlpriv)
 		return;
 
 	exhalbtc_halt_notify(btcoexist);
+=======
+	/*rtl_bt_dm_monitor();*/
+	exhalbtc_periodical(&gl_bt_coexist);
+}
+
+void rtl_btc_halt_notify(void)
+{
+	exhalbtc_halt_notify(&gl_bt_coexist);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 void rtl_btc_btinfo_notify(struct rtl_priv *rtlpriv, u8 *tmp_buf, u8 length)
 {
+<<<<<<< HEAD
 	struct btc_coexist *btcoexist = rtl_btc_coexist(rtlpriv);
 
 	if (!btcoexist)
@@ -387,16 +495,23 @@ void rtl_btc_btmpinfo_notify(struct rtl_priv *rtlpriv, u8 *tmp_buf, u8 length)
 		"btmpinfo complete req_num=%d\n", seq);
 
 	complete(&btcoexist->bt_mp_comp);
+=======
+	exhalbtc_bt_info_notify(&gl_bt_coexist, tmp_buf, length);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 bool rtl_btc_is_limited_dig(struct rtl_priv *rtlpriv)
 {
+<<<<<<< HEAD
 	struct btc_coexist *btcoexist = rtl_btc_coexist(rtlpriv);
 
 	if (!btcoexist)
 		return false;
 
 	return btcoexist->bt_info.limited_dig;
+=======
+	return gl_bt_coexist.bt_info.limited_dig;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 bool rtl_btc_is_disable_edca_turbo(struct rtl_priv *rtlpriv)
@@ -428,6 +543,7 @@ bool rtl_btc_is_disable_edca_turbo(struct rtl_priv *rtlpriv)
 
 bool rtl_btc_is_bt_disabled(struct rtl_priv *rtlpriv)
 {
+<<<<<<< HEAD
 	struct btc_coexist *btcoexist = rtl_btc_coexist(rtlpriv);
 
 	if (!btcoexist)
@@ -435,6 +551,10 @@ bool rtl_btc_is_bt_disabled(struct rtl_priv *rtlpriv)
 
 	/* It seems 'bt_disabled' is never be initialized or set. */
 	if (btcoexist->bt_info.bt_disabled)
+=======
+	/* It seems 'bt_disabled' is never be initialized or set. */
+	if (gl_bt_coexist.bt_info.bt_disabled)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		return true;
 	else
 		return false;
@@ -442,6 +562,7 @@ bool rtl_btc_is_bt_disabled(struct rtl_priv *rtlpriv)
 
 void rtl_btc_special_packet_notify(struct rtl_priv *rtlpriv, u8 pkt_type)
 {
+<<<<<<< HEAD
 	struct btc_coexist *btcoexist = rtl_btc_coexist(rtlpriv);
 
 	if (!btcoexist)
@@ -495,6 +616,29 @@ struct rtl_btc_ops *rtl_btc_get_ops_pointer(void)
 EXPORT_SYMBOL(rtl_btc_get_ops_pointer);
 
 
+=======
+	return exhalbtc_special_packet_notify(&gl_bt_coexist, pkt_type);
+}
+
+struct rtl_btc_ops *rtl_btc_get_ops_pointer(void)
+{
+	return &rtl_btc_operation;
+}
+EXPORT_SYMBOL(rtl_btc_get_ops_pointer);
+
+u8 rtl_get_hwpg_ant_num(struct rtl_priv *rtlpriv)
+{
+	u8 num;
+
+	if (rtlpriv->btcoexist.btc_info.ant_num == ANT_X2)
+		num = 2;
+	else
+		num = 1;
+
+	return num;
+}
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 enum rt_media_status mgnt_link_status_query(struct ieee80211_hw *hw)
 {
 	struct rtl_priv *rtlpriv = rtl_priv(hw);
@@ -514,6 +658,14 @@ u8 rtl_get_hwpg_bt_exist(struct rtl_priv *rtlpriv)
 	return rtlpriv->btcoexist.btc_info.btcoexist;
 }
 
+<<<<<<< HEAD
+=======
+u8 rtl_get_hwpg_bt_type(struct rtl_priv *rtlpriv)
+{
+	return rtlpriv->btcoexist.btc_info.bt_type;
+}
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 MODULE_AUTHOR("Page He	<page_he@realsil.com.cn>");
 MODULE_AUTHOR("Realtek WlanFAE	<wlanfae@realtek.com>");
 MODULE_AUTHOR("Larry Finger	<Larry.FInger@lwfinger.net>");

@@ -1,6 +1,7 @@
 #
 # MediaTek SoC drivers
 #
+<<<<<<< HEAD
 config MTK_CMDQ
 	bool "MediaTek CMDQ Support"
 	depends on ARM64 && ( ARCH_MEDIATEK || COMPILE_TEST )
@@ -13,6 +14,8 @@ config MTK_CMDQ
 	  time limitation, such as updating display configuration during the
 	  vblank.
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 config MTK_INFRACFG
 	bool "MediaTek INFRACFG Support"
 	depends on ARCH_MEDIATEK || COMPILE_TEST
@@ -24,6 +27,11 @@ config MTK_INFRACFG
 
 config MTK_PMIC_WRAP
 	tristate "MediaTek PMIC Wrapper Support"
+<<<<<<< HEAD
+=======
+	depends on ARCH_MEDIATEK
+	depends on RESET_CONTROLLER
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	select REGMAP
 	help
 	  Say yes here to add support for MediaTek PMIC Wrapper found
@@ -33,6 +41,7 @@ config MTK_PMIC_WRAP
 config MTK_SCPSYS
 	bool "MediaTek SCPSYS Support"
 	depends on ARCH_MEDIATEK || COMPILE_TEST
+<<<<<<< HEAD
 	default ARCH_MEDIATEK
 	select REGMAP
 	select MTK_INFRACFG
@@ -45,11 +54,17 @@ config MTK_SCPSYS_MT8163
 	bool "SCPSYS Support MediaTek MT8163"
 	depends on ARCH_MEDIATEK || COMPILE_TEST
 	default y if MACH_MT8163
+=======
+	default ARM64 && ARCH_MEDIATEK
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	select REGMAP
 	select MTK_INFRACFG
 	select PM_GENERIC_DOMAINS if PM
 	help
 	  Say yes here to add support for the MediaTek SCPSYS power domain
 	  driver.
+<<<<<<< HEAD
 	  The System Control Processor System (SCPSYS) has several power
 	  management related tasks in the system.
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

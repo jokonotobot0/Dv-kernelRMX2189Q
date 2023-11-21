@@ -1374,7 +1374,11 @@ static int dm_any_congested(void *congested_data, int bdi_bits)
 			 * With request-based DM we only need to check the
 			 * top-level queue for congestion.
 			 */
+<<<<<<< HEAD
 			r = md->queue->backing_dev_info->wb.state & bdi_bits;
+=======
+			r = md->queue->backing_dev_info.wb.state & bdi_bits;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		} else {
 			map = dm_get_live_table_fast(md);
 			if (map)
@@ -1457,7 +1461,11 @@ void dm_init_md_queue(struct mapped_device *md)
 	 * - must do so here (in alloc_dev callchain) before queue is used
 	 */
 	md->queue->queuedata = md;
+<<<<<<< HEAD
 	md->queue->backing_dev_info->congested_data = md;
+=======
+	md->queue->backing_dev_info.congested_data = md;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 void dm_init_normal_md_queue(struct mapped_device *md)
@@ -1468,7 +1476,11 @@ void dm_init_normal_md_queue(struct mapped_device *md)
 	/*
 	 * Initialize aspects of queue that aren't relevant for blk-mq
 	 */
+<<<<<<< HEAD
 	md->queue->backing_dev_info->congested_fn = dm_any_congested;
+=======
+	md->queue->backing_dev_info.congested_fn = dm_any_congested;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	blk_queue_bounce_limit(md->queue, BLK_BOUNCE_ANY);
 }
 

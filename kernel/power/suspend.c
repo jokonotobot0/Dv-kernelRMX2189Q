@@ -26,6 +26,7 @@
 #include <linux/suspend.h>
 #include <linux/syscore_ops.h>
 #include <linux/ftrace.h>
+<<<<<<< HEAD
 #include <linux/rtc.h>
 #include <trace/events/power.h>
 #include <linux/compiler.h>
@@ -36,6 +37,14 @@
 
 #define MTK_SOLUTION 1
 
+=======
+#include <trace/events/power.h>
+#include <linux/compiler.h>
+#include <linux/moduleparam.h>
+
+#include "power.h"
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 const char *pm_labels[] = { "mem", "standby", "freeze", NULL };
 const char *pm_states[PM_SUSPEND_MAX];
 
@@ -326,8 +335,12 @@ void __weak arch_suspend_enable_irqs(void)
  */
 static int suspend_enter(suspend_state_t state, bool *wakeup)
 {
+<<<<<<< HEAD
 	char suspend_abort[MAX_SUSPEND_ABORT_LEN];
 	int error, last_dev;
+=======
+	int error;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	error = platform_suspend_prepare(state);
 	if (error)
@@ -335,11 +348,15 @@ static int suspend_enter(suspend_state_t state, bool *wakeup)
 
 	error = dpm_suspend_late(PMSG_SUSPEND);
 	if (error) {
+<<<<<<< HEAD
 		last_dev = suspend_stats.last_failed_dev + REC_FAILED_NUM - 1;
 		last_dev %= REC_FAILED_NUM;
 		pr_err("PM: late suspend of devices failed\n");
 		log_suspend_abort_reason("%s device failed to power down",
 			suspend_stats.failed_devs[last_dev]);
+=======
+		pr_err("PM: late suspend of devices failed\n");
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		goto Platform_finish;
 	}
 	error = platform_suspend_prepare_late(state);
@@ -348,11 +365,15 @@ static int suspend_enter(suspend_state_t state, bool *wakeup)
 
 	error = dpm_suspend_noirq(PMSG_SUSPEND);
 	if (error) {
+<<<<<<< HEAD
 		last_dev = suspend_stats.last_failed_dev + REC_FAILED_NUM - 1;
 		last_dev %= REC_FAILED_NUM;
 		pr_err("PM: noirq suspend of devices failed\n");
 		log_suspend_abort_reason("noirq suspend of %s device failed",
 			suspend_stats.failed_devs[last_dev]);
+=======
+		pr_err("PM: noirq suspend of devices failed\n");
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		goto Platform_early_resume;
 	}
 	error = platform_suspend_prepare_noirq(state);
@@ -376,10 +397,15 @@ static int suspend_enter(suspend_state_t state, bool *wakeup)
 	}
 
 	error = disable_nonboot_cpus();
+<<<<<<< HEAD
 	if (error || suspend_test(TEST_CPUS)) {
 		log_suspend_abort_reason("Disabling non-boot cpus failed");
 		goto Enable_cpus;
 	}
+=======
+	if (error || suspend_test(TEST_CPUS))
+		goto Enable_cpus;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	arch_suspend_disable_irqs();
 	BUG_ON(!irqs_disabled());
@@ -395,9 +421,12 @@ static int suspend_enter(suspend_state_t state, bool *wakeup)
 				state, false);
 			events_check_enabled = false;
 		} else if (*wakeup) {
+<<<<<<< HEAD
 			pm_get_active_wakeup_sources(suspend_abort,
 				MAX_SUSPEND_ABORT_LEN);
 			log_suspend_abort_reason(suspend_abort);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			error = -EBUSY;
 		}
 		syscore_resume();
@@ -445,7 +474,10 @@ int suspend_devices_and_enter(suspend_state_t state)
 	error = dpm_suspend_start(PMSG_SUSPEND);
 	if (error) {
 		pr_err("PM: Some devices failed to suspend, or early wake event detected\n");
+<<<<<<< HEAD
 		log_suspend_abort_reason("Some devices failed to suspend, or early wake event detected");
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		goto Recover_platform;
 	}
 	suspend_test_finish("suspend devices");
@@ -486,6 +518,7 @@ static void suspend_finish(void)
 	pm_restore_console();
 }
 
+<<<<<<< HEAD
 #if MTK_SOLUTION
 
 #define SYS_SYNC_TIMEOUT 2000
@@ -540,6 +573,8 @@ int suspend_syssync_enqueue(void)
 
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /**
  * enter_state - Do common work needed to enter system sleep state.
  * @state: System sleep state to enter.
@@ -572,6 +607,7 @@ static int enter_state(suspend_state_t state)
 #ifndef CONFIG_SUSPEND_SKIP_SYNC
 	trace_suspend_resume(TPS("sync_filesystems"), 0, true);
 	pr_info("PM: Syncing filesystems ... ");
+<<<<<<< HEAD
 #if MTK_SOLUTION
 	error = suspend_syssync_enqueue();
 	if (error) {
@@ -581,6 +617,9 @@ static int enter_state(suspend_state_t state)
 #else
 	sys_sync();
 #endif
+=======
+	sys_sync();
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	pr_cont("done.\n");
 	trace_suspend_resume(TPS("sync_filesystems"), 0, false);
 #endif
@@ -608,6 +647,7 @@ static int enter_state(suspend_state_t state)
 	return error;
 }
 
+<<<<<<< HEAD
 static void pm_suspend_marker(char *annotation)
 {
 	struct timespec ts;
@@ -620,6 +660,8 @@ static void pm_suspend_marker(char *annotation)
 		tm.tm_hour, tm.tm_min, tm.tm_sec, ts.tv_nsec);
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /**
  * pm_suspend - Externally visible function for suspending the system.
  * @state: System sleep state to enter.
@@ -634,7 +676,10 @@ int pm_suspend(suspend_state_t state)
 	if (state <= PM_SUSPEND_ON || state >= PM_SUSPEND_MAX)
 		return -EINVAL;
 
+<<<<<<< HEAD
 	pm_suspend_marker("entry");
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	error = enter_state(state);
 	if (error) {
 		suspend_stats.fail++;
@@ -642,7 +687,10 @@ int pm_suspend(suspend_state_t state)
 	} else {
 		suspend_stats.success++;
 	}
+<<<<<<< HEAD
 	pm_suspend_marker("exit");
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return error;
 }
 EXPORT_SYMBOL(pm_suspend);

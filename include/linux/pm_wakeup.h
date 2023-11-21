@@ -59,10 +59,13 @@ struct wakeup_source {
 	struct timer_list	timer;
 	unsigned long		timer_expires;
 	ktime_t total_time;
+<<<<<<< HEAD
 	#ifdef VENDOR_EDIT
 /* wenxian.Zhen@PSW.BSP.POWER, , 2018/11/14, Add for print wakeup source */
 	ktime_t total_time_backup;
 #endif /* VENDOR_EDIT */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	ktime_t max_time;
 	ktime_t last_time;
 	ktime_t start_prevent_time;
@@ -113,11 +116,14 @@ extern void pm_relax(struct device *dev);
 extern void __pm_wakeup_event(struct wakeup_source *ws, unsigned int msec);
 extern void pm_wakeup_event(struct device *dev, unsigned int msec);
 
+<<<<<<< HEAD
 /* OPPO 2013-09-17 wangjc Add begin for print wakeup source */
 #ifdef VENDOR_EDIT
 extern void pm_print_active_wakeup_sources(void);
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #else /* !CONFIG_PM_SLEEP */
 
 static inline void device_set_wakeup_capable(struct device *dev, bool capable)

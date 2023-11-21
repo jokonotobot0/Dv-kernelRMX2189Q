@@ -29,11 +29,14 @@ struct fib_rule_hdr {
 	__u32		flags;
 };
 
+<<<<<<< HEAD
 struct fib_rule_uid_range {
 	__u32		start;
 	__u32		end;
 };
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 enum {
 	FRA_UNSPEC,
 	FRA_DST,	/* destination address */
@@ -56,7 +59,10 @@ enum {
 	FRA_OIFNAME,
 	FRA_PAD,
 	FRA_L3MDEV,	/* iif or oif is l3mdev goto its table */
+<<<<<<< HEAD
 	FRA_UID_RANGE,	/* UID range */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	__FRA_MAX
 };
 

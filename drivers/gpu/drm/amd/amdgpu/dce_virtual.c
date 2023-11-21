@@ -199,12 +199,20 @@ static void dce_virtual_crtc_dpms(struct drm_crtc *crtc, int mode)
 		type = amdgpu_crtc_idx_to_irq_type(adev, amdgpu_crtc->crtc_id);
 		amdgpu_irq_update(adev, &adev->crtc_irq, type);
 		amdgpu_irq_update(adev, &adev->pageflip_irq, type);
+<<<<<<< HEAD
 		drm_crtc_vblank_on(crtc);
+=======
+		drm_vblank_on(dev, amdgpu_crtc->crtc_id);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		break;
 	case DRM_MODE_DPMS_STANDBY:
 	case DRM_MODE_DPMS_SUSPEND:
 	case DRM_MODE_DPMS_OFF:
+<<<<<<< HEAD
 		drm_crtc_vblank_off(crtc);
+=======
+		drm_vblank_off(dev, amdgpu_crtc->crtc_id);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		amdgpu_crtc->enabled = false;
 		break;
 	}

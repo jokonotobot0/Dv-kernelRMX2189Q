@@ -174,7 +174,11 @@ static void *__dma_alloc(struct device *dev, size_t size,
 	/* create a coherent mapping */
 	page = virt_to_page(ptr);
 	coherent_ptr = dma_common_contiguous_remap(page, size, VM_USERMAP,
+<<<<<<< HEAD
 						   prot, __builtin_return_address(0));
+=======
+						   prot, NULL);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (!coherent_ptr)
 		goto no_map;
 

@@ -39,6 +39,7 @@
 
 #include <linux/mmc/ioctl.h>
 #include <linux/mmc/card.h>
+<<<<<<< HEAD
 #include <linux/mmc/core.h>
 #include <linux/mmc/host.h>
 #include <linux/mmc/mmc.h>
@@ -54,17 +55,25 @@
 #include <linux/types.h>
 #include "mtk_emmc_write_protect.h"
 #endif
+=======
+#include <linux/mmc/host.h>
+#include <linux/mmc/mmc.h>
+#include <linux/mmc/sd.h>
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #include <asm/uaccess.h>
 
 #include "queue.h"
 #include "block.h"
+<<<<<<< HEAD
 #include "mtk_mmc_block.h"
 
 #ifdef ODM_WT_EDIT
 //Haibo.Dong@ODM_WT.BSP.Kernel.Emmc,2020/04/05, Add  for eMMC and DDR device information
 #include <soc/oppo/device_info.h>
 #endif /* ODM_WT_EDIT */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 MODULE_ALIAS("mmc:block");
 #ifdef MODULE_PARAM_PREFIX
@@ -87,6 +96,7 @@ MODULE_ALIAS("mmc:block");
 #define PACKED_CMD_VER	0x01
 #define PACKED_CMD_WR	0x02
 
+<<<<<<< HEAD
 /* emmc cmdq enabled if part idx <= PART_CMDQ_EN
  * user:  0
  * boot1: 1
@@ -99,6 +109,8 @@ static struct mmc_cmdq_req *mmc_cmdq_prep_dcmd(
 		struct mmc_queue_req *mqrq, struct mmc_queue *mq);
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static DEFINE_MUTEX(block_mutex);
 
 /*
@@ -130,10 +142,16 @@ struct mmc_blk_data {
 	struct list_head part;
 
 	unsigned int	flags;
+<<<<<<< HEAD
 #define MMC_BLK_CMD23	(1 << 0)/* Can do SET_BLOCK_COUNT for multiblock */
 #define MMC_BLK_REL_WR	(1 << 1)/* MMC Reliable write support */
 #define MMC_BLK_PACKED_CMD	(1 << 2)/* MMC packed command support */
 #define MMC_BLK_CMD_QUEUE	(1 << 3) /* MMC command queue support */
+=======
+#define MMC_BLK_CMD23	(1 << 0)	/* Can do SET_BLOCK_COUNT for multiblock */
+#define MMC_BLK_REL_WR	(1 << 1)	/* MMC Reliable write support */
+#define MMC_BLK_PACKED_CMD	(1 << 2)	/* MMC packed command support */
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	unsigned int	usage;
 	unsigned int	read_only;
@@ -264,9 +282,13 @@ static ssize_t power_ro_lock_store(struct device *dev,
 				EXT_CSD_BOOT_WP_B_PWR_WP_EN,
 				card->ext_csd.part_time);
 	if (ret)
+<<<<<<< HEAD
 		pr_err(
 	"%s: Locking boot partition ro until next power on failed: %d\n",
 	md->disk->disk_name, ret);
+=======
+		pr_err("%s: Locking boot partition ro until next power on failed: %d\n", md->disk->disk_name, ret);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	else
 		card->ext_csd.boot_ro_lock |= EXT_CSD_BOOT_WP_B_PWR_WP_EN;
 
@@ -279,9 +301,13 @@ static ssize_t power_ro_lock_store(struct device *dev,
 
 		list_for_each_entry(part_md, &md->part, part)
 			if (part_md->area_type == MMC_BLK_DATA_AREA_BOOT) {
+<<<<<<< HEAD
 				pr_info(
 "%s: Locking boot partition ro until next power on\n",
 part_md->disk->disk_name);
+=======
+				pr_info("%s: Locking boot partition ro until next power on\n", part_md->disk->disk_name);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 				set_disk_ro(part_md->disk, 1);
 			}
 	}
@@ -322,6 +348,7 @@ out:
 	return ret;
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_MMC_SIMULATE_MAX_SPEED
 
 static int max_read_speed, max_write_speed, cache_size = 4;
@@ -566,6 +593,8 @@ static void mmc_blk_simulate_delay(
 
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int mmc_blk_open(struct block_device *bdev, fmode_t mode)
 {
 	struct mmc_blk_data *md = mmc_blk_get(bdev->bd_disk);
@@ -747,9 +776,14 @@ static int __mmc_blk_ioctl_cmd(struct mmc_card *card, struct mmc_blk_data *md,
 	struct mmc_request mrq = {NULL};
 	struct scatterlist sg;
 	int err;
+<<<<<<< HEAD
 	int is_rpmb = false, is_switch_part = false;
 	u32 status = 0;
 	u8 *ext_csd = NULL;
+=======
+	int is_rpmb = false;
+	u32 status = 0;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (!card || !md || !idata)
 		return -EINVAL;
@@ -761,10 +795,13 @@ static int __mmc_blk_ioctl_cmd(struct mmc_card *card, struct mmc_blk_data *md,
 	cmd.arg = idata->ic.arg;
 	cmd.flags = idata->ic.flags;
 
+<<<<<<< HEAD
 	if ((MMC_EXTRACT_INDEX_FROM_ARG(cmd.arg) == EXT_CSD_PART_CONFIG) &&
 		(cmd.opcode == MMC_SWITCH))
 		is_switch_part = true;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (idata->buf_bytes) {
 		data.sg = &sg;
 		data.sg_len = 1;
@@ -831,12 +868,15 @@ static int __mmc_blk_ioctl_cmd(struct mmc_card *card, struct mmc_blk_data *md,
 		return err;
 	}
 
+<<<<<<< HEAD
 #ifdef CONFIG_MMC_FFU
 	if (cmd.opcode == MMC_FFU_DOWNLOAD_OP
 		|| cmd.opcode == MMC_FFU_INSTALL_OP) {
 		mmc_wait_for_ffu_req(card->host, &mrq);
 	} else
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	mmc_wait_for_req(card->host, &mrq);
 
 	if (cmd.error) {
@@ -855,8 +895,12 @@ static int __mmc_blk_ioctl_cmd(struct mmc_card *card, struct mmc_blk_data *md,
 	 * issuing the command.
 	 */
 	if (idata->ic.postsleep_min_us)
+<<<<<<< HEAD
 		usleep_range(idata->ic.postsleep_min_us,
 			idata->ic.postsleep_max_us);
+=======
+		usleep_range(idata->ic.postsleep_min_us, idata->ic.postsleep_max_us);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	memcpy(&(idata->ic.response), cmd.resp, sizeof(cmd.resp));
 
@@ -872,6 +916,7 @@ static int __mmc_blk_ioctl_cmd(struct mmc_card *card, struct mmc_blk_data *md,
 					__func__, status, err);
 	}
 
+<<<<<<< HEAD
 	if (is_switch_part) {
 		err = mmc_get_ext_csd(card, &ext_csd);
 		if (err)
@@ -1005,6 +1050,10 @@ int mmc_ffu_ops_check_bdev(struct block_device *bdev,
 	return 0;
 }
 #endif
+=======
+	return err;
+}
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 static int mmc_blk_ioctl_cmd(struct block_device *bdev,
 			     struct mmc_ioc_cmd __user *ic_ptr)
@@ -1013,18 +1062,22 @@ static int mmc_blk_ioctl_cmd(struct block_device *bdev,
 	struct mmc_blk_data *md;
 	struct mmc_card *card;
 	int err = 0, ioc_err = 0;
+<<<<<<< HEAD
 #if defined(CONFIG_MTK_EMMC_CQ_SUPPORT) || defined(CONFIG_MTK_EMMC_HW_CQ)
 	bool cmdq_en = false;
 #endif
 #ifdef CONFIG_MTK_EMMC_SUPPORT_OTP
 	int otp_dev;
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/*
 	 * The caller must have CAP_SYS_RAWIO, and must be calling this on the
 	 * whole block device, not on a partition.  This prevents overspray
 	 * between sibling partitions.
 	 */
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_EMMC_SUPPORT_OTP
 	otp_dev = mmc_otp_ops_check_bdev(bdev);
 	if (!otp_dev)
@@ -1035,17 +1088,23 @@ static int mmc_blk_ioctl_cmd(struct block_device *bdev,
 	!mmc_ffu_ops_check_bdev(bdev, ic_ptr) &&
 #endif
 	!capable(CAP_SYS_RAWIO)) || (bdev != bdev->bd_contains))
+=======
+	if ((!capable(CAP_SYS_RAWIO)) || (bdev != bdev->bd_contains))
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		return -EPERM;
 
 	idata = mmc_blk_ioctl_copy_from_user(ic_ptr);
 	if (IS_ERR(idata))
 		return PTR_ERR(idata);
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_EMMC_SUPPORT_OTP
 	if (otp_dev && (mmc_otp_ops_check(bdev, idata) < 0))
 		goto cmd_err;
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	md = mmc_blk_get(bdev->bd_disk);
 	if (!md) {
 		err = -EINVAL;
@@ -1060,6 +1119,7 @@ static int mmc_blk_ioctl_cmd(struct block_device *bdev,
 
 	mmc_get_card(card);
 
+<<<<<<< HEAD
 #if defined(CONFIG_MTK_EMMC_CQ_SUPPORT) || defined(CONFIG_MTK_EMMC_HW_CQ)
 	cmdq_en = !!mmc_card_cmdq(card);
 	if (cmdq_en) {
@@ -1073,12 +1133,15 @@ static int mmc_blk_ioctl_cmd(struct block_device *bdev,
 	}
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	ioc_err = __mmc_blk_ioctl_cmd(card, md, idata);
 
 	/* Always switch back to main area after RPMB access */
 	if (md->area_type & MMC_BLK_DATA_AREA_RPMB)
 		mmc_blk_part_switch(card, dev_get_drvdata(&card->dev));
 
+<<<<<<< HEAD
 #if defined(CONFIG_MTK_EMMC_CQ_SUPPORT) || defined(CONFIG_MTK_EMMC_HW_CQ)
 	if (cmdq_en) {
 		err = mmc_blk_cmdq_switch(card, 1);
@@ -1088,6 +1151,8 @@ static int mmc_blk_ioctl_cmd(struct block_device *bdev,
 	}
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	mmc_put_card(card);
 
 	err = mmc_blk_ioctl_copy_to_user(ic_ptr, idata);
@@ -1109,10 +1174,13 @@ static int mmc_blk_ioctl_multi_cmd(struct block_device *bdev,
 	struct mmc_blk_data *md;
 	int i, err = 0, ioc_err = 0;
 	__u64 num_of_cmds;
+<<<<<<< HEAD
 #if defined(CONFIG_MTK_EMMC_CQ_SUPPORT) || defined(CONFIG_MTK_EMMC_HW_CQ)
 	struct mmc_blk_data *main_md;
 	bool cmdq_en;
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/*
 	 * The caller must have CAP_SYS_RAWIO, and must be calling this on the
@@ -1156,6 +1224,7 @@ static int mmc_blk_ioctl_multi_cmd(struct block_device *bdev,
 
 	mmc_get_card(card);
 
+<<<<<<< HEAD
 #if defined(CONFIG_MTK_EMMC_CQ_SUPPORT) || defined(CONFIG_MTK_EMMC_HW_CQ)
 	cmdq_en = !!mmc_card_cmdq(card);
 	if (cmdq_en) {
@@ -1169,6 +1238,8 @@ static int mmc_blk_ioctl_multi_cmd(struct block_device *bdev,
 	}
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	for (i = 0; i < num_of_cmds && !ioc_err; i++)
 		ioc_err = __mmc_blk_ioctl_cmd(card, md, idata[i]);
 
@@ -1176,6 +1247,7 @@ static int mmc_blk_ioctl_multi_cmd(struct block_device *bdev,
 	if (md->area_type & MMC_BLK_DATA_AREA_RPMB)
 		mmc_blk_part_switch(card, dev_get_drvdata(&card->dev));
 
+<<<<<<< HEAD
 #if defined(CONFIG_MTK_EMMC_CQ_SUPPORT) || defined(CONFIG_MTK_EMMC_HW_CQ)
 	if (cmdq_en) {
 		main_md = dev_get_drvdata(&card->dev);
@@ -1186,6 +1258,8 @@ static int mmc_blk_ioctl_multi_cmd(struct block_device *bdev,
 	}
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	mmc_put_card(card);
 
 	/* copy to user if data and response */
@@ -1203,6 +1277,7 @@ cmd_err:
 	return ioc_err ? ioc_err : err;
 }
 
+<<<<<<< HEAD
 #define MMC_BLK_NO_WP           0
 #define MMC_BLK_PARTIALLY_WP    1
 #define MMC_BLK_FULLY_WP        2
@@ -1478,6 +1553,30 @@ static int mmc_blk_compat_ioctl(struct block_device *bdev, fmode_t mode,
 	return mmc_blk_ioctl(bdev, mode, cmd, (unsigned long) compat_ptr(arg));
 }
 #endif
+=======
+static int mmc_blk_ioctl(struct block_device *bdev, fmode_t mode,
+	unsigned int cmd, unsigned long arg)
+{
+	switch (cmd) {
+	case MMC_IOC_CMD:
+		return mmc_blk_ioctl_cmd(bdev,
+				(struct mmc_ioc_cmd __user *)arg);
+	case MMC_IOC_MULTI_CMD:
+		return mmc_blk_ioctl_multi_cmd(bdev,
+				(struct mmc_ioc_multi_cmd __user *)arg);
+	default:
+		return -EINVAL;
+	}
+}
+
+#ifdef CONFIG_COMPAT
+static int mmc_blk_compat_ioctl(struct block_device *bdev, fmode_t mode,
+	unsigned int cmd, unsigned long arg)
+{
+	return mmc_blk_ioctl(bdev, mode, cmd, (unsigned long) compat_ptr(arg));
+}
+#endif
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 static const struct block_device_operations mmc_bdops = {
 	.open			= mmc_blk_open,
@@ -1488,7 +1587,10 @@ static const struct block_device_operations mmc_bdops = {
 #ifdef CONFIG_COMPAT
 	.compat_ioctl		= mmc_blk_compat_ioctl,
 #endif
+<<<<<<< HEAD
 	.check_disk_range_wp	= mmc_blk_check_disk_range_wp,
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 static inline int mmc_blk_part_switch(struct mmc_card *card,
@@ -1503,6 +1605,7 @@ static inline int mmc_blk_part_switch(struct mmc_card *card,
 	if (mmc_card_mmc(card)) {
 		u8 part_config = card->ext_csd.part_config;
 
+<<<<<<< HEAD
 #if defined(CONFIG_MTK_EMMC_CQ_SUPPORT) || defined(CONFIG_MTK_EMMC_HW_CQ)
 		/* disabe cmdq
 		 * if partition does not support cmdq
@@ -1514,6 +1617,8 @@ static inline int mmc_blk_part_switch(struct mmc_card *card,
 				return ret;
 		}
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		if (md->part_type == EXT_CSD_PART_CONFIG_ACC_RPMB)
 			mmc_retune_pause(card->host);
 
@@ -1523,6 +1628,7 @@ static inline int mmc_blk_part_switch(struct mmc_card *card,
 		ret = mmc_switch(card, EXT_CSD_CMD_SET_NORMAL,
 				 EXT_CSD_PART_CONFIG, part_config,
 				 card->ext_csd.part_time);
+<<<<<<< HEAD
 
 		if (ret) {
 #if defined(CONFIG_MTK_EMMC_CQ_SUPPORT) || defined(CONFIG_MTK_EMMC_HW_CQ)
@@ -1530,6 +1636,9 @@ static inline int mmc_blk_part_switch(struct mmc_card *card,
 				mmc_hostname(card->host), main_md->part_curr,
 					md->part_type);
 #endif
+=======
+		if (ret) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			if (md->part_type == EXT_CSD_PART_CONFIG_ACC_RPMB)
 				mmc_retune_unpause(card->host);
 			return ret;
@@ -1539,6 +1648,7 @@ static inline int mmc_blk_part_switch(struct mmc_card *card,
 
 		if (main_md->part_curr == EXT_CSD_PART_CONFIG_ACC_RPMB)
 			mmc_retune_unpause(card->host);
+<<<<<<< HEAD
 
 #if defined(CONFIG_MTK_EMMC_CQ_SUPPORT) || defined(CONFIG_MTK_EMMC_HW_CQ)
 		/* enable cmdq
@@ -1557,6 +1667,10 @@ static inline int mmc_blk_part_switch(struct mmc_card *card,
 #ifdef CONFIG_MTK_EMMC_HW_CQ
 	card->part_curr = md->part_type;
 #endif
+=======
+	}
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	main_md->part_curr = md->part_type;
 	return 0;
 }
@@ -1767,8 +1881,12 @@ static int mmc_blk_cmd_error(struct request *req, const char *name, int error,
 
 	default:
 		/* We don't understand the error code the driver gave us */
+<<<<<<< HEAD
 		pr_err(
 "%s: unknown error %d sending read/write command, card status %#x\n",
+=======
+		pr_err("%s: unknown error %d sending read/write command, card status %#x\n",
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		       req->rq_disk->disk_name, error, status);
 		return ERR_ABORT;
 	}
@@ -1831,10 +1949,13 @@ static int mmc_blk_cmd_recovery(struct mmc_card *card, struct request *req,
 	/* Flag ECC errors */
 	if ((status & R1_CARD_ECC_FAILED) ||
 	    (brq->stop.resp[0] & R1_CARD_ECC_FAILED) ||
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_EMMC_CQ_SUPPORT
 	    (brq->sbc.resp[0] & R1_CARD_ECC_FAILED) ||
 	    (brq->que.resp[0] & R1_CARD_ECC_FAILED) ||
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	    (brq->cmd.resp[0] & R1_CARD_ECC_FAILED))
 		*ecc_err = 1;
 
@@ -1842,9 +1963,13 @@ static int mmc_blk_cmd_recovery(struct mmc_card *card, struct request *req,
 	if (!mmc_host_is_spi(card->host) && rq_data_dir(req) != READ)
 		if ((status & R1_ERROR) ||
 			(brq->stop.resp[0] & R1_ERROR)) {
+<<<<<<< HEAD
 			pr_err(
 "%s: %s: general error sending stop or status command, stop cmd response %#x,"
 " card status %#x\n",
+=======
+			pr_err("%s: %s: general error sending stop or status command, stop cmd response %#x, card status %#x\n",
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			       req->rq_disk->disk_name, __func__,
 			       brq->stop.resp[0], status);
 			*gen_err = 1;
@@ -1888,8 +2013,12 @@ static int mmc_blk_cmd_recovery(struct mmc_card *card, struct request *req,
 		return ERR_CONTINUE;
 
 	/* Now for stop errors.  These aren't fatal to the transfer. */
+<<<<<<< HEAD
 	pr_info("%s: error %d sending stop command, original cmd response %#x,"
 	" card status %#x\n",
+=======
+	pr_info("%s: error %d sending stop command, original cmd response %#x, card status %#x\n",
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	       req->rq_disk->disk_name, brq->stop.error,
 	       brq->cmd.resp[0], status);
 
@@ -1914,6 +2043,7 @@ static int mmc_blk_reset(struct mmc_blk_data *md, struct mmc_host *host,
 
 	md->reset_done |= type;
 	err = mmc_hw_reset(host);
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_EMMC_HW_CQ
 	if (err && err != -EOPNOTSUPP) {
 		/* We failed to reset so we need to abort the request */
@@ -1926,6 +2056,10 @@ static int mmc_blk_reset(struct mmc_blk_data *md, struct mmc_host *host,
 #else
 	if (err != -EOPNOTSUPP) {
 #endif
+=======
+	/* Ensure we switch back to the correct partition */
+	if (err != -EOPNOTSUPP) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		struct mmc_blk_data *main_md =
 			dev_get_drvdata(&host->card->dev);
 		int part_err;
@@ -1960,6 +2094,7 @@ int mmc_access_rpmb(struct mmc_queue *mq)
 	return false;
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_EMMC_HW_CQ
 static struct mmc_cmdq_req *mmc_blk_cmdq_prep_discard_req(struct mmc_queue *mq,
 						struct request *req)
@@ -2032,6 +2167,8 @@ out:
 }
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int mmc_blk_issue_discard_rq(struct mmc_queue *mq, struct request *req)
 {
 	struct mmc_blk_data *md = mq->data;
@@ -2075,6 +2212,7 @@ out:
 	return err ? 0 : 1;
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_EMMC_HW_CQ
 static int mmc_blk_cmdq_issue_secdiscard_rq(struct mmc_queue *mq,
 				       struct request *req)
@@ -2139,6 +2277,8 @@ out:
 }
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int mmc_blk_issue_secdiscard_rq(struct mmc_queue *mq,
 				       struct request *req)
 {
@@ -2213,6 +2353,7 @@ static int mmc_blk_issue_flush(struct mmc_queue *mq, struct request *req)
 	int ret = 0;
 
 	ret = mmc_flush_cache(card);
+<<<<<<< HEAD
 	if (ret) {
 		pr_notice("%s: %s: notify flush error to upper layers",
 				req->rq_disk->disk_name, __func__);
@@ -2236,6 +2377,11 @@ static int mmc_blk_issue_flush(struct mmc_queue *mq, struct request *req)
 		}
 	}
 #endif
+=======
+	if (ret)
+		ret = -EIO;
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	blk_end_request_all(req, ret);
 
 	return ret ? 0 : 1;
@@ -2281,7 +2427,10 @@ static int mmc_blk_err_check(struct mmc_card *card,
 	struct request *req = mq_mrq->req;
 	int need_retune = card->host->need_retune;
 	int ecc_err = 0, gen_err = 0;
+<<<<<<< HEAD
 	u32 status;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/*
 	 * sbc.error indicates a problem with the set block count
@@ -2293,6 +2442,7 @@ static int mmc_blk_err_check(struct mmc_card *card,
 	 * stop.error indicates a problem with the stop command.  Data
 	 * may have been transferred, or may still be transferring.
 	 */
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_EMMC_CQ_SUPPORT
 	if (!areq->cmdq_en) {
 #endif
@@ -2315,6 +2465,21 @@ static int mmc_blk_err_check(struct mmc_card *card,
 #ifdef CONFIG_MTK_EMMC_CQ_SUPPORT
 	}
 #endif
+=======
+	if (brq->sbc.error || brq->cmd.error || brq->stop.error ||
+	    brq->data.error) {
+		switch (mmc_blk_cmd_recovery(card, req, brq, &ecc_err, &gen_err)) {
+		case ERR_RETRY:
+			return MMC_BLK_RETRY;
+		case ERR_ABORT:
+			return MMC_BLK_ABORT;
+		case ERR_NOMEDIUM:
+			return MMC_BLK_NOMEDIUM;
+		case ERR_CONTINUE:
+			break;
+		}
+	}
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/*
 	 * Check for errors relating to the execution of the
@@ -2332,22 +2497,31 @@ static int mmc_blk_err_check(struct mmc_card *card,
 	 * kind.  If it was a write, we may have transitioned to
 	 * program mode, which we have to wait for it to complete.
 	 */
+<<<<<<< HEAD
 	if (!mmc_host_is_spi(card->host) && rq_data_dir(req) != READ
 #ifdef CONFIG_MTK_EMMC_CQ_SUPPORT
 	 && !areq->cmdq_en
 #endif
 	   ) {
+=======
+	if (!mmc_host_is_spi(card->host) && rq_data_dir(req) != READ) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		int err;
 
 		/* Check stop command response */
 		if (brq->stop.resp[0] & R1_ERROR) {
+<<<<<<< HEAD
 			pr_err(
 "%s: %s: general error sending stop command, stop cmd response %#x\n",
+=======
+			pr_err("%s: %s: general error sending stop command, stop cmd response %#x\n",
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			       req->rq_disk->disk_name, __func__,
 			       brq->stop.resp[0]);
 			gen_err = 1;
 		}
 
+<<<<<<< HEAD
 		/* Get device status to send stop command to avoid
 		 *  Next command timeout because device in RCV status
 		 */
@@ -2375,6 +2549,8 @@ static int mmc_blk_err_check(struct mmc_card *card,
 			}
 		}
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		err = card_busy_detect(card, MMC_BLK_TIMEOUT_MS, false, req,
 					&gen_err);
 		if (err)
@@ -2395,8 +2571,12 @@ static int mmc_blk_err_check(struct mmc_card *card,
 			brq->retune_retry_done = 1;
 			return MMC_BLK_RETRY;
 		}
+<<<<<<< HEAD
 		pr_err("%s: error %d transferring data, sector %u, nr %u,"
 "cmd response %#x, card status %#x\n",
+=======
+		pr_err("%s: error %d transferring data, sector %u, nr %u, cmd response %#x, card status %#x\n",
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		       req->rq_disk->disk_name, brq->data.error,
 		       (unsigned)blk_rq_pos(req),
 		       (unsigned)blk_rq_sectors(req),
@@ -2549,6 +2729,7 @@ static void mmc_blk_rw_rq_prep(struct mmc_queue_req *mqrq,
 		readcmd = MMC_READ_SINGLE_BLOCK;
 		writecmd = MMC_WRITE_BLOCK;
 	}
+<<<<<<< HEAD
 
 #ifdef CONFIG_MTK_EMMC_CQ_SUPPORT
 	if (mmc_card_cmdq(card)) {
@@ -2557,6 +2738,8 @@ static void mmc_blk_rw_rq_prep(struct mmc_queue_req *mqrq,
 	}
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (rq_data_dir(req) == READ) {
 		brq->cmd.opcode = readcmd;
 		brq->data.flags = MMC_DATA_READ;
@@ -2640,6 +2823,7 @@ static void mmc_blk_rw_rq_prep(struct mmc_queue_req *mqrq,
 	mqrq->mmc_active.mrq = &brq->mrq;
 	mqrq->mmc_active.err_check = mmc_blk_err_check;
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_EMMC_CQ_SUPPORT
 	if (mmc_card_cmdq(card)) {
 		int rt = IS_RT_CLASS_REQ(req);
@@ -2680,6 +2864,8 @@ static void mmc_blk_rw_rq_prep(struct mmc_queue_req *mqrq,
 	brq->mrq.is_mmc_req = true;
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	mmc_queue_bounce_pre(mqrq);
 }
 
@@ -2945,6 +3131,7 @@ static int mmc_blk_end_packed_req(struct mmc_queue_req *mq_rq)
 			mq_rq->req = prq;
 			ret = 1;
 
+<<<<<<< HEAD
 			if (packed->nr_entries == MMC_PACKED_NR_SINGLE) {
 				list_del_init(&prq->queuelist);
 				mmc_blk_clear_packed(mq_rq);
@@ -3760,6 +3947,58 @@ void mmc_blk_cmdq_req_done(struct mmc_request *mrq)
 }
 EXPORT_SYMBOL(mmc_blk_cmdq_req_done);
 #endif
+=======
+			if (packed->nr_entries == MMC_PACKED_NR_SINGLE) {
+				list_del_init(&prq->queuelist);
+				mmc_blk_clear_packed(mq_rq);
+			}
+			return ret;
+		}
+		list_del_init(&prq->queuelist);
+		blk_end_request(prq, 0, blk_rq_bytes(prq));
+		i++;
+	}
+
+	mmc_blk_clear_packed(mq_rq);
+	return ret;
+}
+
+static void mmc_blk_abort_packed_req(struct mmc_queue_req *mq_rq)
+{
+	struct request *prq;
+	struct mmc_packed *packed = mq_rq->packed;
+
+	while (!list_empty(&packed->list)) {
+		prq = list_entry_rq(packed->list.next);
+		list_del_init(&prq->queuelist);
+		blk_end_request(prq, -EIO, blk_rq_bytes(prq));
+	}
+
+	mmc_blk_clear_packed(mq_rq);
+}
+
+static void mmc_blk_revert_packed_req(struct mmc_queue *mq,
+				      struct mmc_queue_req *mq_rq)
+{
+	struct request *prq;
+	struct request_queue *q = mq->queue;
+	struct mmc_packed *packed = mq_rq->packed;
+
+	while (!list_empty(&packed->list)) {
+		prq = list_entry_rq(packed->list.prev);
+		if (prq->queuelist.prev != &packed->list) {
+			list_del_init(&prq->queuelist);
+			spin_lock_irq(q->queue_lock);
+			blk_requeue_request(mq->queue, prq);
+			spin_unlock_irq(q->queue_lock);
+		} else {
+			list_del_init(&prq->queuelist);
+		}
+	}
+
+	mmc_blk_clear_packed(mq_rq);
+}
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 static int mmc_blk_issue_rw_rq(struct mmc_queue *mq, struct request *rqc)
 {
@@ -3773,6 +4012,7 @@ static int mmc_blk_issue_rw_rq(struct mmc_queue *mq, struct request *rqc)
 	struct mmc_async_req *areq;
 	const u8 packed_nr = 2;
 	u8 reqs = 0;
+<<<<<<< HEAD
 #ifdef CONFIG_MMC_SIMULATE_MAX_SPEED
 	unsigned long waitfor = jiffies;
 #endif
@@ -3785,10 +4025,13 @@ static int mmc_blk_issue_rw_rq(struct mmc_queue *mq, struct request *rqc)
 		return 0;
 	}
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (!rqc && !mq->mqrq_prev->req)
 		return 0;
 
+<<<<<<< HEAD
 	if (rqc
 #ifdef CONFIG_MTK_EMMC_CQ_SUPPORT
 	 && !mmc_card_cmdq(card)
@@ -3796,6 +4039,10 @@ static int mmc_blk_issue_rw_rq(struct mmc_queue *mq, struct request *rqc)
 	   )
 		reqs = mmc_blk_prep_packed_list(mq, rqc);
 	mt_biolog_mmcqd_req_check();
+=======
+	if (rqc)
+		reqs = mmc_blk_prep_packed_list(mq, rqc);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	do {
 		if (rqc) {
@@ -3805,8 +4052,12 @@ static int mmc_blk_issue_rw_rq(struct mmc_queue *mq, struct request *rqc)
 			 */
 			if (mmc_large_sector(card) &&
 				!IS_ALIGNED(blk_rq_sectors(rqc), 8)) {
+<<<<<<< HEAD
 				pr_err(
 			"%s: Transfer size is not 4KB sector size aligned\n",
+=======
+				pr_err("%s: Transfer size is not 4KB sector size aligned\n",
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 					req->rq_disk->disk_name);
 				mq_rq = mq->mqrq_cur;
 				goto cmd_abort;
@@ -3818,6 +4069,7 @@ static int mmc_blk_issue_rw_rq(struct mmc_queue *mq, struct request *rqc)
 			else
 				mmc_blk_rw_rq_prep(mq->mqrq_cur, card, 0, mq);
 			areq = &mq->mqrq_cur->mmc_active;
+<<<<<<< HEAD
 
 #ifdef CONFIG_MTK_EMMC_CQ_SUPPORT
 			if (mmc_card_cmdq(card)) {
@@ -3830,12 +4082,18 @@ static int mmc_blk_issue_rw_rq(struct mmc_queue *mq, struct request *rqc)
 			}
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		} else
 			areq = NULL;
 		areq = mmc_start_req(card->host, areq, (int *) &status);
 		if (!areq) {
 			if (status == MMC_BLK_NEW_REQUEST)
+<<<<<<< HEAD
 				set_bit(MMC_QUEUE_NEW_REQUEST, &mq->flags);
+=======
+				mq->flags |= MMC_QUEUE_NEW_REQUEST;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			return 0;
 		}
 
@@ -3853,12 +4111,16 @@ static int mmc_blk_issue_rw_rq(struct mmc_queue *mq, struct request *rqc)
 			 */
 			mmc_blk_reset_success(md, type);
 
+<<<<<<< HEAD
 			mmc_blk_simulate_delay(mq, rqc, waitfor);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			if (mmc_packed_cmd(mq_rq->cmd_type)) {
 				ret = mmc_blk_end_packed_req(mq_rq);
 				break;
 			} else {
+<<<<<<< HEAD
 
 #ifdef CONFIG_MTK_EMMC_CQ_SUPPORT
 				if (status == MMC_BLK_SUCCESS) {
@@ -3877,6 +4139,10 @@ static int mmc_blk_issue_rw_rq(struct mmc_queue *mq, struct request *rqc)
 				}
 #endif
 
+=======
+				ret = blk_end_request(req, 0,
+						brq->data.bytes_xfered);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			}
 
 			/*
@@ -3922,8 +4188,12 @@ static int mmc_blk_issue_rw_rq(struct mmc_queue *mq, struct request *rqc)
 		case MMC_BLK_ECC_ERR:
 			if (brq->data.blocks > 1) {
 				/* Redo read one sector at a time */
+<<<<<<< HEAD
 				pr_warn(
 				"%s: retrying using single block read\n",
+=======
+				pr_warn("%s: retrying using single block read\n",
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 					req->rq_disk->disk_name);
 				disable_multi = 1;
 				break;
@@ -4002,6 +4272,7 @@ static int mmc_blk_issue_rw_rq(struct mmc_queue *mq, struct request *rqc)
 	return 0;
 }
 
+<<<<<<< HEAD
 /* check if the partition support cmdq or not */
 bool mmc_blk_part_cmdq_en(struct mmc_queue *mq)
 {
@@ -4316,6 +4587,8 @@ out:
 }
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 int mmc_blk_issue_rq(struct mmc_queue *mq, struct request *req)
 {
 	int ret;
@@ -4324,12 +4597,18 @@ int mmc_blk_issue_rq(struct mmc_queue *mq, struct request *req)
 	struct mmc_host *host = card->host;
 	unsigned long flags;
 	bool req_is_special = mmc_req_is_special(req);
+<<<<<<< HEAD
 	bool part_cmdq_en = mmc_blk_part_cmdq_en(mq);
 
 	if (part_cmdq_en || (req && !mq->mqrq_prev->req))
 		/* non-cq: claim host only for the first request
 		 * cq: claim host for every request
 		 */
+=======
+
+	if (req && !mq->mqrq_prev->req)
+		/* claim host only for the first request */
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		mmc_get_card(card);
 
 	ret = mmc_blk_part_switch(card, md);
@@ -4338,6 +4617,7 @@ int mmc_blk_issue_rq(struct mmc_queue *mq, struct request *req)
 			blk_end_request_all(req, -EIO);
 		}
 		ret = 0;
+<<<<<<< HEAD
 		if (part_cmdq_en) {
 			mmc_put_card(card);
 			return ret;
@@ -4349,6 +4629,15 @@ int mmc_blk_issue_rq(struct mmc_queue *mq, struct request *req)
 	if (req && req_op(req) == REQ_OP_DISCARD) {
 		/* complete ongoing async transfer before issuing discard */
 		if (part_cmdq_en || card->host->areq)
+=======
+		goto out;
+	}
+
+	mq->flags &= ~MMC_QUEUE_NEW_REQUEST;
+	if (req && req_op(req) == REQ_OP_DISCARD) {
+		/* complete ongoing async transfer before issuing discard */
+		if (card->host->areq)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			mmc_blk_issue_rw_rq(mq, NULL);
 		ret = mmc_blk_issue_discard_rq(mq, req);
 	} else if (req && req_op(req) == REQ_OP_SECURE_ERASE) {
@@ -4358,6 +4647,7 @@ int mmc_blk_issue_rq(struct mmc_queue *mq, struct request *req)
 		ret = mmc_blk_issue_secdiscard_rq(mq, req);
 	} else if (req && req_op(req) == REQ_OP_FLUSH) {
 		/* complete ongoing async transfer before issuing flush */
+<<<<<<< HEAD
 		if (part_cmdq_en || card->host->areq)
 			mmc_blk_issue_rw_rq(mq, NULL);
 		ret = mmc_blk_issue_flush(mq, req);
@@ -4375,6 +4665,13 @@ int mmc_blk_issue_rq(struct mmc_queue *mq, struct request *req)
 		}
 #endif
 		if (!part_cmdq_en && !req && host->areq) {
+=======
+		if (card->host->areq)
+			mmc_blk_issue_rw_rq(mq, NULL);
+		ret = mmc_blk_issue_flush(mq, req);
+	} else {
+		if (!req && host->areq) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			spin_lock_irqsave(&host->context_info.lock, flags);
 			host->context_info.is_waiting_last_req = true;
 			spin_unlock_irqrestore(&host->context_info.lock, flags);
@@ -4383,8 +4680,12 @@ int mmc_blk_issue_rq(struct mmc_queue *mq, struct request *req)
 	}
 
 out:
+<<<<<<< HEAD
 	if ((!req && !(test_bit(MMC_QUEUE_NEW_REQUEST, &mq->flags)))
 		|| req_is_special)
+=======
+	if ((!req && !(mq->flags & MMC_QUEUE_NEW_REQUEST)) || req_is_special)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		/*
 		 * Release host when there are no more requests
 		 * and after special request(discard, flush) is done.
@@ -4453,7 +4754,11 @@ again:
 	INIT_LIST_HEAD(&md->part);
 	md->usage = 1;
 
+<<<<<<< HEAD
 	ret = mmc_init_queue(&md->queue, card, &md->lock, subname, area_type);
+=======
+	ret = mmc_init_queue(&md->queue, card, &md->lock, subname);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (ret)
 		goto err_putdisk;
 
@@ -4509,6 +4814,7 @@ again:
 		blk_queue_write_cache(md->queue.queue, true, true);
 	}
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_EMMC_HW_CQ
 	if (card->cqe_init) {
 		md->flags |= MMC_BLK_CMD_QUEUE;
@@ -4521,6 +4827,8 @@ again:
 
 	if (!card->cqe_init)
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (mmc_card_mmc(card) &&
 	    (area_type == MMC_BLK_DATA_AREA_MAIN) &&
 	    (md->flags & MMC_BLK_CMD23) &&
@@ -4576,8 +4884,13 @@ static int mmc_blk_alloc_part(struct mmc_card *card,
 	char cap_str[10];
 	struct mmc_blk_data *part_md;
 
+<<<<<<< HEAD
 	part_md = mmc_blk_alloc_req(card, disk_to_dev(md->disk), size,
 		default_ro, subname, area_type);
+=======
+	part_md = mmc_blk_alloc_req(card, disk_to_dev(md->disk), size, default_ro,
+				    subname, area_type);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (IS_ERR(part_md))
 		return PTR_ERR(part_md);
 	part_md->part_type = part_type;
@@ -4634,6 +4947,7 @@ static void mmc_blk_remove_req(struct mmc_blk_data *md)
 		mmc_cleanup_queue(&md->queue);
 		if (md->flags & MMC_BLK_PACKED_CMD)
 			mmc_packed_clean(&md->queue);
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_EMMC_HW_CQ
 		if (md->flags & MMC_BLK_CMD_QUEUE)
 			mmc_cmdq_clean(&md->queue, card);
@@ -4641,10 +4955,15 @@ static void mmc_blk_remove_req(struct mmc_blk_data *md)
 		if (md->disk->flags & GENHD_FL_UP) {
 			device_remove_file(disk_to_dev(md->disk),
 				&md->force_ro);
+=======
+		if (md->disk->flags & GENHD_FL_UP) {
+			device_remove_file(disk_to_dev(md->disk), &md->force_ro);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			if ((md->area_type & MMC_BLK_DATA_AREA_BOOT) &&
 					card->ext_csd.boot_ro_lockable)
 				device_remove_file(disk_to_dev(md->disk),
 					&md->power_ro_lock);
+<<<<<<< HEAD
 #ifdef CONFIG_MMC_SIMULATE_MAX_SPEED
 			device_remove_file(disk_to_dev(md->disk),
 						&dev_attr_max_write_speed);
@@ -4653,6 +4972,8 @@ static void mmc_blk_remove_req(struct mmc_blk_data *md)
 			device_remove_file(disk_to_dev(md->disk),
 						&dev_attr_cache_size);
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 			del_gendisk(md->disk);
 		}
@@ -4687,6 +5008,7 @@ static int mmc_add_disk(struct mmc_blk_data *md)
 	ret = device_create_file(disk_to_dev(md->disk), &md->force_ro);
 	if (ret)
 		goto force_ro_fail;
+<<<<<<< HEAD
 #ifdef CONFIG_MMC_SIMULATE_MAX_SPEED
 	atomic_set(&md->queue.max_write_speed, max_write_speed);
 	ret = device_create_file(disk_to_dev(md->disk),
@@ -4705,6 +5027,8 @@ static int mmc_add_disk(struct mmc_blk_data *md)
 	if (ret)
 		goto cache_size_fail;
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if ((md->area_type & MMC_BLK_DATA_AREA_BOOT) &&
 	     card->ext_csd.boot_ro_lockable) {
@@ -4729,6 +5053,7 @@ static int mmc_add_disk(struct mmc_blk_data *md)
 	return ret;
 
 power_ro_lock_fail:
+<<<<<<< HEAD
 #ifdef CONFIG_MMC_SIMULATE_MAX_SPEED
 	device_remove_file(disk_to_dev(md->disk), &dev_attr_cache_size);
 cache_size_fail:
@@ -4737,6 +5062,8 @@ max_read_speed_fail:
 	device_remove_file(disk_to_dev(md->disk), &dev_attr_max_write_speed);
 max_write_speed_fail:
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	device_remove_file(disk_to_dev(md->disk), &md->force_ro);
 force_ro_fail:
 	del_gendisk(md->disk);
@@ -4815,6 +5142,7 @@ static const struct mmc_fixup blk_fixups[] =
 	MMC_FIXUP("V10016", CID_MANFID_KINGSTON, CID_OEMID_ANY, add_quirk_mmc,
 		  MMC_QUIRK_TRIM_BROKEN),
 
+<<<<<<< HEAD
 	MMC_FIXUP("SEM16G", CID_MANFID_SANDISK_EMMC, CID_OEMID_ANY,
 		add_quirk_mmc, MMC_QUIRK_DISABLE_SNO),
 	MMC_FIXUP("SEM08G", CID_MANFID_SANDISK_EMMC, CID_OEMID_ANY,
@@ -4829,6 +5157,8 @@ static const struct mmc_fixup blk_fixups[] =
 	MMC_FIXUP("HCG8a4", CID_MANFID_HYNIX, CID_OEMID_ANY, add_quirk_mmc,
 		MMC_QUIRK_SKIP_CHECK_WP),
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	END_FIXUP
 };
 
@@ -4837,6 +5167,7 @@ static int mmc_blk_probe(struct mmc_card *card)
 	struct mmc_blk_data *md, *part_md;
 	char cap_str[10];
 
+<<<<<<< HEAD
 #ifdef ODM_WT_EDIT
     //Haibo.Dong@ODM_WT.BSP.Kernel.Emmc,2020/04/05, Add for eMMC and DDR device information
     char * manufacturerid;
@@ -4885,6 +5216,14 @@ static int mmc_blk_probe(struct mmc_card *card)
         register_device_proc("emmc_version", mmc_card_name(card), temp_version);
     }
 #endif  /* ODM_WT_EDIT */
+=======
+	/*
+	 * Check that the card supports the command class(es) we need.
+	 */
+	if (!(card->csd.cmdclass & CCC_BLOCK_READ))
+		return -ENODEV;
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	mmc_fixup_device(card, blk_fixups);
 
 	md = mmc_blk_alloc(card);
@@ -4930,6 +5269,7 @@ static int mmc_blk_probe(struct mmc_card *card)
 	return 0;
 }
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 //Chunyi.Mei@PSW.BSP.Storage.Sdcard, 2018-12-10, Add for SD Card device information
 char *capacity_string(struct mmc_card *card){
@@ -4943,6 +5283,8 @@ char *capacity_string(struct mmc_card *card){
 }
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static void mmc_blk_remove(struct mmc_card *card)
 {
 	struct mmc_blk_data *md = dev_get_drvdata(&card->dev);
@@ -4959,6 +5301,7 @@ static void mmc_blk_remove(struct mmc_card *card)
 	dev_set_drvdata(&card->dev, NULL);
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_EMMC_HW_CQ
 static int _mmc_blk_suspend(struct mmc_card *card, bool wait)
 {
@@ -4987,6 +5330,8 @@ static int _mmc_blk_suspend(struct mmc_card *card, bool wait)
 	return rc;
 }
 #else
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int _mmc_blk_suspend(struct mmc_card *card)
 {
 	struct mmc_blk_data *part_md;
@@ -5000,6 +5345,7 @@ static int _mmc_blk_suspend(struct mmc_card *card)
 	}
 	return 0;
 }
+<<<<<<< HEAD
 #endif
 
 static void mmc_blk_shutdown(struct mmc_card *card)
@@ -5009,12 +5355,19 @@ static void mmc_blk_shutdown(struct mmc_card *card)
 #else
 	_mmc_blk_suspend(card);
 #endif
+=======
+
+static void mmc_blk_shutdown(struct mmc_card *card)
+{
+	_mmc_blk_suspend(card);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 #ifdef CONFIG_PM_SLEEP
 static int mmc_blk_suspend(struct device *dev)
 {
 	struct mmc_card *card = mmc_dev_to_card(dev);
+<<<<<<< HEAD
 	struct mmc_blk_data *md = dev_get_drvdata(dev);
 	int ret;
 
@@ -5038,6 +5391,10 @@ static int mmc_blk_suspend(struct device *dev)
 	}
 out:
 	return ret;
+=======
+
+	return _mmc_blk_suspend(card);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static int mmc_blk_resume(struct device *dev)
@@ -5088,7 +5445,10 @@ static int __init mmc_blk_init(void)
 	res = mmc_register_driver(&mmc_driver);
 	if (res)
 		goto out2;
+<<<<<<< HEAD
 	mt_mmc_biolog_init();
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	return 0;
  out2:
@@ -5101,7 +5461,10 @@ static void __exit mmc_blk_exit(void)
 {
 	mmc_unregister_driver(&mmc_driver);
 	unregister_blkdev(MMC_BLOCK_MAJOR, "mmc");
+<<<<<<< HEAD
 	mt_mmc_biolog_exit();
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 module_init(mmc_blk_init);

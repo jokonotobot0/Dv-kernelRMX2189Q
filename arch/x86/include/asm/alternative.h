@@ -218,9 +218,16 @@ static inline int alternatives_text_reserved(void *start, void *end)
 #define alternative_call_2(oldfunc, newfunc1, feature1, newfunc2, feature2,   \
 			   output, input...)				      \
 {									      \
+<<<<<<< HEAD
 	asm volatile (ALTERNATIVE_2("call %P[old]", "call %P[new1]", feature1,\
 		"call %P[new2]", feature2)				      \
 		: output, ASM_CALL_CONSTRAINT				      \
+=======
+	register void *__sp asm(_ASM_SP);				      \
+	asm volatile (ALTERNATIVE_2("call %P[old]", "call %P[new1]", feature1,\
+		"call %P[new2]", feature2)				      \
+		: output, "+r" (__sp)					      \
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		: [old] "i" (oldfunc), [new1] "i" (newfunc1),		      \
 		  [new2] "i" (newfunc2), ## input);			      \
 }

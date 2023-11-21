@@ -490,8 +490,12 @@ bool mem_cgroup_oom_synchronize(bool wait);
 extern int do_swap_account;
 #endif
 
+<<<<<<< HEAD
 struct mem_cgroup *lock_page_memcg(struct page *page);
 void __unlock_page_memcg(struct mem_cgroup *memcg);
+=======
+void lock_page_memcg(struct page *page);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 void unlock_page_memcg(struct page *page);
 
 /**
@@ -530,6 +534,7 @@ static inline void mem_cgroup_dec_page_stat(struct page *page,
 	mem_cgroup_update_page_stat(page, idx, -1);
 }
 
+<<<<<<< HEAD
 static inline void mem_cgroup_update_stat(struct mem_cgroup *memcg,
 				 enum mem_cgroup_stat_index idx, int val)
 {
@@ -551,6 +556,8 @@ static inline void mem_cgroup_dec_stat(struct mem_cgroup *memcg,
 	mem_cgroup_update_stat(memcg, idx, -1);
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 unsigned long mem_cgroup_soft_limit_reclaim(pg_data_t *pgdat, int order,
 						gfp_t gfp_mask,
 						unsigned long *total_scanned);
@@ -731,12 +738,16 @@ mem_cgroup_print_oom_info(struct mem_cgroup *memcg, struct task_struct *p)
 {
 }
 
+<<<<<<< HEAD
 static inline struct mem_cgroup *lock_page_memcg(struct page *page)
 {
 	return NULL;
 }
 
 static inline void __unlock_page_memcg(struct mem_cgroup *memcg)
+=======
+static inline void lock_page_memcg(struct page *page)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 }
 
@@ -798,11 +809,14 @@ static inline
 void mem_cgroup_count_vm_event(struct mm_struct *mm, enum vm_event_item idx)
 {
 }
+<<<<<<< HEAD
 
 static inline void mem_cgroup_dec_stat(struct mem_cgroup *memcg,
 					    enum mem_cgroup_stat_index idx)
 {
 }
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif /* CONFIG_MEMCG */
 
 #ifdef CONFIG_CGROUP_WRITEBACK

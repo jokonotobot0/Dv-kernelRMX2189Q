@@ -18,7 +18,10 @@
 #include <linux/sched_clock.h>
 #include <linux/seqlock.h>
 #include <linux/bitops.h>
+<<<<<<< HEAD
 #include <mt-plat/mtk_sys_timer.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /**
  * struct clock_read_data - data required to read from sched_clock()
@@ -113,6 +116,7 @@ unsigned long long notrace sched_clock(void)
 }
 
 /*
+<<<<<<< HEAD
  * alternative sched_clock to get arch_timer cycle as well
  */
 unsigned long long notrace sched_clock_get_cyc(unsigned long long *cyc_ret)
@@ -139,6 +143,8 @@ unsigned long long notrace sched_clock_get_cyc(unsigned long long *cyc_ret)
 }
 
 /*
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  * Updating the data required to read the clock.
  *
  * sched_clock() will never observe mis-matched data even if called from
@@ -188,9 +194,12 @@ static enum hrtimer_restart sched_clock_poll(struct hrtimer *hrt)
 	update_sched_clock();
 	hrtimer_forward_now(hrt, cd.wrap_kt);
 
+<<<<<<< HEAD
 	/* snchronize new sched_clock base to co-processors */
 	sys_timer_timesync_sync_base(SYS_TIMER_TIMESYNC_FLAG_ASYNC);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return HRTIMER_RESTART;
 }
 
@@ -307,6 +316,7 @@ static u64 notrace suspended_sched_clock_read(void)
 static int sched_clock_suspend(void)
 {
 	struct clock_read_data *rd = &cd.read_data[0];
+<<<<<<< HEAD
 	update_sched_clock();
 	hrtimer_cancel(&sched_clock_timer);
 
@@ -316,12 +326,20 @@ static int sched_clock_suspend(void)
 	sys_timer_timesync_sync_base(SYS_TIMER_TIMESYNC_FLAG_SYNC |
 		SYS_TIMER_TIMESYNC_FLAG_FREEZE);
 
+=======
+
+	update_sched_clock();
+	hrtimer_cancel(&sched_clock_timer);
+	rd->read_sched_clock = suspended_sched_clock_read;
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return 0;
 }
 
 static void sched_clock_resume(void)
 {
 	struct clock_read_data *rd = &cd.read_data[0];
+<<<<<<< HEAD
 	rd->epoch_cyc = cd.actual_read_sched_clock();
 
 	hrtimer_start(&sched_clock_timer, cd.wrap_kt, HRTIMER_MODE_REL);
@@ -330,6 +348,12 @@ static void sched_clock_resume(void)
 	/* snchronize new sched_clock base to co-processors */
 	sys_timer_timesync_sync_base(SYS_TIMER_TIMESYNC_FLAG_SYNC |
 		SYS_TIMER_TIMESYNC_FLAG_UNFREEZE);
+=======
+
+	rd->epoch_cyc = cd.actual_read_sched_clock();
+	hrtimer_start(&sched_clock_timer, cd.wrap_kt, HRTIMER_MODE_REL);
+	rd->read_sched_clock = cd.actual_read_sched_clock;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static struct syscore_ops sched_clock_ops = {

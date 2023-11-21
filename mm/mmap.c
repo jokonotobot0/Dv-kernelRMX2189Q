@@ -970,8 +970,12 @@ again:
  */
 static inline int is_mergeable_vma(struct vm_area_struct *vma,
 				struct file *file, unsigned long vm_flags,
+<<<<<<< HEAD
 				struct vm_userfaultfd_ctx vm_userfaultfd_ctx,
 				const char __user *anon_name)
+=======
+				struct vm_userfaultfd_ctx vm_userfaultfd_ctx)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	/*
 	 * VM_SOFTDIRTY should not prevent from VMA merging, if we
@@ -989,8 +993,11 @@ static inline int is_mergeable_vma(struct vm_area_struct *vma,
 		return 0;
 	if (!is_mergeable_vm_userfaultfd_ctx(vma, vm_userfaultfd_ctx))
 		return 0;
+<<<<<<< HEAD
 	if (vma_get_anon_name(vma) != anon_name)
 		return 0;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return 1;
 }
 
@@ -1023,10 +1030,16 @@ static int
 can_vma_merge_before(struct vm_area_struct *vma, unsigned long vm_flags,
 		     struct anon_vma *anon_vma, struct file *file,
 		     pgoff_t vm_pgoff,
+<<<<<<< HEAD
 		     struct vm_userfaultfd_ctx vm_userfaultfd_ctx,
 		     const char __user *anon_name)
 {
 	if (is_mergeable_vma(vma, file, vm_flags, vm_userfaultfd_ctx, anon_name) &&
+=======
+		     struct vm_userfaultfd_ctx vm_userfaultfd_ctx)
+{
+	if (is_mergeable_vma(vma, file, vm_flags, vm_userfaultfd_ctx) &&
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	    is_mergeable_anon_vma(anon_vma, vma->anon_vma, vma)) {
 		if (vma->vm_pgoff == vm_pgoff)
 			return 1;
@@ -1045,10 +1058,16 @@ static int
 can_vma_merge_after(struct vm_area_struct *vma, unsigned long vm_flags,
 		    struct anon_vma *anon_vma, struct file *file,
 		    pgoff_t vm_pgoff,
+<<<<<<< HEAD
 		    struct vm_userfaultfd_ctx vm_userfaultfd_ctx,
 		    const char __user *anon_name)
 {
 	if (is_mergeable_vma(vma, file, vm_flags, vm_userfaultfd_ctx, anon_name) &&
+=======
+		    struct vm_userfaultfd_ctx vm_userfaultfd_ctx)
+{
+	if (is_mergeable_vma(vma, file, vm_flags, vm_userfaultfd_ctx) &&
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	    is_mergeable_anon_vma(anon_vma, vma->anon_vma, vma)) {
 		pgoff_t vm_pglen;
 		vm_pglen = vma_pages(vma);
@@ -1059,9 +1078,15 @@ can_vma_merge_after(struct vm_area_struct *vma, unsigned long vm_flags,
 }
 
 /*
+<<<<<<< HEAD
  * Given a mapping request (addr,end,vm_flags,file,pgoff,anon_name),
  * figure out whether that can be merged with its predecessor or its
  * successor.  Or both (it neatly fills a hole).
+=======
+ * Given a mapping request (addr,end,vm_flags,file,pgoff), figure out
+ * whether that can be merged with its predecessor or its successor.
+ * Or both (it neatly fills a hole).
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  *
  * In most cases - when called for mmap, brk or mremap - [addr,end) is
  * certain not to be mapped by the time vma_merge is called; but when
@@ -1103,8 +1128,12 @@ struct vm_area_struct *vma_merge(struct mm_struct *mm,
 			unsigned long end, unsigned long vm_flags,
 			struct anon_vma *anon_vma, struct file *file,
 			pgoff_t pgoff, struct mempolicy *policy,
+<<<<<<< HEAD
 			struct vm_userfaultfd_ctx vm_userfaultfd_ctx,
 			const char __user *anon_name)
+=======
+			struct vm_userfaultfd_ctx vm_userfaultfd_ctx)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	pgoff_t pglen = (end - addr) >> PAGE_SHIFT;
 	struct vm_area_struct *area, *next;
@@ -1137,8 +1166,12 @@ struct vm_area_struct *vma_merge(struct mm_struct *mm,
 			mpol_equal(vma_policy(prev), policy) &&
 			can_vma_merge_after(prev, vm_flags,
 					    anon_vma, file, pgoff,
+<<<<<<< HEAD
 					    vm_userfaultfd_ctx,
 					    anon_name)) {
+=======
+					    vm_userfaultfd_ctx)) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		/*
 		 * OK, it can.  Can we now merge in the successor as well?
 		 */
@@ -1147,8 +1180,12 @@ struct vm_area_struct *vma_merge(struct mm_struct *mm,
 				can_vma_merge_before(next, vm_flags,
 						     anon_vma, file,
 						     pgoff+pglen,
+<<<<<<< HEAD
 						     vm_userfaultfd_ctx,
 						     anon_name) &&
+=======
+						     vm_userfaultfd_ctx) &&
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 				is_mergeable_anon_vma(prev->anon_vma,
 						      next->anon_vma, NULL)) {
 							/* cases 1, 6 */
@@ -1171,8 +1208,12 @@ struct vm_area_struct *vma_merge(struct mm_struct *mm,
 			mpol_equal(policy, vma_policy(next)) &&
 			can_vma_merge_before(next, vm_flags,
 					     anon_vma, file, pgoff+pglen,
+<<<<<<< HEAD
 					     vm_userfaultfd_ctx,
 					     anon_name)) {
+=======
+					     vm_userfaultfd_ctx)) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		if (prev && addr < prev->vm_end)	/* case 4 */
 			err = __vma_adjust(prev, prev->vm_start,
 					 addr, prev->vm_pgoff, NULL, next);
@@ -1682,7 +1723,11 @@ unsigned long mmap_region(struct file *file, unsigned long addr,
 	 * Can we just expand an old mapping?
 	 */
 	vma = vma_merge(mm, prev, addr, addr + len, vm_flags,
+<<<<<<< HEAD
 			NULL, file, pgoff, NULL, NULL_VM_UFFD_CTX, NULL);
+=======
+			NULL, file, pgoff, NULL, NULL_VM_UFFD_CTX);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (vma)
 		goto out;
 
@@ -2745,7 +2790,10 @@ int do_munmap(struct mm_struct *mm, unsigned long start, size_t len)
 
 	return 0;
 }
+<<<<<<< HEAD
 EXPORT_SYMBOL(do_munmap);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 int vm_munmap(unsigned long start, size_t len)
 {
@@ -2935,7 +2983,11 @@ static int do_brk(unsigned long addr, unsigned long len)
 
 	/* Can we just expand an old private anonymous mapping? */
 	vma = vma_merge(mm, prev, addr, addr + len, flags,
+<<<<<<< HEAD
 			NULL, NULL, pgoff, NULL, NULL_VM_UFFD_CTX, NULL);
+=======
+			NULL, NULL, pgoff, NULL, NULL_VM_UFFD_CTX);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (vma)
 		goto out;
 
@@ -3103,7 +3155,11 @@ struct vm_area_struct *copy_vma(struct vm_area_struct **vmap,
 		return NULL;	/* should never get here */
 	new_vma = vma_merge(mm, prev, addr, addr + len, vma->vm_flags,
 			    vma->anon_vma, vma->vm_file, pgoff, vma_policy(vma),
+<<<<<<< HEAD
 			    vma->vm_userfaultfd_ctx, vma_get_anon_name(vma));
+=======
+			    vma->vm_userfaultfd_ctx);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (new_vma) {
 		/*
 		 * Source vma may have been merged into new_vma

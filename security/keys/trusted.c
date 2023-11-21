@@ -1139,12 +1139,20 @@ out:
 static long trusted_read(const struct key *key, char __user *buffer,
 			 size_t buflen)
 {
+<<<<<<< HEAD
 	const struct trusted_key_payload *p;
+=======
+	struct trusted_key_payload *p;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	char *ascii_buf;
 	char *bufp;
 	int i;
 
+<<<<<<< HEAD
 	p = dereference_key_locked(key);
+=======
+	p = rcu_dereference_key(key);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (!p)
 		return -EINVAL;
 

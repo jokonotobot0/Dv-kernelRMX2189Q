@@ -39,6 +39,7 @@
 
 #include "internal.h"
 
+<<<<<<< HEAD
 #ifdef CONFIG_ARM64
 #ifdef CONFIG_MTK_MEMCFG
 #ifndef CONFIG_RANDOMIZE_BASE
@@ -47,6 +48,8 @@
 #endif
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * Lock order:
  *   1. slab_mutex (Global Mutex)
@@ -205,6 +208,7 @@ static inline bool kmem_cache_has_cpu_partial(struct kmem_cache *s)
 /*
  * Tracking user of a slab.
  */
+<<<<<<< HEAD
 #ifdef CONFIG_RANDOMIZE_BASE
 #define TRACK_ADDRS_COUNT 4
 #else
@@ -223,6 +227,14 @@ struct track {
 	unsigned long addrs[TRACK_ADDRS_COUNT];	/* Called from address */
 #endif
 #endif
+=======
+#define TRACK_ADDRS_COUNT 16
+struct track {
+	unsigned long addr;	/* Called from address */
+#ifdef CONFIG_STACKTRACE
+	unsigned long addrs[TRACK_ADDRS_COUNT];	/* Called from address */
+#endif
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	int cpu;		/* Was running on cpu */
 	int pid;		/* Pid context */
 	unsigned long when;	/* When did the operation occur */
@@ -433,6 +445,7 @@ static inline bool cmpxchg_double_slab(struct kmem_cache *s, struct page *page,
 	return false;
 }
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /* Kui.Zhang@PSW.BSP.Kernel.Performance, 2018-11-12, if SLAB_STAT_DEBUG is
  * is enabled, /proc/slabinfo is created for getting more slab details. */
@@ -505,6 +518,8 @@ static void print_page_info_freelist(struct page *page)
 
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #ifdef CONFIG_SLUB_DEBUG
 /*
  * Determine a map of object in use on a page.
@@ -617,6 +632,7 @@ static void set_track(struct kmem_cache *s, void *object,
 
 	if (addr) {
 #ifdef CONFIG_STACKTRACE
+<<<<<<< HEAD
 #ifdef MTK_COMPACT_SLUB_TRACK
 		unsigned long addrs[TRACK_ADDRS_COUNT];
 		struct stack_trace trace;
@@ -645,6 +661,8 @@ static void set_track(struct kmem_cache *s, void *object,
 				p->addrs[i] = 0;
 		}
 #else
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		struct stack_trace trace;
 		int i;
 
@@ -664,7 +682,10 @@ static void set_track(struct kmem_cache *s, void *object,
 		for (i = trace.nr_entries; i < TRACK_ADDRS_COUNT; i++)
 			p->addrs[i] = 0;
 #endif
+<<<<<<< HEAD
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		p->addr = addr;
 		p->cpu = smp_processor_id();
 		p->pid = current->pid;
@@ -690,6 +711,7 @@ static void print_track(const char *s, struct track *t)
 	pr_err("INFO: %s in %pS age=%lu cpu=%u pid=%d\n",
 	       s, (void *)t->addr, jiffies - t->when, t->cpu, t->pid);
 #ifdef CONFIG_STACKTRACE
+<<<<<<< HEAD
 #ifdef MTK_COMPACT_SLUB_TRACK
 	{
 		int i;
@@ -712,6 +734,8 @@ static void print_track(const char *s, struct track *t)
 		}
 	}
 #else
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	{
 		int i;
 		for (i = 0; i < TRACK_ADDRS_COUNT; i++)
@@ -721,7 +745,10 @@ static void print_track(const char *s, struct track *t)
 				break;
 	}
 #endif
+<<<<<<< HEAD
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static void print_tracking(struct kmem_cache *s, void *object)
@@ -815,7 +842,10 @@ void object_err(struct kmem_cache *s, struct page *page,
 {
 	slab_bug(s, "%s", reason);
 	print_trailer(s, page, object);
+<<<<<<< HEAD
 	BUG();
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static __printf(3, 4) void slab_err(struct kmem_cache *s, struct page *page,
@@ -830,7 +860,10 @@ static __printf(3, 4) void slab_err(struct kmem_cache *s, struct page *page,
 	slab_bug(s, "%s", buf);
 	print_page_info(page);
 	dump_stack();
+<<<<<<< HEAD
 	BUG();
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static void init_object(struct kmem_cache *s, void *object, u8 val)
@@ -878,7 +911,10 @@ static int check_bytes_and_report(struct kmem_cache *s, struct page *page,
 					fault, end - 1, fault[0], value);
 	print_trailer(s, page, object);
 
+<<<<<<< HEAD
 	BUG();
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	restore_bytes(s, what, value, fault, end);
 	return 0;
 }
@@ -1152,11 +1188,14 @@ static void remove_full(struct kmem_cache *s, struct kmem_cache_node *n, struct 
 	list_del(&page->lru);
 }
 
+<<<<<<< HEAD
 #ifndef VENDOR_EDIT
 /* Kui.Zhang@PSW.BSP.Kernel.Performance, 2018-11-12, if SLUB_STAT_DEBUG is
  * is enabled, /proc/slabinfo is created for getting more slab details.
  */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* Tracking of the number of slabs for debugging purposes */
 static inline unsigned long slabs_node(struct kmem_cache *s, int node)
 {
@@ -1192,7 +1231,10 @@ static inline void dec_slabs_node(struct kmem_cache *s, int node, int objects)
 	atomic_long_dec(&n->nr_slabs);
 	atomic_long_sub(objects, &n->total_objects);
 }
+<<<<<<< HEAD
 #endif /* VENDOR_EDIT */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /* Object debug checks for alloc/free paths */
 static void setup_object_debug(struct kmem_cache *s, struct page *page,
@@ -1449,10 +1491,13 @@ unsigned long kmem_cache_flags(unsigned long object_size,
 
 #define disable_higher_order_debug 0
 
+<<<<<<< HEAD
 #ifndef VENDOR_EDIT
 /* Kui.Zhang@PSW.BSP.Kernel.Performance, 2018-11-12, if SLUB_STAT_DEBUG is
  * is enabled, /proc/slabinfo is created for getting more slab details.
  */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static inline unsigned long slabs_node(struct kmem_cache *s, int node)
 							{ return 0; }
 static inline unsigned long node_nr_slabs(struct kmem_cache_node *n)
@@ -1461,7 +1506,11 @@ static inline void inc_slabs_node(struct kmem_cache *s, int node,
 							int objects) {}
 static inline void dec_slabs_node(struct kmem_cache *s, int node,
 							int objects) {}
+<<<<<<< HEAD
 #endif /* VENDOR_EDIT */
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif /* CONFIG_SLUB_DEBUG */
 
 /*
@@ -1787,7 +1836,10 @@ static struct page *new_slab(struct kmem_cache *s, gfp_t flags, int node)
 		flags &= ~GFP_SLAB_BUG_MASK;
 		pr_warn("Unexpected gfp: %#x (%pGg). Fixing up to gfp: %#x (%pGg). Fix your code!\n",
 				invalid_mask, &invalid_mask, flags, &flags);
+<<<<<<< HEAD
 		BUG();
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 
 	return allocate_slab(s,
@@ -2497,11 +2549,15 @@ static inline int node_match(struct page *page, int node)
 	return 1;
 }
 
+<<<<<<< HEAD
 #if defined(CONFIG_SLUB_DEBUG) || (defined(VENDOR_EDIT) &&\
 		defined(CONFIG_SLUB_STAT_DEBUG))
 /* Kui.Zhang@PSW.BSP.Kernel.Performance, 2018-11-12, if SLUB_STAT_DEBUG is
   * is enabled, /proc/slabinfo is created for getting more slab details.
   */
+=======
+#ifdef CONFIG_SLUB_DEBUG
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int count_free(struct page *page)
 {
 	return page->objects - page->inuse;
@@ -2867,6 +2923,7 @@ redo:
 			note_cmpxchg_failure("slab_alloc", s, tid);
 			goto redo;
 		}
+<<<<<<< HEAD
 
 		if (next_object && unlikely(!virt_addr_valid(next_object))) {
 			slab_bug_freelist(s, "Error: Freelist has been corrupted, object: %lx, next_object: %lx",
@@ -2876,6 +2933,8 @@ redo:
 			BUG();
 		}
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		prefetch_freepointer(s, next_object);
 		stat(s, ALLOC_FASTPATH);
 	}
@@ -3451,11 +3510,15 @@ init_kmem_cache_node(struct kmem_cache_node *n)
 	n->nr_partial = 0;
 	spin_lock_init(&n->list_lock);
 	INIT_LIST_HEAD(&n->partial);
+<<<<<<< HEAD
 #if defined(CONFIG_SLUB_DEBUG) || (defined(VENDOR_EDIT) &&\
 			defined(CONFIG_SLUB_STAT_DEBUG))
 /* Kui.Zhang@PSW.BSP.Kernel.Performance, 2018-11-12, if SLUB_STAT_DEBUG is
 * is enabled, /proc/slabinfo is created for getting more slab details.
 */
+=======
+#ifdef CONFIG_SLUB_DEBUG
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	atomic_long_set(&n->nr_slabs, 0);
 	atomic_long_set(&n->total_objects, 0);
 	INIT_LIST_HEAD(&n->full);
@@ -3652,7 +3715,11 @@ static int calculate_sizes(struct kmem_cache *s, int forced_order)
 
 	kasan_cache_create(s, &size, &s->flags);
 #ifdef CONFIG_SLUB_DEBUG
+<<<<<<< HEAD
 	if (flags & SLAB_RED_ZONE && 0) {
+=======
+	if (flags & SLAB_RED_ZONE) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		/*
 		 * Add some empty padding so that we can catch
 		 * overwrites from earlier objects rather than let
@@ -3803,6 +3870,10 @@ static void list_slab_objects(struct kmem_cache *s, struct page *page,
 				     sizeof(long), GFP_ATOMIC);
 	if (!map)
 		return;
+<<<<<<< HEAD
+=======
+	slab_err(s, page, text, s->name);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	slab_lock(page);
 
 	get_map(s, page, map);
@@ -3815,7 +3886,10 @@ static void list_slab_objects(struct kmem_cache *s, struct page *page,
 	}
 	slab_unlock(page);
 	kfree(map);
+<<<<<<< HEAD
 	slab_err(s, page, text, s->name);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif
 }
 
@@ -4546,6 +4620,7 @@ static long validate_slab_cache(struct kmem_cache *s)
  * and freed.
  */
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_MEMCFG
 #define MTK_MEMCFG_SLABTRACE_CNT 4
 /* MTK_MEMCFG_SLABTRACE_CNT should be always <= TRACK_ADDRS_COUNT */
@@ -4562,6 +4637,11 @@ struct location {
 	unsigned long addrs[MTK_MEMCFG_SLABTRACE_CNT]; /* caller address */
 #endif
 #endif
+=======
+struct location {
+	unsigned long count;
+	unsigned long addr;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	long long sum_time;
 	long min_time;
 	long max_time;
@@ -4855,6 +4935,7 @@ enum slab_stat_type {
 #define SO_OBJECTS	(1 << SL_OBJECTS)
 #define SO_TOTAL	(1 << SL_TOTAL)
 
+<<<<<<< HEAD
 #ifdef CONFIG_MEMCG
 static bool memcg_sysfs_enabled = IS_ENABLED(CONFIG_SLUB_MEMCG_SYSFS_ON);
 
@@ -4871,6 +4952,8 @@ static int __init setup_slub_memcg_sysfs(char *str)
 __setup("slub_memcg_sysfs=", setup_slub_memcg_sysfs);
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static ssize_t show_slab_objects(struct kmem_cache *s,
 			    char *buf, unsigned long flags)
 {
@@ -5776,6 +5859,7 @@ static int sysfs_slab_add(struct kmem_cache *s)
 {
 	int err;
 	const char *name;
+<<<<<<< HEAD
 	struct kset *kset = cache_kset(s);
 	int unmergeable = slab_unmergeable(s);
 
@@ -5788,6 +5872,10 @@ static int sysfs_slab_add(struct kmem_cache *s)
 			(slub_debug & DEBUG_METADATA_FLAGS))
 		unmergeable = 1;
 
+=======
+	int unmergeable = slab_unmergeable(s);
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (unmergeable) {
 		/*
 		 * Slabcache can never be merged so we can use the name proper.
@@ -5804,7 +5892,11 @@ static int sysfs_slab_add(struct kmem_cache *s)
 		name = create_unique_id(s);
 	}
 
+<<<<<<< HEAD
 	s->kobj.kset = kset;
+=======
+	s->kobj.kset = cache_kset(s);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	err = kobject_init_and_add(&s->kobj, &slab_ktype, NULL, "%s", name);
 	if (err)
 		goto out;
@@ -5814,7 +5906,11 @@ static int sysfs_slab_add(struct kmem_cache *s)
 		goto out_del_kobj;
 
 #ifdef CONFIG_MEMCG
+<<<<<<< HEAD
 	if (is_root_cache(s) && memcg_sysfs_enabled) {
+=======
+	if (is_root_cache(s)) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		s->memcg_kset = kset_create_and_add("cgroup", NULL, &s->kobj);
 		if (!s->memcg_kset) {
 			err = -ENOMEM;
@@ -5966,6 +6062,7 @@ ssize_t slabinfo_write(struct file *file, const char __user *buffer,
 {
 	return -EIO;
 }
+<<<<<<< HEAD
 
 #if defined(CONFIG_MTK_MEMCFG) &&\
 	((defined(VENDOR_EDIT) && !defined(CONFIG_SLUB_STAT_DEBUG)) ||\
@@ -6200,4 +6297,6 @@ int slabtrace_open(struct inode *inode, struct file *file)
 	return single_open(file, mtk_memcfg_slabtrace_show, NULL);
 }
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif /* CONFIG_SLABINFO */

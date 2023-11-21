@@ -1155,11 +1155,14 @@ static void check_unmap(struct dma_debug_entry *ref)
 			   dir2name[ref->direction]);
 	}
 
+<<<<<<< HEAD
 	/*
 	 * Drivers should use dma_mapping_error() to check the returned
 	 * addresses of dma_map_single() and dma_map_page().
 	 * If not, print this warning message. See Documentation/DMA-API.txt.
 	 */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (entry->map_err_type == MAP_ERR_NOT_CHECKED) {
 		err_printk(ref->dev, entry,
 			   "DMA-API: device driver failed to check map error"
@@ -1497,22 +1500,31 @@ void debug_dma_alloc_coherent(struct device *dev, size_t size,
 	if (!entry)
 		return;
 
+<<<<<<< HEAD
 	/* handle vmalloc and linear addresses */
 	if (!is_vmalloc_addr(virt) && !virt_addr_valid(virt))
 		return;
 
 	entry->type      = dma_debug_coherent;
 	entry->dev       = dev;
+=======
+	entry->type      = dma_debug_coherent;
+	entry->dev       = dev;
+	entry->pfn	 = page_to_pfn(virt_to_page(virt));
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	entry->offset	 = (size_t) virt & ~PAGE_MASK;
 	entry->size      = size;
 	entry->dev_addr  = dma_addr;
 	entry->direction = DMA_BIDIRECTIONAL;
 
+<<<<<<< HEAD
 	if (is_vmalloc_addr(virt))
 		entry->pfn = vmalloc_to_pfn(virt);
 	else
 		entry->pfn = page_to_pfn(virt_to_page(virt));
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	add_dma_entry(entry);
 }
 EXPORT_SYMBOL(debug_dma_alloc_coherent);
@@ -1523,12 +1535,17 @@ void debug_dma_free_coherent(struct device *dev, size_t size,
 	struct dma_debug_entry ref = {
 		.type           = dma_debug_coherent,
 		.dev            = dev,
+<<<<<<< HEAD
+=======
+		.pfn		= page_to_pfn(virt_to_page(virt)),
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		.offset		= (size_t) virt & ~PAGE_MASK,
 		.dev_addr       = addr,
 		.size           = size,
 		.direction      = DMA_BIDIRECTIONAL,
 	};
 
+<<<<<<< HEAD
 	/* handle vmalloc and linear addresses */
 	if (!is_vmalloc_addr(virt) && !virt_addr_valid(virt))
 		return;
@@ -1538,6 +1555,8 @@ void debug_dma_free_coherent(struct device *dev, size_t size,
 	else
 		ref.pfn = page_to_pfn(virt_to_page(virt));
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (unlikely(dma_debug_disabled()))
 		return;
 

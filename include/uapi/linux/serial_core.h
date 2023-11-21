@@ -270,7 +270,10 @@
 /* MPS2 UART */
 #define PORT_MPS2UART	116
 
+<<<<<<< HEAD
 /* Mediatek */
 #define PORT_MTK	117
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif /* _UAPILINUX_SERIAL_CORE_H */

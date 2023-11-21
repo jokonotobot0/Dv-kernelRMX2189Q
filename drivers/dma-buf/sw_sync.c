@@ -360,8 +360,13 @@ static long sw_sync_ioctl_create_fence(struct sync_timeline *obj,
 	}
 
 	sync_file = sync_file_create(&pt->base);
+<<<<<<< HEAD
 	fence_put(&pt->base);
 	if (!sync_file) {
+=======
+	if (!sync_file) {
+		fence_put(&pt->base);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		err = -ENOMEM;
 		goto err;
 	}

@@ -13,6 +13,7 @@ struct request;
 struct task_struct;
 
 struct mmc_blk_request {
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_EMMC_CQ_SUPPORT
 	struct mmc_request	mrq_que;
 #endif
@@ -21,6 +22,10 @@ struct mmc_blk_request {
 #ifdef CONFIG_MTK_EMMC_CQ_SUPPORT
 	struct mmc_command	que;
 #endif
+=======
+	struct mmc_request	mrq;
+	struct mmc_command	sbc;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct mmc_command	cmd;
 	struct mmc_command	stop;
 	struct mmc_data		data;
@@ -54,23 +59,31 @@ struct mmc_queue_req {
 	struct mmc_async_req	mmc_active;
 	enum mmc_packed_type	cmd_type;
 	struct mmc_packed	*packed;
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_EMMC_CQ_SUPPORT
 	atomic_t		index;
 #endif
 #ifdef CONFIG_MTK_EMMC_HW_CQ
 	struct mmc_cmdq_req	cmdq_req;
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 struct mmc_queue {
 	struct mmc_card		*card;
 	struct task_struct	*thread;
 	struct semaphore	thread_sem;
+<<<<<<< HEAD
 	unsigned long		flags;
+=======
+	unsigned int		flags;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define MMC_QUEUE_SUSPENDED	(1 << 0)
 #define MMC_QUEUE_NEW_REQUEST	(1 << 1)
 	void			*data;
 	struct request_queue	*queue;
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_EMMC_CQ_SUPPORT
 	struct mmc_queue_req	mqrq[EMMC_MAX_QUEUE_DEPTH];
 #else
@@ -116,6 +129,17 @@ extern int mmc_queue_suspend(struct mmc_queue *mq, int wait);
 #else
 extern void mmc_queue_suspend(struct mmc_queue *);
 #endif
+=======
+	struct mmc_queue_req	mqrq[2];
+	struct mmc_queue_req	*mqrq_cur;
+	struct mmc_queue_req	*mqrq_prev;
+};
+
+extern int mmc_init_queue(struct mmc_queue *, struct mmc_card *, spinlock_t *,
+			  const char *);
+extern void mmc_cleanup_queue(struct mmc_queue *);
+extern void mmc_queue_suspend(struct mmc_queue *);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 extern void mmc_queue_resume(struct mmc_queue *);
 
 extern unsigned int mmc_queue_map_sg(struct mmc_queue *,
@@ -125,6 +149,7 @@ extern void mmc_queue_bounce_post(struct mmc_queue_req *);
 
 extern int mmc_packed_init(struct mmc_queue *, struct mmc_card *);
 extern void mmc_packed_clean(struct mmc_queue *);
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_EMMC_CQ_SUPPORT
 extern void mmc_wait_cmdq_empty(struct mmc_host *host);
 #endif
@@ -135,4 +160,9 @@ extern int mmc_access_rpmb(struct mmc_queue *);
 extern int mmc_cmdq_init(struct mmc_queue *mq, struct mmc_card *card);
 extern void mmc_cmdq_clean(struct mmc_queue *mq, struct mmc_card *card);
 #endif
+=======
+
+extern int mmc_access_rpmb(struct mmc_queue *);
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif

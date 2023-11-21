@@ -40,8 +40,11 @@ struct route_info {
  */
 #define IP6_MAX_MTU (0xFFFF + sizeof(struct ipv6hdr))
 
+<<<<<<< HEAD
 extern int sysctl_optr;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * rt6_srcprefs2flags() and rt6_flags2srcprefs() translate
  * between IPV6_ADDR_PREFERENCES socket option values
@@ -135,10 +138,13 @@ struct rt6_info *ip6_dst_alloc(struct net *net, struct net_device *dev,
  */
 struct rt6_info *rt6_get_dflt_router(const struct in6_addr *addr,
 				     struct net_device *dev);
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_IPV6_VZW
 struct rt6_info *rt6_get_dflt_router_expires(struct net_device *dev);
 #endif
 int ip6_operator_isop12(void);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 struct rt6_info *rt6_add_dflt_router(const struct in6_addr *gwaddr,
 				     struct net_device *dev, unsigned int pref);
 
@@ -148,10 +154,16 @@ int rt6_route_rcv(struct net_device *dev, u8 *opt, int len,
 		  const struct in6_addr *gwaddr);
 
 void ip6_update_pmtu(struct sk_buff *skb, struct net *net, __be32 mtu, int oif,
+<<<<<<< HEAD
 		     u32 mark, kuid_t uid);
 void ip6_sk_update_pmtu(struct sk_buff *skb, struct sock *sk, __be32 mtu);
 void ip6_redirect(struct sk_buff *skb, struct net *net, int oif, u32 mark,
 		  kuid_t uid);
+=======
+		     u32 mark);
+void ip6_sk_update_pmtu(struct sk_buff *skb, struct sock *sk, __be32 mtu);
+void ip6_redirect(struct sk_buff *skb, struct net *net, int oif, u32 mark);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 void ip6_redirect_no_header(struct sk_buff *skb, struct net *net, int oif,
 			    u32 mark);
 void ip6_sk_redirect(struct sk_buff *skb, struct sock *sk);

@@ -25,7 +25,10 @@
 #include <linux/syscalls.h>
 #include <linux/compat.h>
 #include <linux/rcupdate.h>
+<<<<<<< HEAD
 #include <linux/rtc.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 struct timerfd_ctx {
 	union {
@@ -161,9 +164,12 @@ static ktime_t timerfd_get_remaining(struct timerfd_ctx *ctx)
 {
 	ktime_t remaining;
 
+<<<<<<< HEAD
 	if (ctx->clockid == CLOCK_POWER_OFF_ALARM)
 		return ktime_set(0, 0);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (isalarm(ctx))
 		remaining = alarm_expires_remaining(&ctx->t.alarm);
 	else
@@ -222,12 +228,19 @@ static int timerfd_release(struct inode *inode, struct file *file)
 
 	timerfd_remove_cancel(ctx);
 
+<<<<<<< HEAD
 	if (ctx->clockid != CLOCK_POWER_OFF_ALARM) {
 		if (isalarm(ctx))
 			alarm_cancel(&ctx->t.alarm);
 		else
 			hrtimer_cancel(&ctx->t.tmr);
 	}
+=======
+	if (isalarm(ctx))
+		alarm_cancel(&ctx->t.alarm);
+	else
+		hrtimer_cancel(&ctx->t.tmr);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	kfree_rcu(ctx, rcu);
 	return 0;
 }
@@ -403,8 +416,12 @@ SYSCALL_DEFINE2(timerfd_create, int, clockid, int, flags)
 	     clockid != CLOCK_REALTIME &&
 	     clockid != CLOCK_REALTIME_ALARM &&
 	     clockid != CLOCK_BOOTTIME &&
+<<<<<<< HEAD
 	     clockid != CLOCK_BOOTTIME_ALARM &&
 	     clockid != CLOCK_POWER_OFF_ALARM))
+=======
+	     clockid != CLOCK_BOOTTIME_ALARM))
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		return -EINVAL;
 
 	if (!capable(CAP_WAKE_ALARM) &&
@@ -420,6 +437,7 @@ SYSCALL_DEFINE2(timerfd_create, int, clockid, int, flags)
 	spin_lock_init(&ctx->cancel_lock);
 	ctx->clockid = clockid;
 
+<<<<<<< HEAD
 	if (clockid != CLOCK_POWER_OFF_ALARM) {
 		if (isalarm(ctx))
 			alarm_init(&ctx->t.alarm,
@@ -429,6 +447,15 @@ SYSCALL_DEFINE2(timerfd_create, int, clockid, int, flags)
 		else
 			hrtimer_init(&ctx->t.tmr, clockid, HRTIMER_MODE_ABS);
 	}
+=======
+	if (isalarm(ctx))
+		alarm_init(&ctx->t.alarm,
+			   ctx->clockid == CLOCK_REALTIME_ALARM ?
+			   ALARM_REALTIME : ALARM_BOOTTIME,
+			   timerfd_alarmproc);
+	else
+		hrtimer_init(&ctx->t.tmr, clockid, HRTIMER_MODE_ABS);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	ctx->moffs = ktime_mono_to_real((ktime_t){ .tv64 = 0 });
 
@@ -440,6 +467,7 @@ SYSCALL_DEFINE2(timerfd_create, int, clockid, int, flags)
 	return ufd;
 }
 
+<<<<<<< HEAD
 static void alarm_set_power_on(struct timespec new_pwron_time, bool logo)
 {
 	unsigned long pwron_time;
@@ -460,6 +488,8 @@ static void alarm_set_power_on(struct timespec new_pwron_time, bool logo)
 	rtc_set_alarm_poweron(alarm_rtc_dev, &alm);
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int do_timerfd_settime(int ufd, int flags, 
 		const struct itimerspec *new,
 		struct itimerspec *old)
@@ -478,11 +508,14 @@ static int do_timerfd_settime(int ufd, int flags,
 		return ret;
 	ctx = f.file->private_data;
 
+<<<<<<< HEAD
 	if (ctx->clockid == CLOCK_POWER_OFF_ALARM) {
 		alarm_set_power_on(new->it_value, true);
 		return 0;
 	}
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (!capable(CAP_WAKE_ALARM) && isalarm(ctx)) {
 		fdput(f);
 		return -EPERM;

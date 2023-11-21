@@ -62,7 +62,10 @@
 #include <linux/proc_ns.h>
 #include <linux/nsproxy.h>
 #include <linux/file.h>
+<<<<<<< HEAD
 #include <linux/psi.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <net/sock.h>
 
 #define CREATE_TRACE_POINTS
@@ -362,6 +365,18 @@ static void cgroup_idr_remove(struct idr *idr, int id)
 	spin_unlock_bh(&cgroup_idr_lock);
 }
 
+<<<<<<< HEAD
+=======
+static struct cgroup *cgroup_parent(struct cgroup *cgrp)
+{
+	struct cgroup_subsys_state *parent_css = cgrp->self.parent;
+
+	if (parent_css)
+		return container_of(parent_css, struct cgroup, self);
+	return NULL;
+}
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* subsystems visibly enabled on a cgroup */
 static u16 cgroup_control(struct cgroup *cgrp)
 {
@@ -479,6 +494,20 @@ static inline bool cgroup_is_dead(const struct cgroup *cgrp)
 	return !(cgrp->self.flags & CSS_ONLINE);
 }
 
+<<<<<<< HEAD
+=======
+static void cgroup_get(struct cgroup *cgrp)
+{
+	WARN_ON_ONCE(cgroup_is_dead(cgrp));
+	css_get(&cgrp->self);
+}
+
+static bool cgroup_tryget(struct cgroup *cgrp)
+{
+	return css_tryget(&cgrp->self);
+}
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 struct cgroup_subsys_state *of_css(struct kernfs_open_file *of)
 {
 	struct cgroup *cgrp = of->kn->parent->priv;
@@ -762,7 +791,11 @@ static void css_set_move_task(struct task_struct *task,
 		 */
 		WARN_ON_ONCE(task->flags & PF_EXITING);
 
+<<<<<<< HEAD
 		cgroup_move_task(task, to_cset);
+=======
+		rcu_assign_pointer(task->cgroups, to_cset);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		list_add_tail(&task->cg_list, use_mg_tasks ? &to_cset->mg_tasks :
 							     &to_cset->tasks);
 	}
@@ -2837,8 +2870,12 @@ static int cgroup_procs_write_permission(struct task_struct *task,
 	 */
 	if (!uid_eq(cred->euid, GLOBAL_ROOT_UID) &&
 	    !uid_eq(cred->euid, tcred->uid) &&
+<<<<<<< HEAD
 	    !uid_eq(cred->euid, tcred->suid) &&
 	    !ns_capable(tcred->user_ns, CAP_SYS_NICE))
+=======
+	    !uid_eq(cred->euid, tcred->suid))
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		ret = -EACCES;
 
 	if (!ret && cgroup_on_dfl(dst_cgrp)) {
@@ -3486,6 +3523,7 @@ static int cgroup_events_show(struct seq_file *seq, void *v)
 	return 0;
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_PSI
 static int cgroup_io_pressure_show(struct seq_file *seq, void *v)
 {
@@ -3576,6 +3614,8 @@ static void cgroup_file_release(struct kernfs_open_file *of)
 		cft->release(of);
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static ssize_t cgroup_file_write(struct kernfs_open_file *of, char *buf,
 				 size_t nbytes, loff_t off)
 {
@@ -3614,6 +3654,7 @@ static ssize_t cgroup_file_write(struct kernfs_open_file *of, char *buf,
 	return ret ?: nbytes;
 }
 
+<<<<<<< HEAD
 static unsigned int cgroup_file_poll(struct kernfs_open_file *of, poll_table *pt)
 {
 	struct cftype *cft = of->kn->priv;
@@ -3624,6 +3665,8 @@ static unsigned int cgroup_file_poll(struct kernfs_open_file *of, poll_table *pt
 	return kernfs_generic_poll(of, pt);
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static void *cgroup_seqfile_start(struct seq_file *seq, loff_t *ppos)
 {
 	return seq_cft(seq)->seq_start(seq, ppos);
@@ -3636,8 +3679,12 @@ static void *cgroup_seqfile_next(struct seq_file *seq, void *v, loff_t *ppos)
 
 static void cgroup_seqfile_stop(struct seq_file *seq, void *v)
 {
+<<<<<<< HEAD
 	if (seq_cft(seq)->seq_stop)
 		seq_cft(seq)->seq_stop(seq, v);
+=======
+	seq_cft(seq)->seq_stop(seq, v);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static int cgroup_seqfile_show(struct seq_file *m, void *arg)
@@ -3659,19 +3706,27 @@ static int cgroup_seqfile_show(struct seq_file *m, void *arg)
 
 static struct kernfs_ops cgroup_kf_single_ops = {
 	.atomic_write_len	= PAGE_SIZE,
+<<<<<<< HEAD
 	.open			= cgroup_file_open,
 	.release		= cgroup_file_release,
 	.write			= cgroup_file_write,
 	.poll			= cgroup_file_poll,
+=======
+	.write			= cgroup_file_write,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	.seq_show		= cgroup_seqfile_show,
 };
 
 static struct kernfs_ops cgroup_kf_ops = {
 	.atomic_write_len	= PAGE_SIZE,
+<<<<<<< HEAD
 	.open			= cgroup_file_open,
 	.release		= cgroup_file_release,
 	.write			= cgroup_file_write,
 	.poll			= cgroup_file_poll,
+=======
+	.write			= cgroup_file_write,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	.seq_start		= cgroup_seqfile_start,
 	.seq_next		= cgroup_seqfile_next,
 	.seq_stop		= cgroup_seqfile_stop,
@@ -5008,6 +5063,7 @@ static struct cftype cgroup_dfl_base_files[] = {
 		.file_offset = offsetof(struct cgroup, events_file),
 		.seq_show = cgroup_events_show,
 	},
+<<<<<<< HEAD
 #ifdef CONFIG_PSI
 	{
 		.name = "io.pressure",
@@ -5034,6 +5090,8 @@ static struct cftype cgroup_dfl_base_files[] = {
 		.release = cgroup_pressure_release,
 	},
 #endif /* CONFIG_PSI */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	{ }	/* terminate */
 };
 
@@ -5139,8 +5197,11 @@ static void css_free_work_fn(struct work_struct *work)
 			 */
 			cgroup_put(cgroup_parent(cgrp));
 			kernfs_put(cgrp->kn);
+<<<<<<< HEAD
 			if (cgroup_on_dfl(cgrp))
 				psi_cgroup_free(cgrp);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			kfree(cgrp);
 		} else {
 			/*
@@ -5196,8 +5257,11 @@ static void css_release_work_fn(struct work_struct *work)
 		if (cgrp->kn)
 			RCU_INIT_POINTER(*(void __rcu __force **)&cgrp->kn->priv,
 					 NULL);
+<<<<<<< HEAD
 
 		cgroup_bpf_put(cgrp);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 
 	mutex_unlock(&cgroup_mutex);
@@ -5410,6 +5474,7 @@ static struct cgroup *cgroup_create(struct cgroup *parent)
 	if (!cgroup_on_dfl(cgrp))
 		cgrp->subtree_control = cgroup_control(cgrp);
 
+<<<<<<< HEAD
 	if (cgroup_on_dfl(cgrp)) {
 		ret = psi_cgroup_alloc(cgrp);
 		if (ret)
@@ -5419,12 +5484,17 @@ static struct cgroup *cgroup_create(struct cgroup *parent)
 	if (parent)
 		cgroup_bpf_inherit(cgrp, parent);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	cgroup_propagate_control(cgrp);
 
 	return cgrp;
 
+<<<<<<< HEAD
 out_idr_free:
 	cgroup_idr_remove(&root->cgroup_idr, cgrp->id);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 out_cancel_ref:
 	percpu_ref_exit(&cgrp->self.refcnt);
 out_free_cgrp:
@@ -6636,6 +6706,7 @@ static __init int cgroup_namespaces_init(void)
 }
 subsys_initcall(cgroup_namespaces_init);
 
+<<<<<<< HEAD
 #ifdef CONFIG_CGROUP_BPF
 int cgroup_bpf_update(struct cgroup *cgrp, struct bpf_prog *prog,
 		      enum bpf_attach_type type, bool overridable)
@@ -6650,6 +6721,8 @@ int cgroup_bpf_update(struct cgroup *cgrp, struct bpf_prog *prog,
 }
 #endif /* CONFIG_CGROUP_BPF */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #ifdef CONFIG_CGROUP_DEBUG
 static struct cgroup_subsys_state *
 debug_css_alloc(struct cgroup_subsys_state *parent_css)
@@ -6728,7 +6801,11 @@ static int cgroup_css_links_read(struct seq_file *seq, void *v)
 		struct task_struct *task;
 		int count = 0;
 
+<<<<<<< HEAD
 		seq_printf(seq, "css_set %pK\n", cset);
+=======
+		seq_printf(seq, "css_set %p\n", cset);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 		list_for_each_entry(task, &cset->tasks, cg_list) {
 			if (count++ > MAX_TASKS_SHOWN_PER_CSS)

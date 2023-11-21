@@ -1077,12 +1077,20 @@ static void gc_worker(struct work_struct *work)
 
 	next_run = gc_work->next_gc_run;
 	gc_work->last_bucket = i;
+<<<<<<< HEAD
 	queue_delayed_work(system_power_efficient_wq, &gc_work->dwork, next_run);
+=======
+	queue_delayed_work(system_long_wq, &gc_work->dwork, next_run);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static void conntrack_gc_work_init(struct conntrack_gc_work *gc_work)
 {
+<<<<<<< HEAD
 	INIT_DEFERRABLE_WORK(&gc_work->dwork, gc_worker);
+=======
+	INIT_DELAYED_WORK(&gc_work->dwork, gc_worker);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	gc_work->next_gc_run = HZ;
 	gc_work->exiting = false;
 }
@@ -1867,7 +1875,11 @@ int nf_conntrack_hash_resize(unsigned int hashsize)
 	return 0;
 }
 
+<<<<<<< HEAD
 int nf_conntrack_set_hashsize(const char *val, const struct kernel_param *kp)
+=======
+int nf_conntrack_set_hashsize(const char *val, struct kernel_param *kp)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	unsigned int hashsize;
 	int rc;
@@ -1995,7 +2007,11 @@ int nf_conntrack_init_start(void)
 	nf_ct_untracked_status_or(IPS_CONFIRMED | IPS_UNTRACKED);
 
 	conntrack_gc_work_init(&conntrack_gc_work);
+<<<<<<< HEAD
 	queue_delayed_work(system_power_efficient_wq, &conntrack_gc_work.dwork, HZ);
+=======
+	queue_delayed_work(system_long_wq, &conntrack_gc_work.dwork, HZ);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	return 0;
 

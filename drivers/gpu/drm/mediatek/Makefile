@@ -1,7 +1,11 @@
+<<<<<<< HEAD
 subdir-ccflags-y += -Werror
 
 mediatek-drm-y := mtk_disp_color.o \
 		  mtk_disp_ovl.o \
+=======
+mediatek-drm-y := mtk_disp_ovl.o \
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		  mtk_disp_rdma.o \
 		  mtk_drm_crtc.o \
 		  mtk_drm_ddp.o \
@@ -12,6 +16,7 @@ mediatek-drm-y := mtk_disp_color.o \
 		  mtk_drm_plane.o \
 		  mtk_dsi.o \
 		  mtk_mipi_tx.o \
+<<<<<<< HEAD
 		  mtk_dpi.o \
 		  mtk_lvds.o \
 		  mtk_lvds_phy.o
@@ -19,6 +24,9 @@ mediatek-drm-y := mtk_disp_color.o \
 ifeq ($(CONFIG_DEBUG_FS),y)
 mediatek-drm-y += mtk_drm_debugfs.o
 endif
+=======
+		  mtk_dpi.o
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 obj-$(CONFIG_DRM_MEDIATEK) += mediatek-drm.o
 

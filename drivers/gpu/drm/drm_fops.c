@@ -665,10 +665,13 @@ void drm_event_cancel_free(struct drm_device *dev,
 		list_del(&p->pending_link);
 	}
 	spin_unlock_irqrestore(&dev->event_lock, flags);
+<<<<<<< HEAD
 
 	if (p->fence)
 		fence_put(p->fence);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	kfree(p);
 }
 EXPORT_SYMBOL(drm_event_cancel_free);

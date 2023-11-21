@@ -530,6 +530,7 @@ int trace_print_context(struct trace_iterator *iter)
 	unsigned long long t;
 	unsigned long secs, usec_rem;
 	char comm[TASK_COMM_LEN];
+<<<<<<< HEAD
 	int tgid;
 
 	trace_find_cmdline(entry->pid, comm);
@@ -545,6 +546,13 @@ int trace_print_context(struct trace_iterator *iter)
 	}
 
 	trace_seq_printf(s, "[%03d] ", iter->cpu);
+=======
+
+	trace_find_cmdline(entry->pid, comm);
+
+	trace_seq_printf(s, "%16s-%-5d [%03d] ",
+			       comm, entry->pid, iter->cpu);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (tr->trace_flags & TRACE_ITER_IRQ_INFO)
 		trace_print_lat_fmt(s, entry);
@@ -859,6 +867,7 @@ static struct trace_event trace_fn_event = {
 	.funcs		= &trace_fn_funcs,
 };
 
+<<<<<<< HEAD
 /* TRACE_GRAPH_ENT */
 static enum print_line_t trace_graph_ent_trace(struct trace_iterator *iter, int flags,
 					struct trace_event *event)
@@ -1027,6 +1036,8 @@ static struct trace_event trace_graph_ret_event = {
 	.funcs		= &trace_graph_ret_funcs,
 };
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* TRACE_CTX an TRACE_WAKE */
 static enum print_line_t trace_ctxwake_print(struct trace_iterator *iter,
 					     char *delim)
@@ -1469,8 +1480,11 @@ static struct trace_event trace_print_event = {
 
 static struct trace_event *events[] __initdata = {
 	&trace_fn_event,
+<<<<<<< HEAD
 	&trace_graph_ent_event,
 	&trace_graph_ret_event,
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	&trace_ctx_event,
 	&trace_wake_event,
 	&trace_stack_event,

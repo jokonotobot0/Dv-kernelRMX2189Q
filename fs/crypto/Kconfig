@@ -1,5 +1,9 @@
 config FS_ENCRYPTION
 	tristate "FS Encryption (Per-file encryption)"
+<<<<<<< HEAD
+=======
+	depends on BLOCK
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	select CRYPTO
 	select CRYPTO_AES
 	select CRYPTO_CBC
@@ -7,7 +11,13 @@ config FS_ENCRYPTION
 	select CRYPTO_XTS
 	select CRYPTO_CTS
 	select CRYPTO_CTR
+<<<<<<< HEAD
 	select KEYS
+=======
+	select CRYPTO_SHA256
+	select KEYS
+	select ENCRYPTED_KEYS
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	help
 	  Enable encryption of files and directories.  This
 	  feature is similar to ecryptfs, but it is more memory

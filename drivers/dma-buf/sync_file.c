@@ -172,6 +172,7 @@ static struct fence **get_fences(struct sync_file *sync_file, int *num_fences)
 
 static void add_fence(struct fence **fences, int *i, struct fence *fence)
 {
+<<<<<<< HEAD
 	if (!fence_is_signaled(fence)) {
 		fences[*i] = fence;
 		fence_get(fence);
@@ -182,6 +183,13 @@ static void add_fence(struct fence **fences, int *i, struct fence *fence)
 		else if (ktime_to_ns(fence->timestamp) >
 				ktime_to_ns(fences[*i]->timestamp))
 			fences[*i] = fence;
+=======
+	fences[*i] = fence;
+
+	if (!fence_is_signaled(fence)) {
+		fence_get(fence);
+		(*i)++;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 }
 
@@ -254,7 +262,11 @@ static struct sync_file *sync_file_merge(const char *name, struct sync_file *a,
 		add_fence(fences, &i, b_fences[i_b]);
 
 	if (i == 0)
+<<<<<<< HEAD
 		fences[i++] = fence_get(fences[0]);
+=======
+		fences[i++] = fence_get(a_fences[0]);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (num_fences > i) {
 		nfences = krealloc(fences, i * sizeof(*fences),
@@ -284,7 +296,11 @@ static void sync_file_free(struct kref *kref)
 	struct sync_file *sync_file = container_of(kref, struct sync_file,
 						     kref);
 
+<<<<<<< HEAD
 	if (test_bit(POLL_ENABLED, &sync_file->flags))
+=======
+	if (test_bit(POLL_ENABLED, &sync_file->fence->flags))
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		fence_remove_callback(sync_file->fence, &sync_file->cb);
 	fence_put(sync_file->fence);
 	kfree(sync_file);
@@ -304,10 +320,17 @@ static unsigned int sync_file_poll(struct file *file, poll_table *wait)
 
 	poll_wait(file, &sync_file->wq, wait);
 
+<<<<<<< HEAD
 	if (list_empty(&sync_file->cb.node) &&
 	    !test_and_set_bit(POLL_ENABLED, &sync_file->flags)) {
 		if (fence_add_callback(sync_file->fence, &sync_file->cb,
 					   fence_check_cb_func) < 0)
+=======
+	if (!poll_does_not_wait(wait) &&
+	    !test_and_set_bit(POLL_ENABLED, &sync_file->fence->flags)) {
+		if (fence_add_callback(sync_file->fence, &sync_file->cb,
+				       fence_check_cb_func) < 0)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			wake_up_all(&sync_file->wq);
 	}
 
@@ -378,6 +401,7 @@ static void sync_fill_fence_info(struct fence *fence,
 		sizeof(info->driver_name));
 
 	info->status = fence_get_status(fence);
+<<<<<<< HEAD
 	while (test_bit(FENCE_FLAG_SIGNALED_BIT, &fence->flags) &&
 	       !test_bit(FENCE_FLAG_TIMESTAMP_BIT, &fence->flags))
 		cpu_relax();
@@ -385,6 +409,9 @@ static void sync_fill_fence_info(struct fence *fence,
 		test_bit(FENCE_FLAG_TIMESTAMP_BIT, &fence->flags) ?
 		ktime_to_ns(fence->timestamp) :
 		ktime_to_ns(ktime_set(0, 0));
+=======
+	info->timestamp_ns = ktime_to_ns(fence->timestamp);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static long sync_file_ioctl_fence_info(struct sync_file *sync_file,
@@ -395,7 +422,10 @@ static long sync_file_ioctl_fence_info(struct sync_file *sync_file,
 	struct fence **fences;
 	__u32 size;
 	int num_fences, ret, i;
+<<<<<<< HEAD
 	__s32 status;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (copy_from_user(&info, (void __user *)arg, sizeof(info)))
 		return -EFAULT;
@@ -404,7 +434,10 @@ static long sync_file_ioctl_fence_info(struct sync_file *sync_file,
 		return -EINVAL;
 
 	fences = get_fences(sync_file, &num_fences);
+<<<<<<< HEAD
 	status = fence_is_signaled(sync_file->fence);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/*
 	 * Passing num_fences = 0 means that userspace doesn't want to
@@ -434,7 +467,11 @@ static long sync_file_ioctl_fence_info(struct sync_file *sync_file,
 
 no_fences:
 	strlcpy(info.name, sync_file->name, sizeof(info.name));
+<<<<<<< HEAD
 	info.status = status;
+=======
+	info.status = fence_is_signaled(sync_file->fence);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	info.num_fences = num_fences;
 
 	if (copy_to_user((void __user *)arg, &info, sizeof(info)))

@@ -154,6 +154,7 @@ bulk:
 	return skb;
 }
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 //Junyuan.Huang@PSW.CN.WiFi.Network.1471780, 2018/06/26,
 //Add for limit speed function
@@ -166,6 +167,8 @@ struct sk_buff *qdisc_dequeue_skb(struct Qdisc *q, bool *validate)
 EXPORT_SYMBOL(qdisc_dequeue_skb);
 #endif /* VENDOR_EDIT */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * Transmit possibly several skbs, and handle the return status as
  * required. Owning running seqcount bit guarantees that

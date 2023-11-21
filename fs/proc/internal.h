@@ -210,11 +210,18 @@ struct pde_opener {
 extern const struct inode_operations proc_link_inode_operations;
 
 extern const struct inode_operations proc_pid_link_inode_operations;
+<<<<<<< HEAD
 extern const struct file_operations proc_reclaim_operations;
 
 extern void proc_init_inodecache(void);
 extern struct inode *proc_get_inode(struct super_block *, struct proc_dir_entry *);
 extern int proc_fill_super(struct super_block *);
+=======
+
+extern void proc_init_inodecache(void);
+extern struct inode *proc_get_inode(struct super_block *, struct proc_dir_entry *);
+extern int proc_fill_super(struct super_block *, void *data, int flags);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 extern void proc_entry_rundown(struct proc_dir_entry *);
 
 /*
@@ -260,6 +267,7 @@ static inline void proc_sys_evict_inode(struct  inode *inode,
 #endif
 
 /*
+<<<<<<< HEAD
  * uid.c
  */
 #ifdef CONFIG_PROC_UID
@@ -269,6 +277,8 @@ static inline void proc_uid_init(void) { }
 #endif
 
 /*
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  * proc_tty.c
  */
 #ifdef CONFIG_TTY
@@ -281,6 +291,10 @@ static inline void proc_tty_init(void) {}
  * root.c
  */
 extern struct proc_dir_entry proc_root;
+<<<<<<< HEAD
+=======
+extern int proc_parse_options(char *options, struct pid_namespace *pid);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 extern void proc_self_init(void);
 extern int proc_remount(struct super_block *, int *, char *);
@@ -288,12 +302,18 @@ extern int proc_remount(struct super_block *, int *, char *);
 /*
  * task_[no]mmu.c
  */
+<<<<<<< HEAD
 struct mem_size_stats;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 struct proc_maps_private {
 	struct inode *inode;
 	struct task_struct *task;
 	struct mm_struct *mm;
+<<<<<<< HEAD
 	struct mem_size_stats *rollup;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #ifdef CONFIG_MMU
 	struct vm_area_struct *tail_vma;
 #endif
@@ -309,7 +329,10 @@ extern const struct file_operations proc_tid_maps_operations;
 extern const struct file_operations proc_pid_numa_maps_operations;
 extern const struct file_operations proc_tid_numa_maps_operations;
 extern const struct file_operations proc_pid_smaps_operations;
+<<<<<<< HEAD
 extern const struct file_operations proc_pid_smaps_rollup_operations;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 extern const struct file_operations proc_tid_smaps_operations;
 extern const struct file_operations proc_clear_refs_operations;
 extern const struct file_operations proc_pagemap_operations;
@@ -319,9 +342,12 @@ extern unsigned long task_statm(struct mm_struct *,
 				unsigned long *, unsigned long *,
 				unsigned long *, unsigned long *);
 extern void task_mem(struct seq_file *, struct mm_struct *);
+<<<<<<< HEAD
 
 #if defined(VENDOR_EDIT) && defined(CONFIG_PROCESS_RECLAIM)
 /* Kui.Zhang@PSW.BSP.Kernel.Performance, 2018-11-07,
  * add new file node for process reclaim */
 extern const struct file_operations proc_reclaim_operations;
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

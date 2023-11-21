@@ -3,7 +3,11 @@ if BLOCK
 menu "IO Schedulers"
 
 config IOSCHED_NOOP
+<<<<<<< HEAD
 	bool "No-op I/O scheduler"
+=======
+	bool
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	default y
 	---help---
 	  The no-op I/O scheduler is a minimal scheduler that does basic merging
@@ -53,7 +57,11 @@ choice
 		bool "CFQ" if IOSCHED_CFQ=y
 
 	config DEFAULT_NOOP
+<<<<<<< HEAD
 		bool "No-op" if IOSCHED_NOOP=y
+=======
+		bool "No-op"
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 endchoice
 

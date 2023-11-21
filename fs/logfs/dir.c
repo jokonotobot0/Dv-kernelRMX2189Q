@@ -174,7 +174,11 @@ static struct page *logfs_get_dd_page(struct inode *dir, struct dentry *dentry)
 		if (!logfs_exist_block(dir, index))
 			continue;
 		page = read_cache_page(dir->i_mapping, index,
+<<<<<<< HEAD
 				logfs_readpage, NULL);
+=======
+				(filler_t *)logfs_readpage, NULL);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		if (IS_ERR(page))
 			return page;
 		dd = kmap_atomic(page);
@@ -306,7 +310,11 @@ static int logfs_readdir(struct file *file, struct dir_context *ctx)
 			continue;
 		}
 		page = read_cache_page(dir->i_mapping, pos,
+<<<<<<< HEAD
 				logfs_readpage, NULL);
+=======
+				(filler_t *)logfs_readpage, NULL);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		if (IS_ERR(page))
 			return PTR_ERR(page);
 		dd = kmap(page);

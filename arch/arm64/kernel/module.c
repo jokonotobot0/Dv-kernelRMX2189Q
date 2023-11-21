@@ -384,7 +384,11 @@ int apply_relocate_add(Elf64_Shdr *sechdrs,
 
 			if (IS_ENABLED(CONFIG_ARM64_MODULE_PLTS) &&
 			    ovf == -ERANGE) {
+<<<<<<< HEAD
 				val = module_emit_plt_entry(me, loc, &rel[i], sym);
+=======
+				val = module_emit_plt_entry(me, &rel[i], sym);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 				ovf = reloc_insn_imm(RELOC_OP_PREL, loc, val, 2,
 						     26, AARCH64_INSN_IMM_26);
 			}

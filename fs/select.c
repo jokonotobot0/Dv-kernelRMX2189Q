@@ -33,8 +33,11 @@
 
 #include <asm/uaccess.h>
 
+<<<<<<< HEAD
 #include <mt-plat/fpsgo_common.h>
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /*
  * Estimate expected accuracy in ns from a timeval.
@@ -240,6 +243,7 @@ int poll_schedule_timeout(struct poll_wqueues *pwq, int state,
 	int rc = -EINTR;
 
 	set_current_state(state);
+<<<<<<< HEAD
 	if (!pwq->triggered) {
 		if (expires && expires->tv64)
 			xgf_igather_timer(current, 1);
@@ -247,6 +251,10 @@ int poll_schedule_timeout(struct poll_wqueues *pwq, int state,
 		if (expires && expires->tv64)
 			xgf_igather_timer(current, rc ? -1 : 0);
 	}
+=======
+	if (!pwq->triggered)
+		rc = schedule_hrtimeout_range(expires, slack, HRTIMER_MODE_ABS);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	__set_current_state(TASK_RUNNING);
 
 	/*

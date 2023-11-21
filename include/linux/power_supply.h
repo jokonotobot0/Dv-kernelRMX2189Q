@@ -18,7 +18,10 @@
 #include <linux/leds.h>
 #include <linux/spinlock.h>
 #include <linux/notifier.h>
+<<<<<<< HEAD
 #include <linux/types.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /*
  * All voltages, currents, charges, energies, time and temperatures in uV,
@@ -39,7 +42,10 @@ enum {
 	POWER_SUPPLY_STATUS_DISCHARGING,
 	POWER_SUPPLY_STATUS_NOT_CHARGING,
 	POWER_SUPPLY_STATUS_FULL,
+<<<<<<< HEAD
 	POWER_SUPPLY_STATUS_CMD_DISCHARGING,
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 enum {
@@ -88,6 +94,7 @@ enum {
 
 enum power_supply_property {
 	/* Properties of type `int' */
+<<<<<<< HEAD
 #ifndef VENDOR_EDIT
 /* Jianchao.Shi@BSP.CHG.Basic, 2018/11/09, sjc Add for charging */
 	POWER_SUPPLY_PROP_STATUS = 0,
@@ -109,6 +116,9 @@ enum power_supply_property {
 	POWER_SUPPLY_PROP_CHARGER_IC,
 	POWER_SUPPLY_PROP_STATUS,
 #endif /* VENDOR_EDIT */
+=======
+	POWER_SUPPLY_PROP_STATUS = 0,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	POWER_SUPPLY_PROP_CHARGE_TYPE,
 	POWER_SUPPLY_PROP_HEALTH,
 	POWER_SUPPLY_PROP_PRESENT,
@@ -168,6 +178,7 @@ enum power_supply_property {
 	POWER_SUPPLY_PROP_TIME_TO_FULL_AVG,
 	POWER_SUPPLY_PROP_TYPE, /* use power_supply.type instead */
 	POWER_SUPPLY_PROP_SCOPE,
+<<<<<<< HEAD
 	POWER_SUPPLY_PROP_PRECHARGE_CURRENT,
 	POWER_SUPPLY_PROP_CHARGE_TERM_CURRENT,
 	POWER_SUPPLY_PROP_CALIBRATE,
@@ -272,6 +283,10 @@ enum power_supply_property {
 	POWER_SUPPLY_PROP_BAT_ID_VOLT,
 	POWER_SUPPLY_PROP_BAT_TYPE,
 #endif
+=======
+	POWER_SUPPLY_PROP_CHARGE_TERM_CURRENT,
+	POWER_SUPPLY_PROP_CALIBRATE,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* Properties of type `const char *' */
 	POWER_SUPPLY_PROP_MODEL_NAME,
 	POWER_SUPPLY_PROP_MANUFACTURER,
@@ -287,11 +302,17 @@ enum power_supply_type {
 	POWER_SUPPLY_TYPE_USB_DCP,	/* Dedicated Charging Port */
 	POWER_SUPPLY_TYPE_USB_CDP,	/* Charging Downstream Port */
 	POWER_SUPPLY_TYPE_USB_ACA,	/* Accessory Charger Adapters */
+<<<<<<< HEAD
 	POWER_SUPPLY_TYPE_WIRELESS,	/* Wireless Charger */
 	POWER_SUPPLY_TYPE_USB_TYPE_C,	/* Type C Port */
 	POWER_SUPPLY_TYPE_USB_PD,	/* Power Delivery Port */
 	POWER_SUPPLY_TYPE_USB_PD_DRP,	/* PD Dual Role Port */
 	POWER_SUPPLY_TYPE_APPLE_BRICK_ID,	/* Apple Charging Method */
+=======
+	POWER_SUPPLY_TYPE_USB_TYPE_C,	/* Type C Port */
+	POWER_SUPPLY_TYPE_USB_PD,	/* Power Delivery Port */
+	POWER_SUPPLY_TYPE_USB_PD_DRP,	/* PD Dual Role Port */
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 enum power_supply_notifier_events {
@@ -301,7 +322,10 @@ enum power_supply_notifier_events {
 union power_supply_propval {
 	int intval;
 	const char *strval;
+<<<<<<< HEAD
 	int64_t int64val;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 struct device_node;

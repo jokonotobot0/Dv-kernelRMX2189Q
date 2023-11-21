@@ -23,10 +23,13 @@
 #include <linux/of_irq.h>
 #include <linux/io.h>
 #include <linux/mfd/mt6397/core.h>
+<<<<<<< HEAD
 #include <linux/reboot.h>
 #ifdef CONFIG_MTK_KERNEL_POWER_OFF_CHARGING
 #include "../misc/mediatek/include/mt-plat/mtk_boot_common.h"
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #define RTC_BBPU		0x0000
 #define RTC_BBPU_CBUSY		BIT(6)
@@ -47,9 +50,12 @@
 #define RTC_AL_MASK_DOW		BIT(4)
 
 #define RTC_TC_SEC		0x000a
+<<<<<<< HEAD
 #define RTC_SPAR1		0x0032
 #define RTC_AL_SEC		0x0018
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* Min, Hour, Dom... register offset to RTC_TC_SEC */
 #define RTC_OFFSET_SEC		0
 #define RTC_OFFSET_MIN		1
@@ -63,6 +69,7 @@
 #define RTC_AL_SEC		0x0018
 
 #define RTC_PDN2		0x002e
+<<<<<<< HEAD
 #define RTC_PDN1		0x002c
 #define RTC_SPAR0		0x0030
 #define RTC_PDN2_PWRON_ALARM	BIT(4)
@@ -95,6 +102,9 @@
 #define RTC_PWRON_DOM        RTC_SPAR1
 #define RTC_PWRON_DOM_MASK     0xf800
 #define RTC_PWRON_DOM_SHIFT     11
+=======
+#define RTC_PDN2_PWRON_ALARM	BIT(4)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #define RTC_MIN_YEAR		1968
 #define RTC_BASE_YEAR		1900
@@ -110,11 +120,14 @@ struct mt6397_rtc {
 	u32			addr_base;
 };
 
+<<<<<<< HEAD
 static struct mt6397_rtc *mt_rtc;
 #if defined(CONFIG_MACH_MT8163)
 static bool rtc_probe_done;
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int mtk_rtc_write_trigger(struct mt6397_rtc *rtc)
 {
 	unsigned long timeout = jiffies + HZ;
@@ -142,6 +155,7 @@ static int mtk_rtc_write_trigger(struct mt6397_rtc *rtc)
 	return ret;
 }
 
+<<<<<<< HEAD
 static void _mtk_rtc_save_pwron_alarm(void)
 {
 	u32 pdn1, pdn2;
@@ -377,11 +391,14 @@ static bool _mtk_rtc_is_charging_boot(void)
 }
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static irqreturn_t mtk_rtc_irq_handler_thread(int irq, void *data)
 {
 	struct mt6397_rtc *rtc = data;
 	u32 irqsta, irqen;
 	int ret;
+<<<<<<< HEAD
 	bool pwron_alm = false, pwron_alarm = false;
 	struct rtc_time nowtm;
 	struct rtc_time tm = {0};
@@ -449,6 +466,14 @@ static irqreturn_t mtk_rtc_irq_handler_thread(int irq, void *data)
 		rtc_update_irq(rtc->rtc_dev, 1, RTC_IRQF | RTC_AF);
 		irqen = irqsta & ~RTC_IRQ_EN_AL;
 
+=======
+
+	ret = regmap_read(rtc->regmap, rtc->addr_base + RTC_IRQ_STA, &irqsta);
+	if ((ret >= 0) && (irqsta & RTC_IRQ_STA_AL)) {
+		rtc_update_irq(rtc->rtc_dev, 1, RTC_IRQF | RTC_AF);
+		irqen = irqsta & ~RTC_IRQ_EN_AL;
+		mutex_lock(&rtc->lock);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		if (regmap_write(rtc->regmap, rtc->addr_base + RTC_IRQ_EN,
 				 irqen) < 0)
 			mtk_rtc_write_trigger(rtc);
@@ -456,6 +481,7 @@ static irqreturn_t mtk_rtc_irq_handler_thread(int irq, void *data)
 
 		return IRQ_HANDLED;
 	}
+<<<<<<< HEAD
 	mutex_unlock(&rtc->lock);
 	return IRQ_NONE;
 }
@@ -467,6 +493,11 @@ void rtc_irq_handler(void)
 		mtk_rtc_irq_handler_thread(0, mt_rtc);
 }
 #endif /* defined(CONFIG_MACH_MT8163) */
+=======
+
+	return IRQ_NONE;
+}
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 static int __mtk_rtc_read_time(struct mt6397_rtc *rtc,
 			       struct rtc_time *tm, int *sec)
@@ -493,6 +524,7 @@ exit:
 	return ret;
 }
 
+<<<<<<< HEAD
 void rtc_read_pwron_alarm(struct rtc_wkalrm *alm)
 {
 	struct rtc_time *tm;
@@ -684,6 +716,8 @@ exit:
 
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int mtk_rtc_read_time(struct device *dev, struct rtc_time *tm)
 {
 	time64_t time;
@@ -793,7 +827,10 @@ static int mtk_rtc_set_alarm(struct device *dev, struct rtc_wkalrm *alm)
 	struct mt6397_rtc *rtc = dev_get_drvdata(dev);
 	int ret;
 	u16 data[RTC_OFFSET_COUNT];
+<<<<<<< HEAD
 	u32 irqsta, irqen, pdn2;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	tm->tm_year -= RTC_MIN_YEAR_OFFSET;
 	tm->tm_mon++;
@@ -805,6 +842,7 @@ static int mtk_rtc_set_alarm(struct device *dev, struct rtc_wkalrm *alm)
 	data[RTC_OFFSET_MTH] = tm->tm_mon;
 	data[RTC_OFFSET_YEAR] = tm->tm_year;
 
+<<<<<<< HEAD
 	dev_notice(rtc->dev,
 		"set al time = %04d/%02d/%02d %02d:%02d:%02d (%d)\n",
 		tm->tm_year + RTC_MIN_YEAR, tm->tm_mon, tm->tm_mday,
@@ -850,6 +888,9 @@ static int mtk_rtc_set_alarm(struct device *dev, struct rtc_wkalrm *alm)
 	if (ret < 0)
 		goto exit;
 
+=======
+	mutex_lock(&rtc->lock);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (alm->enabled) {
 		ret = regmap_bulk_write(rtc->regmap,
 					rtc->addr_base + RTC_AL_SEC,
@@ -905,37 +946,56 @@ static int mtk_rtc_probe(struct platform_device *pdev)
 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
 	rtc->addr_base = res->start;
 
+<<<<<<< HEAD
 #if !defined(CONFIG_MACH_MT8163)
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	res = platform_get_resource(pdev, IORESOURCE_IRQ, 0);
 	rtc->irq = irq_create_mapping(mt6397_chip->irq_domain, res->start);
 	if (rtc->irq <= 0)
 		return -EINVAL;
+<<<<<<< HEAD
 #endif /* !defined(CONFIG_MACH_MT8163) */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	rtc->regmap = mt6397_chip->regmap;
 	rtc->dev = &pdev->dev;
 	mutex_init(&rtc->lock);
 
+<<<<<<< HEAD
 	mt_rtc = rtc;
 	platform_set_drvdata(pdev, rtc);
 
 #if !defined(CONFIG_MACH_MT8163)
+=======
+	platform_set_drvdata(pdev, rtc);
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	ret = request_threaded_irq(rtc->irq, NULL,
 				   mtk_rtc_irq_handler_thread,
 				   IRQF_ONESHOT | IRQF_TRIGGER_HIGH,
 				   "mt6397-rtc", rtc);
 	if (ret) {
+<<<<<<< HEAD
 		dev_dbg(&pdev->dev, "Failed to request alarm IRQ: %d: %d\n",
 			rtc->irq, ret);
 		goto out_dispose_irq;
 	}
 #endif /* !defined(CONFIG_MACH_MT8163) */
+=======
+		dev_err(&pdev->dev, "Failed to request alarm IRQ: %d: %d\n",
+			rtc->irq, ret);
+		goto out_dispose_irq;
+	}
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	device_init_wakeup(&pdev->dev, 1);
 
 	rtc->rtc_dev = rtc_device_register("mt6397-rtc", &pdev->dev,
 					   &mtk_rtc_ops, THIS_MODULE);
 	if (IS_ERR(rtc->rtc_dev)) {
+<<<<<<< HEAD
 		dev_dbg(&pdev->dev, "register rtc device failed\n");
 		ret = PTR_ERR(rtc->rtc_dev);
 		goto out_free_irq;
@@ -943,15 +1003,27 @@ static int mtk_rtc_probe(struct platform_device *pdev)
 #if defined(CONFIG_MACH_MT8163)
 	rtc_probe_done = true;
 #endif
+=======
+		dev_err(&pdev->dev, "register rtc device failed\n");
+		ret = PTR_ERR(rtc->rtc_dev);
+		goto out_free_irq;
+	}
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	return 0;
 
 out_free_irq:
+<<<<<<< HEAD
 #if !defined(CONFIG_MACH_MT8163)
 	free_irq(rtc->irq, rtc->rtc_dev);
 out_dispose_irq:
 	irq_dispose_mapping(rtc->irq);
 #endif /* !defined(CONFIG_MACH_MT8163) */
+=======
+	free_irq(rtc->irq, rtc->rtc_dev);
+out_dispose_irq:
+	irq_dispose_mapping(rtc->irq);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return ret;
 }
 
@@ -960,10 +1032,15 @@ static int mtk_rtc_remove(struct platform_device *pdev)
 	struct mt6397_rtc *rtc = platform_get_drvdata(pdev);
 
 	rtc_device_unregister(rtc->rtc_dev);
+<<<<<<< HEAD
 #if !defined(CONFIG_MACH_MT8163)
 	free_irq(rtc->irq, rtc->rtc_dev);
 	irq_dispose_mapping(rtc->irq);
 #endif /* !defined(CONFIG_MACH_MT8163) */
+=======
+	free_irq(rtc->irq, rtc->rtc_dev);
+	irq_dispose_mapping(rtc->irq);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	return 0;
 }
@@ -971,24 +1048,36 @@ static int mtk_rtc_remove(struct platform_device *pdev)
 #ifdef CONFIG_PM_SLEEP
 static int mt6397_rtc_suspend(struct device *dev)
 {
+<<<<<<< HEAD
 #if !defined(CONFIG_MACH_MT8163)
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct mt6397_rtc *rtc = dev_get_drvdata(dev);
 
 	if (device_may_wakeup(dev))
 		enable_irq_wake(rtc->irq);
+<<<<<<< HEAD
 #endif /* !defined(CONFIG_MACH_MT8163) */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	return 0;
 }
 
 static int mt6397_rtc_resume(struct device *dev)
 {
+<<<<<<< HEAD
 #if !defined(CONFIG_MACH_MT8163)
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct mt6397_rtc *rtc = dev_get_drvdata(dev);
 
 	if (device_may_wakeup(dev))
 		disable_irq_wake(rtc->irq);
+<<<<<<< HEAD
 #endif /* !defined(CONFIG_MACH_MT8163) */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	return 0;
 }
@@ -998,8 +1087,11 @@ static SIMPLE_DEV_PM_OPS(mt6397_pm_ops, mt6397_rtc_suspend,
 			mt6397_rtc_resume);
 
 static const struct of_device_id mt6397_rtc_of_match[] = {
+<<<<<<< HEAD
 	{ .compatible = "mediatek,mt6323-rtc", },
 	{ .compatible = "mediatek,mt6392-rtc", },
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	{ .compatible = "mediatek,mt6397-rtc", },
 	{ }
 };
@@ -1020,4 +1112,7 @@ module_platform_driver(mtk_rtc_driver);
 MODULE_LICENSE("GPL v2");
 MODULE_AUTHOR("Tianping Fang <tianping.fang@mediatek.com>");
 MODULE_DESCRIPTION("RTC Driver for MediaTek MT6397 PMIC");
+<<<<<<< HEAD
 MODULE_ALIAS("platform:mt6397-rtc");
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

@@ -77,7 +77,11 @@ static const struct clk_ops mtk_ref2usb_tx_ops = {
 	.unprepare	= mtk_ref2usb_tx_unprepare,
 };
 
+<<<<<<< HEAD
 struct clk *mtk_clk_register_ref2usb_tx(const char *name,
+=======
+struct clk * __init mtk_clk_register_ref2usb_tx(const char *name,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			const char *parent_name, void __iomem *reg)
 {
 	struct mtk_ref2usb_tx *tx;

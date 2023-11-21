@@ -400,6 +400,7 @@ config IRQ_TIME_ACCOUNTING
 
 	  If in doubt, say N here.
 
+<<<<<<< HEAD
 config SCHED_WALT
         bool "Support window based load tracking"
         depends on SMP
@@ -409,6 +410,8 @@ config SCHED_WALT
 	used to guide task placement as well as task frequency requirements
 	for cpufreq governors.
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 config BSD_PROCESS_ACCT
 	bool "BSD Process Accounting"
 	depends on MULTIUSER
@@ -479,6 +482,7 @@ config TASK_IO_ACCOUNTING
 
 	  Say N if unsure.
 
+<<<<<<< HEAD
 config PSI
 	bool "Pressure stall information tracking"
 	help
@@ -518,6 +522,8 @@ config PSI_DEFAULT_DISABLED
 
 	  Say N if unsure.
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 endmenu # "CPU/Task time and stats accounting"
 
 menu "RCU Subsystem"
@@ -954,6 +960,7 @@ config HAVE_UNSTABLE_SCHED_CLOCK
 config GENERIC_SCHED_CLOCK
 	bool
 
+<<<<<<< HEAD
 menu "Scheduler features"
 
 config UCLAMP_TASK
@@ -994,6 +1001,8 @@ config UCLAMP_GROUPS_COUNT
 
 endmenu
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #
 # For architectures that want to enable the support for NUMA-affine scheduler
 # balancing logic:
@@ -1059,6 +1068,7 @@ menuconfig CGROUPS
 
 if CGROUPS
 
+<<<<<<< HEAD
 config CGROUP_DEBUG
 	bool "Example debug cgroup subsystem"
 	default n
@@ -1157,6 +1167,8 @@ config CGROUP_SCHEDTUNE
 
 	  Say N if unsure.
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 config PAGE_COUNTER
        bool
 
@@ -1340,6 +1352,7 @@ config CGROUP_PERF
 
 	  Say N if unsure.
 
+<<<<<<< HEAD
 config CGROUP_BPF
 	bool "Support for eBPF programs attached to cgroups"
 	depends on BPF_SYSCALL
@@ -1353,6 +1366,8 @@ config CGROUP_BPF
 	  BPF_CGROUP_INET_INGRESS will be executed on the ingress path of
 	  inet sockets.
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 config CGROUP_DEBUG
 	bool "Example controller"
 	default n
@@ -1362,10 +1377,13 @@ config CGROUP_DEBUG
 
 	  Say N.
 
+<<<<<<< HEAD
 config SOCK_CGROUP_DATA
 	bool
 	default n
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 endif # CGROUPS
 
 config CHECKPOINT_RESTORE
@@ -1451,6 +1469,7 @@ config SCHED_AUTOGROUP
 	  desktop applications.  Task group autogeneration is currently based
 	  upon task session.
 
+<<<<<<< HEAD
 config SCHED_TUNE
 	bool "Boosting for CFS tasks (EXPERIMENTAL)"
 	depends on SMP
@@ -1488,6 +1507,8 @@ config DEFAULT_USE_ENERGY_AWARE
 
 	  Say N if unsure.
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 config SYSFS_DEPRECATED
 	bool "Enable deprecated sysfs features to support old userspace tools"
 	depends on SYSFS
@@ -1716,7 +1737,11 @@ config KALLSYMS_ABSOLUTE_PERCPU
 	default X86_64 && SMP
 
 config KALLSYMS_BASE_RELATIVE
+<<<<<<< HEAD
 	bool "Enable KALLSYMS_BASE_RELATIVE or not"
+=======
+	bool
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	depends on KALLSYMS
 	default !IA64 && !(TILE && 64BIT)
 	help
@@ -1989,6 +2014,7 @@ config VM_EVENT_COUNTERS
 	  on EXPERT systems.  /proc/vmstat will only show page counts
 	  if VM event counters are disabled.
 
+<<<<<<< HEAD
 #ifndef VENDOR_EDIT
 # /* Kui.Zhang@PSW.BSP.Kernel.Performance, 2018-11-12, Support slab objects
 #  * statistics whlie not open SLUB_DEBUG*/
@@ -2013,12 +2039,19 @@ config SLUB_DEBUG
 	bool "Enable SLUB debugging support" if EXPERT
 	depends on SLUB && SYSFS
 	depends on !MTK_ENABLE_AGO
+=======
+config SLUB_DEBUG
+	default y
+	bool "Enable SLUB debugging support" if EXPERT
+	depends on SLUB && SYSFS
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	help
 	  SLUB has extensive debug support features. Disabling these can
 	  result in significant savings in code size. This also disables
 	  SLUB sysfs support. /sys/slab will not exist and there will be
 	  no support for cache validation etc.
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 # /* Kui.Zhang@PSW.BSP.Kernel.Performance, 2018-11-12, Support slab objects
 #  * statistics whlie not open SLUB_DEBUG
@@ -2047,6 +2080,8 @@ config SLUB_MEMCG_SYSFS_ON
 	  controlled by slub_memcg_sysfs boot parameter and this
 	  config option determines the parameter's default value.
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 config COMPAT_BRK
 	bool "Disable heap randomization"
 	default y
@@ -2178,6 +2213,7 @@ config HAVE_GENERIC_DMA_COHERENT
 config SLABINFO
 	bool
 	depends on PROC_FS
+<<<<<<< HEAD
 	depends on !MTK_ENABLE_GMO
 #ifndef VENDOR_EDIT
 # /* Kui.Zhang@PSW.BSP.Kernel.Performance, 2018-11-12, if SLAB_STAT_DEBUG is
@@ -2186,6 +2222,9 @@ config SLABINFO
 #else
 	depends on SLAB || SLUB_DEBUG || SLUB_STAT_DEBUG
 #endif
+=======
+	depends on SLAB || SLUB_DEBUG
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	default y
 
 config RT_MUTEXES
@@ -2401,7 +2440,11 @@ endif # MODULES
 
 config MODULES_TREE_LOOKUP
 	def_bool y
+<<<<<<< HEAD
 	depends on PERF_EVENTS || TRACING || CFI_CLANG
+=======
+	depends on PERF_EVENTS || TRACING
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 config INIT_ALL_POSSIBLE
 	bool

@@ -1723,6 +1723,7 @@ config EARLY_PRINTK
 	  kernel low-level debugging functions. Add earlyprintk to your
 	  kernel parameters to enable this console.
 
+<<<<<<< HEAD
 config EARLY_PRINTK_DIRECT
 	bool "Early printk direct"
 	depends on DEBUG_LL
@@ -1731,6 +1732,8 @@ config EARLY_PRINTK_DIRECT
 	  kernel low-level debugging functions and EARLY_PRINTK is
 	  not early enough.
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 config ARM_KPROBES_TEST
 	tristate "Kprobes test module"
 	depends on KPROBES && MODULES

@@ -20,12 +20,15 @@
 struct snd_soc_dai_ops;
 struct mtk_base_afe;
 struct mtk_base_afe_memif;
+<<<<<<< HEAD
 struct regmap;
 
 int mtk_regmap_update_bits(struct regmap *map, int reg,
 			   unsigned int mask,
 			   unsigned int val);
 int mtk_regmap_write(struct regmap *map, int reg, unsigned int val);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 int mtk_afe_fe_startup(struct snd_pcm_substream *substream,
 		       struct snd_soc_dai *dai);
@@ -48,6 +51,7 @@ int mtk_dynamic_irq_release(struct mtk_base_afe *afe, int irq_id);
 int mtk_afe_dai_suspend(struct snd_soc_dai *dai);
 int mtk_afe_dai_resume(struct snd_soc_dai *dai);
 
+<<<<<<< HEAD
 int mtk_memif_set_enable(struct mtk_base_afe *afe, int id);
 int mtk_memif_set_disable(struct mtk_base_afe *afe, int id);
 int mtk_memif_set_addr(struct mtk_base_afe *afe, int id,
@@ -64,4 +68,6 @@ int mtk_memif_set_format(struct mtk_base_afe *afe,
 			 int id, snd_pcm_format_t format);
 int mtk_memif_set_pbuf_size(struct mtk_base_afe *afe,
 			    int id, int pbuf_size);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif

@@ -119,10 +119,13 @@ static inline long firmware_loading_timeout(void)
 #endif
 #define FW_OPT_NO_WARN	(1U << 3)
 #define FW_OPT_NOCACHE	(1U << 4)
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 //Tong.Han@Bsp.Group.Tp,2017-12-16,Add interface to get proper fw
 #define FW_OPT_COMPARE (1U << 5)
 #endif/*VENDOR_EDIT*/
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 struct firmware_cache {
 	/* firmware_buf instance will be added into the below list */
@@ -294,14 +297,21 @@ static void fw_free_buf(struct firmware_buf *buf)
 /* direct firmware loading support */
 static char fw_path_para[256];
 static const char * const fw_path[] = {
+<<<<<<< HEAD
 	"/data/misc/firmware/active/",
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	fw_path_para,
 	"/lib/firmware/updates/" UTS_RELEASE,
 	"/lib/firmware/updates",
 	"/lib/firmware/" UTS_RELEASE,
+<<<<<<< HEAD
 	"/lib/firmware",
 //Yize.Zhang@ODM_WT.BSP.Touchscreen.Base,2020/03/27,bringup add for xl/hlt/txd touchscreen module
 	"/vendor/firmware"
+=======
+	"/lib/firmware"
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 /*
@@ -321,11 +331,16 @@ static void fw_finish_direct_load(struct device *device,
 	mutex_unlock(&fw_lock);
 }
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 //Wanghao@Bsp.Group.Tp,2018-02-13, Add to avoid direct pass encrypt tp firmware to driver
 static int fw_get_filesystem_firmware(struct device *device,
 				       struct firmware_buf *buf, unsigned int opt_flags)
 #endif
+=======
+static int
+fw_get_filesystem_firmware(struct device *device, struct firmware_buf *buf)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	loff_t size;
 	int i, len;
@@ -334,6 +349,7 @@ static int fw_get_filesystem_firmware(struct device *device,
 	enum kernel_read_file_id id = READING_FIRMWARE;
 	size_t msize = INT_MAX;
 
+<<<<<<< HEAD
         #ifdef VENDOR_EDIT
         //Wanghao@Bsp.Group.Tp,2018-02-13, Add to avoid direct pass encrypt tp firmware to driver
         if(opt_flags & FW_OPT_COMPARE) {
@@ -342,6 +358,8 @@ static int fw_get_filesystem_firmware(struct device *device,
         }
 	#endif/*VENDOR_EDIT*/
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* Already populated data member means we're loading into a buffer */
 	if (buf->data) {
 		id = READING_FIRMWARE_PREALLOC_BUFFER;
@@ -947,10 +965,14 @@ static int _request_firmware_load(struct firmware_priv *fw_priv,
 	int retval = 0;
 	struct device *f_dev = &fw_priv->dev;
 	struct firmware_buf *buf = fw_priv->buf;
+<<<<<<< HEAD
     #ifdef VENDOR_EDIT
 	//Tong.Han@Bsp.Group.Tp,2017-12-16,Add interface to get proper fw
 	char *envp[2]={"FwUp=compare", NULL};
 	#endif/*VENDOR_EDIT*/
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* fall back on userspace loading */
 	if (!buf->data)
 		buf->is_paged_buf = true;
@@ -971,6 +993,7 @@ static int _request_firmware_load(struct firmware_priv *fw_priv,
 		buf->need_uevent = true;
 		dev_set_uevent_suppress(f_dev, false);
 		dev_dbg(f_dev, "firmware: requesting %s\n", buf->fw_id);
+<<<<<<< HEAD
         #ifdef VENDOR_EDIT
 		//Tong.Han@Bsp.Group.Tp,2017-12-16,Add interface to get proper fw
 		if (opt_flags & FW_OPT_COMPARE) {
@@ -981,6 +1004,9 @@ static int _request_firmware_load(struct firmware_priv *fw_priv,
 		#else
 		kobject_uevent(&fw_priv->dev.kobj, KOBJ_ADD);
         #endif/*VENDOR_EDIT*/
+=======
+		kobject_uevent(&fw_priv->dev.kobj, KOBJ_ADD);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	} else {
 		timeout = MAX_JIFFY_OFFSET;
 	}
@@ -1200,10 +1226,14 @@ _request_firmware(const struct firmware **firmware_p, const char *name,
 		}
 	}
 
+<<<<<<< HEAD
         #ifdef VENDOR_EDIT
         //Wanghao@Bsp.Group.Tp,2018-02-13, Add to avoid direct pass encrypt tp firmware to driver
 	ret = fw_get_filesystem_firmware(device, fw->priv, opt_flags);
         #endif
+=======
+	ret = fw_get_filesystem_firmware(device, fw->priv);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (ret) {
 		if (!(opt_flags & FW_OPT_NO_WARN))
 			dev_warn(device,
@@ -1290,6 +1320,7 @@ int request_firmware_direct(const struct firmware **firmware_p,
 }
 EXPORT_SYMBOL_GPL(request_firmware_direct);
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 //Tong.Han@Bsp.Group.Tp,2017-12-16,Add interface to get proper fw
 int request_firmware_select(const struct firmware **firmware_p, const char *name,
@@ -1306,6 +1337,8 @@ int request_firmware_select(const struct firmware **firmware_p, const char *name
 EXPORT_SYMBOL(request_firmware_select);
 #endif/*VENDOR_EDIT*/
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /**
  * request_firmware_into_buf - load firmware into a previously allocated buffer
  * @firmware_p: pointer to firmware image

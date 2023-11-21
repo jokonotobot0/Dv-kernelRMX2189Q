@@ -10,7 +10,10 @@
 #include <linux/flex_proportions.h>
 #include <linux/timer.h>
 #include <linux/workqueue.h>
+<<<<<<< HEAD
 #include <linux/kref.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 struct page;
 struct device;
@@ -137,14 +140,20 @@ struct bdi_writeback {
 struct backing_dev_info {
 	struct list_head bdi_list;
 	unsigned long ra_pages;	/* max readahead in PAGE_SIZE units */
+<<<<<<< HEAD
 	unsigned long io_pages;	/* max allowed IO size */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	unsigned int capabilities; /* Device capabilities */
 	congested_fn *congested_fn; /* Function pointer if device is md/dm */
 	void *congested_data;	/* Pointer to aux data for congested func */
 
 	char *name;
 
+<<<<<<< HEAD
 	struct kref refcnt; /* Reference counter for the structure */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	unsigned int min_ratio;
 	unsigned int max_ratio, max_prop_frac;
 
@@ -180,12 +189,15 @@ struct backing_dev_info {
 enum {
 	BLK_RW_ASYNC	= 0,
 	BLK_RW_SYNC	= 1,
+<<<<<<< HEAD
 #if defined(VENDOR_EDIT) && defined(CONFIG_OPPO_HEALTHINFO)
 // jiheng.xie@PSW.Tech.BSP.Performance, 2019/03/11
 // Add for ioqueue
 	BLK_RW_BG	= 2,
 	BLK_RW_FG	= 3,
 #endif /*VENDOR_EDIT*/
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 void clear_wb_congested(struct bdi_writeback_congested *congested, int sync);

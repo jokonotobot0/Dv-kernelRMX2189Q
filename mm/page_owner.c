@@ -9,8 +9,11 @@
 #include <linux/migrate.h>
 #include <linux/stackdepot.h>
 #include <linux/seq_file.h>
+<<<<<<< HEAD
 #include <linux/hashtable.h>
 #include <linux/stackdepot.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #include "internal.h"
 
@@ -18,6 +21,7 @@
  * TODO: teach PAGE_OWNER_STACK_DEPTH (__dump_page_owner and save_stack)
  * to use off stack temporal storage
  */
+<<<<<<< HEAD
 
 #define PAGE_OWNER_STACK_DEPTH (8)
 
@@ -192,6 +196,9 @@ static const struct file_operations proc_page_owner_slim_operations = {
 };
 #endif
 
+=======
+#define PAGE_OWNER_STACK_DEPTH (16)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 struct page_owner {
 	unsigned int order;
@@ -230,13 +237,21 @@ static bool need_page_owner(void)
 
 static noinline void register_dummy_stack(void)
 {
+<<<<<<< HEAD
 	unsigned long entries[PAGE_OWNER_STACK_DEPTH];
+=======
+	unsigned long entries[4];
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct stack_trace dummy;
 
 	dummy.nr_entries = 0;
 	dummy.max_entries = ARRAY_SIZE(entries);
 	dummy.entries = &entries[0];
+<<<<<<< HEAD
 	dummy.skip = 1;
+=======
+	dummy.skip = 0;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	save_stack_trace(&dummy);
 	dummy_handle = depot_save_stack(&dummy, GFP_KERNEL);
@@ -244,13 +259,21 @@ static noinline void register_dummy_stack(void)
 
 static noinline void register_failure_stack(void)
 {
+<<<<<<< HEAD
 	unsigned long entries[PAGE_OWNER_STACK_DEPTH];
+=======
+	unsigned long entries[4];
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct stack_trace failure;
 
 	failure.nr_entries = 0;
 	failure.max_entries = ARRAY_SIZE(entries);
 	failure.entries = &entries[0];
+<<<<<<< HEAD
 	failure.skip = 1;
+=======
+	failure.skip = 0;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	save_stack_trace(&failure);
 	failure_handle = depot_save_stack(&failure, GFP_KERNEL);
@@ -283,6 +306,7 @@ void __reset_page_owner(struct page *page, unsigned int order)
 	int i;
 	struct page_ext *page_ext;
 
+<<<<<<< HEAD
 #ifdef CONFIG_PAGE_OWNER_SLIM
 	struct page_owner *page_owner;
 	depot_stack_handle_t handle;
@@ -295,6 +319,8 @@ void __reset_page_owner(struct page *page, unsigned int order)
 	}
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	for (i = 0; i < (1 << order); i++) {
 		page_ext = lookup_page_ext(page + i);
 		if (unlikely(!page_ext))
@@ -326,11 +352,15 @@ static noinline depot_stack_handle_t save_stack(gfp_t flags)
 		.nr_entries = 0,
 		.entries = entries,
 		.max_entries = PAGE_OWNER_STACK_DEPTH,
+<<<<<<< HEAD
 #ifdef CONFIG_64BIT
 		.skip = 3
 #else
 		.skip = 1
 #endif
+=======
+		.skip = 0
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	};
 	depot_stack_handle_t handle;
 
@@ -371,10 +401,13 @@ noinline void __set_page_owner(struct page *page, unsigned int order,
 	page_owner->gfp_mask = gfp_mask;
 	page_owner->last_migrate_reason = -1;
 
+<<<<<<< HEAD
 #ifdef CONFIG_PAGE_OWNER_SLIM
 	record_backtrace(page_owner->handle, 1 << order);
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	__set_bit(PAGE_EXT_OWNER, &page_ext->flags);
 }
 
@@ -434,6 +467,7 @@ void __copy_page_owner(struct page *oldpage, struct page *newpage)
 	__set_bit(PAGE_EXT_OWNER, &new_ext->flags);
 }
 
+<<<<<<< HEAD
 int __dump_pfn_backtrace(unsigned long pfn)
 {
 	struct page *page = pfn_to_page(pfn);
@@ -493,6 +527,8 @@ int __dump_pfn_backtrace(unsigned long pfn)
 	return -1;
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 void pagetypeinfo_showmixedcount_print(struct seq_file *m,
 				       pg_data_t *pgdat, struct zone *zone)
 {
@@ -588,7 +624,10 @@ print_page_owner(char __user *buf, size_t count, unsigned long pfn,
 		.skip = 0
 	};
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	kbuf = kmalloc(count, GFP_KERNEL);
 	if (!kbuf)
 		return -ENOMEM;
@@ -868,11 +907,16 @@ static int __init pageowner_init(void)
 		return 0;
 	}
 
+<<<<<<< HEAD
 	dentry = debugfs_create_file("page_owner", 0400, NULL,
+=======
+	dentry = debugfs_create_file("page_owner", S_IRUSR, NULL,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			NULL, &proc_page_owner_operations);
 	if (IS_ERR(dentry))
 		return PTR_ERR(dentry);
 
+<<<<<<< HEAD
 #ifdef CONFIG_PAGE_OWNER_SLIM
 	dentry = debugfs_create_file("page_owner_slim", 0400, NULL,
 			NULL, &proc_page_owner_slim_operations);
@@ -972,3 +1016,8 @@ ssize_t print_max_page_owner(void)
 
 	return 0;
 }
+=======
+	return 0;
+}
+late_initcall(pageowner_init)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

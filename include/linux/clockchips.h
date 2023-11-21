@@ -125,11 +125,14 @@ struct clock_event_device {
 	int			rating;
 	int			irq;
 	int			bound_on;
+<<<<<<< HEAD
 	/*
 	 * MTK PATCH: indicate target cpu which will be waken by dynamic irq
 	 * affinity mechanism.
 	 */
 	int			irq_affinity_on;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	const struct cpumask	*cpumask;
 	struct list_head	list;
 	struct module		*owner;

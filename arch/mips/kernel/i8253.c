@@ -31,7 +31,12 @@ void __init setup_pit_timer(void)
 
 static int __init init_pit_clocksource(void)
 {
+<<<<<<< HEAD
 	if (num_possible_cpus() > 1) /* PIT does not scale! */
+=======
+	if (num_possible_cpus() > 1 || /* PIT does not scale! */
+	    !clockevent_state_periodic(&i8253_clockevent))
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		return 0;
 
 	return clocksource_i8253_init();

@@ -124,7 +124,11 @@ struct musb_hdrc_platform_data {
 	int		(*set_power)(int state);
 
 	/* MUSB configuration-specific details */
+<<<<<<< HEAD
 	struct musb_hdrc_config *config;
+=======
+	const struct musb_hdrc_config *config;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/* Architecture specific board data	*/
 	void		*board_data;

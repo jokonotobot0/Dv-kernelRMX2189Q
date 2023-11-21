@@ -221,6 +221,7 @@ static inline struct page *page_cache_alloc_cold(struct address_space *x)
 
 static inline gfp_t readahead_gfp_mask(struct address_space *x)
 {
+<<<<<<< HEAD
 #ifdef CONFIG_CMA_REFUSE_PAGE_CACHE
 	return mapping_gfp_mask(x) |
 				  __GFP_COLD | __GFP_NORETRY | __GFP_NOWARN;
@@ -232,6 +233,13 @@ static inline gfp_t readahead_gfp_mask(struct address_space *x)
 }
 
 typedef int filler_t(struct file *, struct page *);
+=======
+	return mapping_gfp_mask(x) |
+				  __GFP_COLD | __GFP_NORETRY | __GFP_NOWARN;
+}
+
+typedef int filler_t(void *, struct page *);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 pgoff_t page_cache_next_hole(struct address_space *mapping,
 			     pgoff_t index, unsigned long max_scan);
@@ -244,7 +252,10 @@ pgoff_t page_cache_prev_hole(struct address_space *mapping,
 #define FGP_WRITE		0x00000008
 #define FGP_NOFS		0x00000010
 #define FGP_NOWAIT		0x00000020
+<<<<<<< HEAD
 #define FGP_FOR_MMAP		0x00000040
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 struct page *pagecache_get_page(struct address_space *mapping, pgoff_t offset,
 		int fgp_flags, gfp_t cache_gfp_mask);
@@ -348,6 +359,7 @@ unsigned find_get_pages(struct address_space *mapping, pgoff_t start,
 			unsigned int nr_pages, struct page **pages);
 unsigned find_get_pages_contig(struct address_space *mapping, pgoff_t start,
 			       unsigned int nr_pages, struct page **pages);
+<<<<<<< HEAD
 unsigned find_get_pages_range_tag(struct address_space *mapping, pgoff_t *index,
 			pgoff_t end, int tag, unsigned int nr_pages,
 			struct page **pages);
@@ -358,6 +370,10 @@ static inline unsigned find_get_pages_tag(struct address_space *mapping,
 	return find_get_pages_range_tag(mapping, index, (pgoff_t)-1, tag,
 					nr_pages, pages);
 }
+=======
+unsigned find_get_pages_tag(struct address_space *mapping, pgoff_t *index,
+			int tag, unsigned int nr_pages, struct page **pages);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 unsigned find_get_entries_tag(struct address_space *mapping, pgoff_t start,
 			int tag, unsigned int nr_entries,
 			struct page **entries, pgoff_t *indices);
@@ -384,7 +400,11 @@ extern int read_cache_pages(struct address_space *mapping,
 static inline struct page *read_mapping_page(struct address_space *mapping,
 				pgoff_t index, void *data)
 {
+<<<<<<< HEAD
 	filler_t *filler = mapping->a_ops->readpage;
+=======
+	filler_t *filler = (filler_t *)mapping->a_ops->readpage;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return read_cache_page(mapping, index, filler, data);
 }
 
@@ -501,6 +521,7 @@ static inline int lock_page_or_retry(struct page *page, struct mm_struct *mm,
  * and for filesystems which need to wait on PG_private.
  */
 extern void wait_on_page_bit(struct page *page, int bit_nr);
+<<<<<<< HEAD
 extern int wait_on_page_bit_killable(struct page *page, int bit_nr);
 extern void wake_up_page_bit(struct page *page, int bit_nr);
 
@@ -509,6 +530,24 @@ static inline void wake_up_page(struct page *page, int bit)
 	if (!PageWaiters(page))
 		return;
 	wake_up_page_bit(page, bit);
+=======
+
+extern int wait_on_page_bit_killable(struct page *page, int bit_nr);
+extern int wait_on_page_bit_killable_timeout(struct page *page,
+					     int bit_nr, unsigned long timeout);
+
+static inline int wait_on_page_locked_killable(struct page *page)
+{
+	if (!PageLocked(page))
+		return 0;
+	return wait_on_page_bit_killable(compound_head(page), PG_locked);
+}
+
+extern wait_queue_head_t *page_waitqueue(struct page *page);
+static inline void wake_up_page(struct page *page, int bit)
+{
+	__wake_up_bit(page_waitqueue(page), &page->flags, bit);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 /* 
@@ -524,6 +563,7 @@ static inline void wait_on_page_locked(struct page *page)
 		wait_on_page_bit(compound_head(page), PG_locked);
 }
 
+<<<<<<< HEAD
 static inline int wait_on_page_locked_killable(struct page *page)
 {
 	if (!PageLocked(page))
@@ -531,6 +571,8 @@ static inline int wait_on_page_locked_killable(struct page *page)
 	return wait_on_page_bit_killable(compound_head(page), PG_locked);
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* 
  * Wait for a page to complete writeback
  */

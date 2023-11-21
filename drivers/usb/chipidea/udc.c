@@ -709,12 +709,15 @@ static int _gadget_stop_activity(struct usb_gadget *gadget)
 	struct ci_hdrc    *ci = container_of(gadget, struct ci_hdrc, gadget);
 	unsigned long flags;
 
+<<<<<<< HEAD
 	spin_lock_irqsave(&ci->lock, flags);
 	ci->gadget.speed = USB_SPEED_UNKNOWN;
 	ci->remote_wakeup = 0;
 	ci->suspended = 0;
 	spin_unlock_irqrestore(&ci->lock, flags);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* flush all endpoints */
 	gadget_for_each_ep(ep, gadget) {
 		usb_ep_fifo_flush(ep);
@@ -732,6 +735,15 @@ static int _gadget_stop_activity(struct usb_gadget *gadget)
 		ci->status = NULL;
 	}
 
+<<<<<<< HEAD
+=======
+	spin_lock_irqsave(&ci->lock, flags);
+	ci->gadget.speed = USB_SPEED_UNKNOWN;
+	ci->remote_wakeup = 0;
+	ci->suspended = 0;
+	spin_unlock_irqrestore(&ci->lock, flags);
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return 0;
 }
 
@@ -1306,6 +1318,13 @@ static int ep_disable(struct usb_ep *ep)
 		return -EBUSY;
 
 	spin_lock_irqsave(hwep->lock, flags);
+<<<<<<< HEAD
+=======
+	if (hwep->ci->gadget.speed == USB_SPEED_UNKNOWN) {
+		spin_unlock_irqrestore(hwep->lock, flags);
+		return 0;
+	}
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/* only internal SW should disable ctrl endpts */
 
@@ -1395,6 +1414,13 @@ static int ep_queue(struct usb_ep *ep, struct usb_request *req,
 		return -EINVAL;
 
 	spin_lock_irqsave(hwep->lock, flags);
+<<<<<<< HEAD
+=======
+	if (hwep->ci->gadget.speed == USB_SPEED_UNKNOWN) {
+		spin_unlock_irqrestore(hwep->lock, flags);
+		return 0;
+	}
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	retval = _ep_queue(ep, req, gfp_flags);
 	spin_unlock_irqrestore(hwep->lock, flags);
 	return retval;
@@ -1418,8 +1444,13 @@ static int ep_dequeue(struct usb_ep *ep, struct usb_request *req)
 		return -EINVAL;
 
 	spin_lock_irqsave(hwep->lock, flags);
+<<<<<<< HEAD
 
 	hw_ep_flush(hwep->ci, hwep->num, hwep->dir);
+=======
+	if (hwep->ci->gadget.speed != USB_SPEED_UNKNOWN)
+		hw_ep_flush(hwep->ci, hwep->num, hwep->dir);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	list_for_each_entry_safe(node, tmpnode, &hwreq->tds, td) {
 		dma_pool_free(hwep->td_pool, node->ptr, node->dma);
@@ -1490,6 +1521,13 @@ static void ep_fifo_flush(struct usb_ep *ep)
 	}
 
 	spin_lock_irqsave(hwep->lock, flags);
+<<<<<<< HEAD
+=======
+	if (hwep->ci->gadget.speed == USB_SPEED_UNKNOWN) {
+		spin_unlock_irqrestore(hwep->lock, flags);
+		return;
+	}
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	hw_ep_flush(hwep->ci, hwep->num, hwep->dir);
 
@@ -1558,6 +1596,13 @@ static int ci_udc_wakeup(struct usb_gadget *_gadget)
 	int ret = 0;
 
 	spin_lock_irqsave(&ci->lock, flags);
+<<<<<<< HEAD
+=======
+	if (ci->gadget.speed == USB_SPEED_UNKNOWN) {
+		spin_unlock_irqrestore(&ci->lock, flags);
+		return 0;
+	}
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (!ci->remote_wakeup) {
 		ret = -EOPNOTSUPP;
 		goto out;

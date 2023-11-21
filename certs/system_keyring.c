@@ -241,6 +241,7 @@ error:
 	return ret;
 }
 EXPORT_SYMBOL_GPL(verify_pkcs7_signature);
+<<<<<<< HEAD
 #endif /* CONFIG_SYSTEM_DATA_VERIFICATION */
 
 /**
@@ -284,3 +285,7 @@ int verify_signature_one(const struct public_key_signature *sig,
 }
 EXPORT_SYMBOL_GPL(verify_signature_one);
 
+=======
+
+#endif /* CONFIG_SYSTEM_DATA_VERIFICATION */
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

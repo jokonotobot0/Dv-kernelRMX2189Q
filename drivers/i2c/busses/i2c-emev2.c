@@ -72,6 +72,10 @@ struct em_i2c_device {
 	struct completion msg_done;
 	struct clk *sclk;
 	struct i2c_client *slave;
+<<<<<<< HEAD
+=======
+	int irq;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 static inline void em_clear_set_bit(struct em_i2c_device *priv, u8 clear, u8 set, u8 reg)
@@ -342,6 +346,15 @@ static int em_i2c_unreg_slave(struct i2c_client *slave)
 
 	writeb(0, priv->base + I2C_OFS_SVA0);
 
+<<<<<<< HEAD
+=======
+	/*
+	 * Wait for interrupt to finish. New slave irqs cannot happen because we
+	 * cleared the slave address and, thus, only extension codes will be
+	 * detected which do not use the slave ptr.
+	 */
+	synchronize_irq(priv->irq);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	priv->slave = NULL;
 
 	return 0;
@@ -358,7 +371,11 @@ static int em_i2c_probe(struct platform_device *pdev)
 {
 	struct em_i2c_device *priv;
 	struct resource *r;
+<<<<<<< HEAD
 	int irq, ret;
+=======
+	int ret;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	priv = devm_kzalloc(&pdev->dev, sizeof(*priv), GFP_KERNEL);
 	if (!priv)
@@ -391,8 +408,13 @@ static int em_i2c_probe(struct platform_device *pdev)
 
 	em_i2c_reset(&priv->adap);
 
+<<<<<<< HEAD
 	irq = platform_get_irq(pdev, 0);
 	ret = devm_request_irq(&pdev->dev, irq, em_i2c_irq_handler, 0,
+=======
+	priv->irq = platform_get_irq(pdev, 0);
+	ret = devm_request_irq(&pdev->dev, priv->irq, em_i2c_irq_handler, 0,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 				"em_i2c", priv);
 	if (ret)
 		goto err_clk;
@@ -402,7 +424,12 @@ static int em_i2c_probe(struct platform_device *pdev)
 	if (ret)
 		goto err_clk;
 
+<<<<<<< HEAD
 	dev_info(&pdev->dev, "Added i2c controller %d, irq %d\n", priv->adap.nr, irq);
+=======
+	dev_info(&pdev->dev, "Added i2c controller %d, irq %d\n", priv->adap.nr,
+		 priv->irq);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	return 0;
 

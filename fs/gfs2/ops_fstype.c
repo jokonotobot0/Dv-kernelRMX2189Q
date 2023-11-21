@@ -1226,7 +1226,11 @@ static int set_gfs2_super(struct super_block *s, void *data)
 	 * We set the bdi here to the queue backing, file systems can
 	 * overwrite this in ->fill_super()
 	 */
+<<<<<<< HEAD
 	s->s_bdi = bdev_get_queue(s->s_bdev)->backing_dev_info;
+=======
+	s->s_bdi = &bdev_get_queue(s->s_bdev)->backing_dev_info;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return 0;
 }
 

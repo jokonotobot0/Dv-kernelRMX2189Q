@@ -16,12 +16,16 @@
 
 #include <linux/types.h>
 
+<<<<<<< HEAD
 #define COMMAND_LINE_SIZE 2048
 #define MBLOCK_RESERVED_NAME_SIZE 128
 #define MBLOCK_RESERVED_NUM_MAX  128
 #define MBLOCK_NUM_MAX 128
 #define MBLOCK_MAGIC 0x99999999
 #define MBLOCK_VERSION 0x2
+=======
+#define COMMAND_LINE_SIZE 1024
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /* The list ends with an ATAG_NONE node. */
 #define ATAG_NONE	0x00000000
@@ -178,6 +182,7 @@ struct tagtable {
 	int (*parse)(const struct tag *);
 };
 
+<<<<<<< HEAD
 /* general memory descriptor */
 struct mem_desc {
 	u64 start;
@@ -213,6 +218,8 @@ struct dram_info {
 };
 
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define tag_member_present(tag,member)				\
 	((unsigned long)(&((struct tag *)0L)->member + 1)	\
 		<= (tag)->hdr.size * 4)

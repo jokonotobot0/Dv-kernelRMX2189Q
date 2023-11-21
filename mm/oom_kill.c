@@ -39,6 +39,7 @@
 #include <linux/init.h>
 #include <linux/mmu_notifier.h>
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_ION
 #include "mtk/ion_drv.h"
 #endif
@@ -46,6 +47,8 @@
 #include <mt-plat/mtk_gpu_utility.h>
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <asm/tlb.h>
 #include "internal.h"
 
@@ -409,6 +412,7 @@ static void dump_tasks(struct mem_cgroup *memcg, const nodemask_t *nodemask)
 	rcu_read_unlock();
 }
 
+<<<<<<< HEAD
 /* show tasks' memory usage */
 void show_task_mem(void)
 {
@@ -427,6 +431,8 @@ void oom_dump_extra_info(void)
 #endif
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static void dump_header(struct oom_control *oc, struct task_struct *p)
 {
 	nodemask_t *nm = (oc->nodemask) ? oc->nodemask : &cpuset_current_mems_allowed;
@@ -446,8 +452,11 @@ static void dump_header(struct oom_control *oc, struct task_struct *p)
 		show_mem(SHOW_MEM_FILTER_NODES);
 	if (sysctl_oom_dump_tasks)
 		dump_tasks(oc->memcg, oc->nodemask);
+<<<<<<< HEAD
 
 	oom_dump_extra_info();
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 /*
@@ -1090,9 +1099,12 @@ bool out_of_memory(struct oom_control *oc)
 	/* Found nothing?!?! Either we hang forever, or we panic. */
 	if (!oc->chosen && !is_sysrq_oom(oc) && !is_memcg_oom(oc)) {
 		dump_header(oc, NULL);
+<<<<<<< HEAD
 #ifdef CONFIG_PAGE_OWNER
 		print_max_page_owner();
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		panic("Out of memory and no killable processes...\n");
 	}
 	if (oc->chosen && oc->chosen != (void *)-1UL) {

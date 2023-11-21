@@ -67,12 +67,18 @@
  */
 #ifdef CONFIG_LD_DEAD_CODE_DATA_ELIMINATION
 #define TEXT_MAIN .text .text.[0-9a-zA-Z_]*
+<<<<<<< HEAD
 #define TEXT_CFI_MAIN .text.cfi .text.[0-9a-zA-Z_]*.cfi
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define DATA_MAIN .data .data.[0-9a-zA-Z_]*
 #define BSS_MAIN .bss .bss.[0-9a-zA-Z_]*
 #else
 #define TEXT_MAIN .text
+<<<<<<< HEAD
 #define TEXT_CFI_MAIN .text.cfi
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define DATA_MAIN .data
 #define BSS_MAIN .bss
 #endif
@@ -107,7 +113,11 @@
 #ifdef CONFIG_FTRACE_MCOUNT_RECORD
 #define MCOUNT_REC()	. = ALIGN(8);				\
 			VMLINUX_SYMBOL(__start_mcount_loc) = .; \
+<<<<<<< HEAD
 			KEEP(*(__mcount_loc))			\
+=======
+			*(__mcount_loc)				\
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			VMLINUX_SYMBOL(__stop_mcount_loc) = .;
 #else
 #define MCOUNT_REC()
@@ -141,10 +151,17 @@
 #ifdef CONFIG_EVENT_TRACING
 #define FTRACE_EVENTS()	. = ALIGN(8);					\
 			VMLINUX_SYMBOL(__start_ftrace_events) = .;	\
+<<<<<<< HEAD
 			KEEP(*(_ftrace_events))				\
 			VMLINUX_SYMBOL(__stop_ftrace_events) = .;	\
 			VMLINUX_SYMBOL(__start_ftrace_enum_maps) = .;	\
 			KEEP(*(_ftrace_enum_map))			\
+=======
+			*(_ftrace_events)				\
+			VMLINUX_SYMBOL(__stop_ftrace_events) = .;	\
+			VMLINUX_SYMBOL(__start_ftrace_enum_maps) = .;	\
+			*(_ftrace_enum_map)				\
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			VMLINUX_SYMBOL(__stop_ftrace_enum_maps) = .;
 #else
 #define FTRACE_EVENTS()
@@ -187,8 +204,13 @@
 #define _OF_TABLE_1(name)						\
 	. = ALIGN(8);							\
 	VMLINUX_SYMBOL(__##name##_of_table) = .;			\
+<<<<<<< HEAD
 	KEEP(*(__##name##_of_table))					\
 	KEEP(*(__##name##_of_table_end))
+=======
+	*(__##name##_of_table)						\
+	*(__##name##_of_table_end)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #define CLKSRC_OF_TABLES()	OF_TABLE(CONFIG_CLKSRC_OF, clksrc)
 #define IRQCHIP_OF_MATCH_TABLE() OF_TABLE(CONFIG_IRQCHIP, irqchip)
@@ -306,6 +328,7 @@
 	/* PCI quirks */						\
 	.pci_fixup        : AT(ADDR(.pci_fixup) - LOAD_OFFSET) {	\
 		VMLINUX_SYMBOL(__start_pci_fixups_early) = .;		\
+<<<<<<< HEAD
 		KEEP(*(.pci_fixup_early))				\
 		VMLINUX_SYMBOL(__end_pci_fixups_early) = .;		\
 		VMLINUX_SYMBOL(__start_pci_fixups_header) = .;		\
@@ -328,6 +351,30 @@
 		VMLINUX_SYMBOL(__end_pci_fixups_suspend) = .;		\
 		VMLINUX_SYMBOL(__start_pci_fixups_suspend_late) = .;	\
 		KEEP(*(.pci_fixup_suspend_late))			\
+=======
+		*(.pci_fixup_early)					\
+		VMLINUX_SYMBOL(__end_pci_fixups_early) = .;		\
+		VMLINUX_SYMBOL(__start_pci_fixups_header) = .;		\
+		*(.pci_fixup_header)					\
+		VMLINUX_SYMBOL(__end_pci_fixups_header) = .;		\
+		VMLINUX_SYMBOL(__start_pci_fixups_final) = .;		\
+		*(.pci_fixup_final)					\
+		VMLINUX_SYMBOL(__end_pci_fixups_final) = .;		\
+		VMLINUX_SYMBOL(__start_pci_fixups_enable) = .;		\
+		*(.pci_fixup_enable)					\
+		VMLINUX_SYMBOL(__end_pci_fixups_enable) = .;		\
+		VMLINUX_SYMBOL(__start_pci_fixups_resume) = .;		\
+		*(.pci_fixup_resume)					\
+		VMLINUX_SYMBOL(__end_pci_fixups_resume) = .;		\
+		VMLINUX_SYMBOL(__start_pci_fixups_resume_early) = .;	\
+		*(.pci_fixup_resume_early)				\
+		VMLINUX_SYMBOL(__end_pci_fixups_resume_early) = .;	\
+		VMLINUX_SYMBOL(__start_pci_fixups_suspend) = .;		\
+		*(.pci_fixup_suspend)					\
+		VMLINUX_SYMBOL(__end_pci_fixups_suspend) = .;		\
+		VMLINUX_SYMBOL(__start_pci_fixups_suspend_late) = .;	\
+		*(.pci_fixup_suspend_late)				\
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		VMLINUX_SYMBOL(__end_pci_fixups_suspend_late) = .;	\
 	}								\
 									\
@@ -425,7 +472,11 @@
 	/* Built-in module parameters. */				\
 	__param : AT(ADDR(__param) - LOAD_OFFSET) {			\
 		VMLINUX_SYMBOL(__start___param) = .;			\
+<<<<<<< HEAD
 		KEEP(*(__param))					\
+=======
+		*(__param)						\
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		VMLINUX_SYMBOL(__stop___param) = .;			\
 	}								\
 									\
@@ -462,8 +513,11 @@
 #define TEXT_TEXT							\
 		ALIGN_FUNCTION();					\
 		*(.text.hot TEXT_MAIN .text.fixup .text.unlikely)	\
+<<<<<<< HEAD
 		*(.text..ftrace)					\
 		*(TEXT_CFI_MAIN) 					\
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		*(.ref.text)						\
 	MEM_KEEP(init.text)						\
 	MEM_KEEP(exit.text)						\
@@ -503,20 +557,41 @@
 		*(.entry.text)						\
 		VMLINUX_SYMBOL(__entry_text_end) = .;
 
+<<<<<<< HEAD
+=======
+#if defined(CONFIG_FUNCTION_GRAPH_TRACER) || defined(CONFIG_KASAN)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define IRQENTRY_TEXT							\
 		ALIGN_FUNCTION();					\
 		VMLINUX_SYMBOL(__irqentry_text_start) = .;		\
 		*(.irqentry.text)					\
 		VMLINUX_SYMBOL(__irqentry_text_end) = .;
+<<<<<<< HEAD
 
+=======
+#else
+#define IRQENTRY_TEXT
+#endif
+
+#if defined(CONFIG_FUNCTION_GRAPH_TRACER) || defined(CONFIG_KASAN)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define SOFTIRQENTRY_TEXT						\
 		ALIGN_FUNCTION();					\
 		VMLINUX_SYMBOL(__softirqentry_text_start) = .;		\
 		*(.softirqentry.text)					\
 		VMLINUX_SYMBOL(__softirqentry_text_end) = .;
+<<<<<<< HEAD
 
 /* Section used for early init (in .S files) */
 #define HEAD_TEXT  KEEP(*(.head.text))
+=======
+#else
+#define SOFTIRQENTRY_TEXT
+#endif
+
+/* Section used for early init (in .S files) */
+#define HEAD_TEXT  *(.head.text)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #define HEAD_TEXT_SECTION							\
 	.head.text : AT(ADDR(.head.text) - LOAD_OFFSET) {		\
@@ -530,7 +605,11 @@
 	. = ALIGN(align);						\
 	__ex_table : AT(ADDR(__ex_table) - LOAD_OFFSET) {		\
 		VMLINUX_SYMBOL(__start___ex_table) = .;			\
+<<<<<<< HEAD
 		KEEP(*(__ex_table))					\
+=======
+		*(__ex_table)						\
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		VMLINUX_SYMBOL(__stop___ex_table) = .;			\
 	}
 
@@ -561,7 +640,11 @@
 	MEM_DISCARD(init.data)						\
 	KERNEL_CTORS()							\
 	MCOUNT_REC()							\
+<<<<<<< HEAD
 	*(.init.rodata .init.rodata.*)					\
+=======
+	*(.init.rodata)							\
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	FTRACE_EVENTS()							\
 	TRACE_SYSCALLS()						\
 	KPROBE_BLACKLIST()						\
@@ -579,7 +662,11 @@
 	EARLYCON_TABLE()
 
 #define INIT_TEXT							\
+<<<<<<< HEAD
 	*(.init.text .init.text.*)					\
+=======
+	*(.init.text)							\
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	*(.text.startup)						\
 	MEM_DISCARD(init.text)
 
@@ -596,7 +683,11 @@
 	MEM_DISCARD(exit.text)
 
 #define EXIT_CALL							\
+<<<<<<< HEAD
 	KEEP(*(.exitcall.exit))
+=======
+	*(.exitcall.exit)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /*
  * bss (Block Started by Symbol) - uninitialized data
@@ -672,7 +763,11 @@
 	. = ALIGN(8);							\
 	__bug_table : AT(ADDR(__bug_table) - LOAD_OFFSET) {		\
 		VMLINUX_SYMBOL(__start___bug_table) = .;		\
+<<<<<<< HEAD
 		KEEP(*(__bug_table))					\
+=======
+		*(__bug_table)						\
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		VMLINUX_SYMBOL(__stop___bug_table) = .;			\
 	}
 #else
@@ -701,7 +796,11 @@
 #define INIT_SETUP(initsetup_align)					\
 		. = ALIGN(initsetup_align);				\
 		VMLINUX_SYMBOL(__setup_start) = .;			\
+<<<<<<< HEAD
 		KEEP(*(.init.setup))					\
+=======
+		*(.init.setup)						\
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		VMLINUX_SYMBOL(__setup_end) = .;
 
 #define INIT_CALLS_LEVEL(level)						\

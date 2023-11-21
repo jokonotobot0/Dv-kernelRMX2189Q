@@ -9010,11 +9010,14 @@ F:	arch/*/oprofile/
 F:	drivers/oprofile/
 F:	include/linux/oprofile.h
 
+<<<<<<< HEAD
 OP-TEE DRIVER
 M:	Jens Wiklander <jens.wiklander@linaro.org>
 S:	Maintained
 F:	drivers/tee/optee/
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 ORACLE CLUSTER FILESYSTEM 2 (OCFS2)
 M:	Mark Fasheh <mfasheh@versity.com>
 M:	Joel Becker <jlbec@evilplan.org>
@@ -10660,6 +10663,7 @@ F:	drivers/hwtracing/stm/
 F:	include/linux/stm.h
 F:	include/uapi/linux/stm.h
 
+<<<<<<< HEAD
 TEE SUBSYSTEM
 M:	Jens Wiklander <jens.wiklander@linaro.org>
 S:	Maintained
@@ -10668,6 +10672,8 @@ F:	include/uapi/linux/tee.h
 F:	drivers/tee/
 F:	Documentation/tee.txt
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 THUNDERBOLT DRIVER
 M:	Andreas Noever <andreas.noever@gmail.com>
 S:	Maintained

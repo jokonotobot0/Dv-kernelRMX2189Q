@@ -263,7 +263,11 @@
 #include <linux/syscalls.h>
 #include <linux/completion.h>
 #include <linux/uuid.h>
+<<<<<<< HEAD
 #include <crypto/chacha.h>
+=======
+#include <crypto/chacha20.h>
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #include <asm/processor.h>
 #include <asm/uaccess.h>
@@ -438,10 +442,18 @@ static int crng_init = 0;
 #define crng_ready() (likely(crng_init > 1))
 static int crng_init_cnt = 0;
 static unsigned long crng_global_init_time = 0;
+<<<<<<< HEAD
 #define CRNG_INIT_CNT_THRESH (2*CHACHA_KEY_SIZE)
 static void _extract_crng(struct crng_state *crng, __u8 out[CHACHA_BLOCK_SIZE]);
 static void _crng_backtrack_protect(struct crng_state *crng,
 				    __u8 tmp[CHACHA_BLOCK_SIZE], int used);
+=======
+#define CRNG_INIT_CNT_THRESH (2*CHACHA20_KEY_SIZE)
+static void _extract_crng(struct crng_state *crng,
+			  __u8 out[CHACHA20_BLOCK_SIZE]);
+static void _crng_backtrack_protect(struct crng_state *crng,
+				    __u8 tmp[CHACHA20_BLOCK_SIZE], int used);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static void process_random_ready_list(void);
 
 static struct ratelimit_state unseeded_warning =
@@ -817,7 +829,11 @@ static int crng_fast_load(const char *cp, size_t len)
 	}
 	p = (unsigned char *) &primary_crng.state[4];
 	while (len > 0 && crng_init_cnt < CRNG_INIT_CNT_THRESH) {
+<<<<<<< HEAD
 		p[crng_init_cnt % CHACHA_KEY_SIZE] ^= *cp;
+=======
+		p[crng_init_cnt % CHACHA20_KEY_SIZE] ^= *cp;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		cp++; crng_init_cnt++; len--;
 	}
 	if (crng_init_cnt >= CRNG_INIT_CNT_THRESH) {
@@ -867,7 +883,11 @@ static void crng_reseed(struct crng_state *crng, struct entropy_store *r)
 	unsigned long	flags;
 	int		i, num;
 	union {
+<<<<<<< HEAD
 		__u8	block[CHACHA_BLOCK_SIZE];
+=======
+		__u8	block[CHACHA20_BLOCK_SIZE];
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		__u32	key[8];
 	} buf;
 
@@ -878,7 +898,11 @@ static void crng_reseed(struct crng_state *crng, struct entropy_store *r)
 	} else {
 		_extract_crng(&primary_crng, buf.block);
 		_crng_backtrack_protect(&primary_crng, buf.block,
+<<<<<<< HEAD
 					CHACHA_KEY_SIZE);
+=======
+					CHACHA20_KEY_SIZE);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 	spin_lock_irqsave(&crng->lock, flags);
 	for (i = 0; i < 8; i++) {
@@ -893,7 +917,10 @@ static void crng_reseed(struct crng_state *crng, struct entropy_store *r)
 	if (crng == &primary_crng && crng_init < 2) {
 		numa_crng_init();
 		crng_init = 2;
+<<<<<<< HEAD
 		spin_unlock_irqrestore(&crng->lock, flags);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		process_random_ready_list();
 		wake_up_interruptible(&crng_init_wait);
 		pr_notice("random: crng init done\n");
@@ -909,9 +936,14 @@ static void crng_reseed(struct crng_state *crng, struct entropy_store *r)
 				  urandom_warning.missed);
 			urandom_warning.missed = 0;
 		}
+<<<<<<< HEAD
 	} else {
 		spin_unlock_irqrestore(&crng->lock, flags);
 	}
+=======
+	}
+	spin_unlock_irqrestore(&crng->lock, flags);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static inline void maybe_reseed_primary_crng(void)
@@ -927,7 +959,11 @@ static inline void crng_wait_ready(void)
 }
 
 static void _extract_crng(struct crng_state *crng,
+<<<<<<< HEAD
 			  __u8 out[CHACHA_BLOCK_SIZE])
+=======
+			  __u8 out[CHACHA20_BLOCK_SIZE])
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	unsigned long v, flags;
 
@@ -944,7 +980,11 @@ static void _extract_crng(struct crng_state *crng,
 	spin_unlock_irqrestore(&crng->lock, flags);
 }
 
+<<<<<<< HEAD
 static void extract_crng(__u8 out[CHACHA_BLOCK_SIZE])
+=======
+static void extract_crng(__u8 out[CHACHA20_BLOCK_SIZE])
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	struct crng_state *crng = NULL;
 
@@ -962,14 +1002,22 @@ static void extract_crng(__u8 out[CHACHA_BLOCK_SIZE])
  * enough) to mutate the CRNG key to provide backtracking protection.
  */
 static void _crng_backtrack_protect(struct crng_state *crng,
+<<<<<<< HEAD
 				    __u8 tmp[CHACHA_BLOCK_SIZE], int used)
+=======
+				    __u8 tmp[CHACHA20_BLOCK_SIZE], int used)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	unsigned long	flags;
 	__u32		*s, *d;
 	int		i;
 
 	used = round_up(used, sizeof(__u32));
+<<<<<<< HEAD
 	if (used + CHACHA_KEY_SIZE > CHACHA_BLOCK_SIZE) {
+=======
+	if (used + CHACHA20_KEY_SIZE > CHACHA20_BLOCK_SIZE) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		extract_crng(tmp);
 		used = 0;
 	}
@@ -981,7 +1029,11 @@ static void _crng_backtrack_protect(struct crng_state *crng,
 	spin_unlock_irqrestore(&crng->lock, flags);
 }
 
+<<<<<<< HEAD
 static void crng_backtrack_protect(__u8 tmp[CHACHA_BLOCK_SIZE], int used)
+=======
+static void crng_backtrack_protect(__u8 tmp[CHACHA20_BLOCK_SIZE], int used)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	struct crng_state *crng = NULL;
 
@@ -996,8 +1048,13 @@ static void crng_backtrack_protect(__u8 tmp[CHACHA_BLOCK_SIZE], int used)
 
 static ssize_t extract_crng_user(void __user *buf, size_t nbytes)
 {
+<<<<<<< HEAD
 	ssize_t ret = 0, i = CHACHA_BLOCK_SIZE;
 	__u8 tmp[CHACHA_BLOCK_SIZE] __aligned(4);
+=======
+	ssize_t ret = 0, i = CHACHA20_BLOCK_SIZE;
+	__u8 tmp[CHACHA20_BLOCK_SIZE];
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	int large_request = (nbytes > 256);
 
 	while (nbytes) {
@@ -1011,7 +1068,11 @@ static ssize_t extract_crng_user(void __user *buf, size_t nbytes)
 		}
 
 		extract_crng(tmp);
+<<<<<<< HEAD
 		i = min_t(int, nbytes, CHACHA_BLOCK_SIZE);
+=======
+		i = min_t(int, nbytes, CHACHA20_BLOCK_SIZE);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		if (copy_to_user(buf, tmp, i)) {
 			ret = -EFAULT;
 			break;
@@ -1565,7 +1626,11 @@ static ssize_t extract_entropy_user(struct entropy_store *r, void __user *buf,
  */
 void get_random_bytes(void *buf, int nbytes)
 {
+<<<<<<< HEAD
 	__u8 tmp[CHACHA_BLOCK_SIZE] __aligned(4);
+=======
+	__u8 tmp[CHACHA20_BLOCK_SIZE];
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #if DEBUG_RANDOM_BOOT > 0
 	if (!crng_ready())
@@ -1574,10 +1639,17 @@ void get_random_bytes(void *buf, int nbytes)
 #endif
 	trace_get_random_bytes(nbytes, _RET_IP_);
 
+<<<<<<< HEAD
 	while (nbytes >= CHACHA_BLOCK_SIZE) {
 		extract_crng(buf);
 		buf += CHACHA_BLOCK_SIZE;
 		nbytes -= CHACHA_BLOCK_SIZE;
+=======
+	while (nbytes >= CHACHA20_BLOCK_SIZE) {
+		extract_crng(buf);
+		buf += CHACHA20_BLOCK_SIZE;
+		nbytes -= CHACHA20_BLOCK_SIZE;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 
 	if (nbytes > 0) {
@@ -1585,7 +1657,11 @@ void get_random_bytes(void *buf, int nbytes)
 		memcpy(buf, tmp, nbytes);
 		crng_backtrack_protect(tmp, nbytes);
 	} else
+<<<<<<< HEAD
 		crng_backtrack_protect(tmp, CHACHA_BLOCK_SIZE);
+=======
+		crng_backtrack_protect(tmp, CHACHA20_BLOCK_SIZE);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	memzero_explicit(tmp, sizeof(tmp));
 }
 EXPORT_SYMBOL(get_random_bytes);
@@ -2111,8 +2187,13 @@ struct ctl_table random_table[] = {
 
 struct batched_entropy {
 	union {
+<<<<<<< HEAD
 		unsigned long entropy_long[CHACHA_BLOCK_SIZE / sizeof(unsigned long)];
 		unsigned int entropy_int[CHACHA_BLOCK_SIZE / sizeof(unsigned int)];
+=======
+		unsigned long entropy_long[CHACHA20_BLOCK_SIZE / sizeof(unsigned long)];
+		unsigned int entropy_int[CHACHA20_BLOCK_SIZE / sizeof(unsigned int)];
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	};
 	unsigned int position;
 };

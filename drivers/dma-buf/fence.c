@@ -68,11 +68,22 @@ int fence_signal_locked(struct fence *fence)
 	struct fence_cb *cur, *tmp;
 	int ret = 0;
 
+<<<<<<< HEAD
 	lockdep_assert_held(fence->lock);
 
 	if (WARN_ON(!fence))
 		return -EINVAL;
 
+=======
+	if (WARN_ON(!fence))
+		return -EINVAL;
+
+	if (!ktime_to_ns(fence->timestamp)) {
+		fence->timestamp = ktime_get();
+		smp_mb__before_atomic();
+	}
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (test_and_set_bit(FENCE_FLAG_SIGNALED_BIT, &fence->flags)) {
 		ret = -EINVAL;
 
@@ -80,11 +91,16 @@ int fence_signal_locked(struct fence *fence)
 		 * we might have raced with the unlocked fence_signal,
 		 * still run through all callbacks
 		 */
+<<<<<<< HEAD
 	} else {
 		fence->timestamp = ktime_get();
 		set_bit(FENCE_FLAG_TIMESTAMP_BIT, &fence->flags);
 		trace_fence_signaled(fence);
 	}
+=======
+	} else
+		trace_fence_signaled(fence);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	list_for_each_entry_safe(cur, tmp, &fence->cb_list, node) {
 		list_del_init(&cur->node);
@@ -111,11 +127,22 @@ int fence_signal(struct fence *fence)
 	if (!fence)
 		return -EINVAL;
 
+<<<<<<< HEAD
 	if (test_and_set_bit(FENCE_FLAG_SIGNALED_BIT, &fence->flags))
 		return -EINVAL;
 
 	fence->timestamp = ktime_get();
 	set_bit(FENCE_FLAG_TIMESTAMP_BIT, &fence->flags);
+=======
+	if (!ktime_to_ns(fence->timestamp)) {
+		fence->timestamp = ktime_get();
+		smp_mb__before_atomic();
+	}
+
+	if (test_and_set_bit(FENCE_FLAG_SIGNALED_BIT, &fence->flags))
+		return -EINVAL;
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	trace_fence_signaled(fence);
 
 	if (test_bit(FENCE_FLAG_ENABLE_SIGNAL_BIT, &fence->flags)) {
@@ -156,6 +183,12 @@ fence_wait_timeout(struct fence *fence, bool intr, signed long timeout)
 	if (WARN_ON(timeout < 0))
 		return -EINVAL;
 
+<<<<<<< HEAD
+=======
+	if (timeout == 0)
+		return fence_is_signaled(fence);
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	trace_fence_wait_start(fence);
 	ret = fence->ops->wait(fence, intr, timeout);
 	trace_fence_wait_end(fence);
@@ -211,6 +244,7 @@ void fence_enable_sw_signaling(struct fence *fence)
 EXPORT_SYMBOL(fence_enable_sw_signaling);
 
 /**
+<<<<<<< HEAD
  * fence_enable_sw_signaling_nolock - enable signaling on fence without
  * taking lock
  * @fence:	[in]	the fence to enable
@@ -233,6 +267,8 @@ void fence_enable_sw_signaling_nolock(struct fence *fence)
 EXPORT_SYMBOL(fence_enable_sw_signaling_nolock);
 
 /**
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  * fence_add_callback - add a callback to be called when the fence
  * is signaled
  * @fence:	[in]	the fence to wait on
@@ -345,12 +381,17 @@ fence_remove_callback(struct fence *fence, struct fence_cb *cb)
 	spin_lock_irqsave(fence->lock, flags);
 
 	ret = !list_empty(&cb->node);
+<<<<<<< HEAD
 	if (ret) {
 		list_del_init(&cb->node);
 		if (list_empty(&fence->cb_list))
 			if (fence->ops->disable_signaling)
 				fence->ops->disable_signaling(fence);
 	}
+=======
+	if (ret)
+		list_del_init(&cb->node);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	spin_unlock_irqrestore(fence->lock, flags);
 

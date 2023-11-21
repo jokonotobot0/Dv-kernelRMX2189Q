@@ -424,7 +424,11 @@ our $typeTypedefs = qr{(?x:
 our $zero_initializer = qr{(?:(?:0[xX])?0+$Int_type?|NULL|false)\b};
 
 our $logFunctions = qr{(?x:
+<<<<<<< HEAD
 	printk(?:_ratelimited|_once|_deferred_once|_deferred|)|
+=======
+	printk(?:_ratelimited|_once|)|
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	(?:[a-z0-9]+_){1,2}(?:printk|emerg|alert|crit|err|warning|warn|notice|info|debug|dbg|vdbg|devel|cont|WARN)(?:_ratelimited|_once|)|
 	WARN(?:_RATELIMIT|_ONCE|)|
 	panic|
@@ -2134,7 +2138,11 @@ sub process {
 	my $in_header_lines = $file ? 0 : 1;
 	my $in_commit_log = 0;		#Scanning lines before patch
 	my $has_commit_log = 0;		#Encountered lines before patch
+<<<<<<< HEAD
 	my $commit_log_possible_stack_dump = 0;
+=======
+       my $commit_log_possible_stack_dump = 0;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	my $commit_log_long_line = 0;
 	my $commit_log_has_diff = 0;
 	my $reported_maintainer_file = 0;
@@ -2154,7 +2162,10 @@ sub process {
 	my $realline = 0;
 	my $realcnt = 0;
 	my $here = '';
+<<<<<<< HEAD
 	my $context_function;		#undef'd unless there's a known function
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	my $in_comment = 0;
 	my $comment_edge = 0;
 	my $first_line = 0;
@@ -2193,8 +2204,12 @@ sub process {
 			}
 			#next;
 		}
+<<<<<<< HEAD
 		if ($rawline=~/^\@\@ -\d+(?:,\d+)? \+(\d+)(,(\d+))? \@\@(.*)/) {
 			my $context = $4;
+=======
+		if ($rawline=~/^\@\@ -\d+(?:,\d+)? \+(\d+)(,(\d+))? \@\@/) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			$realline=$1-1;
 			if (defined $2) {
 				$realcnt=$3+1;
@@ -2203,12 +2218,15 @@ sub process {
 			}
 			$in_comment = 0;
 
+<<<<<<< HEAD
 			if ($context =~ /\b(\w+)\s*\(/) {
 				$context_function = $1;
 			} else {
 				undef $context_function;
 			}
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			# Guestimate if this is a continuing comment.  Run
 			# the context looking for a comment "edge".  If this
 			# edge is a close comment then we must be in a comment
@@ -2537,7 +2555,10 @@ sub process {
 # Check for git id commit length and improperly formed commit descriptions
 		if ($in_commit_log && !$commit_log_possible_stack_dump &&
 		    $line !~ /^\s*(?:Link|Patchwork|http|https|BugLink):/i &&
+<<<<<<< HEAD
 		    $line !~ /^This reverts commit [0-9a-f]{7,40}/ &&
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		    ($line =~ /\bcommit\s+[0-9a-f]{5,}\b/i ||
 		     ($line =~ /(?:\s|^)[0-9a-f]{12,40}(?:[\s"'\(\[]|$)/i &&
 		      $line !~ /[\<\[][0-9a-f]{12,40}[\>\]]/i &&
@@ -3188,7 +3209,11 @@ sub process {
 		my ($stat, $cond, $line_nr_next, $remain_next, $off_next,
 		    $realline_next);
 #print "LINE<$line>\n";
+<<<<<<< HEAD
 		if ($linenr > $suppress_statement &&
+=======
+		if ($linenr >= $suppress_statement &&
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		    $realcnt && $sline =~ /.\s*\S/) {
 			($stat, $cond, $line_nr_next, $remain_next, $off_next) =
 				ctx_statement_block($linenr, $realcnt, 0);
@@ -5153,6 +5178,7 @@ sub process {
 			     "break quoted strings at a space character\n" . $hereprev);
 		}
 
+<<<<<<< HEAD
 #check for an embedded function name in a string when the function is known
 # as part of a diff.  This does not work for -f --file checking as it
 #depends on patch context providing the function name
@@ -5163,6 +5189,8 @@ sub process {
 			     "Prefer using \"%s\", __func__ to embedded function names\n" . $herecurr);
 		}
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 # check for spaces before a quoted newline
 		if ($rawline =~ /^.*\".*\s\\n/) {
 			if (WARN("QUOTED_WHITESPACE_BEFORE_NEWLINE",
@@ -5639,6 +5667,7 @@ sub process {
 			}
 		}
 
+<<<<<<< HEAD
 		# check for vsprintf extension %p<foo> misuses
 		if ($^V && $^V ge 5.10.0 &&
 		    defined $stat &&
@@ -5665,6 +5694,8 @@ sub process {
 			}
 		}
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 # Check for misused memsets
 		if ($^V && $^V ge 5.10.0 &&
 		    defined $stat &&
@@ -5843,9 +5874,14 @@ sub process {
 			     "externs should be avoided in .c files\n" .  $herecurr);
 		}
 
+<<<<<<< HEAD
 # check for function declarations that have arguments without identifier names
 		if (defined $stat &&
 		    $stat =~ /^.\s*(?:extern\s+)?$Type\s*(?:$Ident|\(\s*\*\s*$Ident\s*\))\s*\(\s*([^{]+)\s*\)\s*;/s &&
+=======
+		if ($realfile =~ /\.[ch]$/ && defined $stat &&
+		    $stat =~ /^.\s*(?:extern\s+)?$Type\s*$Ident\s*\(\s*([^{]+)\s*\)\s*;/s &&
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		    $1 ne "void") {
 			my $args = trim($1);
 			while ($args =~ m/\s*($Type\s*(?:$Ident|\(\s*\*\s*$Ident?\s*\)\s*$balanced_parens)?)/g) {
@@ -5857,6 +5893,7 @@ sub process {
 			}
 		}
 
+<<<<<<< HEAD
 # check for function definitions
 		if ($^V && $^V ge 5.10.0 &&
 		    defined $stat &&
@@ -5880,6 +5917,8 @@ sub process {
 			}
 		}
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 # checks for new __setup's
 		if ($rawline =~ /\b__setup\("([^"]*)"/) {
 			my $name = $1;

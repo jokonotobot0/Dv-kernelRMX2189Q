@@ -1782,6 +1782,7 @@ struct cfg80211_auth_request {
  * @ASSOC_REQ_DISABLE_HT:  Disable HT (802.11n)
  * @ASSOC_REQ_DISABLE_VHT:  Disable VHT
  * @ASSOC_REQ_USE_RRM: Declare RRM capability in this association
+<<<<<<< HEAD
  * @CONNECT_REQ_EXTERNAL_AUTH_SUPPORT: User space indicates external
  *	authentication capability. Drivers can offload authentication to
  *	userspace if this flag is set. Only applicable for cfg80211_connect()
@@ -1792,6 +1793,13 @@ enum cfg80211_assoc_req_flags {
 	ASSOC_REQ_DISABLE_VHT			= BIT(1),
 	ASSOC_REQ_USE_RRM			= BIT(2),
 	CONNECT_REQ_EXTERNAL_AUTH_SUPPORT	= BIT(3),
+=======
+ */
+enum cfg80211_assoc_req_flags {
+	ASSOC_REQ_DISABLE_HT		= BIT(0),
+	ASSOC_REQ_DISABLE_VHT		= BIT(1),
+	ASSOC_REQ_USE_RRM		= BIT(2),
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 /**
@@ -2411,6 +2419,7 @@ struct cfg80211_nan_func {
 };
 
 /**
+<<<<<<< HEAD
  * struct cfg80211_external_auth_params - Trigger External authentication.
  *
  * Commonly used across the external auth request and event interfaces.
@@ -2438,6 +2447,8 @@ struct cfg80211_external_auth_params {
 };
 
 /**
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  * struct cfg80211_ops - backend description for wireless configuration
  *
  * This struct is registered by fullmac card drivers and/or wireless stacks
@@ -2738,9 +2749,12 @@ struct cfg80211_external_auth_params {
  * @nan_change_conf: changes NAN configuration. The changed parameters must
  *	be specified in @changes (using &enum cfg80211_nan_conf_changes);
  *	All other parameters must be ignored.
+<<<<<<< HEAD
  *
  * @external_auth: indicates result of offloaded authentication processing from
  *     user space
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  */
 struct cfg80211_ops {
 	int	(*suspend)(struct wiphy *wiphy, struct cfg80211_wowlan *wow);
@@ -3017,8 +3031,11 @@ struct cfg80211_ops {
 				   struct wireless_dev *wdev,
 				   struct cfg80211_nan_conf *conf,
 				   u32 changes);
+<<<<<<< HEAD
 	int     (*external_auth)(struct wiphy *wiphy, struct net_device *dev,
 				 struct cfg80211_external_auth_params *params);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 /*
@@ -3801,9 +3818,12 @@ struct cfg80211_cached_keys;
  * @conn: (private) cfg80211 software SME connection state machine data
  * @connect_keys: (private) keys to set after connection is established
  * @conn_bss_type: connecting/connected BSS type
+<<<<<<< HEAD
  * @conn_owner_nlportid: (private) connection owner socket port ID
  * @disconnect_wk: (private) auto-disconnect work
  * @disconnect_bssid: (private) the BSSID to use for auto-disconnect
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  * @ibss_fixed: (private) IBSS is using fixed BSSID
  * @ibss_dfs_possible: (private) IBSS may change to a DFS channel
  * @event_list: (private) list for internal event processing
@@ -3835,10 +3855,13 @@ struct wireless_dev {
 	struct cfg80211_conn *conn;
 	struct cfg80211_cached_keys *connect_keys;
 	enum ieee80211_bss_type conn_bss_type;
+<<<<<<< HEAD
 	u32 conn_owner_nlportid;
 
 	struct work_struct disconnect_wk;
 	u8 disconnect_bssid[ETH_ALEN];
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	struct list_head event_list;
 	spinlock_t event_lock;
@@ -5828,6 +5851,7 @@ void cfg80211_nan_func_terminated(struct wireless_dev *wdev,
 /* ethtool helper */
 void cfg80211_get_drvinfo(struct net_device *dev, struct ethtool_drvinfo *info);
 
+<<<<<<< HEAD
 /**
  * cfg80211_external_auth_request - userspace request for authentication
  * @netdev: network device
@@ -5839,6 +5863,8 @@ int cfg80211_external_auth_request(struct net_device *netdev,
 				   struct cfg80211_external_auth_params *params,
 				   gfp_t gfp);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* Logging, debugging and troubleshooting/diagnostic helpers. */
 
 /* wiphy_printk helpers, similar to dev_printk */

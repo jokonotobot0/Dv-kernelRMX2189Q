@@ -11,7 +11,10 @@
  *	(at your option) any later version.
  */
 
+<<<<<<< HEAD
 #include <linux/bpf.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <linux/capability.h>
 #include <linux/dcache.h>
 #include <linux/module.h>
@@ -509,7 +512,10 @@ int security_path_chown(const struct path *path, kuid_t uid, kgid_t gid)
 		return 0;
 	return call_int_hook(path_chown, 0, path, uid, gid);
 }
+<<<<<<< HEAD
 EXPORT_SYMBOL(security_path_chown);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 int security_path_chroot(const struct path *path)
 {
@@ -1598,6 +1604,7 @@ int security_audit_rule_match(u32 secid, u32 field, u32 op, void *lsmrule,
 }
 #endif /* CONFIG_AUDIT */
 
+<<<<<<< HEAD
 #ifdef CONFIG_BPF_SYSCALL
 int security_bpf(int cmd, union bpf_attr *attr, unsigned int size)
 {
@@ -1629,6 +1636,8 @@ void security_bpf_prog_free(struct bpf_prog_aux *aux)
 }
 #endif /* CONFIG_BPF_SYSCALL */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 struct security_hook_heads security_hook_heads = {
 	.binder_set_context_mgr =
 		LIST_HEAD_INIT(security_hook_heads.binder_set_context_mgr),
@@ -1980,6 +1989,7 @@ struct security_hook_heads security_hook_heads = {
 	.audit_rule_free =
 		LIST_HEAD_INIT(security_hook_heads.audit_rule_free),
 #endif /* CONFIG_AUDIT */
+<<<<<<< HEAD
 #ifdef CONFIG_BPF_SYSCALL
 	.bpf =
 		LIST_HEAD_INIT(security_hook_heads.bpf),
@@ -1996,4 +2006,6 @@ struct security_hook_heads security_hook_heads = {
 	.bpf_prog_free_security =
 		LIST_HEAD_INIT(security_hook_heads.bpf_prog_free_security),
 #endif /* CONFIG_BPF_SYSCALL */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };

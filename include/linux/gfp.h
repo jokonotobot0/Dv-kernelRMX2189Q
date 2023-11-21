@@ -41,7 +41,10 @@ struct vm_area_struct;
 #define ___GFP_OTHER_NODE	0x800000u
 #define ___GFP_WRITE		0x1000000u
 #define ___GFP_KSWAPD_RECLAIM	0x2000000u
+<<<<<<< HEAD
 #define ___GFP_CMA		0x4000000u
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* If the above are modified, __GFP_BITS_SHIFT may need updating */
 
 /*
@@ -187,6 +190,7 @@ struct vm_area_struct;
 #define __GFP_NOTRACK_FALSE_POSITIVE (__GFP_NOTRACK)
 #define __GFP_OTHER_NODE ((__force gfp_t)___GFP_OTHER_NODE)
 
+<<<<<<< HEAD
 /*
  * MTK defined modifiers
  *
@@ -199,6 +203,10 @@ struct vm_area_struct;
 
 /* Room for N __GFP_FOO bits */
 #define __GFP_BITS_SHIFT 27
+=======
+/* Room for N __GFP_FOO bits */
+#define __GFP_BITS_SHIFT 26
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define __GFP_BITS_MASK ((__force gfp_t)((1 << __GFP_BITS_SHIFT) - 1))
 
 /*
@@ -265,6 +273,7 @@ struct vm_area_struct;
 #define GFP_USER	(__GFP_RECLAIM | __GFP_IO | __GFP_FS | __GFP_HARDWALL)
 #define GFP_DMA		__GFP_DMA
 #define GFP_DMA32	__GFP_DMA32
+<<<<<<< HEAD
 #ifdef CONFIG_DMAUSER_PAGES
 #define GFP_HIGHUSER	(GFP_USER | GFP_DMA)
 #define GFP_HIGHUSER_MOVABLE	(GFP_HIGHUSER)
@@ -272,6 +281,10 @@ struct vm_area_struct;
 #define GFP_HIGHUSER	(GFP_USER | __GFP_HIGHMEM)
 #define GFP_HIGHUSER_MOVABLE	(GFP_HIGHUSER | __GFP_MOVABLE)
 #endif
+=======
+#define GFP_HIGHUSER	(GFP_USER | __GFP_HIGHMEM)
+#define GFP_HIGHUSER_MOVABLE	(GFP_HIGHUSER | __GFP_MOVABLE)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define GFP_TRANSHUGE_LIGHT	((GFP_HIGHUSER_MOVABLE | __GFP_COMP | \
 			 __GFP_NOMEMALLOC | __GFP_NOWARN) & ~__GFP_RECLAIM)
 #define GFP_TRANSHUGE	(GFP_TRANSHUGE_LIGHT | __GFP_DIRECT_RECLAIM)
@@ -390,6 +403,7 @@ static inline bool gfpflags_allow_blocking(const gfp_t gfp_flags)
 	| 1 << (___GFP_MOVABLE | ___GFP_DMA32 | ___GFP_DMA | ___GFP_HIGHMEM)  \
 )
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_MEMORY_LOWPOWER
 #define OPT_ZONE_MOVABLE_CMA	ZONE_NORMAL
 #else
@@ -402,6 +416,8 @@ static inline bool gfpflags_allow_blocking(const gfp_t gfp_flags)
 #define IS_ZONE_MOVABLE_CMA_ZONE_IDX(z)		(false)
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static inline enum zone_type gfp_zone(gfp_t flags)
 {
 	enum zone_type z;
@@ -410,6 +426,7 @@ static inline enum zone_type gfp_zone(gfp_t flags)
 	z = (GFP_ZONE_TABLE >> (bit * GFP_ZONES_SHIFT)) &
 					 ((1 << GFP_ZONES_SHIFT) - 1);
 	VM_BUG_ON((GFP_ZONE_BAD >> bit) & 1);
+<<<<<<< HEAD
 
 	if (!(flags & __GFP_MOVABLE) && IS_ZONE_MOVABLE_CMA_ZONE_IDX(z))
 		z = OPT_ZONE_DMA;
@@ -417,6 +434,8 @@ static inline enum zone_type gfp_zone(gfp_t flags)
 		if (z == ZONE_MOVABLE && !(flags & __GFP_CMA))
 			z -= 1;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return z;
 }
 
@@ -551,7 +570,11 @@ extern void __free_page_frag(void *addr);
 void page_alloc_init(void);
 void drain_zone_pages(struct zone *zone, struct per_cpu_pages *pcp);
 void drain_all_pages(struct zone *zone);
+<<<<<<< HEAD
 void drain_local_pages(void *zone);
+=======
+void drain_local_pages(struct zone *zone);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 void page_alloc_init_late(void);
 
@@ -590,9 +613,12 @@ extern void free_contig_range(unsigned long pfn, unsigned nr_pages);
 /* CMA stuff */
 extern void init_cma_reserved_pageblock(struct page *page);
 #endif
+<<<<<<< HEAD
 #ifdef CONFIG_ZONE_MOVABLE_CMA
 extern void free_cma_reserved_pageblock(struct page *page);
 #endif
 extern int free_reserved_memory(phys_addr_t start_phys, phys_addr_t end_phys);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #endif /* __LINUX_GFP_H */

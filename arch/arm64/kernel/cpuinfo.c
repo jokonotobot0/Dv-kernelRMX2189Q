@@ -19,7 +19,10 @@
 #include <asm/cpu.h>
 #include <asm/cputype.h>
 #include <asm/cpufeature.h>
+<<<<<<< HEAD
 #include <asm/elf.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #include <linux/bitops.h>
 #include <linux/bug.h>
@@ -52,9 +55,12 @@ static char *icache_policy_str[] = {
 
 unsigned long __icache_flags;
 
+<<<<<<< HEAD
 /* machine descriptor for arm64 device */
 static const char *machine_desc_str;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static const char *const hwcap_str[] = {
 	"fp",
 	"asimd",
@@ -67,6 +73,7 @@ static const char *const hwcap_str[] = {
 	"atomics",
 	"fphp",
 	"asimdhp",
+<<<<<<< HEAD
 	"cpuid",
 	"asimdrdm",
 	"jscvt",
@@ -78,6 +85,8 @@ static const char *const hwcap_str[] = {
 	"sm4",
 	"asimddp",
 	"sha512",
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	NULL
 };
 
@@ -118,17 +127,21 @@ static const char *const compat_hwcap2_str[] = {
 };
 #endif /* CONFIG_COMPAT */
 
+<<<<<<< HEAD
 /* setup machine descriptor */
 void machine_desc_set(const char *str)
 {
 	machine_desc_str = str;
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int c_show(struct seq_file *m, void *v)
 {
 	int i, j;
 	bool compat = personality(current->personality) == PER_LINUX32;
 
+<<<<<<< HEAD
 	/* a hint message to notify that some process reads /proc/cpuinfo */
 	pr_debug("Dump cpuinfo\n");
 
@@ -140,6 +153,8 @@ static int c_show(struct seq_file *m, void *v)
 	seq_printf(m, "Processor\t: AArch64 Processor rev %d (%s)\n",
 			read_cpuid_id() & 15, ELF_PLATFORM);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	for_each_online_cpu(i) {
 		struct cpuinfo_arm64 *cpuinfo = &per_cpu(cpu_data, i);
 		u32 midr = cpuinfo->reg_midr;
@@ -190,9 +205,12 @@ static int c_show(struct seq_file *m, void *v)
 		seq_printf(m, "CPU revision\t: %d\n\n", MIDR_REVISION(midr));
 	}
 
+<<<<<<< HEAD
 	/* backward-compatibility for thrid-party applications */
 	seq_printf(m, "Hardware\t: %s\n", machine_desc_str);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return 0;
 }
 

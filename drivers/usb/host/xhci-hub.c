@@ -27,10 +27,13 @@
 #include "xhci.h"
 #include "xhci-trace.h"
 
+<<<<<<< HEAD
 #if IS_ENABLED(CONFIG_USB_XHCI_MTK_SUSPEND)
 #include "xhci-mtk.h"
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define	PORT_WAKE_BITS	(PORT_WKOC_E | PORT_WKDISC_E | PORT_WKCONN_E)
 #define	PORT_RWC_BITS	(PORT_CSC | PORT_PEC | PORT_WRC | PORT_OCC | \
 			 PORT_RC | PORT_PLC | PORT_PE)
@@ -1419,6 +1422,7 @@ int xhci_bus_suspend(struct usb_hcd *hcd)
 	hcd->state = HC_STATE_SUSPENDED;
 	bus_state->next_statechange = jiffies + msecs_to_jiffies(10);
 	spin_unlock_irqrestore(&xhci->lock, flags);
+<<<<<<< HEAD
 #if IS_ENABLED(CONFIG_USB_XHCI_MTK_SUSPEND)
 	if (hcd->self.root_hub->do_remote_wakeup == 1) {
 		struct xhci_hcd_mtk *mtk = hcd_to_mtk(hcd);
@@ -1428,6 +1432,8 @@ int xhci_bus_suspend(struct usb_hcd *hcd)
 		mtk_xhci_wakelock_unlock(mtk);
 	}
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return 0;
 }
 
@@ -1520,6 +1526,7 @@ int xhci_bus_resume(struct usb_hcd *hcd)
 		} else
 			writel(temp, port_array[port_index]);
 	}
+<<<<<<< HEAD
 #if IS_ENABLED(CONFIG_USB_XHCI_MTK_SUSPEND)
 	if (hcd->self.root_hub->do_remote_wakeup == 1) {
 		struct xhci_hcd_mtk *mtk = hcd_to_mtk(hcd);
@@ -1529,6 +1536,8 @@ int xhci_bus_resume(struct usb_hcd *hcd)
 		mtk_xhci_wakelock_lock(mtk);
 	}
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (need_usb2_u3_exit) {
 		spin_unlock_irqrestore(&xhci->lock, flags);

@@ -7,21 +7,30 @@ struct cpu_topology {
 	int thread_id;
 	int core_id;
 	int cluster_id;
+<<<<<<< HEAD
 	unsigned int partno;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	cpumask_t thread_sibling;
 	cpumask_t core_sibling;
 };
 
 extern struct cpu_topology cpu_topology[NR_CPUS];
+<<<<<<< HEAD
 extern unsigned long arch_get_max_cpu_capacity(int cpu);
 extern unsigned long arch_get_cur_cpu_capacity(int cpu);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #define topology_physical_package_id(cpu)	(cpu_topology[cpu].cluster_id)
 #define topology_core_id(cpu)		(cpu_topology[cpu].core_id)
 #define topology_core_cpumask(cpu)	(&cpu_topology[cpu].core_sibling)
 #define topology_sibling_cpumask(cpu)	(&cpu_topology[cpu].thread_sibling)
+<<<<<<< HEAD
 #define topology_max_cpu_capacity(cpu) (arch_get_max_cpu_capacity(cpu))
 #define topology_cur_cpu_capacity(cpu) (arch_get_cur_cpu_capacity(cpu))
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 void init_cpu_topology(void);
 void store_cpu_topology(unsigned int cpuid);
@@ -36,6 +45,7 @@ int pcibus_to_node(struct pci_bus *bus);
 				 cpumask_of_node(pcibus_to_node(bus)))
 
 #endif /* CONFIG_NUMA */
+<<<<<<< HEAD
 struct sched_domain;
 
 #ifdef CONFIG_CPU_FREQ
@@ -61,6 +71,8 @@ extern int arch_get_cluster_id(unsigned int cpu);
 extern void arch_get_cluster_cpus(struct cpumask *cpus, int cluster_id);
 extern int arch_better_capacity(unsigned int cpu);
 void arch_build_cpu_topology_domain(void);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #include <asm-generic/topology.h>
 

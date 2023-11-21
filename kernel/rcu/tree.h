@@ -672,6 +672,7 @@ static void rcu_dynticks_task_exit(void);
 
 #endif /* #ifndef RCU_TREE_NONCORE */
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_RCU_MONITOR
 #include <linux/sched.h>
 
@@ -727,6 +728,8 @@ extern struct rcu_invoke_log_entry *rcu_invoke_log_add(void);
 
 #endif /* #ifdef CONFIG_MTK_RCU_MONITOR */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #ifdef CONFIG_RCU_TRACE
 /* Read out queue lengths for tracing. */
 static inline void rcu_nocb_q_lengths(struct rcu_data *rdp, long *ql, long *qll)

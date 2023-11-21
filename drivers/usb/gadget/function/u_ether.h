@@ -20,7 +20,11 @@
 #include <linux/usb/cdc.h>
 #include <linux/netdevice.h>
 
+<<<<<<< HEAD
 #define QMULT_DEFAULT 10
+=======
+#define QMULT_DEFAULT 5
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /*
  * dev_addr: initial value
@@ -29,6 +33,7 @@
  */
 #define USB_ETHERNET_MODULE_PARAMETERS() \
 	static unsigned qmult = QMULT_DEFAULT;				\
+<<<<<<< HEAD
 	module_param(qmult, uint, 0644);			\
 	MODULE_PARM_DESC(qmult, "queue length multiplier at high/super speed");\
 									\
@@ -84,6 +89,20 @@ struct eth_dev {
 	u8			host_mac[ETH_ALEN];
 	u8			dev_mac[ETH_ALEN];
 };
+=======
+	module_param(qmult, uint, S_IRUGO|S_IWUSR);			\
+	MODULE_PARM_DESC(qmult, "queue length multiplier at high/super speed");\
+									\
+	static char *dev_addr;						\
+	module_param(dev_addr, charp, S_IRUGO);				\
+	MODULE_PARM_DESC(dev_addr, "Device Ethernet Address");		\
+									\
+	static char *host_addr;						\
+	module_param(host_addr, charp, S_IRUGO);			\
+	MODULE_PARM_DESC(host_addr, "Host Ethernet Address")
+
+struct eth_dev;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /*
  * This represents the USB side of an "ethernet" link, managed by a USB
@@ -107,6 +126,10 @@ struct gether {
 	struct usb_ep			*out_ep;
 
 	bool				is_zlp_ok;
+<<<<<<< HEAD
+=======
+	bool				no_skb_reserve;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	u16				cdc_filter;
 
@@ -116,10 +139,13 @@ struct gether {
 	bool				is_fixed;
 	u32				fixed_out_len;
 	u32				fixed_in_len;
+<<<<<<< HEAD
 	unsigned int		ul_max_pkts_per_xfer;
 	unsigned int		dl_max_pkts_per_xfer;
 	unsigned int		dl_max_transfer_len;
 	bool				multi_pkt_xfer;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	bool				supports_multi_frame;
 	struct sk_buff			*(*wrap)(struct gether *port,
 						struct sk_buff *skb);
@@ -130,7 +156,10 @@ struct gether {
 	/* called on network open/close */
 	void				(*open)(struct gether *);
 	void				(*close)(struct gether *);
+<<<<<<< HEAD
 	struct rndis_packet_msg_type	*header;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 #define	DEFAULT_FILTER	(USB_CDC_PACKET_TYPE_BROADCAST \
@@ -301,7 +330,10 @@ void gether_cleanup(struct eth_dev *dev);
 /* connect/disconnect is handled by individual functions */
 struct net_device *gether_connect(struct gether *);
 void gether_disconnect(struct gether *);
+<<<<<<< HEAD
 void gether_update_dl_max_xfer_size(struct gether *link, uint32_t s);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /* Some controllers can't support CDC Ethernet (ECM) ... */
 static inline bool can_support_ecm(struct usb_gadget *gadget)
@@ -316,6 +348,7 @@ static inline bool can_support_ecm(struct usb_gadget *gadget)
 	return true;
 }
 
+<<<<<<< HEAD
 extern unsigned int rndis_test_last_resp_id;
 extern unsigned int rndis_test_last_msg_id;
 
@@ -335,4 +368,6 @@ extern unsigned long rndis_test_tx_complete;
 
 extern void rx_fill(struct eth_dev *dev, gfp_t gfp_flags);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif /* __U_ETHER_H */

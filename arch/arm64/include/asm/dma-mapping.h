@@ -24,10 +24,13 @@
 #include <xen/xen.h>
 #include <asm/xen/hypervisor.h>
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_BOUNCING_CHECK
 #include "../../../../drivers/misc/mediatek/include/mt-plat/aee.h"
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define DMA_ERROR_CODE	(~(dma_addr_t)0)
 extern struct dma_map_ops dummy_dma_ops;
 
@@ -84,6 +87,7 @@ static inline phys_addr_t dma_to_phys(struct device *dev, dma_addr_t dev_addr)
 
 static inline bool dma_capable(struct device *dev, dma_addr_t addr, size_t size)
 {
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_BOUNCING_CHECK
 	bool ret;
 
@@ -99,11 +103,16 @@ static inline bool dma_capable(struct device *dev, dma_addr_t addr, size_t size)
 				*dev->dma_mask, addr + size - 1);
 	return ret;
 #else
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (!dev->dma_mask)
 		return false;
 
 	return addr + size - 1 <= *dev->dma_mask;
+<<<<<<< HEAD
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static inline void dma_mark_clean(void *addr, size_t size)

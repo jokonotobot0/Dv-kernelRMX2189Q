@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 subdir-ccflags-y += -Werror
 
 ccflags-y += -I$(srctree)/drivers/misc/mediatek/include/
@@ -42,3 +43,9 @@ obj-$(CONFIG_COMMON_CLK_MT6779) += clkdbg-mt6779.o clkchk-mt6779.o
 obj-$(CONFIG_COMMON_CLK_MT8163) += clkdbg_mt8163.o clkchk_mt8163.o
 obj-$(CONFIG_COMMON_CLK_MT8173) += clkdbg_mt8173.o clkchk_mt8173.o
 endif
+=======
+obj-$(CONFIG_COMMON_CLK_MEDIATEK) += clk-mtk.o clk-pll.o clk-gate.o clk-apmixed.o
+obj-$(CONFIG_RESET_CONTROLLER) += reset.o
+obj-$(CONFIG_COMMON_CLK_MT8135) += clk-mt8135.o
+obj-$(CONFIG_COMMON_CLK_MT8173) += clk-mt8173.o
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

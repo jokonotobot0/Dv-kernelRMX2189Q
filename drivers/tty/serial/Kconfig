@@ -1635,6 +1635,7 @@ config SERIAL_STM32
 
 	  If unsure, say N.
 
+<<<<<<< HEAD
 config SERIAL_MTK_EARLY_CONSOLE
 	bool "Support for MTK Early Console"
 	select SERIAL_CORE_CONSOLE
@@ -1645,6 +1646,8 @@ config SERIAL_MTK_EARLY_CONSOLE
 	  It can show 0 sec log
 	  It is easy for debugging bringup issue
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 config SERIAL_STM32_CONSOLE
 	bool "Support for console on STM32"
 	depends on SERIAL_STM32=y

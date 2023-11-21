@@ -244,6 +244,7 @@ static inline int ftrace_function_local_disabled(struct ftrace_ops *ops)
 	return *this_cpu_ptr(ops->disabled);
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_CFI_CLANG
 /* Use a C stub with the correct type for CFI */
 static inline void ftrace_stub(unsigned long a0, unsigned long a1,
@@ -254,6 +255,10 @@ static inline void ftrace_stub(unsigned long a0, unsigned long a1,
 extern void ftrace_stub(unsigned long a0, unsigned long a1,
 			struct ftrace_ops *op, struct pt_regs *regs);
 #endif
+=======
+extern void ftrace_stub(unsigned long a0, unsigned long a1,
+			struct ftrace_ops *op, struct pt_regs *regs);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #else /* !CONFIG_FUNCTION_TRACER */
 /*
@@ -742,8 +747,12 @@ static inline unsigned long get_lock_parent_ip(void)
   static inline void time_hardirqs_off(unsigned long a0, unsigned long a1) { }
 #endif
 
+<<<<<<< HEAD
 #if defined(CONFIG_PREEMPT_TRACER) || \
 	(defined(CONFIG_DEBUG_PREEMPT) && defined(CONFIG_PREEMPTIRQ_EVENTS))
+=======
+#ifdef CONFIG_PREEMPT_TRACER
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
   extern void trace_preempt_on(unsigned long a0, unsigned long a1);
   extern void trace_preempt_off(unsigned long a0, unsigned long a1);
 #else

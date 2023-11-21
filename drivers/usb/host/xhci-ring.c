@@ -239,9 +239,12 @@ static inline int room_on_ring(struct xhci_hcd *xhci, struct xhci_ring *ring,
 	if (ring->num_trbs_free < num_trbs)
 		return 0;
 
+<<<<<<< HEAD
 #if IS_ENABLED(CONFIG_MTK_UAC_POWER_SAVING)
 	if (!(xhci->quirks & XHCI_MTK_HOST))
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (ring->type != TYPE_COMMAND && ring->type != TYPE_EVENT) {
 		num_trbs_in_deq_seg = ring->dequeue - ring->deq_seg->trbs;
 		if (ring->num_trbs_free < num_trbs + num_trbs_in_deq_seg)
@@ -343,14 +346,22 @@ static int xhci_abort_cmd_ring(struct xhci_hcd *xhci, unsigned long flags)
 	 * seconds), then it should assume that the there are
 	 * larger problems with the xHC and assert HCRST.
 	 */
+<<<<<<< HEAD
 	ret = xhci_handshake_check_state(xhci, &xhci->op_regs->cmd_ring,
+=======
+	ret = xhci_handshake(&xhci->op_regs->cmd_ring,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			CMD_RING_RUNNING, 0, 5 * 1000 * 1000);
 	if (ret < 0) {
 		/* we are about to kill xhci, give it one more chance */
 		xhci_write_64(xhci, temp_64 | CMD_RING_ABORT,
 			      &xhci->op_regs->cmd_ring);
 		udelay(1000);
+<<<<<<< HEAD
 		ret = xhci_handshake_check_state(xhci, &xhci->op_regs->cmd_ring,
+=======
+		ret = xhci_handshake(&xhci->op_regs->cmd_ring,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 				     CMD_RING_RUNNING, 0, 3 * 1000 * 1000);
 		if (ret < 0) {
 			xhci_err(xhci, "Stopped the command ring failed, "
@@ -2424,8 +2435,12 @@ static int handle_tx_event(struct xhci_hcd *xhci,
 		break;
 	case COMP_SPLIT_ERR:
 	case COMP_TX_ERR:
+<<<<<<< HEAD
 		xhci_warn_ratelimited(xhci, "Transfer error on endpoint %d\n",
 				ep_index);
+=======
+		xhci_dbg(xhci, "Transfer error on endpoint\n");
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		status = -EPROTO;
 		break;
 	case COMP_BABBLE:
@@ -2450,7 +2465,11 @@ static int handle_tx_event(struct xhci_hcd *xhci,
 		 */
 		xhci_dbg(xhci, "underrun event on endpoint\n");
 		if (!list_empty(&ep_ring->td_list))
+<<<<<<< HEAD
 			xhci_warn_ratelimited(xhci, "Underrun Event for slot %d ep %d "
+=======
+			xhci_dbg(xhci, "Underrun Event for slot %d ep %d "
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 					"still with TDs queued?\n",
 				 TRB_TO_SLOT_ID(le32_to_cpu(event->flags)),
 				 ep_index);
@@ -2458,7 +2477,11 @@ static int handle_tx_event(struct xhci_hcd *xhci,
 	case COMP_OVERRUN:
 		xhci_dbg(xhci, "overrun event on endpoint\n");
 		if (!list_empty(&ep_ring->td_list))
+<<<<<<< HEAD
 			xhci_warn_ratelimited(xhci, "Overrun Event for slot %d ep %d "
+=======
+			xhci_dbg(xhci, "Overrun Event for slot %d ep %d "
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 					"still with TDs queued?\n",
 				 TRB_TO_SLOT_ID(le32_to_cpu(event->flags)),
 				 ep_index);
@@ -3812,6 +3835,7 @@ static int xhci_queue_isoc_tx(struct xhci_hcd *xhci, gfp_t mem_flags,
 
 	giveback_first_trb(xhci, slot_id, ep_index, urb->stream_id,
 			start_cycle, start_trb);
+<<<<<<< HEAD
 
 #if IS_ENABLED(CONFIG_MTK_UAC_POWER_SAVING)
 	if (!list_empty(&ep_ring->td_list) &&
@@ -3823,6 +3847,8 @@ static int xhci_queue_isoc_tx(struct xhci_hcd *xhci, gfp_t mem_flags,
 		xhci_mtk_allow_sleep(left_trbs, urb->dev->speed);
 	}
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return 0;
 cleanup:
 	/* Clean up a partially enqueued isoc transfer. */

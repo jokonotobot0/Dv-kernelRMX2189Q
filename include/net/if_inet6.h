@@ -25,7 +25,10 @@
 #define IF_RA_RCVD	0x20
 #define IF_RS_SENT	0x10
 #define IF_READY	0x80000000
+<<<<<<< HEAD
 #define IF_RS_VZW_SENT 0x01  /*add for VzW feature*/
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /* prefix flags */
 #define IF_PREFIX_ONLINK	0x01
@@ -205,6 +208,10 @@ struct inet6_dev {
 	__s32			rs_interval;	/* in jiffies */
 	__u8			rs_probes;
 
+<<<<<<< HEAD
+=======
+	__u8			addr_gen_mode;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	unsigned long		tstamp; /* ipv6InterfaceTable update timestamp */
 	struct rcu_head		rcu;
 };

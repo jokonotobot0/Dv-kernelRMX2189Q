@@ -72,9 +72,12 @@ config EVENT_TRACING
 	select CONTEXT_SWITCH_TRACER
 	bool
 
+<<<<<<< HEAD
 config GPU_TRACEPOINTS
 	bool
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 config CONTEXT_SWITCH_TRACER
 	bool
 
@@ -160,6 +163,7 @@ config FUNCTION_GRAPH_TRACER
 	  address on the current task structure into a stack of calls.
 
 
+<<<<<<< HEAD
 config PREEMPTIRQ_EVENTS
 	bool "Enable trace events for preempt and irq disable/enable"
 	select TRACE_IRQFLAGS
@@ -171,6 +175,8 @@ config PREEMPTIRQ_EVENTS
 	  enabled. For tracing irq disable/enable events, PROVE_LOCKING must
 	  be disabled.
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 config IRQSOFF_TRACER
 	bool "Interrupts-off Latency Tracer"
 	default n
@@ -717,6 +723,7 @@ endif # FTRACE
 
 endif # TRACING_SUPPORT
 
+<<<<<<< HEAD
 if TRACING
 # MTK enhancements
 config MTK_SCHED_TRACERS
@@ -750,3 +757,5 @@ config MTK_KERNEL_MARKER
 	  If unsure, say N
 
 endif # TRACING
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

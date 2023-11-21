@@ -564,10 +564,14 @@ __mutex_lock_common(struct mutex *lock, long state, unsigned int subclass,
 		 * got a signal? (This code gets eliminated in the
 		 * TASK_UNINTERRUPTIBLE case.)
 		 */
+<<<<<<< HEAD
 		//#ifdef VENDOR_EDIT fangpan@Swdp.shanghai,2015/11/12
 		if (unlikely(signal_pending_state(state, task))
 			|| hung_long_and_fatal_signal_pending(task)) {
 		//#endif
+=======
+		if (unlikely(signal_pending_state(state, task))) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			ret = -EINTR;
 			goto err;
 		}
@@ -582,6 +586,7 @@ __mutex_lock_common(struct mutex *lock, long state, unsigned int subclass,
 
 		/* didn't get the lock, go to sleep: */
 		spin_unlock_mutex(&lock->wait_lock, flags);
+<<<<<<< HEAD
 #if defined(VENDOR_EDIT) && defined(CONFIG_OPPO_HEALTHINFO)
 // Liujie.Xie@TECH.Kernel.Sched, 2019/08/29, add for stuck monitor
         if (state & TASK_UNINTERRUPTIBLE) {
@@ -595,6 +600,9 @@ __mutex_lock_common(struct mutex *lock, long state, unsigned int subclass,
             current->in_mutex = 0;
         }
 #endif
+=======
+		schedule_preempt_disabled();
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		spin_lock_mutex(&lock->wait_lock, flags);
 	}
 	__set_task_state(task, TASK_RUNNING);

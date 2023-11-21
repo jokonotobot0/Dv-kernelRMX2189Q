@@ -326,6 +326,7 @@ fastopen:
 	*foc = valid_foc;
 	return NULL;
 }
+<<<<<<< HEAD
 
 bool tcp_fastopen_cookie_check(struct sock *sk, u16 *mss,
 			       struct tcp_fastopen_cookie *cookie)
@@ -380,3 +381,5 @@ bool tcp_fastopen_defer_connect(struct sock *sk, int *err)
 	return false;
 }
 EXPORT_SYMBOL(tcp_fastopen_defer_connect);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

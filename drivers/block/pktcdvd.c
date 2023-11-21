@@ -1276,7 +1276,11 @@ try_next_bio:
 	 		&& pd->bio_queue_size <= pd->write_congestion_off);
 	spin_unlock(&pd->lock);
 	if (wakeup) {
+<<<<<<< HEAD
 		clear_bdi_congested(pd->disk->queue->backing_dev_info,
+=======
+		clear_bdi_congested(&pd->disk->queue->backing_dev_info,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 					BLK_RW_ASYNC);
 	}
 
@@ -2405,7 +2409,11 @@ static void pkt_make_request_write(struct request_queue *q, struct bio *bio)
 	spin_lock(&pd->lock);
 	if (pd->write_congestion_on > 0
 	    && pd->bio_queue_size >= pd->write_congestion_on) {
+<<<<<<< HEAD
 		set_bdi_congested(q->backing_dev_info, BLK_RW_ASYNC);
+=======
+		set_bdi_congested(&q->backing_dev_info, BLK_RW_ASYNC);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		do {
 			spin_unlock(&pd->lock);
 			congestion_wait(BLK_RW_ASYNC, HZ);

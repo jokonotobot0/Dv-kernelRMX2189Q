@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 config MTD_NAND_IDS
 	tristate "Include chip ids for known NAND devices."
 	depends on MTD
@@ -5,6 +6,8 @@ config MTD_NAND_IDS
 	  Useful for NAND drivers that do not use the NAND subsystem but
 	  still like to take advantage of the known chip information.
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 config MTD_NAND_ECC
 	tristate
 
@@ -116,6 +119,12 @@ config MTD_NAND_OMAP_BCH
 config MTD_NAND_OMAP_BCH_BUILD
 	def_tristate MTD_NAND_OMAP2 && MTD_NAND_OMAP_BCH
 
+<<<<<<< HEAD
+=======
+config MTD_NAND_IDS
+	tristate
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 config MTD_NAND_RICOH
 	tristate "Ricoh xD card reader"
 	default n

@@ -24,6 +24,7 @@
 
 static struct class *leds_class;
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /*
 * Ling.Guo@PSW.MM.Display.LCD.Stability, 2019/01/28,
@@ -32,6 +33,8 @@ static struct class *leds_class;
 extern unsigned long oppo_display_brightness;
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static ssize_t brightness_show(struct device *dev,
 		struct device_attribute *attr, char *buf)
 {
@@ -68,6 +71,7 @@ static ssize_t brightness_store(struct device *dev,
 	ret = size;
 unlock:
 	mutex_unlock(&led_cdev->led_access);
+<<<<<<< HEAD
 
 	#ifdef VENDOR_EDIT
 	/*
@@ -77,6 +81,8 @@ unlock:
 	oppo_display_brightness = state;
 	#endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return ret;
 }
 static DEVICE_ATTR_RW(brightness);
@@ -229,6 +235,7 @@ int led_classdev_register(struct device *parent, struct led_classdev *led_cdev)
 	list_add_tail(&led_cdev->node, &leds_list);
 	up_write(&leds_list_lock);
 
+<<<<<<< HEAD
 	if (!led_cdev->max_brightness){
 #ifdef ODM_WT_EDIT
 //wu.weihong@ODM_WT.MM.Display.Lcd, 2020/4/8, LCD backlight switch 8bit to 11bit
@@ -237,6 +244,15 @@ int led_classdev_register(struct device *parent, struct led_classdev *led_cdev)
 		led_cdev->max_brightness = LED_FULL;
 #endif
 }
+=======
+	if (!led_cdev->max_brightness)
+		led_cdev->max_brightness = LED_FULL;
+
+	led_update_brightness(led_cdev);
+
+	led_init_core(led_cdev);
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #ifdef CONFIG_LEDS_TRIGGERS
 	led_trigger_set_default(led_cdev);
 #endif

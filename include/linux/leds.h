@@ -19,22 +19,29 @@
 #include <linux/spinlock.h>
 #include <linux/timer.h>
 #include <linux/workqueue.h>
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /*Yongpeng.Yi@PSW.MultiMedia.Display.Machine, 2017/12/8,modify for multibits backlight.*/
 #include <soc/oppo/oppo_project.h>
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 struct device;
 /*
  * LED Core
  */
+<<<<<<< HEAD
 #ifndef VENDOR_EDIT
 /*Yongpeng.Yi@PSW.MultiMedia.Display.Machine, 2017/12/8,modify for multibits backlight.*/
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 enum led_brightness {
 	LED_OFF		= 0,
 	LED_HALF	= 127,
 	LED_FULL	= 255,
+<<<<<<< HEAD
 #ifdef ODM_WT_EDIT
 //Hao.liang@ODM_WT.MM.Display.Lcd, 2019/10/30, LCD backlight switch 8bit to 11bit
 	LED_2047     = 2047,
@@ -54,6 +61,10 @@ extern bool oppo_display_elevenbits_support;
 #define LED_HALF (oppo_display_elevenbits_support ? 1023 : (oppo_display_tenbits_support ? 511 : 127))
 #define LED_FULL (oppo_display_elevenbits_support ? 2047 : (oppo_display_tenbits_support ? 1023 : 255))
 #endif /* VENDOR_EDIT */
+=======
+};
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 struct led_classdev {
 	const char		*name;
 	enum led_brightness	 brightness;

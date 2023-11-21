@@ -675,6 +675,7 @@ config MFD_MT6397
 	  accessing the device; additional drivers must be enabled in order
 	  to use the functionality of the device.
 
+<<<<<<< HEAD
 config MT6397_MISC
 	tristate "MediaTek MT6323 MISC FUNCTIONS Support"
 	depends on MFD_MT6397
@@ -684,6 +685,8 @@ config MT6397_MISC
 	  PMIC rtc module. it can be provide some APIs to other modules and store
 	  some misc information to rtc registers.
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 config MFD_MENF21BMC
 	tristate "MEN 14F021P00 Board Management Controller Support"
 	depends on I2C

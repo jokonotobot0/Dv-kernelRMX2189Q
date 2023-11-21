@@ -16,7 +16,10 @@
 
 #include <linux/init.h>
 #include <linux/mm.h>
+<<<<<<< HEAD
 #include <linux/stacktrace.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #define INIT_MEMBLOCK_REGIONS	128
 #define INIT_PHYSMEM_REGIONS	4
@@ -62,6 +65,7 @@ extern int memblock_debug;
 extern bool movable_node_enabled;
 #endif /* CONFIG_MOVABLE_NODE */
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_MEMCFG
 /* Record reserved memblock */
 #define MAX_MEMBLOCK_RECORD 150
@@ -82,6 +86,8 @@ struct memblock_stack_trace {
 };
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #ifdef CONFIG_ARCH_DISCARD_MEMBLOCK
 #define __init_memblock __meminit
 #define __initdata_memblock __meminitdata

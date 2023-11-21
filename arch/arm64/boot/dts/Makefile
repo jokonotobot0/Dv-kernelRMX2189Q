@@ -28,6 +28,7 @@ dtstree		:= $(srctree)/$(src)
 dtb-$(CONFIG_OF_ALL_DTBS) := $(patsubst $(dtstree)/%.dts,%.dtb, $(foreach d,$(dts-dirs), $(wildcard $(dtstree)/$(d)/*.dts)))
 
 always		:= $(dtb-y)
+<<<<<<< HEAD
 
 targets += dtbs
 
@@ -42,3 +43,5 @@ targets += $(DTB_LIST)
 dtbs: $(addprefix $(obj)/, $(DTB_LIST))
 
 clean-files := dts/*.dtb *.dtb
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

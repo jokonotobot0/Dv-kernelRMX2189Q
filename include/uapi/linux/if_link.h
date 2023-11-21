@@ -444,6 +444,7 @@ enum {
 
 #define IFLA_MACSEC_MAX (__IFLA_MACSEC_MAX - 1)
 
+<<<<<<< HEAD
 /* XFRM section */
 enum {
 	IFLA_XFRM_UNSPEC,
@@ -454,6 +455,8 @@ enum {
 
 #define IFLA_XFRM_MAX (__IFLA_XFRM_MAX - 1)
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 enum macsec_validation_type {
 	MACSEC_VALIDATE_DISABLED = 0,
 	MACSEC_VALIDATE_CHECK = 1,

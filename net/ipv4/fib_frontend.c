@@ -320,7 +320,11 @@ static int __fib_validate_source(struct sk_buff *skb, __be32 src, __be32 dst,
 	int ret, no_addr;
 	struct fib_result res;
 	struct flowi4 fl4;
+<<<<<<< HEAD
 	struct net *net = dev_net(dev);
+=======
+	struct net *net;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	bool dev_match;
 
 	fl4.flowi4_oif = 0;
@@ -333,7 +337,10 @@ static int __fib_validate_source(struct sk_buff *skb, __be32 src, __be32 dst,
 	fl4.flowi4_scope = RT_SCOPE_UNIVERSE;
 	fl4.flowi4_tun_key.tun_id = 0;
 	fl4.flowi4_flags = 0;
+<<<<<<< HEAD
 	fl4.flowi4_uid = sock_net_uid(net, NULL);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	no_addr = idev->ifa_list == NULL;
 
@@ -341,12 +348,20 @@ static int __fib_validate_source(struct sk_buff *skb, __be32 src, __be32 dst,
 
 	trace_fib_validate_source(dev, &fl4);
 
+<<<<<<< HEAD
+=======
+	net = dev_net(dev);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (fib_lookup(net, &fl4, &res, 0))
 		goto last_resort;
 	if (res.type != RTN_UNICAST &&
 	    (res.type != RTN_LOCAL || !IN_DEV_ACCEPT_LOCAL(idev)))
 		goto e_inval;
+<<<<<<< HEAD
 	if (!rpf && !fib_num_tclassid_users(net) &&
+=======
+	if (!rpf && !fib_num_tclassid_users(dev_net(dev)) &&
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	    (dev->ifindex != oif || !IN_DEV_TX_REDIRECTS(idev)))
 		goto last_resort;
 	fib_combine_itag(itag, &res);
@@ -622,7 +637,10 @@ const struct nla_policy rtm_ipv4_policy[RTA_MAX + 1] = {
 	[RTA_FLOW]		= { .type = NLA_U32 },
 	[RTA_ENCAP_TYPE]	= { .type = NLA_U16 },
 	[RTA_ENCAP]		= { .type = NLA_NESTED },
+<<<<<<< HEAD
 	[RTA_UID]		= { .type = NLA_U32 },
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 static int rtm_to_fib_config(struct net *net, struct sk_buff *skb,

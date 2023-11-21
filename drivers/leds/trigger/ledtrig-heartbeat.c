@@ -17,7 +17,10 @@
 #include <linux/slab.h>
 #include <linux/timer.h>
 #include <linux/sched.h>
+<<<<<<< HEAD
 #include <linux/sched/loadavg.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <linux/leds.h>
 #include <linux/reboot.h>
 #include "../leds.h"

@@ -16,7 +16,11 @@
  * this program; if not, write to the Free Software Foundation, Inc., 51
  * Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  *
+<<<<<<< HEAD
  * Authors: Artem Bityutskiy (?и???кий ????м)
+=======
+ * Authors: Artem Bityutskiy (Битюцкий Артём)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  *          Adrian Hunter
  */
 

@@ -13,11 +13,14 @@
 #include <linux/kern_levels.h>
 #include <linux/linkage.h>
 #include <asm/assembler.h>
+<<<<<<< HEAD
 .extern _stext, _etext
 __stext:
 	.word _stext
 __etext:
 	.word _etext
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		.text
 
 @ fp is 0 or stack frame
@@ -73,6 +76,7 @@ for_each_frame:	tst	frame, mask		@ Check for address exceptions
 		sub	sv_pc, sv_pc, offset	@ Correct PC for prefetching
 		bic	sv_pc, sv_pc, mask	@ mask PC/LR for the mode
 
+<<<<<<< HEAD
 		ldr	r0, __stext
 		cmp	sv_pc, r0
 		blo	.badpc
@@ -80,6 +84,8 @@ for_each_frame:	tst	frame, mask		@ Check for address exceptions
 		cmp	sv_pc, r0
 		bhs	.badpc
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 1003:		ldr	r2, [sv_pc, #-4]	@ if stmfd sp!, {args} exists,
 		ldr	r3, .Ldsi+4		@ adjust saved 'pc' back one
 		teq	r3, r2, lsr #10		@ instruction
@@ -125,6 +131,7 @@ ENDPROC(c_backtrace)
 		.long	1004b, 1006b
 		.popsection
 
+<<<<<<< HEAD
 .badpc:
 		adr	r0, .Lbadpc
 		mov	r1, sv_pc
@@ -134,6 +141,10 @@ ENDPROC(c_backtrace)
 		.align
 .Lbadpc:	.asciz	"Backtrace aborted due to bad pc <%p>\n"
 		.align
+=======
+.Lbad:		.asciz	"Backtrace aborted due to bad frame pointer <%p>\n"
+		.align
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 .Ldsi:		.word	0xe92dd800 >> 11	@ stmfd sp!, {... fp, ip, lr, pc}
 		.word	0xe92d0000 >> 11	@ stmfd sp!, {}
 

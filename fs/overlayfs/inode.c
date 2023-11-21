@@ -34,7 +34,11 @@ static int ovl_copy_up_truncate(struct dentry *dentry)
 		stat.size = 0;
 		err = ovl_copy_up_one(parent, dentry, &lowerpath, &stat);
 	}
+<<<<<<< HEAD
 	ovl_revert_creds(old_cred);
+=======
+	revert_creds(old_cred);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 out_dput_parent:
 	dput(parent);
@@ -91,7 +95,11 @@ int ovl_setattr(struct dentry *dentry, struct iattr *attr)
 		inode_lock(upperdentry->d_inode);
 		old_cred = ovl_override_creds(dentry->d_sb);
 		err = notify_change(upperdentry, attr, NULL);
+<<<<<<< HEAD
 		ovl_revert_creds(old_cred);
+=======
+		revert_creds(old_cred);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		if (!err)
 			ovl_copyattr(upperdentry->d_inode, dentry->d_inode);
 		inode_unlock(upperdentry->d_inode);
@@ -115,7 +123,11 @@ static int ovl_getattr(struct vfsmount *mnt, struct dentry *dentry,
 	ovl_path_real(dentry, &realpath);
 	old_cred = ovl_override_creds(dentry->d_sb);
 	err = vfs_getattr(&realpath, stat);
+<<<<<<< HEAD
 	ovl_revert_creds(old_cred);
+=======
+	revert_creds(old_cred);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return err;
 }
 
@@ -147,7 +159,11 @@ int ovl_permission(struct inode *inode, int mask)
 		mask |= MAY_READ;
 	}
 	err = inode_permission(realinode, mask);
+<<<<<<< HEAD
 	ovl_revert_creds(old_cred);
+=======
+	revert_creds(old_cred);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	return err;
 }
@@ -164,7 +180,11 @@ static const char *ovl_get_link(struct dentry *dentry,
 
 	old_cred = ovl_override_creds(dentry->d_sb);
 	p = vfs_get_link(ovl_dentry_real(dentry), done);
+<<<<<<< HEAD
 	ovl_revert_creds(old_cred);
+=======
+	revert_creds(old_cred);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return p;
 }
 
@@ -206,7 +226,11 @@ int ovl_xattr_set(struct dentry *dentry, const char *name, const void *value,
 		WARN_ON(flags != XATTR_REPLACE);
 		err = vfs_removexattr(realpath.dentry, name);
 	}
+<<<<<<< HEAD
 	ovl_revert_creds(old_cred);
+=======
+	revert_creds(old_cred);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 out_drop_write:
 	ovl_drop_write(dentry);
@@ -223,7 +247,11 @@ int ovl_xattr_get(struct dentry *dentry, const char *name,
 
 	old_cred = ovl_override_creds(dentry->d_sb);
 	res = vfs_getxattr(realdentry, name, value, size);
+<<<<<<< HEAD
 	ovl_revert_creds(old_cred);
+=======
+	revert_creds(old_cred);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return res;
 }
 
@@ -247,7 +275,11 @@ ssize_t ovl_listxattr(struct dentry *dentry, char *list, size_t size)
 
 	old_cred = ovl_override_creds(dentry->d_sb);
 	res = vfs_listxattr(realdentry, list, size);
+<<<<<<< HEAD
 	ovl_revert_creds(old_cred);
+=======
+	revert_creds(old_cred);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (res <= 0 || size == 0)
 		return res;
 
@@ -282,7 +314,11 @@ struct posix_acl *ovl_get_acl(struct inode *inode, int type)
 
 	old_cred = ovl_override_creds(inode->i_sb);
 	acl = get_acl(realinode, type);
+<<<<<<< HEAD
 	ovl_revert_creds(old_cred);
+=======
+	revert_creds(old_cred);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	return acl;
 }

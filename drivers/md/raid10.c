@@ -833,7 +833,11 @@ static int raid10_congested(struct mddev *mddev, int bits)
 		if (rdev && !test_bit(Faulty, &rdev->flags)) {
 			struct request_queue *q = bdev_get_queue(rdev->bdev);
 
+<<<<<<< HEAD
 			ret |= bdi_congested(q->backing_dev_info, bits);
+=======
+			ret |= bdi_congested(&q->backing_dev_info, bits);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		}
 	}
 	rcu_read_unlock();
@@ -3770,8 +3774,13 @@ static int raid10_run(struct mddev *mddev)
 		 * maybe...
 		 */
 		stripe /= conf->geo.near_copies;
+<<<<<<< HEAD
 		if (mddev->queue->backing_dev_info->ra_pages < 2 * stripe)
 			mddev->queue->backing_dev_info->ra_pages = 2 * stripe;
+=======
+		if (mddev->queue->backing_dev_info.ra_pages < 2 * stripe)
+			mddev->queue->backing_dev_info.ra_pages = 2 * stripe;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 
 	if (md_integrity_register(mddev))
@@ -4578,8 +4587,13 @@ static void end_reshape(struct r10conf *conf)
 		int stripe = conf->geo.raid_disks *
 			((conf->mddev->chunk_sectors << 9) / PAGE_SIZE);
 		stripe /= conf->geo.near_copies;
+<<<<<<< HEAD
 		if (conf->mddev->queue->backing_dev_info->ra_pages < 2 * stripe)
 			conf->mddev->queue->backing_dev_info->ra_pages = 2 * stripe;
+=======
+		if (conf->mddev->queue->backing_dev_info.ra_pages < 2 * stripe)
+			conf->mddev->queue->backing_dev_info.ra_pages = 2 * stripe;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 	conf->fullsync = 0;
 }

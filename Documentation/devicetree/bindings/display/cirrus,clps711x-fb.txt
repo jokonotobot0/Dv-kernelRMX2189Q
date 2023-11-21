@@ -6,7 +6,11 @@ Required properties:
               location and size of the framebuffer memory.
 - clocks    : phandle + clock specifier pair of the FB reference clock.
 - display   : phandle to a display node as described in
+<<<<<<< HEAD
               Documentation/devicetree/bindings/display/panel/display-timing.txt.
+=======
+              Documentation/devicetree/bindings/display/display-timing.txt.
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
               Additionally, the display node has to define properties:
   - bits-per-pixel: Bits per pixel.
   - ac-prescale   : LCD AC bias frequency. This frequency is the required

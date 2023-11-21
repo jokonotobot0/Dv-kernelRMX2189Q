@@ -210,6 +210,7 @@ ext4_xattr_check_block(struct inode *inode, struct buffer_head *bh)
 	int error;
 
 	if (BHDR(bh)->h_magic != cpu_to_le32(EXT4_XATTR_MAGIC) ||
+<<<<<<< HEAD
 	BHDR(bh)->h_blocks != cpu_to_le32(1)) {
 		pr_debug("%s, %d, %u, %u\n",
 			__func__, __LINE__,
@@ -219,6 +220,11 @@ ext4_xattr_check_block(struct inode *inode, struct buffer_head *bh)
 	}
 
         if (buffer_verified(bh))
+=======
+	    BHDR(bh)->h_blocks != cpu_to_le32(1))
+		return -EFSCORRUPTED;
+	if (buffer_verified(bh))
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		return 0;
 
 	if (!ext4_xattr_block_csum_verify(inode, bh))

@@ -16,8 +16,11 @@ static inline struct usb_os_desc *to_usb_os_desc(struct config_item *item)
 {
 	return container_of(to_config_group(item), struct usb_os_desc, group);
 }
+<<<<<<< HEAD
 extern int acm_shortcut(void);
 
 extern struct device *create_function_device(char *name);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #endif /*  USB__GADGET__CONFIGFS__H */

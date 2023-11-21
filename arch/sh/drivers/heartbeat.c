@@ -21,7 +21,10 @@
 #include <linux/init.h>
 #include <linux/platform_device.h>
 #include <linux/sched.h>
+<<<<<<< HEAD
 #include <linux/sched/loadavg.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <linux/timer.h>
 #include <linux/io.h>
 #include <linux/slab.h>

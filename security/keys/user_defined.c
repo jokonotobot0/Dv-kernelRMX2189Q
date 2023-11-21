@@ -107,7 +107,11 @@ int user_update(struct key *key, struct key_preparsed_payload *prep)
 	/* attach the new data, displacing the old */
 	key->expiry = prep->expiry;
 	if (key_is_positive(key))
+<<<<<<< HEAD
 		zap = dereference_key_locked(key);
+=======
+		zap = rcu_dereference_key(key);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	rcu_assign_keypointer(key, prep->payload.data[0]);
 	prep->payload.data[0] = NULL;
 
@@ -169,7 +173,11 @@ long user_read(const struct key *key, char __user *buffer, size_t buflen)
 	const struct user_key_payload *upayload;
 	long ret;
 
+<<<<<<< HEAD
 	upayload = user_key_payload_locked(key);
+=======
+	upayload = user_key_payload(key);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	ret = upayload->datalen;
 
 	/* we can return the data as is */

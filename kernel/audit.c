@@ -402,6 +402,7 @@ static void audit_printk_skb(struct sk_buff *skb)
 	audit_hold_skb(skb);
 }
 
+<<<<<<< HEAD
 
 #if defined(CONFIG_MTK_SELINUX_AEE_WARNING) &&\
 	defined(MTK_SELINUX_WARNING_ENABLE)
@@ -417,6 +418,8 @@ struct sk_buff *audit_get_skb(struct audit_buffer *ab)
 }
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static void kauditd_send_skb(struct sk_buff *skb)
 {
 	int err;

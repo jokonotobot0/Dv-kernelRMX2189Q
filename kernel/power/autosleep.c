@@ -23,6 +23,7 @@ static struct workqueue_struct *autosleep_wq;
 static DEFINE_MUTEX(autosleep_lock);
 static struct wakeup_source *autosleep_ws;
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /* ChaoYing.Chen@BSP.Power.Basic, 2017/12/9, Add for print wakeup source,
 ** Interval(Seconds) of wakeup source printk. */
@@ -51,6 +52,8 @@ void wakelock_printk_control(int on)
 }
 #endif /* VENDOR_EDIT */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static void try_to_suspend(struct work_struct *work)
 {
 	unsigned int initial_count, final_count;
@@ -122,11 +125,14 @@ int pm_autosleep_set_state(suspend_state_t state)
 		return -EINVAL;
 #endif
 
+<<<<<<< HEAD
 	#ifdef VENDOR_EDIT
 	/* ChaoYing.Chen@BSP.Power.Basic, 2017/12/9, Add for print wakeup source */
 	wakelock_printk_control(0);
 	#endif /* VENDOR_EDIT */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	__pm_stay_awake(autosleep_ws);
 
 	mutex_lock(&autosleep_lock);
@@ -143,17 +149,21 @@ int pm_autosleep_set_state(suspend_state_t state)
 	}
 
 	mutex_unlock(&autosleep_lock);
+<<<<<<< HEAD
 
 	#ifdef VENDOR_EDIT
 	/* ChaoYing.Chen@BSP.Power.Basic, 2017/12/9, Add for print wakeup source */
 	wakelock_printk_control(1);
 	#endif /* VENDOR_EDIT */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return 0;
 }
 
 int __init pm_autosleep_init(void)
 {
+<<<<<<< HEAD
 	#ifdef VENDOR_EDIT
 	/* ChaoYing.Chen@BSP.Power.Basic, 2017/12/9, Add for print wakeup source */
 	wakelock_printk_work_queue = create_singlethread_workqueue("wakelock_printk");
@@ -162,6 +172,8 @@ int __init pm_autosleep_init(void)
 	wakelock_printk_control(1);
 	#endif /* VENDOR_EDIT */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	autosleep_ws = wakeup_source_register("autosleep");
 	if (!autosleep_ws)
 		return -ENOMEM;

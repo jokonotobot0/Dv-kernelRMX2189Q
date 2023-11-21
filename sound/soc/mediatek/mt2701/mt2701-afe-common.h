@@ -22,6 +22,7 @@
 #include "mt2701-reg.h"
 #include "../common/mtk-base-afe.h"
 
+<<<<<<< HEAD
 void mt2701_regmap_update_bits(struct regmap *map, unsigned int reg,
 			    unsigned int mask, unsigned int val);
 
@@ -43,6 +44,13 @@ void mt2701_regmap_read(struct regmap *map, unsigned int reg, unsigned int *val)
 #define MT2701_TDM_IN_CLK_THR 12288000U
 #define MT2701_TDM_OUT_CLK_THR 24576000U
 #define MT2701_TDM_MAX_CLK_DIV 256U
+=======
+#define MT2701_STREAM_DIR_NUM (SNDRV_PCM_STREAM_LAST + 1)
+#define MT2701_PLL_DOMAIN_0_RATE	98304000
+#define MT2701_PLL_DOMAIN_1_RATE	90316800
+#define MT2701_AUD_AUD_MUX1_DIV_RATE (MT2701_PLL_DOMAIN_0_RATE / 2)
+#define MT2701_AUD_AUD_MUX2_DIV_RATE (MT2701_PLL_DOMAIN_1_RATE / 2)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 enum {
 	MT2701_I2S_1,
@@ -65,6 +73,7 @@ enum {
 	MT2701_MEMIF_UL3,
 	MT2701_MEMIF_UL4,
 	MT2701_MEMIF_UL5,
+<<<<<<< HEAD
 	MT2701_MEMIF_AWB2,
 	MT2701_MEMIF_DLBT,
 	MT2701_MEMIF_ULBT,
@@ -73,6 +82,10 @@ enum {
 	MT2701_MEMIF_DLTDM1,
 	MT2701_MEMIF_DLTDM2,
 	MT2701_MEMIF_ULTDM,
+=======
+	MT2701_MEMIF_DLBT,
+	MT2701_MEMIF_ULBT,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	MT2701_MEMIF_NUM,
 	MT2701_IO_I2S = MT2701_MEMIF_NUM,
 	MT2701_IO_2ND_I2S,
@@ -80,12 +93,16 @@ enum {
 	MT2701_IO_4TH_I2S,
 	MT2701_IO_5TH_I2S,
 	MT2701_IO_6TH_I2S,
+<<<<<<< HEAD
 	MT2701_IO_AADC,
 	MT2701_IO_MRG,
 	MT2701_IO_MOD,
 	MT2701_IO_TDMO1,
 	MT2701_IO_TDMO2,
 	MT2701_IO_TDMI,
+=======
+	MT2701_IO_MRG,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 enum {
@@ -93,6 +110,7 @@ enum {
 	MT2701_IRQ_ASYS_IRQ1 = MT2701_IRQ_ASYS_START,
 	MT2701_IRQ_ASYS_IRQ2,
 	MT2701_IRQ_ASYS_IRQ3,
+<<<<<<< HEAD
 	MT2701_IRQ_ASYS_IRQ4,
 	MT2701_IRQ_ASYS_IRQ5,
 	MT2701_IRQ_ASYS_IRQ6,
@@ -106,6 +124,11 @@ enum {
 	MT2701_TDM_NUM,
 };
 
+=======
+	MT2701_IRQ_ASYS_END,
+};
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* 2701 clock def */
 enum audio_system_clock_type {
 	MT2701_AUD_INFRA_SYS_AUDIO,
@@ -155,6 +178,7 @@ enum audio_system_clock_type {
 	MT2701_CLOCK_NUM
 };
 
+<<<<<<< HEAD
 /* 2712 clock def */
 enum audio_system_clock_type_2712 {
 	MT2712_AUD_AUD_INTBUS_SEL,
@@ -218,6 +242,8 @@ enum audio_system_clock_type_2712 {
 #define MCLK_I2SIN_OFFSET 5
 #define MCLK_TDM_OFFSET 3
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static const unsigned int mt2701_afe_backup_list[] = {
 	AUDIO_TOP_CON0,
 	AUDIO_TOP_CON4,
@@ -243,10 +269,17 @@ struct snd_pcm_substream;
 struct mtk_base_irq_data;
 
 struct mt2701_i2s_data {
+<<<<<<< HEAD
 	unsigned int i2s_ctrl_reg;
 	unsigned int i2s_pwn_shift;
 	unsigned int i2s_asrc_fs_shift;
 	unsigned int i2s_asrc_fs_mask;
+=======
+	int i2s_ctrl_reg;
+	int i2s_pwn_shift;
+	int i2s_asrc_fs_shift;
+	int i2s_asrc_fs_mask;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 enum mt2701_i2s_dir {
@@ -255,6 +288,7 @@ enum mt2701_i2s_dir {
 	I2S_DIR_NUM,
 };
 
+<<<<<<< HEAD
 enum mt2701_i2s_mode {
 	I2S_COCLK,
 	I2S_SEPCLK,
@@ -342,6 +376,20 @@ struct mt2701_afe_private {
 	struct mt2701_tdm_coclk_info tdm_coclk_info;
 	struct tdm_in_lrck_setting tdm_in_lrck;
 	struct clock_ctrl *clk_ctrl;
+=======
+struct mt2701_i2s_path {
+	int dai_id;
+	int mclk_rate;
+	int on[I2S_DIR_NUM];
+	int occupied[I2S_DIR_NUM];
+	const struct mt2701_i2s_data *i2s_data[2];
+};
+
+struct mt2701_afe_private {
+	struct clk *clocks[MT2701_CLOCK_NUM];
+	struct mt2701_i2s_path i2s_path[MT2701_I2S_NUM];
+	bool mrg_enable[MT2701_STREAM_DIR_NUM];
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 #endif

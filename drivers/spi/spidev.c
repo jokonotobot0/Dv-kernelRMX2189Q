@@ -35,7 +35,10 @@
 #include <linux/spi/spidev.h>
 
 #include <linux/uaccess.h>
+<<<<<<< HEAD
 #include <linux/platform_data/spi-mt65xx.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 
 /*
@@ -740,6 +743,7 @@ static inline void spidev_probe_acpi(struct spi_device *spi) {}
 #endif
 
 /*-------------------------------------------------------------------------*/
+<<<<<<< HEAD
 #define SPIS_DEBUG(fmt, args...) pr_info(fmt, ##args)
 
 void spi_transfer_malloc(struct spi_transfer *trans)
@@ -866,6 +870,8 @@ static void spi_create_attribute(struct device *dev)
 	for (idx = 0; idx < size; idx++)
 		device_create_file(dev, spi_attribute[idx]);
 }
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 static int spidev_probe(struct spi_device *spi)
 {
@@ -878,8 +884,16 @@ static int spidev_probe(struct spi_device *spi)
 	 * compatible string, it is a Linux implementation thing
 	 * rather than a description of the hardware.
 	 */
+<<<<<<< HEAD
 	if (spi->dev.of_node && !of_match_device(spidev_dt_ids, &spi->dev))
 		dev_err(&spi->dev, "buggy DT: spidev listed directly in DT\n");
+=======
+	if (spi->dev.of_node && !of_match_device(spidev_dt_ids, &spi->dev)) {
+		dev_err(&spi->dev, "buggy DT: spidev listed directly in DT\n");
+		WARN_ON(spi->dev.of_node &&
+			!of_match_device(spidev_dt_ids, &spi->dev));
+	}
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	spidev_probe_acpi(spi);
 
@@ -925,8 +939,11 @@ static int spidev_probe(struct spi_device *spi)
 	else
 		kfree(spidev);
 
+<<<<<<< HEAD
 	spi_create_attribute(&spi->dev);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return status;
 }
 

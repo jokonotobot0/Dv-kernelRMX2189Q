@@ -18,11 +18,16 @@
 #include "mtk_drm_ddp_comp.h"
 #include "mtk_drm_plane.h"
 
+<<<<<<< HEAD
 #define OVL_LAYER_NR	4UL
+=======
+#define OVL_LAYER_NR	4
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define MTK_LUT_SIZE	512
 #define MTK_MAX_BPC	10
 #define MTK_MIN_BPC	3
 
+<<<<<<< HEAD
 /**
  * struct mtk_drm_crtc - MediaTek specific crtc structure.
  * @base: crtc object.
@@ -51,6 +56,8 @@ struct mtk_drm_crtc {
 	struct mtk_ddp_comp		**ddp_comp;
 };
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 int mtk_drm_crtc_enable_vblank(struct drm_device *drm, unsigned int pipe);
 void mtk_drm_crtc_disable_vblank(struct drm_device *drm, unsigned int pipe);
 void mtk_drm_crtc_commit(struct drm_crtc *crtc);

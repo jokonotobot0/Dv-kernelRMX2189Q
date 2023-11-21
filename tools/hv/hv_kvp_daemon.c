@@ -1379,6 +1379,11 @@ int main(int argc, char *argv[])
 			daemonize = 0;
 			break;
 		case 'h':
+<<<<<<< HEAD
+=======
+			print_usage(argv);
+			exit(0);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		default:
 			print_usage(argv);
 			exit(EXIT_FAILURE);

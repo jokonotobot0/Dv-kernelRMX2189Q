@@ -244,7 +244,11 @@ _set_debug(struct inf_hw *card)
 }
 
 static int
+<<<<<<< HEAD
 set_debug(const char *val, const struct kernel_param *kp)
+=======
+set_debug(const char *val, struct kernel_param *kp)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	int ret;
 	struct inf_hw *card;

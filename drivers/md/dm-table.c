@@ -11,7 +11,10 @@
 #include <linux/vmalloc.h>
 #include <linux/blkdev.h>
 #include <linux/namei.h>
+<<<<<<< HEAD
 #include <linux/mount.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <linux/ctype.h>
 #include <linux/string.h>
 #include <linux/slab.h>
@@ -384,6 +387,7 @@ dev_t dm_get_dev_t(const char *path)
 		bdput(bdev);
 	}
 
+<<<<<<< HEAD
 	if (!dev) {
 		unsigned int wait_time_ms = 0;
 
@@ -407,6 +411,8 @@ dev_t dm_get_dev_t(const char *path)
 		}
 	}
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return dev;
 }
 EXPORT_SYMBOL_GPL(dm_get_dev_t);
@@ -534,14 +540,23 @@ static int adjoin(struct dm_table *table, struct dm_target *ti)
  * On the other hand, dm-switch needs to process bulk data using messages and
  * excessive use of GFP_NOIO could cause trouble.
  */
+<<<<<<< HEAD
 static char **realloc_argv(unsigned *size, char **old_argv)
+=======
+static char **realloc_argv(unsigned *array_size, char **old_argv)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	char **argv;
 	unsigned new_size;
 	gfp_t gfp;
 
+<<<<<<< HEAD
 	if (*size) {
 		new_size = *size * 2;
+=======
+	if (*array_size) {
+		new_size = *array_size * 2;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		gfp = GFP_KERNEL;
 	} else {
 		new_size = 8;
@@ -549,8 +564,13 @@ static char **realloc_argv(unsigned *size, char **old_argv)
 	}
 	argv = kmalloc(new_size * sizeof(*argv), gfp);
 	if (argv) {
+<<<<<<< HEAD
 		memcpy(argv, old_argv, *size * sizeof(*argv));
 		*size = new_size;
+=======
+		memcpy(argv, old_argv, *array_size * sizeof(*argv));
+		*array_size = new_size;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 
 	kfree(old_argv);
@@ -1287,7 +1307,11 @@ void dm_table_event(struct dm_table *t)
 }
 EXPORT_SYMBOL(dm_table_event);
 
+<<<<<<< HEAD
 sector_t dm_table_get_size(struct dm_table *t)
+=======
+inline sector_t dm_table_get_size(struct dm_table *t)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	return t->num_targets ? (t->highs[t->num_targets - 1] + 1) : 0;
 }
@@ -1312,6 +1336,12 @@ struct dm_target *dm_table_find_target(struct dm_table *t, sector_t sector)
 	unsigned int l, n = 0, k = 0;
 	sector_t *node;
 
+<<<<<<< HEAD
+=======
+	if (unlikely(sector >= dm_table_get_size(t)))
+		return &t->targets[t->num_targets];
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	for (l = 0; l < t->depth; l++) {
 		n = get_child(n, k);
 		node = get_node(t, l, n);
@@ -1779,7 +1809,11 @@ int dm_table_any_congested(struct dm_table *t, int bdi_bits)
 		char b[BDEVNAME_SIZE];
 
 		if (likely(q))
+<<<<<<< HEAD
 			r |= bdi_congested(q->backing_dev_info, bdi_bits);
+=======
+			r |= bdi_congested(&q->backing_dev_info, bdi_bits);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		else
 			DMWARN_LIMIT("%s: any_congested: nonexistent device %s",
 				     dm_device_name(t->md),

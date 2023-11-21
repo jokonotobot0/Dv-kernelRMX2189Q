@@ -19,10 +19,13 @@
 
 #include "internals.h"
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_SCHED_MONITOR
 #include "mtk_sched_mon.h"
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * lockdep: we want to handle all irq_desc locks as a single lock-class:
  */
@@ -271,6 +274,21 @@ static void irq_sysfs_add(int irq, struct irq_desc *desc)
 	}
 }
 
+<<<<<<< HEAD
+=======
+static void irq_sysfs_del(struct irq_desc *desc)
+{
+	/*
+	 * If irq_sysfs_init() has not yet been invoked (early boot), then
+	 * irq_kobj_base is NULL and the descriptor was never added.
+	 * kobject_del() complains about a object with no parent, so make
+	 * it conditional.
+	 */
+	if (irq_kobj_base)
+		kobject_del(&desc->kobj);
+}
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int __init irq_sysfs_init(void)
 {
 	struct irq_desc *desc;
@@ -301,6 +319,10 @@ static struct kobj_type irq_kobj_type = {
 };
 
 static void irq_sysfs_add(int irq, struct irq_desc *desc) {}
+<<<<<<< HEAD
+=======
+static void irq_sysfs_del(struct irq_desc *desc) {}
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #endif /* CONFIG_SYSFS */
 
@@ -410,7 +432,11 @@ static void free_desc(unsigned int irq)
 	 * The sysfs entry must be serialized against a concurrent
 	 * irq_sysfs_init() as well.
 	 */
+<<<<<<< HEAD
 	kobject_del(&desc->kobj);
+=======
+	irq_sysfs_del(desc);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	delete_irq_desc(irq);
 
 	/*
@@ -613,9 +639,12 @@ int __handle_domain_irq(struct irq_domain *domain, unsigned int hwirq,
 	struct pt_regs *old_regs = set_irq_regs(regs);
 	unsigned int irq = hwirq;
 	int ret = 0;
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_SCHED_TRACERS
 	//struct irq_desc *desc;
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	irq_enter();
 
@@ -624,10 +653,13 @@ int __handle_domain_irq(struct irq_domain *domain, unsigned int hwirq,
 		irq = irq_find_mapping(domain, hwirq);
 #endif
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_SCHED_MONITOR
 	mt_trace_ISR_start(irq);
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/*
 	 * Some hardware gives randomly wrong interrupts.  Rather
 	 * than crashing, do something sensible.
@@ -639,9 +671,12 @@ int __handle_domain_irq(struct irq_domain *domain, unsigned int hwirq,
 		generic_handle_irq(irq);
 	}
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_SCHED_MONITOR
 	mt_trace_ISR_end(irq);
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	irq_exit();
 	set_irq_regs(old_regs);
 	return ret;

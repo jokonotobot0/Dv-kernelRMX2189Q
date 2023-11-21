@@ -12,6 +12,7 @@
 #define PERF_TP_SAMPLE_TYPE (PERF_SAMPLE_RAW | PERF_SAMPLE_TIME | \
 			     PERF_SAMPLE_CPU | PERF_SAMPLE_PERIOD)
 
+<<<<<<< HEAD
 #if defined(__s390x__)
 /* Return true if kvm module is available and loaded. Test this
  * and retun success when trace point kvm_s390_create_vm
@@ -38,6 +39,8 @@ static bool kvm_s390_create_vm_valid(void)
 }
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int test__checkevent_tracepoint(struct perf_evlist *evlist)
 {
 	struct perf_evsel *evsel = perf_evlist__first(evlist);
@@ -1619,7 +1622,10 @@ static struct evlist_test test__events[] = {
 	{
 		.name  = "kvm-s390:kvm_s390_create_vm",
 		.check = test__checkevent_tracepoint,
+<<<<<<< HEAD
 		.valid = kvm_s390_create_vm_valid,
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		.id    = 100,
 	},
 #endif

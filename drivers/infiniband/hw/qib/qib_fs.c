@@ -512,7 +512,11 @@ static int qibfs_fill_super(struct super_block *sb, void *data, int silent)
 	unsigned long flags;
 	int ret;
 
+<<<<<<< HEAD
 	static const struct tree_descr files[] = {
+=======
+	static struct tree_descr files[] = {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		[2] = {"driver_stats", &driver_ops[0], S_IRUGO},
 		[3] = {"driver_stats_names", &driver_ops[1], S_IRUGO},
 		{""},

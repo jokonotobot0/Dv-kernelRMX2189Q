@@ -280,6 +280,7 @@ config EZNPS_GIC
 config STM32_EXTI
 	bool
 	select IRQ_DOMAIN
+<<<<<<< HEAD
 
 config MTK_GIC_TARGET_ALL
 	bool
@@ -312,3 +313,5 @@ config MTK_INDIRECT_ACCESS
 	  race condition.
 
 	  If you want to execute gic600 in Mediatek platform, say Y.
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

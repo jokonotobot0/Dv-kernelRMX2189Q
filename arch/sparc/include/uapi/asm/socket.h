@@ -86,8 +86,11 @@
 
 #define SO_CNX_ADVICE		0x0037
 
+<<<<<<< HEAD
 #define SO_COOKIE		0x003b
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* Security levels - as per NRL IPv6 - don't actually do anything */
 #define SO_SECURITY_AUTHENTICATION		0x5001
 #define SO_SECURITY_ENCRYPTION_TRANSPORT	0x5002

@@ -1,6 +1,10 @@
 VERSION = 4
 PATCHLEVEL = 9
+<<<<<<< HEAD
 SUBLEVEL = 190
+=======
+SUBLEVEL = 191
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 EXTRAVERSION =
 NAME = Roaring Lionus
 
@@ -343,7 +347,10 @@ include scripts/Kbuild.include
 # Make variables (CC, etc...)
 AS		= $(CROSS_COMPILE)as
 LD		= $(CROSS_COMPILE)ld
+<<<<<<< HEAD
 LDGOLD		= $(CROSS_COMPILE)ld.gold
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 CC		= $(CROSS_COMPILE)gcc
 CPP		= $(CC) -E
 AR		= $(CROSS_COMPILE)ar
@@ -403,6 +410,7 @@ KBUILD_LDFLAGS_MODULE := -T $(srctree)/scripts/module-common.lds
 GCC_PLUGINS_CFLAGS :=
 CLANG_FLAGS :=
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 #Jianchao.Shi@PSW.BSP.CHG.Basic, 2019/05/09, sjc Add for 806 high/low temp aging test
 ifeq ($(OPPO_HIGH_TEMP_VERSION),true)
@@ -452,6 +460,8 @@ KBUILD_CFLAGS += -DOPPO_DISALLOW_KEY_INTERFACES
 endif
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 # Read KERNELRELEASE from include/config/kernel.release (if it exists)
 KERNELRELEASE = $(shell cat include/config/kernel.release 2> /dev/null)
 KERNELVERSION = $(VERSION)$(if $(PATCHLEVEL),.$(PATCHLEVEL)$(if $(SUBLEVEL),.$(SUBLEVEL)))$(EXTRAVERSION)
@@ -557,11 +567,15 @@ endif
 
 ifeq ($(cc-name),clang)
 ifneq ($(CROSS_COMPILE),)
+<<<<<<< HEAD
 CLANG_TRIPLE	?= $(CROSS_COMPILE)
 CLANG_FLAGS	+= --target=$(notdir $(CLANG_TRIPLE:%-=%))
 ifeq ($(shell $(srctree)/scripts/clang-android.sh $(CC) $(CLANG_FLAGS)), y)
 $(error "Clang with Android --target detected. Did you specify CLANG_TRIPLE?")
 endif
+=======
+CLANG_FLAGS	+= --target=$(notdir $(CROSS_COMPILE:%-=%))
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 GCC_TOOLCHAIN_DIR := $(dir $(shell which $(CROSS_COMPILE)elfedit))
 CLANG_FLAGS	+= --prefix=$(GCC_TOOLCHAIN_DIR)
 GCC_TOOLCHAIN	:= $(realpath $(GCC_TOOLCHAIN_DIR)/..)
@@ -691,6 +705,7 @@ CFLAGS_GCOV	:= -fprofile-arcs -ftest-coverage -fno-tree-loop-im $(call cc-disabl
 CFLAGS_KCOV	:= $(call cc-option,-fsanitize-coverage=trace-pc,)
 export CFLAGS_GCOV CFLAGS_KCOV
 
+<<<<<<< HEAD
 # Make toolchain changes before including arch/$(SRCARCH)/Makefile to ensure
 # ar/cc/ld-* macros return correct values.
 ifdef CONFIG_LTO_CLANG
@@ -705,6 +720,8 @@ LLVM_DIS	:= llvm-dis
 export LLVM_AR LLVM_DIS
 endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 # The arch Makefile can set ARCH_{CPP,A,C}FLAGS to override the default
 # values of the respective KBUILD_* variables
 ARCH_CPPFLAGS :=
@@ -725,6 +742,7 @@ KBUILD_CFLAGS	+= $(call cc-option,-ffunction-sections,)
 KBUILD_CFLAGS	+= $(call cc-option,-fdata-sections,)
 endif
 
+<<<<<<< HEAD
 ifdef CONFIG_LTO_CLANG
 lto-clang-flags	:= -flto -fvisibility=hidden
 
@@ -772,6 +790,8 @@ DISABLE_LTO	+= $(DISABLE_CFI)
 export DISABLE_CFI
 endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
 KBUILD_CFLAGS	+= -Os $(call cc-disable-warning,maybe-uninitialized,)
 else
@@ -832,6 +852,7 @@ ifdef CONFIG_CC_STACKPROTECTOR
 endif
 KBUILD_CFLAGS += $(stackp-flag)
 
+<<<<<<< HEAD
 #Junbo.Guo@ODM_WT.BSP.Kernel.Boot, 2019/10/22, Add for ODM_WT_EDIT
 $(warning *****CONFIG_ODM_WT_EDIT is defined****)
 KBUILD_CFLAGS +=   -DODM_WT_EDIT
@@ -840,11 +861,16 @@ CFLAGS_KERNEL +=   -DODM_WT_EDIT
 CFLAGS_MODULE +=   -DODM_WT_EDIT
 export ODM_WT_EDIT=yes
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 ifeq ($(cc-name),clang)
 KBUILD_CPPFLAGS += $(call cc-option,-Qunused-arguments,)
 KBUILD_CFLAGS += $(call cc-disable-warning, format-invalid-specifier)
 KBUILD_CFLAGS += $(call cc-disable-warning, gnu)
+<<<<<<< HEAD
 KBUILD_CFLAGS += $(call cc-disable-warning, duplicate-decl-specifier)
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 # Quiet clang warning: comparison of unsigned expression < 0 is always false
 KBUILD_CFLAGS += $(call cc-disable-warning, tautological-compare)
 # CLANG uses a _MergedGlobals as optimization, but this breaks modpost, as the
@@ -1219,6 +1245,7 @@ prepare-objtool: $(objtool_target)
 # CC_STACKPROTECTOR_STRONG! Why did it build with _REGULAR?!")
 PHONY += prepare-compiler-check
 prepare-compiler-check: FORCE
+<<<<<<< HEAD
 # Make sure we're using a supported toolchain with LTO_CLANG
 ifdef CONFIG_LTO_CLANG
   ifneq ($(call clang-ifversion, -ge, 0500, y), y)
@@ -1235,6 +1262,8 @@ ifdef lto-flags
 		>&2 && exit 1
   endif
 endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 # Make sure compiler supports requested stack protector flag.
 ifdef stackp-name
   ifeq ($(call cc-option, $(stackp-flag)),)
@@ -1249,11 +1278,14 @@ ifdef stackp-check
                   $(stackp-flag) available but compiler is broken >&2 && exit 1
   endif
 endif
+<<<<<<< HEAD
 ifdef cfi-flags
   ifeq ($(call cc-option, $(cfi-flags)),)
 	@echo Cannot use CONFIG_CFI: $(cfi-flags) not supported by compiler >&2 && exit 1
   endif
 endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	@:
 
 # Generate some files
@@ -1726,8 +1758,12 @@ clean: $(clean-dirs)
 		-o -name modules.builtin -o -name '.tmp_*.o.*' \
 		-o -name '*.c.[012]*.*' \
 		-o -name '*.ll' \
+<<<<<<< HEAD
 		-o -name '*.gcno' \
 		-o -name '*.*.symversions' \) -type f -print | xargs rm -f
+=======
+		-o -name '*.gcno' \) -type f -print | xargs rm -f
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 # Generate tags for editors
 # ---------------------------------------------------------------------------

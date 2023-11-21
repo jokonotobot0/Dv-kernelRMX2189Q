@@ -184,6 +184,7 @@ static const struct iio_info mt6577_auxadc_info = {
 	.read_raw = &mt6577_auxadc_read_raw,
 };
 
+<<<<<<< HEAD
 #ifdef CONFIG_PM_SLEEP
 static int mt6577_auxadc_resume(struct device *dev)
 {
@@ -217,6 +218,8 @@ static int mt6577_auxadc_suspend(struct device *dev)
 }
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int mt6577_auxadc_probe(struct platform_device *pdev)
 {
 	struct mt6577_auxadc_device *adc_dev;
@@ -302,6 +305,7 @@ static int mt6577_auxadc_remove(struct platform_device *pdev)
 	return 0;
 }
 
+<<<<<<< HEAD
 static SIMPLE_DEV_PM_OPS(mt6577_auxadc_pm_ops,
 			 mt6577_auxadc_suspend,
 			 mt6577_auxadc_resume);
@@ -310,6 +314,11 @@ static const struct of_device_id mt6577_auxadc_of_match[] = {
 	{ .compatible = "mediatek,mt2701-auxadc", },
 	{ .compatible = "mediatek,mt8173-auxadc", },
 	{ .compatible = "mediatek,mt6735-auxadc", },
+=======
+static const struct of_device_id mt6577_auxadc_of_match[] = {
+	{ .compatible = "mediatek,mt2701-auxadc", },
+	{ .compatible = "mediatek,mt8173-auxadc", },
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	{ }
 };
 MODULE_DEVICE_TABLE(of, mt6577_auxadc_of_match);
@@ -318,7 +327,10 @@ static struct platform_driver mt6577_auxadc_driver = {
 	.driver = {
 		.name   = "mt6577-auxadc",
 		.of_match_table = mt6577_auxadc_of_match,
+<<<<<<< HEAD
 		.pm = &mt6577_auxadc_pm_ops,
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	},
 	.probe	= mt6577_auxadc_probe,
 	.remove	= mt6577_auxadc_remove,

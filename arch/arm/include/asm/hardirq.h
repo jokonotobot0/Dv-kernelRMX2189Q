@@ -5,12 +5,17 @@
 #include <linux/threads.h>
 #include <asm/irq.h>
 
+<<<<<<< HEAD
 #ifdef CONFIG_TRUSTY
 #define NR_IPI	17
 #else
 /* number of IPIS _not_ including IPI_CPU_BACKTRACE */
 #define NR_IPI	7
 #endif
+=======
+/* number of IPIS _not_ including IPI_CPU_BACKTRACE */
+#define NR_IPI	7
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 typedef struct {
 	unsigned int __softirq_pending;

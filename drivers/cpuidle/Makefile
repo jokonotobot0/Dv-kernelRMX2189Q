@@ -8,8 +8,11 @@ obj-$(CONFIG_DT_IDLE_STATES)		  += dt_idle_states.o
 
 ##################################################################################
 # ARM SoC drivers
+<<<<<<< HEAD
 obj-$(CONFIG_ARM_MTK_CPUIDLE)		+= cpuidle-mtk_acao.o
 obj-$(CONFIG_ARM_MTK_81XX_CPUIDLE)	+= cpuidle-mt81xx_v2.o
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 obj-$(CONFIG_ARM_MVEBU_V7_CPUIDLE) += cpuidle-mvebu-v7.o
 obj-$(CONFIG_ARM_BIG_LITTLE_CPUIDLE)	+= cpuidle-big_little.o
 obj-$(CONFIG_ARM_CLPS711X_CPUIDLE)	+= cpuidle-clps711x.o

@@ -224,7 +224,10 @@ int usb_phy_gen_create_phy(struct device *dev, struct usb_phy_generic *nop,
 			clk_rate = 0;
 
 		needs_vcc = of_property_read_bool(node, "vcc-supply");
+<<<<<<< HEAD
 #ifndef CONFIG_FPGA_EARLY_PORTING
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		nop->gpiod_reset = devm_gpiod_get_optional(dev, "reset",
 							   GPIOD_ASIS);
 		err = PTR_ERR_OR_ZERO(nop->gpiod_reset);
@@ -234,9 +237,12 @@ int usb_phy_gen_create_phy(struct device *dev, struct usb_phy_generic *nop,
 							 GPIOD_ASIS);
 			err = PTR_ERR_OR_ZERO(nop->gpiod_vbus);
 		}
+<<<<<<< HEAD
 #else
 		dev_info(dev, "Skip PTR_ERR_OR_ZERO check\n");
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	} else if (pdata) {
 		type = pdata->type;
 		clk_rate = pdata->clk_rate;

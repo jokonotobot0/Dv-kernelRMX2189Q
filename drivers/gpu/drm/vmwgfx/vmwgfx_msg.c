@@ -300,8 +300,15 @@ static int vmw_recv_msg(struct rpc_channel *channel, void **msg,
 		break;
 	}
 
+<<<<<<< HEAD
 	if (retries == RETRIES)
 		return -EINVAL;
+=======
+	if (retries == RETRIES) {
+		kfree(reply);
+		return -EINVAL;
+	}
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	*msg_len = reply_len;
 	*msg     = reply;

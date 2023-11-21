@@ -88,11 +88,17 @@ extern struct file *get_empty_filp(void);
  * super.c
  */
 extern int do_remount_sb(struct super_block *, int, void *, int);
+<<<<<<< HEAD
 extern int do_remount_sb2(struct vfsmount *, struct super_block *, int,
 								void *, int);
 extern bool trylock_super(struct super_block *sb);
 extern struct dentry *mount_fs(struct file_system_type *,
 			       int, const char *, struct vfsmount *, void *);
+=======
+extern bool trylock_super(struct super_block *sb);
+extern struct dentry *mount_fs(struct file_system_type *,
+			       int, const char *, void *);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 extern struct super_block *user_get_super(dev_t);
 
 /*

@@ -294,11 +294,14 @@ static void gic_eoimode1_eoi_irq(struct irq_data *d)
 	gic_write_dir(gic_irq(d));
 }
 
+<<<<<<< HEAD
 /* should be define in mtk-gic-v3-extend.c */
 __weak void _mt_irq_set_polarity(unsigned int irq, unsigned int polarity)
 {
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int gic_set_type(struct irq_data *d, unsigned int type)
 {
 	unsigned int irq = gic_irq(d);
@@ -309,6 +312,7 @@ static int gic_set_type(struct irq_data *d, unsigned int type)
 	if (irq < 16)
 		return -EINVAL;
 
+<<<<<<< HEAD
 #ifndef CONFIG_MTK_SYSIRQ
 	/* setup polarity registers */
 	if (type & (IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING))
@@ -319,11 +323,16 @@ static int gic_set_type(struct irq_data *d, unsigned int type)
 			(type & IRQF_TRIGGER_LOW) ? 0 : 1);
 
 #else
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* SPIs have restrictions on the supported types */
 	if (irq >= 32 && type != IRQ_TYPE_LEVEL_HIGH &&
 			 type != IRQ_TYPE_EDGE_RISING)
 		return -EINVAL;
+<<<<<<< HEAD
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (gic_irq_in_rdist(d)) {
 		base = gic_data_rdist_sgi_base();
@@ -406,9 +415,13 @@ static asmlinkage void __exception_irq_entry gic_handle_irq(struct pt_regs *regs
 static void __init gic_dist_init(void)
 {
 	unsigned int i;
+<<<<<<< HEAD
 #ifndef CONFIG_MTK_GIC_TARGET_ALL
 	u64 affinity;
 #endif
+=======
+	u64 affinity;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	void __iomem *base = gic_data.dist_base;
 
 	/* Disable the distributor */
@@ -430,7 +443,10 @@ static void __init gic_dist_init(void)
 	writel_relaxed(GICD_CTLR_ARE_NS | GICD_CTLR_ENABLE_G1A | GICD_CTLR_ENABLE_G1,
 		       base + GICD_CTLR);
 
+<<<<<<< HEAD
 #ifndef CONFIG_MTK_GIC_TARGET_ALL
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/*
 	 * Set all global interrupts to the boot CPU only. ARE must be
 	 * enabled.
@@ -438,6 +454,7 @@ static void __init gic_dist_init(void)
 	affinity = gic_mpidr_to_affinity(cpu_logical_map(smp_processor_id()));
 	for (i = 32; i < gic_data.irq_nr; i++)
 		gic_write_irouter(affinity, base + GICD_IROUTER + i * 8);
+<<<<<<< HEAD
 #else
 	/* default set target all for all SPI */
 	for (i = 32; i < gic_data.irq_nr; i++)
@@ -445,6 +462,8 @@ static void __init gic_dist_init(void)
 				base + GICD_IROUTER + i * 8);
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static int gic_populate_rdist(void)
@@ -540,6 +559,7 @@ static void gic_cpu_sys_reg_init(void)
 	gic_write_grpen1(1);
 }
 
+<<<<<<< HEAD
 void mt_gic_cpu_init_for_low_power(void)
 {
 	gic_cpu_sys_reg_init();
@@ -555,6 +575,8 @@ int mt_get_supported_irq_num(void)
 #endif
 __weak int __init mt_gic_ext_init(void) { return 0; }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int gic_dist_supports_lpis(void)
 {
 	return !!(readl_relaxed(gic_data.dist_base + GICD_TYPER) & GICD_TYPER_LPIS);
@@ -692,8 +714,11 @@ static int gic_set_affinity(struct irq_data *d, const struct cpumask *mask_val,
 	if (gic_irq_in_rdist(d))
 		return -EINVAL;
 
+<<<<<<< HEAD
 #ifndef CONFIG_MTK_GIC_TARGET_ALL
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* If interrupt was enabled, disable it first */
 	enabled = gic_peek_irq(d, GICD_ISENABLER);
 	if (enabled)
@@ -714,6 +739,7 @@ static int gic_set_affinity(struct irq_data *d, const struct cpumask *mask_val,
 		gic_dist_wait_for_rwp();
 
 	return IRQ_SET_MASK_OK_DONE;
+<<<<<<< HEAD
 #else
 	/*
 	 * no need to update when:
@@ -761,6 +787,8 @@ static int gic_set_affinity(struct irq_data *d, const struct cpumask *mask_val,
 
 	return IRQ_SET_MASK_OK;
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 #else
 #define gic_set_affinity	NULL
@@ -944,7 +972,11 @@ static int gic_irq_domain_select(struct irq_domain *d,
 				 enum irq_domain_bus_token bus_token)
 {
 	/* Not for us */
+<<<<<<< HEAD
 	if (fwspec->fwnode != d->fwnode)
+=======
+        if (fwspec->fwnode != d->fwnode)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		return 0;
 
 	/* If this is not DT, then we have a single domain */
@@ -1264,10 +1296,13 @@ static int __init gic_of_init(struct device_node *node, struct device_node *pare
 
 	gic_populate_ppi_partitions(node);
 	gic_of_setup_kvm_info(node);
+<<<<<<< HEAD
 
 	mt_gic_ext_init();
 	mt_gic_irqs = gic_data.irq_nr;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return 0;
 
 out_unmap_rdist:

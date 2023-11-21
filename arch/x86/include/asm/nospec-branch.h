@@ -196,7 +196,11 @@
 	"    	lfence;\n"					\
 	"       jmp    902b;\n"					\
 	"       .align 16\n"					\
+<<<<<<< HEAD
 	"903:	addl   $4, %%esp;\n"				\
+=======
+	"903:	lea    4(%%esp), %%esp;\n"			\
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	"       pushl  %[thunk_target];\n"			\
 	"       ret;\n"						\
 	"       .align 16\n"					\

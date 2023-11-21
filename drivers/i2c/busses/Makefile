@@ -99,8 +99,12 @@ obj-$(CONFIG_I2C_XILINX)	+= i2c-xiic.o
 obj-$(CONFIG_I2C_XLR)		+= i2c-xlr.o
 obj-$(CONFIG_I2C_XLP9XX)	+= i2c-xlp9xx.o
 obj-$(CONFIG_I2C_RCAR)		+= i2c-rcar.o
+<<<<<<< HEAD
 obj-$(CONFIG_I2C_MTK)		+= i2c-mtk.o
 obj-$(CONFIG_I2C_MTK)           += i2c-mtk_debug.o
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 # External I2C/SMBus adapter drivers
 obj-$(CONFIG_I2C_DIOLAN_U2C)	+= i2c-diolan-u2c.o
 obj-$(CONFIG_I2C_DLN2)		+= i2c-dln2.o
@@ -124,7 +128,10 @@ obj-$(CONFIG_I2C_XGENE_SLIMPRO) += i2c-xgene-slimpro.o
 obj-$(CONFIG_SCx200_ACB)	+= scx200_acb.o
 
 ccflags-$(CONFIG_I2C_DEBUG_BUS) := -DDEBUG
+<<<<<<< HEAD
 ccflags-y += -I$(srctree)/drivers/misc/mediatek/include/mt-plat
 ccflags-y += -I$(srctree)/drivers/pinctrl/mediatek/
 ccflags-y += -I$(srctree)/drivers/misc/mediatek/scp/$(CONFIG_MTK_PLATFORM)/
 ccflags-$(CONFIG_MACH_MT6761) += -I$(srctree)/drivers/misc/mediatek/scp/mt6765
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

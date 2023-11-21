@@ -1359,9 +1359,12 @@ struct xhci_segment {
 	void			*bounce_buf;
 	unsigned int		bounce_offs;
 	unsigned int		bounce_len;
+<<<<<<< HEAD
 #if IS_ENABLED(CONFIG_MTK_UAC_POWER_SAVING)
 	int sram_flag;
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 struct xhci_td {
@@ -1513,8 +1516,12 @@ struct xhci_bus_state {
  * It can take up to 20 ms to transition from RExit to U0 on the
  * Intel Lynx Point LP xHCI host.
  */
+<<<<<<< HEAD
 #define	XHCI_MAX_REXIT_TIMEOUT	(20 * 1000)
 #define XHCI_MAX_REXIT_TIMEOUT_MS 20
+=======
+#define	XHCI_MAX_REXIT_TIMEOUT_MS	20
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 static inline unsigned int hcd_index(struct usb_hcd *hcd)
 {
@@ -1671,7 +1678,10 @@ struct xhci_hcd {
 #define XHCI_LIMIT_ENDPOINT_INTERVAL_7	(1 << 26)
 /* Reserved. It was XHCI_U2_DISABLE_WAKE */
 #define XHCI_ASMEDIA_MODIFY_FLOWCONTROL	(1 << 28)
+<<<<<<< HEAD
 #define XHCI_DEV_WITH_SYNC_EP	(1 << 31)
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	unsigned int		num_active_eps;
 	unsigned int		limit_active_eps;
@@ -1699,10 +1709,14 @@ struct xhci_hcd {
 	u32			port_status_u0;
 /* Compliance Mode Timer Triggered every 2 seconds */
 #define COMP_MODE_RCVRY_MSECS 2000
+<<<<<<< HEAD
 #if IS_ENABLED(CONFIG_MTK_UAC_POWER_SAVING)
 	dma_addr_t		msram_phys_addr;
 	void		*msram_virt_addr;
 #endif
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* platform-specific data -- must come last */
 	unsigned long		priv[0] __aligned(sizeof(s64));
 };
@@ -1865,8 +1879,11 @@ void xhci_free_command(struct xhci_hcd *xhci,
 /* xHCI host controller glue */
 typedef void (*xhci_get_quirks_t)(struct device *, struct xhci_hcd *);
 int xhci_handshake(void __iomem *ptr, u32 mask, u32 done, int usec);
+<<<<<<< HEAD
 int xhci_handshake_check_state(struct xhci_hcd *xhci,
 		void __iomem *ptr, u32 mask, u32 done, int usec);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 void xhci_quiesce(struct xhci_hcd *xhci);
 int xhci_halt(struct xhci_hcd *xhci);
 int xhci_reset(struct xhci_hcd *xhci);

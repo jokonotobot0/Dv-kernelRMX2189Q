@@ -1,8 +1,11 @@
 # Makefile for the Linux device tree
 
+<<<<<<< HEAD
 ifdef CONFIG_MTPROF
  ccflags-y += -Idrivers/misc/mediatek/mtprof/
 endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 obj-y			:= component.o core.o bus.o dd.o syscore.o \
 			   driver.o class.o platform.o \
 			   cpu.o firmware.o init.o map.o devres.o \

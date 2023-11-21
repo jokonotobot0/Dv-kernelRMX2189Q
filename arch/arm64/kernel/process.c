@@ -45,7 +45,10 @@
 #include <linux/personality.h>
 #include <linux/notifier.h>
 #include <trace/events/power.h>
+<<<<<<< HEAD
 #include <linux/percpu.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #include <asm/alternative.h>
 #include <asm/compat.h>
@@ -55,7 +58,10 @@
 #include <asm/mmu_context.h>
 #include <asm/processor.h>
 #include <asm/stacktrace.h>
+<<<<<<< HEAD
 #include <asm/esr.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #ifdef CONFIG_CC_STACKPROTECTOR
 #include <linux/stackprotector.h>
@@ -168,6 +174,7 @@ void machine_restart(char *cmd)
 	while (1);
 }
 
+<<<<<<< HEAD
 /*
  * dump a block of kernel memory from around the given address
  */
@@ -250,6 +257,8 @@ static unsigned int is_external_abort(void)
 	return 0;
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 void __show_regs(struct pt_regs *regs)
 {
 	int i, top_reg;
@@ -285,8 +294,11 @@ void __show_regs(struct pt_regs *regs)
 
 		pr_cont("\n");
 	}
+<<<<<<< HEAD
 	if (!user_mode(regs) && !is_external_abort())
 		show_extra_register_data(regs, 128);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	printk("\n");
 }
 
@@ -417,6 +429,7 @@ void uao_thread_switch(struct task_struct *next)
 }
 
 /*
+<<<<<<< HEAD
  * We store our current task in sp_el0, which is clobbered by userspace. Keep a
  * shadow copy so that we can restore this upon entry from userspace.
  *
@@ -431,6 +444,8 @@ static void entry_task_switch(struct task_struct *next)
 }
 
 /*
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  * Thread switching.
  */
 struct task_struct *__switch_to(struct task_struct *prev,
@@ -442,7 +457,10 @@ struct task_struct *__switch_to(struct task_struct *prev,
 	tls_thread_switch(next);
 	hw_breakpoint_thread_switch(next);
 	contextidr_thread_switch(next);
+<<<<<<< HEAD
 	entry_task_switch(next);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	uao_thread_switch(next);
 
 	/*
@@ -460,25 +478,37 @@ struct task_struct *__switch_to(struct task_struct *prev,
 unsigned long get_wchan(struct task_struct *p)
 {
 	struct stackframe frame;
+<<<<<<< HEAD
 	unsigned long stack_page, ret = 0;
+=======
+	unsigned long stack_page;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	int count = 0;
 	if (!p || p == current || p->state == TASK_RUNNING)
 		return 0;
 
+<<<<<<< HEAD
 	stack_page = (unsigned long)try_get_task_stack(p);
 	if (!stack_page)
 		return 0;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	frame.fp = thread_saved_fp(p);
 	frame.sp = thread_saved_sp(p);
 	frame.pc = thread_saved_pc(p);
 #ifdef CONFIG_FUNCTION_GRAPH_TRACER
 	frame.graph = p->curr_ret_stack;
 #endif
+<<<<<<< HEAD
+=======
+	stack_page = (unsigned long)task_stack_page(p);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	do {
 		if (frame.sp < stack_page ||
 		    frame.sp >= stack_page + THREAD_SIZE ||
 		    unwind_frame(p, &frame))
+<<<<<<< HEAD
 			goto out;
 		if (!in_sched_functions(frame.pc)) {
 			ret = frame.pc;
@@ -489,6 +519,13 @@ unsigned long get_wchan(struct task_struct *p)
 out:
 	put_task_stack(p);
 	return ret;
+=======
+			return 0;
+		if (!in_sched_functions(frame.pc))
+			return frame.pc;
+	} while (count ++ < 16);
+	return 0;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 unsigned long arch_align_stack(unsigned long sp)

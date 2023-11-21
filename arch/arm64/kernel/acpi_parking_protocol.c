@@ -17,7 +17,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include <linux/acpi.h>
+<<<<<<< HEAD
 #include <linux/mm.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <linux/types.h>
 
 #include <asm/cpu_ops.h>
@@ -110,7 +113,11 @@ static int acpi_parking_protocol_cpu_boot(unsigned int cpu)
 	 * that read this address need to convert this address to the
 	 * Boot-Loader's endianness before jumping.
 	 */
+<<<<<<< HEAD
 	writeq_relaxed(__pa_symbol(secondary_entry), &mailbox->entry_point);
+=======
+	writeq_relaxed(__pa(secondary_entry), &mailbox->entry_point);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	writel_relaxed(cpu_entry->gic_cpu_id, &mailbox->cpu_id);
 
 	arch_send_wakeup_ipi_mask(cpumask_of(cpu));

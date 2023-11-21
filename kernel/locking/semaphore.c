@@ -212,9 +212,13 @@ static inline int __sched __down_common(struct semaphore *sem, long state,
 	waiter.up = false;
 
 	for (;;) {
+<<<<<<< HEAD
 		//#ifdef VENDOR_EDIT fangpan@Swdp.shanghai,2015/11/12
 		if (signal_pending_state(state, task) || hung_long_and_fatal_signal_pending(task))
 		//#endif
+=======
+		if (signal_pending_state(state, task))
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			goto interrupted;
 		if (unlikely(timeout <= 0))
 			goto timed_out;

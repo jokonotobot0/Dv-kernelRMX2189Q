@@ -117,6 +117,7 @@ extern void tick_nohz_idle_enter(void);
 extern void tick_nohz_idle_exit(void);
 extern void tick_nohz_irq_exit(void);
 extern ktime_t tick_nohz_get_sleep_length(void);
+<<<<<<< HEAD
 extern unsigned long tick_nohz_get_idle_calls(void);
 extern u64 get_cpu_idle_time_us(int cpu, u64 *last_update_time);
 extern u64 get_cpu_iowait_time_us(int cpu, u64 *last_update_time);
@@ -127,6 +128,10 @@ extern u64 get_cpu_idle_time_us_wo_cpuoffline(int cpu, u64 *last_update_time);
 extern u64 get_cpu_iowait_time_us_wo_cpuoffline(int cpu, u64 *last_update_time);
 #endif
 
+=======
+extern u64 get_cpu_idle_time_us(int cpu, u64 *last_update_time);
+extern u64 get_cpu_iowait_time_us(int cpu, u64 *last_update_time);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #else /* !CONFIG_NO_HZ_COMMON */
 #define tick_nohz_enabled (0)
 static inline int tick_nohz_tick_stopped(void) { return 0; }
@@ -141,6 +146,7 @@ static inline ktime_t tick_nohz_get_sleep_length(void)
 }
 static inline u64 get_cpu_idle_time_us(int cpu, u64 *unused) { return -1; }
 static inline u64 get_cpu_iowait_time_us(int cpu, u64 *unused) { return -1; }
+<<<<<<< HEAD
 
 #ifdef CONFIG_MEDIATEK_SOLUTION
 static inline void tick_set_cpu_plugoff_flag(int flag) { }
@@ -156,6 +162,8 @@ u64 get_cpu_iowait_time_us_wo_cpuoffline(int cpu, u64 *last_update_time)
 }
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif /* !CONFIG_NO_HZ_COMMON */
 
 #ifdef CONFIG_NO_HZ_FULL
@@ -317,10 +325,13 @@ static inline void tick_nohz_task_switch(void)
 		__tick_nohz_task_switch();
 }
 
+<<<<<<< HEAD
 #if defined(CONFIG_TICK_ONESHOT) && defined(CONFIG_MTK_RAM_CONSOLE)
 extern void tick_broadcast_mtk_aee_dump(void);
 #else
 static inline void tick_broadcast_mtk_aee_dump(void) { };
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif

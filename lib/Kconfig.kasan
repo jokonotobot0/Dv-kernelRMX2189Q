@@ -24,7 +24,10 @@ choice
 	prompt "Instrumentation type"
 	depends on KASAN
 	default KASAN_OUTLINE
+<<<<<<< HEAD
 	default KASAN_ENHANCEMENT
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 config KASAN_OUTLINE
 	bool "Outline instrumentation"
@@ -44,11 +47,14 @@ config KASAN_INLINE
 	  make kernel's .text size much bigger.
 	  This requires a gcc version of 5.0 or later.
 
+<<<<<<< HEAD
 config KASAN_ENHANCEMENT
 	bool "shadow scale 16"
 	help
 	  kasan enhancement
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 endchoice
 
 config TEST_KASAN

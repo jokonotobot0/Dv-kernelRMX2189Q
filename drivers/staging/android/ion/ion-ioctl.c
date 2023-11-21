@@ -116,7 +116,10 @@ long ion_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
 		handle = ion_handle_get_by_id_nolock(client, data.handle.handle);
 		if (IS_ERR(handle)) {
 			mutex_unlock(&client->lock);
+<<<<<<< HEAD
 			IONMSG("%s:ION_IOC_FREE handle is error\n", __func__);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			return PTR_ERR(handle);
 		}
 		ion_free_nolock(client, handle);
@@ -129,6 +132,7 @@ long ion_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
 	{
 		struct ion_handle *handle;
 
+<<<<<<< HEAD
 		handle = ion_handle_get_by_id(client, data.handle.handle);
 		if (IS_ERR(handle)) {
 			ret = PTR_ERR(handle);
@@ -142,6 +146,19 @@ long ion_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
 			IONMSG("ION_IOC_SHARE fd = %d.\n", data.fd.fd);
 			ret = data.fd.fd;
 		}
+=======
+		mutex_lock(&client->lock);
+		handle = ion_handle_get_by_id_nolock(client, data.handle.handle);
+		if (IS_ERR(handle)) {
+			mutex_unlock(&client->lock);
+			return PTR_ERR(handle);
+		}
+		data.fd.fd = ion_share_dma_buf_fd_nolock(client, handle);
+		ion_handle_put_nolock(handle);
+		mutex_unlock(&client->lock);
+		if (data.fd.fd < 0)
+			ret = data.fd.fd;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		break;
 	}
 	case ION_IOC_IMPORT:
@@ -149,6 +166,7 @@ long ion_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
 		struct ion_handle *handle;
 
 		handle = ion_import_dma_buf_fd(client, data.fd.fd);
+<<<<<<< HEAD
 		if (IS_ERR(handle)) {
 			ret = PTR_ERR(handle);
 			IONMSG("ion_import fail: fd=%d, ret=%d\n",
@@ -156,6 +174,12 @@ long ion_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
 			return ret;
 		}
 		data.handle.handle = handle->id;
+=======
+		if (IS_ERR(handle))
+			ret = PTR_ERR(handle);
+		else
+			data.handle.handle = handle->id;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		break;
 	}
 	case ION_IOC_SYNC:
@@ -165,10 +189,15 @@ long ion_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
 	}
 	case ION_IOC_CUSTOM:
 	{
+<<<<<<< HEAD
 		if (!dev->custom_ioctl) {
 			IONMSG("ION_IOC_CUSTOM dev has no custom ioctl!.\n");
 			return -ENOTTY;
 		}
+=======
+		if (!dev->custom_ioctl)
+			return -ENOTTY;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		ret = dev->custom_ioctl(client, data.custom.cmd,
 						data.custom.arg);
 		break;

@@ -38,7 +38,10 @@ config SCSI_UFSHCD
 	select PM_DEVFREQ
 	select DEVFREQ_GOV_SIMPLE_ONDEMAND
 	select NLS
+<<<<<<< HEAD
 	select RPMB
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	---help---
 	This selects the support for UFS devices in Linux, say Y and make
 	  sure that you know the name of your UFS host adapter (the card
@@ -101,6 +104,7 @@ config SCSI_UFS_QCOM
 
 	  Select this if you have UFS controller on QCOM chipset.
 	  If unsure, say N.
+<<<<<<< HEAD
 
 config UFSHPB
 	bool "UFSHPB (EXPERIMENTAL)"
@@ -133,3 +137,5 @@ config MTK_UFS_BLOCK_IO_LOG
 	---help---
 	  Enable IO trace for performance analysis and application access
 	  pattern study.
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 // SPDX-License-Identifier: GPL-2.0-only
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * Linux device driver for RTL8187
  *
@@ -15,6 +18,13 @@
  *
  * Magic delays and register offsets below are taken from the original
  * r8187 driver sources.  Thanks to Realtek for their support!
+<<<<<<< HEAD
+=======
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  */
 
 #include <linux/usb.h>
@@ -40,7 +50,11 @@ MODULE_AUTHOR("Larry Finger <Larry.Finger@lwfinger.net>");
 MODULE_DESCRIPTION("RTL8187/RTL8187B USB wireless driver");
 MODULE_LICENSE("GPL");
 
+<<<<<<< HEAD
 static const struct usb_device_id rtl8187_table[] = {
+=======
+static struct usb_device_id rtl8187_table[] = {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* Asus */
 	{USB_DEVICE(0x0b05, 0x171d), .driver_info = DEVICE_RTL8187},
 	/* Belkin */
@@ -275,7 +289,12 @@ static void rtl8187_tx(struct ieee80211_hw *dev,
 	}
 
 	if (!priv->is_rtl8187b) {
+<<<<<<< HEAD
 		struct rtl8187_tx_hdr *hdr = skb_push(skb, sizeof(*hdr));
+=======
+		struct rtl8187_tx_hdr *hdr =
+			(struct rtl8187_tx_hdr *)skb_push(skb, sizeof(*hdr));
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		hdr->flags = cpu_to_le32(flags);
 		hdr->len = 0;
 		hdr->rts_duration = rts_dur;
@@ -288,7 +307,12 @@ static void rtl8187_tx(struct ieee80211_hw *dev,
 		unsigned int epmap[4] = { 6, 7, 5, 4 };
 		u16 fc = le16_to_cpu(tx_hdr->frame_control);
 
+<<<<<<< HEAD
 		struct rtl8187b_tx_hdr *hdr = skb_push(skb, sizeof(*hdr));
+=======
+		struct rtl8187b_tx_hdr *hdr =
+			(struct rtl8187b_tx_hdr *)skb_push(skb, sizeof(*hdr));
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		struct ieee80211_rate *txrate =
 			ieee80211_get_tx_rate(dev, info);
 		memset(hdr, 0, sizeof(*hdr));
@@ -384,7 +408,11 @@ static void rtl8187_rx_cb(struct urb *urb)
 	rx_status.band = dev->conf.chandef.chan->band;
 	rx_status.flag |= RX_FLAG_MACTIME_START;
 	if (flags & RTL818X_RX_DESC_FLAG_SPLCP)
+<<<<<<< HEAD
 		rx_status.enc_flags |= RX_ENC_FLAG_SHORTPRE;
+=======
+		rx_status.flag |= RX_FLAG_SHORTPRE;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (flags & RTL818X_RX_DESC_FLAG_CRC32_ERR)
 		rx_status.flag |= RX_FLAG_FAILED_FCS_CRC;
 	memcpy(IEEE80211_SKB_RXCB(skb), &rx_status, sizeof(rx_status));
@@ -441,6 +469,7 @@ static int rtl8187_init_urbs(struct ieee80211_hw *dev)
 		skb_queue_tail(&priv->rx_queue, skb);
 		usb_anchor_urb(entry, &priv->anchored);
 		ret = usb_submit_urb(entry, GFP_KERNEL);
+<<<<<<< HEAD
 		if (ret) {
 			skb_unlink(skb, &priv->rx_queue);
 			usb_unanchor_urb(entry);
@@ -448,6 +477,14 @@ static int rtl8187_init_urbs(struct ieee80211_hw *dev)
 			goto err;
 		}
 		usb_put_urb(entry);
+=======
+		usb_put_urb(entry);
+		if (ret) {
+			skb_unlink(skb, &priv->rx_queue);
+			usb_unanchor_urb(entry);
+			goto err;
+		}
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 	return ret;
 
@@ -497,7 +534,11 @@ static void rtl8187b_status_cb(struct urb *urb)
 	if (cmd_type == 1) {
 		unsigned int pkt_rc, seq_no;
 		bool tok;
+<<<<<<< HEAD
 		struct sk_buff *skb, *iter;
+=======
+		struct sk_buff *skb;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		struct ieee80211_hdr *ieee80211hdr;
 		unsigned long flags;
 
@@ -506,9 +547,14 @@ static void rtl8187b_status_cb(struct urb *urb)
 		seq_no = (val >> 16) & 0xFFF;
 
 		spin_lock_irqsave(&priv->b_tx_status.queue.lock, flags);
+<<<<<<< HEAD
 		skb = NULL;
 		skb_queue_reverse_walk(&priv->b_tx_status.queue, iter) {
 			ieee80211hdr = (struct ieee80211_hdr *)iter->data;
+=======
+		skb_queue_reverse_walk(&priv->b_tx_status.queue, skb) {
+			ieee80211hdr = (struct ieee80211_hdr *)skb->data;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 			/*
 			 * While testing, it was discovered that the seq_no
@@ -521,12 +567,19 @@ static void rtl8187b_status_cb(struct urb *urb)
 			 * it's unlikely we wrongly ack some sent data
 			 */
 			if ((le16_to_cpu(ieee80211hdr->seq_ctrl)
+<<<<<<< HEAD
 			     & 0xFFF) == seq_no) {
 				skb = iter;
 				break;
 			}
 		}
 		if (skb) {
+=======
+			    & 0xFFF) == seq_no)
+				break;
+		}
+		if (skb != (struct sk_buff *) &priv->b_tx_status.queue) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			struct ieee80211_tx_info *info = IEEE80211_SKB_CB(skb);
 
 			__skb_unlink(skb, &priv->b_tx_status.queue);
@@ -945,7 +998,12 @@ static int rtl8187_start(struct ieee80211_hw *dev)
 		      (7 << 13 /* RX FIFO threshold NONE */) |
 		      (7 << 10 /* MAX RX DMA */) |
 		      RTL818X_RX_CONF_RX_AUTORESETPHY |
+<<<<<<< HEAD
 		      RTL818X_RX_CONF_ONLYERLPKT;
+=======
+		      RTL818X_RX_CONF_ONLYERLPKT |
+		      RTL818X_RX_CONF_MULTICAST;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		priv->rx_conf = reg;
 		rtl818x_iowrite32(priv, &priv->map->RX_CONF, reg);
 
@@ -1075,7 +1133,11 @@ static void rtl8187_beacon_work(struct work_struct *work)
 		goto resched;
 
 	/* grab a fresh beacon */
+<<<<<<< HEAD
 	skb = ieee80211_beacon_get(dev, vif, 0);
+=======
+	skb = ieee80211_beacon_get(dev, vif);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (!skb)
 		goto resched;
 
@@ -1251,7 +1313,11 @@ static void rtl8187_conf_erp(struct rtl8187_priv *priv, bool use_short_slot,
 static void rtl8187_bss_info_changed(struct ieee80211_hw *dev,
 				     struct ieee80211_vif *vif,
 				     struct ieee80211_bss_conf *info,
+<<<<<<< HEAD
 				     u64 changed)
+=======
+				     u32 changed)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	struct rtl8187_priv *priv = dev->priv;
 	struct rtl8187_vif *vif_priv;
@@ -1317,11 +1383,20 @@ static void rtl8187_configure_filter(struct ieee80211_hw *dev,
 		priv->rx_conf ^= RTL818X_RX_CONF_FCS;
 	if (changed_flags & FIF_CONTROL)
 		priv->rx_conf ^= RTL818X_RX_CONF_CTRL;
+<<<<<<< HEAD
 	if (*total_flags & FIF_OTHER_BSS ||
 	    *total_flags & FIF_ALLMULTI || multicast > 0)
 		priv->rx_conf |= RTL818X_RX_CONF_MONITOR;
 	else
 		priv->rx_conf &= ~RTL818X_RX_CONF_MONITOR;
+=======
+	if (changed_flags & FIF_OTHER_BSS)
+		priv->rx_conf ^= RTL818X_RX_CONF_MONITOR;
+	if (*total_flags & FIF_ALLMULTI || multicast > 0)
+		priv->rx_conf |= RTL818X_RX_CONF_MULTICAST;
+	else
+		priv->rx_conf &= ~RTL818X_RX_CONF_MULTICAST;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	*total_flags = 0;
 
@@ -1329,17 +1404,28 @@ static void rtl8187_configure_filter(struct ieee80211_hw *dev,
 		*total_flags |= FIF_FCSFAIL;
 	if (priv->rx_conf & RTL818X_RX_CONF_CTRL)
 		*total_flags |= FIF_CONTROL;
+<<<<<<< HEAD
 	if (priv->rx_conf & RTL818X_RX_CONF_MONITOR) {
 		*total_flags |= FIF_OTHER_BSS;
 		*total_flags |= FIF_ALLMULTI;
 	}
+=======
+	if (priv->rx_conf & RTL818X_RX_CONF_MONITOR)
+		*total_flags |= FIF_OTHER_BSS;
+	if (priv->rx_conf & RTL818X_RX_CONF_MULTICAST)
+		*total_flags |= FIF_ALLMULTI;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	rtl818x_iowrite32_async(priv, &priv->map->RX_CONF, priv->rx_conf);
 }
 
 static int rtl8187_conf_tx(struct ieee80211_hw *dev,
+<<<<<<< HEAD
 			   struct ieee80211_vif *vif,
 			   unsigned int link_id, u16 queue,
+=======
+			   struct ieee80211_vif *vif, u16 queue,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			   const struct ieee80211_tx_queue_params *params)
 {
 	struct rtl8187_priv *priv = dev->priv;
@@ -1378,7 +1464,10 @@ static int rtl8187_conf_tx(struct ieee80211_hw *dev,
 
 static const struct ieee80211_ops rtl8187_ops = {
 	.tx			= rtl8187_tx,
+<<<<<<< HEAD
 	.wake_tx_queue		= ieee80211_handle_wake_tx_queue,
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	.start			= rtl8187_start,
 	.stop			= rtl8187_stop,
 	.add_interface		= rtl8187_add_interface,
@@ -1609,8 +1698,11 @@ static int rtl8187_probe(struct usb_interface *intf,
 	dev->wiphy->interface_modes = BIT(NL80211_IFTYPE_STATION) |
 				      BIT(NL80211_IFTYPE_ADHOC) ;
 
+<<<<<<< HEAD
 	wiphy_ext_feature_set(dev->wiphy, NL80211_EXT_FEATURE_CQM_RSSI_LIST);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if ((id->driver_info == DEVICE_RTL8187) && priv->is_rtl8187b)
 		printk(KERN_INFO "rtl8187: inconsistency between id with OEM"
 		       " info!\n");

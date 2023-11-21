@@ -169,19 +169,33 @@ ENTRY(ce_aes_ecb_encrypt)
 .Lecbencloop3x:
 	subs		r4, r4, #3
 	bmi		.Lecbenc1x
+<<<<<<< HEAD
 	vld1.8		{q0-q1}, [r1]!
 	vld1.8		{q2}, [r1]!
 	bl		aes_encrypt_3x
 	vst1.8		{q0-q1}, [r0]!
 	vst1.8		{q2}, [r0]!
+=======
+	vld1.8		{q0-q1}, [r1, :64]!
+	vld1.8		{q2}, [r1, :64]!
+	bl		aes_encrypt_3x
+	vst1.8		{q0-q1}, [r0, :64]!
+	vst1.8		{q2}, [r0, :64]!
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	b		.Lecbencloop3x
 .Lecbenc1x:
 	adds		r4, r4, #3
 	beq		.Lecbencout
 .Lecbencloop:
+<<<<<<< HEAD
 	vld1.8		{q0}, [r1]!
 	bl		aes_encrypt
 	vst1.8		{q0}, [r0]!
+=======
+	vld1.8		{q0}, [r1, :64]!
+	bl		aes_encrypt
+	vst1.8		{q0}, [r0, :64]!
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	subs		r4, r4, #1
 	bne		.Lecbencloop
 .Lecbencout:
@@ -195,19 +209,33 @@ ENTRY(ce_aes_ecb_decrypt)
 .Lecbdecloop3x:
 	subs		r4, r4, #3
 	bmi		.Lecbdec1x
+<<<<<<< HEAD
 	vld1.8		{q0-q1}, [r1]!
 	vld1.8		{q2}, [r1]!
 	bl		aes_decrypt_3x
 	vst1.8		{q0-q1}, [r0]!
 	vst1.8		{q2}, [r0]!
+=======
+	vld1.8		{q0-q1}, [r1, :64]!
+	vld1.8		{q2}, [r1, :64]!
+	bl		aes_decrypt_3x
+	vst1.8		{q0-q1}, [r0, :64]!
+	vst1.8		{q2}, [r0, :64]!
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	b		.Lecbdecloop3x
 .Lecbdec1x:
 	adds		r4, r4, #3
 	beq		.Lecbdecout
 .Lecbdecloop:
+<<<<<<< HEAD
 	vld1.8		{q0}, [r1]!
 	bl		aes_decrypt
 	vst1.8		{q0}, [r0]!
+=======
+	vld1.8		{q0}, [r1, :64]!
+	bl		aes_decrypt
+	vst1.8		{q0}, [r0, :64]!
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	subs		r4, r4, #1
 	bne		.Lecbdecloop
 .Lecbdecout:
@@ -226,10 +254,17 @@ ENTRY(ce_aes_cbc_encrypt)
 	vld1.8		{q0}, [r5]
 	prepare_key	r2, r3
 .Lcbcencloop:
+<<<<<<< HEAD
 	vld1.8		{q1}, [r1]!		@ get next pt block
 	veor		q0, q0, q1		@ ..and xor with iv
 	bl		aes_encrypt
 	vst1.8		{q0}, [r0]!
+=======
+	vld1.8		{q1}, [r1, :64]!	@ get next pt block
+	veor		q0, q0, q1		@ ..and xor with iv
+	bl		aes_encrypt
+	vst1.8		{q0}, [r0, :64]!
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	subs		r4, r4, #1
 	bne		.Lcbcencloop
 	vst1.8		{q0}, [r5]
@@ -244,8 +279,13 @@ ENTRY(ce_aes_cbc_decrypt)
 .Lcbcdecloop3x:
 	subs		r4, r4, #3
 	bmi		.Lcbcdec1x
+<<<<<<< HEAD
 	vld1.8		{q0-q1}, [r1]!
 	vld1.8		{q2}, [r1]!
+=======
+	vld1.8		{q0-q1}, [r1, :64]!
+	vld1.8		{q2}, [r1, :64]!
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	vmov		q3, q0
 	vmov		q4, q1
 	vmov		q5, q2
@@ -254,19 +294,32 @@ ENTRY(ce_aes_cbc_decrypt)
 	veor		q1, q1, q3
 	veor		q2, q2, q4
 	vmov		q6, q5
+<<<<<<< HEAD
 	vst1.8		{q0-q1}, [r0]!
 	vst1.8		{q2}, [r0]!
+=======
+	vst1.8		{q0-q1}, [r0, :64]!
+	vst1.8		{q2}, [r0, :64]!
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	b		.Lcbcdecloop3x
 .Lcbcdec1x:
 	adds		r4, r4, #3
 	beq		.Lcbcdecout
 	vmov		q15, q14		@ preserve last round key
 .Lcbcdecloop:
+<<<<<<< HEAD
 	vld1.8		{q0}, [r1]!		@ get next ct block
 	veor		q14, q15, q6		@ combine prev ct with last key
 	vmov		q6, q0
 	bl		aes_decrypt
 	vst1.8		{q0}, [r0]!
+=======
+	vld1.8		{q0}, [r1, :64]!	@ get next ct block
+	veor		q14, q15, q6		@ combine prev ct with last key
+	vmov		q6, q0
+	bl		aes_decrypt
+	vst1.8		{q0}, [r0, :64]!
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	subs		r4, r4, #1
 	bne		.Lcbcdecloop
 .Lcbcdecout:
@@ -300,15 +353,25 @@ ENTRY(ce_aes_ctr_encrypt)
 	rev		ip, r6
 	add		r6, r6, #1
 	vmov		s11, ip
+<<<<<<< HEAD
 	vld1.8		{q3-q4}, [r1]!
 	vld1.8		{q5}, [r1]!
+=======
+	vld1.8		{q3-q4}, [r1, :64]!
+	vld1.8		{q5}, [r1, :64]!
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	bl		aes_encrypt_3x
 	veor		q0, q0, q3
 	veor		q1, q1, q4
 	veor		q2, q2, q5
 	rev		ip, r6
+<<<<<<< HEAD
 	vst1.8		{q0-q1}, [r0]!
 	vst1.8		{q2}, [r0]!
+=======
+	vst1.8		{q0-q1}, [r0, :64]!
+	vst1.8		{q2}, [r0, :64]!
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	vmov		s27, ip
 	b		.Lctrloop3x
 .Lctr1x:
@@ -318,10 +381,17 @@ ENTRY(ce_aes_ctr_encrypt)
 	vmov		q0, q6
 	bl		aes_encrypt
 	subs		r4, r4, #1
+<<<<<<< HEAD
 	bmi		.Lctrtailblock		@ blocks < 0 means tail block
 	vld1.8		{q3}, [r1]!
 	veor		q3, q0, q3
 	vst1.8		{q3}, [r0]!
+=======
+	bmi		.Lctrhalfblock		@ blocks < 0 means 1/2 block
+	vld1.8		{q3}, [r1, :64]!
+	veor		q3, q0, q3
+	vst1.8		{q3}, [r0, :64]!
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	adds		r6, r6, #1		@ increment BE ctr
 	rev		ip, r6
@@ -333,8 +403,15 @@ ENTRY(ce_aes_ctr_encrypt)
 	vst1.8		{q6}, [r5]
 	pop		{r4-r6, pc}
 
+<<<<<<< HEAD
 .Lctrtailblock:
 	vst1.8		{q0}, [r0, :64]		@ return just the key stream
+=======
+.Lctrhalfblock:
+	vld1.8		{d1}, [r1, :64]
+	veor		d0, d0, d1
+	vst1.8		{d0}, [r0, :64]
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	pop		{r4-r6, pc}
 
 .Lctrcarry:
@@ -403,8 +480,13 @@ ENTRY(ce_aes_xts_encrypt)
 .Lxtsenc3x:
 	subs		r4, r4, #3
 	bmi		.Lxtsenc1x
+<<<<<<< HEAD
 	vld1.8		{q0-q1}, [r1]!		@ get 3 pt blocks
 	vld1.8		{q2}, [r1]!
+=======
+	vld1.8		{q0-q1}, [r1, :64]!	@ get 3 pt blocks
+	vld1.8		{q2}, [r1, :64]!
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	next_tweak	q4, q3, q7, q6
 	veor		q0, q0, q3
 	next_tweak	q5, q4, q7, q6
@@ -414,8 +496,13 @@ ENTRY(ce_aes_xts_encrypt)
 	veor		q0, q0, q3
 	veor		q1, q1, q4
 	veor		q2, q2, q5
+<<<<<<< HEAD
 	vst1.8		{q0-q1}, [r0]!		@ write 3 ct blocks
 	vst1.8		{q2}, [r0]!
+=======
+	vst1.8		{q0-q1}, [r0, :64]!	@ write 3 ct blocks
+	vst1.8		{q2}, [r0, :64]!
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	vmov		q3, q5
 	teq		r4, #0
 	beq		.Lxtsencout
@@ -424,11 +511,19 @@ ENTRY(ce_aes_xts_encrypt)
 	adds		r4, r4, #3
 	beq		.Lxtsencout
 .Lxtsencloop:
+<<<<<<< HEAD
 	vld1.8		{q0}, [r1]!
 	veor		q0, q0, q3
 	bl		aes_encrypt
 	veor		q0, q0, q3
 	vst1.8		{q0}, [r0]!
+=======
+	vld1.8		{q0}, [r1, :64]!
+	veor		q0, q0, q3
+	bl		aes_encrypt
+	veor		q0, q0, q3
+	vst1.8		{q0}, [r0, :64]!
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	subs		r4, r4, #1
 	beq		.Lxtsencout
 	next_tweak	q3, q3, q7, q6
@@ -454,8 +549,13 @@ ENTRY(ce_aes_xts_decrypt)
 .Lxtsdec3x:
 	subs		r4, r4, #3
 	bmi		.Lxtsdec1x
+<<<<<<< HEAD
 	vld1.8		{q0-q1}, [r1]!		@ get 3 ct blocks
 	vld1.8		{q2}, [r1]!
+=======
+	vld1.8		{q0-q1}, [r1, :64]!	@ get 3 ct blocks
+	vld1.8		{q2}, [r1, :64]!
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	next_tweak	q4, q3, q7, q6
 	veor		q0, q0, q3
 	next_tweak	q5, q4, q7, q6
@@ -465,8 +565,13 @@ ENTRY(ce_aes_xts_decrypt)
 	veor		q0, q0, q3
 	veor		q1, q1, q4
 	veor		q2, q2, q5
+<<<<<<< HEAD
 	vst1.8		{q0-q1}, [r0]!		@ write 3 pt blocks
 	vst1.8		{q2}, [r0]!
+=======
+	vst1.8		{q0-q1}, [r0, :64]!	@ write 3 pt blocks
+	vst1.8		{q2}, [r0, :64]!
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	vmov		q3, q5
 	teq		r4, #0
 	beq		.Lxtsdecout
@@ -475,12 +580,20 @@ ENTRY(ce_aes_xts_decrypt)
 	adds		r4, r4, #3
 	beq		.Lxtsdecout
 .Lxtsdecloop:
+<<<<<<< HEAD
 	vld1.8		{q0}, [r1]!
+=======
+	vld1.8		{q0}, [r1, :64]!
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	veor		q0, q0, q3
 	add		ip, r2, #32		@ 3rd round key
 	bl		aes_decrypt
 	veor		q0, q0, q3
+<<<<<<< HEAD
 	vst1.8		{q0}, [r0]!
+=======
+	vst1.8		{q0}, [r0, :64]!
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	subs		r4, r4, #1
 	beq		.Lxtsdecout
 	next_tweak	q3, q3, q7, q6

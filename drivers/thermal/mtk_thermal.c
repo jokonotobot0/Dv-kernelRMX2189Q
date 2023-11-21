@@ -3,7 +3,10 @@
  * Author: Hanyi Wu <hanyi.wu@mediatek.com>
  *         Sascha Hauer <s.hauer@pengutronix.de>
  *         Dawei Chien <dawei.chien@mediatek.com>
+<<<<<<< HEAD
  *         Louis Yu <louis.yu@mediatek.com>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -44,8 +47,11 @@
 
 #define APMIXED_SYS_TS_CON1	0x604
 
+<<<<<<< HEAD
 #define APMIXED_SYS_TS_CON1_BUFFER_OFF	0x30
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* Thermal Controller Registers */
 #define TEMP_MONCTL0		0x000
 #define TEMP_MONCTL1		0x004
@@ -53,7 +59,10 @@
 #define TEMP_MONIDET0		0x014
 #define TEMP_MONIDET1		0x018
 #define TEMP_MSRCTL0		0x038
+<<<<<<< HEAD
 #define TEMP_MSRCTL1		0x03c
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define TEMP_AHBPOLL		0x040
 #define TEMP_AHBTO		0x044
 #define TEMP_ADCPNP0		0x048
@@ -94,9 +103,12 @@
 #define TEMP_ADCVALIDMASK_VALID_HIGH		BIT(5)
 #define TEMP_ADCVALIDMASK_VALID_POS(bit)	(bit)
 
+<<<<<<< HEAD
 #define TEMP_MSRCTL1_BUS_STA	(BIT(0) | BIT(7))
 #define TEMP_MSRCTL1_SENSING_POINTS_PAUSE	0x10E
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* MT8173 thermal sensors */
 #define MT8173_TS1	0
 #define MT8173_TS2	1
@@ -118,10 +130,16 @@
 
 /*
  * Layout of the fuses providing the calibration data
+<<<<<<< HEAD
  * These macros could be used for both MT8173, MT2701, and MT2712.
  * MT8173 has five sensors and need five VTS calibration data,
  * and MT2701 has three sensors and need three VTS calibration data,
  * and MT2712 has four sensors and need four VTS calibration data.
+=======
+ * These macros could be used for both MT8173 and MT2701.
+ * MT8173 has five sensors and need five VTS calibration data,
+ * and MT2701 has three sensors and need three VTS calibration data.
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  */
 #define MT8173_CALIB_BUF0_VALID		BIT(0)
 #define MT8173_CALIB_BUF1_ADC_GE(x)	(((x) >> 22) & 0x3ff)
@@ -132,8 +150,11 @@
 #define MT8173_CALIB_BUF2_VTS_TSABB(x)	(((x) >> 14) & 0x1ff)
 #define MT8173_CALIB_BUF0_DEGC_CALI(x)	(((x) >> 1) & 0x3f)
 #define MT8173_CALIB_BUF0_O_SLOPE(x)	(((x) >> 26) & 0x3f)
+<<<<<<< HEAD
 #define MT8173_CALIB_BUF0_O_SLOPE_SIGN(x)	(((x) >> 7) & 0x1)
 #define MT8173_CALIB_BUF1_ID(x)	(((x) >> 9) & 0x1)
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /* MT2701 thermal sensors */
 #define MT2701_TS1	0
@@ -146,6 +167,7 @@
 /* The total number of temperature sensors in the MT2701 */
 #define MT2701_NUM_SENSORS	3
 
+<<<<<<< HEAD
 /* The number of sensing points per bank */
 #define MT2701_NUM_SENSORS_PER_ZONE	3
 
@@ -165,6 +187,12 @@
 #define MT2712_NUM_SENSORS_PER_ZONE	4
 
 #define THERMAL_NAME    "mtk-thermal"
+=======
+#define THERMAL_NAME    "mtk-thermal"
+
+/* The number of sensing points per bank */
+#define MT2701_NUM_SENSORS_PER_ZONE	3
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 struct mtk_thermal;
 
@@ -191,10 +219,13 @@ struct mtk_thermal_data {
 struct mtk_thermal {
 	struct device *dev;
 	void __iomem *thermal_base;
+<<<<<<< HEAD
 	void __iomem *apmixed_base;
 	void __iomem *auxadc_base;
 	u64 apmixed_phys_base;
 	u64 auxadc_phys_base;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	struct clk *clk_peri_therm;
 	struct clk *clk_auxadc;
@@ -212,13 +243,18 @@ struct mtk_thermal {
 };
 
 /* MT8173 thermal sensor data */
+<<<<<<< HEAD
 static const int mt8173_bank_data[MT8173_NUM_ZONES][3] = {
+=======
+const int mt8173_bank_data[MT8173_NUM_ZONES][3] = {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	{ MT8173_TS2, MT8173_TS3 },
 	{ MT8173_TS2, MT8173_TS4 },
 	{ MT8173_TS1, MT8173_TS2, MT8173_TSABB },
 	{ MT8173_TS2 },
 };
 
+<<<<<<< HEAD
 static const int mt8173_msr[MT8173_NUM_SENSORS_PER_ZONE] = {
 	TEMP_MSR0, TEMP_MSR1, TEMP_MSR2, TEMP_MSR3
 };
@@ -258,6 +294,32 @@ static const int mt2712_adcpnp[MT2712_NUM_SENSORS_PER_ZONE] = {
 };
 
 static const int mt2712_mux_values[MT2712_NUM_SENSORS] = { 0, 1, 2, 3 };
+=======
+const int mt8173_msr[MT8173_NUM_SENSORS_PER_ZONE] = {
+	TEMP_MSR0, TEMP_MSR1, TEMP_MSR2, TEMP_MSR2
+};
+
+const int mt8173_adcpnp[MT8173_NUM_SENSORS_PER_ZONE] = {
+	TEMP_ADCPNP0, TEMP_ADCPNP1, TEMP_ADCPNP2, TEMP_ADCPNP3
+};
+
+const int mt8173_mux_values[MT8173_NUM_SENSORS] = { 0, 1, 2, 3, 16 };
+
+/* MT2701 thermal sensor data */
+const int mt2701_bank_data[MT2701_NUM_SENSORS] = {
+	MT2701_TS1, MT2701_TS2, MT2701_TSABB
+};
+
+const int mt2701_msr[MT2701_NUM_SENSORS_PER_ZONE] = {
+	TEMP_MSR0, TEMP_MSR1, TEMP_MSR2
+};
+
+const int mt2701_adcpnp[MT2701_NUM_SENSORS_PER_ZONE] = {
+	TEMP_ADCPNP0, TEMP_ADCPNP1, TEMP_ADCPNP2
+};
+
+const int mt2701_mux_values[MT2701_NUM_SENSORS] = { 0, 1, 16 };
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /**
  * The MT8173 thermal controller has four banks. Each bank can read up to
@@ -322,6 +384,7 @@ static const struct mtk_thermal_data mt2701_thermal_data = {
 };
 
 /**
+<<<<<<< HEAD
  * The MT2712 thermal controller has one bank, which can read up to
  * four temperature sensors simultaneously. The MT2712 has a total of 4
  * temperature sensors.
@@ -347,6 +410,8 @@ static const struct mtk_thermal_data mt2712_thermal_data = {
 };
 
 /**
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  * raw_to_mcelsius - convert a raw ADC value to mcelsius
  * @mt:		The thermal controller
  * @raw:	raw ADC value
@@ -566,6 +631,7 @@ static void mtk_thermal_init_bank(struct mtk_thermal *mt, int num,
 	mtk_thermal_put_bank(bank);
 }
 
+<<<<<<< HEAD
 static int mtk_thermal_disable_sensing(struct mtk_thermal *mt, int num)
 {
 	struct mtk_thermal_bank *bank = &mt->banks[num];
@@ -613,6 +679,8 @@ out:
 	return ret;
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static u64 of_get_phys_base(struct device_node *np)
 {
 	u64 size64;
@@ -668,10 +736,14 @@ static int mtk_thermal_get_calibration_data(struct device *dev,
 		mt->vts[MT8173_TS4] = MT8173_CALIB_BUF2_VTS_TS4(buf[2]);
 		mt->vts[MT8173_TSABB] = MT8173_CALIB_BUF2_VTS_TSABB(buf[2]);
 		mt->degc_cali = MT8173_CALIB_BUF0_DEGC_CALI(buf[0]);
+<<<<<<< HEAD
 		if (MT8173_CALIB_BUF1_ID(buf[1]) && MT8173_CALIB_BUF0_O_SLOPE_SIGN(buf[0]))
 			mt->o_slope = -MT8173_CALIB_BUF0_O_SLOPE(buf[0]);
 		else
 			mt->o_slope = MT8173_CALIB_BUF0_O_SLOPE(buf[0]);
+=======
+		mt->o_slope = MT8173_CALIB_BUF0_O_SLOPE(buf[0]);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	} else {
 		dev_info(dev, "Device not calibrated, using default calibration values\n");
 	}
@@ -690,10 +762,13 @@ static const struct of_device_id mtk_thermal_of_match[] = {
 	{
 		.compatible = "mediatek,mt2701-thermal",
 		.data = (void *)&mt2701_thermal_data,
+<<<<<<< HEAD
 	},
 	{
 		.compatible = "mediatek,mt2712-thermal",
 		.data = (void *)&mt2712_thermal_data,
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}, {
 	},
 };
@@ -706,6 +781,10 @@ static int mtk_thermal_probe(struct platform_device *pdev)
 	struct mtk_thermal *mt;
 	struct resource *res;
 	const struct of_device_id *of_id;
+<<<<<<< HEAD
+=======
+	u64 auxadc_phys_base, apmixed_phys_base;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct thermal_zone_device *tzdev;
 
 	mt = devm_kzalloc(&pdev->dev, sizeof(*mt), GFP_KERNEL);
@@ -743,12 +822,20 @@ static int mtk_thermal_probe(struct platform_device *pdev)
 		return -ENODEV;
 	}
 
+<<<<<<< HEAD
 	mt->auxadc_phys_base = of_get_phys_base(auxadc);
 	mt->auxadc_base = of_iomap(auxadc, 0);
 
 	of_node_put(auxadc);
 
 	if (mt->auxadc_phys_base == OF_BAD_ADDR) {
+=======
+	auxadc_phys_base = of_get_phys_base(auxadc);
+
+	of_node_put(auxadc);
+
+	if (auxadc_phys_base == OF_BAD_ADDR) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		dev_err(&pdev->dev, "Can't get auxadc phys address\n");
 		return -EINVAL;
 	}
@@ -759,16 +846,25 @@ static int mtk_thermal_probe(struct platform_device *pdev)
 		return -ENODEV;
 	}
 
+<<<<<<< HEAD
 	mt->apmixed_phys_base = of_get_phys_base(apmixedsys);
 	mt->apmixed_base = of_iomap(apmixedsys, 0);
 
 	of_node_put(apmixedsys);
 
 	if (mt->apmixed_phys_base == OF_BAD_ADDR) {
+=======
+	apmixed_phys_base = of_get_phys_base(apmixedsys);
+
+	of_node_put(apmixedsys);
+
+	if (apmixed_phys_base == OF_BAD_ADDR) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		dev_err(&pdev->dev, "Can't get auxadc phys address\n");
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 	ret = device_reset(&pdev->dev);
 	if (ret)
 		return ret;
@@ -788,6 +884,27 @@ static int mtk_thermal_probe(struct platform_device *pdev)
 	for (i = 0; i < mt->conf->num_banks; i++)
 		mtk_thermal_init_bank(mt, i, mt->apmixed_phys_base,
 				      mt->auxadc_phys_base);
+=======
+	ret = clk_prepare_enable(mt->clk_auxadc);
+	if (ret) {
+		dev_err(&pdev->dev, "Can't enable auxadc clk: %d\n", ret);
+		return ret;
+	}
+
+	ret = device_reset(&pdev->dev);
+	if (ret)
+		goto err_disable_clk_auxadc;
+
+	ret = clk_prepare_enable(mt->clk_peri_therm);
+	if (ret) {
+		dev_err(&pdev->dev, "Can't enable peri clk: %d\n", ret);
+		goto err_disable_clk_auxadc;
+	}
+
+	for (i = 0; i < mt->conf->num_banks; i++)
+		mtk_thermal_init_bank(mt, i, apmixed_phys_base,
+				      auxadc_phys_base);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	platform_set_drvdata(pdev, mt);
 
@@ -818,6 +935,7 @@ static int mtk_thermal_remove(struct platform_device *pdev)
 	return 0;
 }
 
+<<<<<<< HEAD
 static int __maybe_unused mtk_thermal_suspend(struct device *dev)
 {
 	struct platform_device *pdev = to_platform_device(dev);
@@ -885,19 +1003,27 @@ err_disable_clk_auxadc:
 static SIMPLE_DEV_PM_OPS(mtk_thermal_pm_ops,
 			 mtk_thermal_suspend, mtk_thermal_resume);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static struct platform_driver mtk_thermal_driver = {
 	.probe = mtk_thermal_probe,
 	.remove = mtk_thermal_remove,
 	.driver = {
 		.name = THERMAL_NAME,
+<<<<<<< HEAD
 		.pm = &mtk_thermal_pm_ops,
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		.of_match_table = mtk_thermal_of_match,
 	},
 };
 
 module_platform_driver(mtk_thermal_driver);
 
+<<<<<<< HEAD
 MODULE_AUTHOR("Louis Yu <louis.yu@mediatek.com>");
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 MODULE_AUTHOR("Dawei Chien <dawei.chien@mediatek.com>");
 MODULE_AUTHOR("Sascha Hauer <s.hauer@pengutronix.de>");
 MODULE_AUTHOR("Hanyi Wu <hanyi.wu@mediatek.com>");

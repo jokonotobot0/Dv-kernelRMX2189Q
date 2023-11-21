@@ -492,6 +492,7 @@ static unsigned int find_next_fd(struct fdtable *fdt, unsigned int start)
 	return find_next_zero_bit(fdt->open_fds, maxfd, start);
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_FD_LEAK_DETECT
 #define FD_CHECK_NAME_SIZE 256
 /* Declare a radix tree to construct fd set tree */
@@ -634,6 +635,8 @@ void fd_show_open_files(pid_t pid,
 }
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * allocate a file descriptor, mark it busy.
  */
@@ -692,6 +695,7 @@ repeat:
 
 out:
 	spin_unlock(&files->file_lock);
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_FD_LEAK_DETECT
 	if (error == -EMFILE && !dump_current_open_files) {
 		/*add Backbone into FD white list for skype*/
@@ -703,6 +707,8 @@ out:
 		/*}*/
 	}
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return error;
 }
 

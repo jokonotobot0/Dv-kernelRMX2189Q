@@ -36,8 +36,11 @@
 /* Do not use these with a slab allocator */
 #define GFP_SLAB_BUG_MASK (__GFP_DMA32|__GFP_HIGHMEM|~__GFP_BITS_MASK)
 
+<<<<<<< HEAD
 void page_writeback_init(void);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 int do_swap_page(struct fault_env *fe, pte_t orig_pte);
 
 void free_pgtables(struct mmu_gather *tlb, struct vm_area_struct *start_vma,
@@ -497,6 +500,7 @@ extern const struct trace_print_flags pageflag_names[];
 extern const struct trace_print_flags vmaflag_names[];
 extern const struct trace_print_flags gfpflag_names[];
 
+<<<<<<< HEAD
 #define IS_ZONE_MOVABLE_CMA_ZONE(z) IS_ZONE_MOVABLE_CMA_ZONE_IDX(\
 					zone_idx(z))
 
@@ -510,4 +514,6 @@ ssize_t print_max_page_owner(void);
 #define TOTALRAM_6GB (6*SZ_1G_PAGES)
 #endif /*VENDOR_EDIT*/
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif	/* __MM_INTERNAL_H */

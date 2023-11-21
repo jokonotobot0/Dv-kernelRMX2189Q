@@ -207,7 +207,11 @@ static inline int cpuidle_enter_freeze(struct cpuidle_driver *drv,
 #endif
 
 /* kernel/sched/idle.c */
+<<<<<<< HEAD
 extern void sched_idle_set_state(struct cpuidle_state *idle_state, int index);
+=======
+extern void sched_idle_set_state(struct cpuidle_state *idle_state);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 extern void default_idle_call(void);
 
 #ifdef CONFIG_ARCH_NEEDS_CPU_IDLE_COUPLED

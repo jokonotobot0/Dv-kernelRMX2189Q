@@ -10,7 +10,11 @@
  * Fork is rather simple, once you get the hang of it, but the memory
  * management can be a bitch. See 'mm/memory.c': 'copy_page_range()'
  */
+<<<<<<< HEAD
 #define DEBUG
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <linux/slab.h>
 #include <linux/init.h>
 #include <linux/unistd.h>
@@ -77,7 +81,10 @@
 #include <linux/compiler.h>
 #include <linux/sysctl.h>
 #include <linux/kcov.h>
+<<<<<<< HEAD
 #include <linux/cpufreq_times.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #include <asm/pgtable.h>
 #include <asm/pgalloc.h>
@@ -87,11 +94,18 @@
 #include <asm/tlbflush.h>
 
 #include <trace/events/sched.h>
+<<<<<<< HEAD
 #define CREATE_TRACE_POINTS
 #include <trace/events/task.h>
 
 #include <mt-plat/mtk_pidmap.h>
 
+=======
+
+#define CREATE_TRACE_POINTS
+#include <trace/events/task.h>
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * Minimum number of threads to boot the kernel
  */
@@ -102,8 +116,11 @@
  */
 #define MAX_THREADS FUTEX_TID_MASK
 
+<<<<<<< HEAD
 #define WARN_FORK_DUR 1000000000
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * Protected counters by write_lock_irq(&tasklist_lock)
  */
@@ -346,8 +363,11 @@ void put_task_stack(struct task_struct *tsk)
 
 void free_task(struct task_struct *tsk)
 {
+<<<<<<< HEAD
 	cpufreq_task_times_exit(tsk);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #ifndef CONFIG_THREAD_INFO_IN_TASK
 	/*
 	 * The task is finally done with both the stack and thread_info,
@@ -489,6 +509,7 @@ static struct task_struct *dup_task_struct(struct task_struct *orig, int node)
 	if (node == NUMA_NO_NODE)
 		node = tsk_fork_get_node(orig);
 	tsk = alloc_task_struct_node(node);
+<<<<<<< HEAD
 	if (!tsk) {
 		pr_debug_ratelimited("[%d:%s] fork fail at alloc_tsk_node\n",
 			current->pid, current->comm);
@@ -500,14 +521,25 @@ static struct task_struct *dup_task_struct(struct task_struct *orig, int node)
 			current->pid, current->comm);
 		goto free_tsk;
 	}
+=======
+	if (!tsk)
+		return NULL;
+
+	stack = alloc_thread_stack_node(tsk, node);
+	if (!stack)
+		goto free_tsk;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	stack_vm_area = task_stack_vm_area(tsk);
 
 	err = arch_dup_task_struct(tsk, orig);
+<<<<<<< HEAD
 	if (err) {
 		pr_debug_ratelimited("[%d:%s] fork fail at arch_dup_task_struct, err:%d\n",
 			current->pid, current->comm, err);
 	}
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/*
 	 * arch_dup_task_struct() clobbers the stack-related fields.  Make
@@ -1192,12 +1224,15 @@ static int copy_mm(unsigned long clone_flags, struct task_struct *tsk)
 	int retval;
 
 	tsk->min_flt = tsk->maj_flt = 0;
+<<<<<<< HEAD
 
 	tsk->fm_flt = 0;
 #ifdef CONFIG_SWAP
 	tsk->swap_in = tsk->swap_out = 0;
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	tsk->nvcsw = tsk->nivcsw = 0;
 #ifdef CONFIG_DETECT_HUNG_TASK
 	tsk->last_switch_count = tsk->nvcsw + tsk->nivcsw;
@@ -1501,6 +1536,7 @@ static __latent_entropy struct task_struct *copy_process(
 {
 	int retval;
 	struct task_struct *p;
+<<<<<<< HEAD
 	unsigned long sig[_NSIG_WORDS];
 	unsigned long shared_sig[_NSIG_WORDS];
 	int i;
@@ -1510,6 +1546,12 @@ static __latent_entropy struct task_struct *copy_process(
 			current->pid, current->comm, (unsigned int)clone_flags);
 		return ERR_PTR(-EINVAL);
 	}
+=======
+
+	if ((clone_flags & (CLONE_NEWNS|CLONE_FS)) == (CLONE_NEWNS|CLONE_FS))
+		return ERR_PTR(-EINVAL);
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if ((clone_flags & (CLONE_NEWUSER|CLONE_FS)) == (CLONE_NEWUSER|CLONE_FS))
 		return ERR_PTR(-EINVAL);
 
@@ -1517,21 +1559,33 @@ static __latent_entropy struct task_struct *copy_process(
 	 * Thread groups must share signals as well, and detached threads
 	 * can only be started up within the thread group.
 	 */
+<<<<<<< HEAD
 	if ((clone_flags & CLONE_THREAD) && !(clone_flags & CLONE_SIGHAND)) {
 		pr_debug_ratelimited("[%d:%s] fork fail at cpp 2, clone_flags:0x%x\n",
 			current->pid, current->comm, (unsigned int)clone_flags);
 		return ERR_PTR(-EINVAL);
 	}
+=======
+	if ((clone_flags & CLONE_THREAD) && !(clone_flags & CLONE_SIGHAND))
+		return ERR_PTR(-EINVAL);
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/*
 	 * Shared signal handlers imply shared VM. By way of the above,
 	 * thread groups also imply shared VM. Blocking this case allows
 	 * for various simplifications in other code.
 	 */
+<<<<<<< HEAD
 	if ((clone_flags & CLONE_SIGHAND) && !(clone_flags & CLONE_VM)) {
 		pr_debug_ratelimited("[%d:%s] fork fail at cpp 3, clone_flags:0x%x\n",
 			current->pid, current->comm, (unsigned int)clone_flags);
 		return ERR_PTR(-EINVAL);
 	}
+=======
+	if ((clone_flags & CLONE_SIGHAND) && !(clone_flags & CLONE_VM))
+		return ERR_PTR(-EINVAL);
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/*
 	 * Siblings of global init remain as zombies on exit since they are
 	 * not reaped by their parent (swapper). To solve this and to avoid
@@ -1539,11 +1593,17 @@ static __latent_entropy struct task_struct *copy_process(
 	 * from creating siblings.
 	 */
 	if ((clone_flags & CLONE_PARENT) &&
+<<<<<<< HEAD
 				current->signal->flags & SIGNAL_UNKILLABLE) {
 		pr_debug_ratelimited("[%d:%s] fork fail at cpp 4, clone_flags:0x%x\n",
 			current->pid, current->comm, (unsigned int)clone_flags);
 		return ERR_PTR(-EINVAL);
 	}
+=======
+				current->signal->flags & SIGNAL_UNKILLABLE)
+		return ERR_PTR(-EINVAL);
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/*
 	 * If the new process will be in a different pid or user namespace
 	 * do not allow it to share a thread group with the forking task.
@@ -1561,6 +1621,7 @@ static __latent_entropy struct task_struct *copy_process(
 
 	retval = -ENOMEM;
 	p = dup_task_struct(current, node);
+<<<<<<< HEAD
 	if (!p) {
 		pr_debug_ratelimited("[%d:%s] fork fail at dup_task_struct, p=%p\n",
 			current->pid, current->comm, p);
@@ -1568,6 +1629,10 @@ static __latent_entropy struct task_struct *copy_process(
 	}
 
 	cpufreq_task_times_init(p);
+=======
+	if (!p)
+		goto fork_out;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/*
 	 * This _must_ happen before we call free_task(), i.e. before we jump
@@ -1638,10 +1703,13 @@ static __latent_entropy struct task_struct *copy_process(
 
 	p->default_timer_slack_ns = current->timer_slack_ns;
 
+<<<<<<< HEAD
 #ifdef CONFIG_PSI
 	p->psi_flags = 0;
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	task_io_accounting_init(&p->ioac);
 	acct_clear_integrals(p);
 
@@ -1695,12 +1763,15 @@ static __latent_entropy struct task_struct *copy_process(
 	p->sequential_io_avg	= 0;
 #endif
 
+<<<<<<< HEAD
 
 #if defined(VENDOR_EDIT) && defined(CONFIG_OPPO_HEALTHINFO)
 // Liujie.Xie@TECH.Kernel.Sched, 2019/08/29, add for stuck monitor
     p->stuck_trace = 0;
     memset(&p->oppo_stuck_info, 0, sizeof(struct oppo_uifirst_monitor_info));
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* Perform scheduler related setup. Assign this task to a CPU. */
 	retval = sched_fork(clone_flags, p);
 	if (retval)
@@ -1857,10 +1928,13 @@ static __latent_entropy struct task_struct *copy_process(
 	recalc_sigpending();
 	if (signal_pending(current)) {
 		retval = -ERESTARTNOINTR;
+<<<<<<< HEAD
 
 		for (i = 0; i < _NSIG_WORDS; ++i)
 			pr_debug_ratelimited("pending i=%d sig=0x%lx shared_sig=0x%lx\n",
 			       i, sig[i], shared_sig[i]);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		goto bad_fork_cancel_cgroup;
 	}
 	if (unlikely(!(ns_of_pid(pid)->nr_hashed & PIDNS_HASH_ADDING))) {
@@ -1912,7 +1986,10 @@ static __latent_entropy struct task_struct *copy_process(
 	perf_event_fork(p);
 
 	trace_task_newtask(p, clone_flags);
+<<<<<<< HEAD
 	mtk_pidmap_update(p);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	uprobe_copy_process(p, clone_flags);
 
 	return p;
@@ -1964,8 +2041,11 @@ bad_fork_free:
 	put_task_stack(p);
 	free_task(p);
 fork_out:
+<<<<<<< HEAD
 	pr_debug_ratelimited("[%d:%s] fork fail retval:0x%x\n",
 		current->pid, current->comm, retval);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return ERR_PTR(retval);
 }
 
@@ -2008,9 +2088,13 @@ long _do_fork(unsigned long clone_flags,
 	struct task_struct *p;
 	int trace = 0;
 	long nr;
+<<<<<<< HEAD
 	unsigned long long start, end, dur;
 
 	start = sched_clock();
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/*
 	 * Determine whether and which event to report to ptracer.  When
 	 * called from kernel_thread or CLONE_UNTRACED is explicitly
@@ -2040,8 +2124,11 @@ long _do_fork(unsigned long clone_flags,
 		struct completion vfork;
 		struct pid *pid;
 
+<<<<<<< HEAD
 		cpufreq_task_times_alloc(p);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		trace_sched_process_fork(current, p);
 
 		pid = get_task_pid(p, PIDTYPE_PID);
@@ -2056,6 +2143,7 @@ long _do_fork(unsigned long clone_flags,
 			get_task_struct(p);
 		}
 
+<<<<<<< HEAD
 		end = sched_clock();
 		dur = end - start;
 		trace_sched_fork_time(current, p, dur);
@@ -2066,6 +2154,8 @@ long _do_fork(unsigned long clone_flags,
 			show_free_areas(0);
 		}
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		wake_up_new_task(p);
 
 		/* forking complete and child started to run, tell ptracer */
@@ -2080,8 +2170,11 @@ long _do_fork(unsigned long clone_flags,
 		put_pid(pid);
 	} else {
 		nr = PTR_ERR(p);
+<<<<<<< HEAD
 		pr_debug_ratelimited("[%d:%s] fork fail:[%p, %d]\n",
 			current->pid, current->comm, p, (int) nr);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 	return nr;
 }

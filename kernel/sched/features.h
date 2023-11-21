@@ -70,6 +70,7 @@ SCHED_FEAT(RT_PUSH_IPI, true)
 #endif
 
 SCHED_FEAT(FORCE_SD_OVERLAP, false)
+<<<<<<< HEAD
 SCHED_FEAT(RT_RUNTIME_SHARE, false)
 SCHED_FEAT(LB_MIN, false)
 SCHED_FEAT(ATTACH_AGE_LOAD, true)
@@ -116,3 +117,9 @@ SCHED_FEAT(FBT_STRICT_ORDER, true)
  * in post_init_entity_util_avg.
  */
 SCHED_FEAT(POST_INIT_UTIL, false)
+=======
+SCHED_FEAT(RT_RUNTIME_SHARE, true)
+SCHED_FEAT(LB_MIN, false)
+SCHED_FEAT(ATTACH_AGE_LOAD, true)
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

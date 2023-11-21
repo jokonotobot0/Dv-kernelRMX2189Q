@@ -25,6 +25,7 @@
 #include <linux/sort.h>
 #include <linux/slab.h>
 
+<<<<<<< HEAD
 #define MAX_RESERVED_REGIONS	64
 static struct reserved_mem reserved_mem[MAX_RESERVED_REGIONS];
 static int reserved_mem_count;
@@ -43,6 +44,12 @@ struct reserved_mem *get_reserved_mem(int num)
 	return &reserved_mem[num];
 }
 
+=======
+#define MAX_RESERVED_REGIONS	16
+static struct reserved_mem reserved_mem[MAX_RESERVED_REGIONS];
+static int reserved_mem_count;
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #if defined(CONFIG_HAVE_MEMBLOCK)
 #include <linux/memblock.h>
 int __init __weak early_init_dt_alloc_reserved_memory_arch(phys_addr_t size,
@@ -77,7 +84,11 @@ int __init __weak early_init_dt_alloc_reserved_memory_arch(phys_addr_t size,
 	phys_addr_t align, phys_addr_t start, phys_addr_t end, bool nomap,
 	phys_addr_t *res_base)
 {
+<<<<<<< HEAD
 	pr_info("Reserved memory not supported, ignoring region 0x%llx%s\n",
+=======
+	pr_err("Reserved memory not supported, ignoring region 0x%llx%s\n",
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		  size, nomap ? " (nomap)" : "");
 	return -ENOSYS;
 }
@@ -92,8 +103,12 @@ void __init fdt_reserved_mem_save_node(unsigned long node, const char *uname,
 	struct reserved_mem *rmem = &reserved_mem[reserved_mem_count];
 
 	if (reserved_mem_count == ARRAY_SIZE(reserved_mem)) {
+<<<<<<< HEAD
 		pr_info("not enough space all defined regions.\n");
 		BUG();
+=======
+		pr_err("not enough space all defined regions.\n");
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		return;
 	}
 
@@ -126,7 +141,11 @@ static int __init __reserved_mem_alloc_size(unsigned long node,
 		return -EINVAL;
 
 	if (len != dt_root_size_cells * sizeof(__be32)) {
+<<<<<<< HEAD
 		pr_info("invalid size property in '%s' node.\n", uname);
+=======
+		pr_err("invalid size property in '%s' node.\n", uname);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		return -EINVAL;
 	}
 	size = dt_mem_next_cell(dt_root_size_cells, &prop);
@@ -136,7 +155,11 @@ static int __init __reserved_mem_alloc_size(unsigned long node,
 	prop = of_get_flat_dt_prop(node, "alignment", &len);
 	if (prop) {
 		if (len != dt_root_addr_cells * sizeof(__be32)) {
+<<<<<<< HEAD
 			pr_info("invalid alignment property in '%s' node.\n",
+=======
+			pr_err("invalid alignment property in '%s' node.\n",
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 				uname);
 			return -EINVAL;
 		}
@@ -158,7 +181,11 @@ static int __init __reserved_mem_alloc_size(unsigned long node,
 	if (prop) {
 
 		if (len % t_len != 0) {
+<<<<<<< HEAD
 			pr_info("invalid alloc-ranges property in '%s', skipping node.\n",
+=======
+			pr_err("invalid alloc-ranges property in '%s', skipping node.\n",
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			       uname);
 			return -EINVAL;
 		}
@@ -261,7 +288,11 @@ static void __init __rmem_check_for_overlap(void)
 
 			this_end = this->base + this->size;
 			next_end = next->base + next->size;
+<<<<<<< HEAD
 			pr_info("OVERLAP DETECTED!\n%s (%pa--%pa) overlaps with %s (%pa--%pa)\n",
+=======
+			pr_err("OVERLAP DETECTED!\n%s (%pa--%pa) overlaps with %s (%pa--%pa)\n",
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			       this->name, &this->base, &this_end,
 			       next->name, &next->base, &next_end);
 		}

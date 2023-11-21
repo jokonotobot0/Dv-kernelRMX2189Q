@@ -24,7 +24,10 @@
 #include <net/cipso_ipv4.h>
 #include <net/inet_frag.h>
 #include <net/ping.h>
+<<<<<<< HEAD
 #include <net/ip6_route.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 static int zero;
 static int one = 1;
@@ -156,6 +159,7 @@ static int ipv4_ping_group_range(struct ctl_table *table, int write,
 	return ret;
 }
 
+<<<<<<< HEAD
 /* Validate changes from /proc interface. */
 static int proc_tcp_default_init_rwnd(struct ctl_table *ctl, int write,
 				      void __user *buffer,
@@ -171,6 +175,8 @@ static int proc_tcp_default_init_rwnd(struct ctl_table *ctl, int write,
 	return ret;
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int proc_tcp_congestion_control(struct ctl_table *ctl, int write,
 				       void __user *buffer, size_t *lenp, loff_t *ppos)
 {
@@ -654,6 +660,7 @@ static struct ctl_table ipv4_table[] = {
 		.proc_handler	= proc_dointvec_ms_jiffies,
 	},
 	{
+<<<<<<< HEAD
 		.procname       = "tcp_default_init_rwnd",
 		.data           = &sysctl_tcp_default_init_rwnd,
 		.maxlen         = sizeof(int),
@@ -661,6 +668,8 @@ static struct ctl_table ipv4_table[] = {
 		.proc_handler   = proc_tcp_default_init_rwnd
 	},
 	{
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		.procname	= "icmp_msgs_per_sec",
 		.data		= &sysctl_icmp_msgs_per_sec,
 		.maxlen		= sizeof(int),
@@ -699,6 +708,7 @@ static struct ctl_table ipv4_table[] = {
 		.proc_handler	= proc_dointvec_minmax,
 		.extra1		= &one
 	},
+<<<<<<< HEAD
 	#ifdef VENDOR_EDIT
 
 	//Mengqing.Zhao@PSW.CN.WiFi.Network.internet.1394484, 2019/04/02,
@@ -722,6 +732,8 @@ static struct ctl_table ipv4_table[] = {
 		.proc_handler	= proc_do_print_tcpinfo
 	},
     #endif /* VENDOR_EDIT */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	{ }
 };
 
@@ -1043,6 +1055,7 @@ static struct ctl_table ipv4_net_table[] = {
 	{ }
 };
 
+<<<<<<< HEAD
 static struct ctl_table net_table[] = {
 	{
 		.procname = "optr",
@@ -1054,6 +1067,8 @@ static struct ctl_table net_table[] = {
 	{ }
 };
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static __net_init int ipv4_sysctl_init_net(struct net *net)
 {
 	struct ctl_table *table;
@@ -1113,10 +1128,13 @@ static __init int sysctl_ipv4_init(void)
 	if (!hdr)
 		return -ENOMEM;
 
+<<<<<<< HEAD
 	hdr = register_net_sysctl(&init_net, "net", net_table);
 	if (!hdr)
 		pr_info("[mtk_net] register net sysctl optr is fail.\n");
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (register_pernet_subsys(&ipv4_sysctl_ops)) {
 		unregister_net_sysctl_table(hdr);
 		return -ENOMEM;

@@ -121,6 +121,7 @@ static inline enum bug_trap_type report_bug(unsigned long bug_addr,
 }
 
 #endif	/* CONFIG_GENERIC_BUG */
+<<<<<<< HEAD
 
 /*
  * Since detected data corruption should stop operation on the affected
@@ -140,4 +141,6 @@ static inline __must_check bool check_data_corruption(bool v) { return v; }
 		corruption;						 \
 	}))
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif	/* _LINUX_BUG_H */

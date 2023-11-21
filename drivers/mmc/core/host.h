@@ -12,8 +12,11 @@
 #define _MMC_CORE_HOST_H
 #include <linux/mmc/host.h>
 
+<<<<<<< HEAD
 #define cls_dev_to_mmc_host(d)	container_of(d, struct mmc_host, class_dev)
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 int mmc_register_host_class(void);
 void mmc_unregister_host_class(void);
 
@@ -23,8 +26,11 @@ void mmc_retune_hold(struct mmc_host *host);
 void mmc_retune_release(struct mmc_host *host);
 int mmc_retune(struct mmc_host *host);
 
+<<<<<<< HEAD
 void mmc_latency_hist_sysfs_init(struct mmc_host *host);
 void mmc_latency_hist_sysfs_exit(struct mmc_host *host);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif
 

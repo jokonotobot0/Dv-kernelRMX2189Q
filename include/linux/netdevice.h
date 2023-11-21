@@ -1836,7 +1836,10 @@ struct net_device {
 #endif
 
 	/* These may be needed for future network-power-down code. */
+<<<<<<< HEAD
 	unsigned long		trans_start;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct timer_list	watchdog_timer;
 
 	int __percpu		*pcpu_refcnt;
@@ -3397,6 +3400,7 @@ extern int		netdev_budget;
 /* Called by rtnetlink.c:rtnl_unlock() */
 void netdev_run_todo(void);
 
+<<<<<<< HEAD
 #define REFCNT_DEBUG 0
 #define REFCNT_MEMORY_DEBUG 0
 #if defined (REFCNT_DEBUG) && defined (REFCNT_MEMORY_DEBUG)
@@ -3421,6 +3425,8 @@ extern unsigned int trace_idx;
 
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /**
  *	dev_put - release reference to device
  *	@dev: network device
@@ -3429,6 +3435,7 @@ extern unsigned int trace_idx;
  */
 static inline void dev_put(struct net_device *dev)
 {
+<<<<<<< HEAD
     #if defined (REFCNT_DEBUG) && defined (REFCNT_MEMORY_DEBUG)
     struct stack_trace trace;
     unsigned int cpu, idx;
@@ -3466,6 +3473,9 @@ static inline void dev_put(struct net_device *dev)
         #endif
     }
     #endif
+=======
+	this_cpu_dec(*dev->pcpu_refcnt);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 /**
@@ -3476,6 +3486,7 @@ static inline void dev_put(struct net_device *dev)
  */
 static inline void dev_hold(struct net_device *dev)
 {
+<<<<<<< HEAD
     #if defined (REFCNT_DEBUG) && defined (REFCNT_MEMORY_DEBUG)
     struct stack_trace trace;
     unsigned int cpu, idx;
@@ -3513,6 +3524,9 @@ static inline void dev_hold(struct net_device *dev)
         #endif
     }
     #endif
+=======
+	this_cpu_inc(*dev->pcpu_refcnt);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 /* Carrier loss detection, dial on demand. The functions netif_carrier_on

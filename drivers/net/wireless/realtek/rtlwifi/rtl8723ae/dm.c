@@ -1,5 +1,32 @@
+<<<<<<< HEAD
 // SPDX-License-Identifier: GPL-2.0
 /* Copyright(c) 2009-2012  Realtek Corporation.*/
+=======
+/******************************************************************************
+ *
+ * Copyright(c) 2009-2012  Realtek Corporation.
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of version 2 of the GNU General Public License as
+ * published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ * more details.
+ *
+ * The full GNU General Public License is included in this distribution in the
+ * file called LICENSE.
+ *
+ * Contact Information:
+ * wlanfae <wlanfae@realtek.com>
+ * Realtek Corporation, No. 2, Innovation Road II, Hsinchu Science Park,
+ * Hsinchu 300, Taiwan.
+ *
+ * Larry Finger <Larry.Finger@lwfinger.net>
+ *
+ *****************************************************************************/
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #include "../wifi.h"
 #include "../base.h"
@@ -13,10 +40,126 @@
 #include "fw.h"
 #include "hal_btc.h"
 
+<<<<<<< HEAD
+=======
+static const u32 ofdmswing_table[OFDM_TABLE_SIZE] = {
+	0x7f8001fe,
+	0x788001e2,
+	0x71c001c7,
+	0x6b8001ae,
+	0x65400195,
+	0x5fc0017f,
+	0x5a400169,
+	0x55400155,
+	0x50800142,
+	0x4c000130,
+	0x47c0011f,
+	0x43c0010f,
+	0x40000100,
+	0x3c8000f2,
+	0x390000e4,
+	0x35c000d7,
+	0x32c000cb,
+	0x300000c0,
+	0x2d4000b5,
+	0x2ac000ab,
+	0x288000a2,
+	0x26000098,
+	0x24000090,
+	0x22000088,
+	0x20000080,
+	0x1e400079,
+	0x1c800072,
+	0x1b00006c,
+	0x19800066,
+	0x18000060,
+	0x16c0005b,
+	0x15800056,
+	0x14400051,
+	0x1300004c,
+	0x12000048,
+	0x11000044,
+	0x10000040,
+};
+
+static const u8 cckswing_table_ch1ch13[CCK_TABLE_SIZE][8] = {
+	{0x36, 0x35, 0x2e, 0x25, 0x1c, 0x12, 0x09, 0x04},
+	{0x33, 0x32, 0x2b, 0x23, 0x1a, 0x11, 0x08, 0x04},
+	{0x30, 0x2f, 0x29, 0x21, 0x19, 0x10, 0x08, 0x03},
+	{0x2d, 0x2d, 0x27, 0x1f, 0x18, 0x0f, 0x08, 0x03},
+	{0x2b, 0x2a, 0x25, 0x1e, 0x16, 0x0e, 0x07, 0x03},
+	{0x28, 0x28, 0x22, 0x1c, 0x15, 0x0d, 0x07, 0x03},
+	{0x26, 0x25, 0x21, 0x1b, 0x14, 0x0d, 0x06, 0x03},
+	{0x24, 0x23, 0x1f, 0x19, 0x13, 0x0c, 0x06, 0x03},
+	{0x22, 0x21, 0x1d, 0x18, 0x11, 0x0b, 0x06, 0x02},
+	{0x20, 0x20, 0x1b, 0x16, 0x11, 0x08, 0x05, 0x02},
+	{0x1f, 0x1e, 0x1a, 0x15, 0x10, 0x0a, 0x05, 0x02},
+	{0x1d, 0x1c, 0x18, 0x14, 0x0f, 0x0a, 0x05, 0x02},
+	{0x1b, 0x1a, 0x17, 0x13, 0x0e, 0x09, 0x04, 0x02},
+	{0x1a, 0x19, 0x16, 0x12, 0x0d, 0x09, 0x04, 0x02},
+	{0x18, 0x17, 0x15, 0x11, 0x0c, 0x08, 0x04, 0x02},
+	{0x17, 0x16, 0x13, 0x10, 0x0c, 0x08, 0x04, 0x02},
+	{0x16, 0x15, 0x12, 0x0f, 0x0b, 0x07, 0x04, 0x01},
+	{0x14, 0x14, 0x11, 0x0e, 0x0b, 0x07, 0x03, 0x02},
+	{0x13, 0x13, 0x10, 0x0d, 0x0a, 0x06, 0x03, 0x01},
+	{0x12, 0x12, 0x0f, 0x0c, 0x09, 0x06, 0x03, 0x01},
+	{0x11, 0x11, 0x0f, 0x0c, 0x09, 0x06, 0x03, 0x01},
+	{0x10, 0x10, 0x0e, 0x0b, 0x08, 0x05, 0x03, 0x01},
+	{0x0f, 0x0f, 0x0d, 0x0b, 0x08, 0x05, 0x03, 0x01},
+	{0x0e, 0x0e, 0x0c, 0x0a, 0x08, 0x05, 0x02, 0x01},
+	{0x0d, 0x0d, 0x0c, 0x0a, 0x07, 0x05, 0x02, 0x01},
+	{0x0d, 0x0c, 0x0b, 0x09, 0x07, 0x04, 0x02, 0x01},
+	{0x0c, 0x0c, 0x0a, 0x09, 0x06, 0x04, 0x02, 0x01},
+	{0x0b, 0x0b, 0x0a, 0x08, 0x06, 0x04, 0x02, 0x01},
+	{0x0b, 0x0a, 0x09, 0x08, 0x06, 0x04, 0x02, 0x01},
+	{0x0a, 0x0a, 0x09, 0x07, 0x05, 0x03, 0x02, 0x01},
+	{0x0a, 0x09, 0x08, 0x07, 0x05, 0x03, 0x02, 0x01},
+	{0x09, 0x09, 0x08, 0x06, 0x05, 0x03, 0x01, 0x01},
+	{0x09, 0x08, 0x07, 0x06, 0x04, 0x03, 0x01, 0x01}
+};
+
+static const u8 cckswing_table_ch14[CCK_TABLE_SIZE][8] = {
+	{0x36, 0x35, 0x2e, 0x1b, 0x00, 0x00, 0x00, 0x00},
+	{0x33, 0x32, 0x2b, 0x19, 0x00, 0x00, 0x00, 0x00},
+	{0x30, 0x2f, 0x29, 0x18, 0x00, 0x00, 0x00, 0x00},
+	{0x2d, 0x2d, 0x17, 0x17, 0x00, 0x00, 0x00, 0x00},
+	{0x2b, 0x2a, 0x25, 0x15, 0x00, 0x00, 0x00, 0x00},
+	{0x28, 0x28, 0x24, 0x14, 0x00, 0x00, 0x00, 0x00},
+	{0x26, 0x25, 0x21, 0x13, 0x00, 0x00, 0x00, 0x00},
+	{0x24, 0x23, 0x1f, 0x12, 0x00, 0x00, 0x00, 0x00},
+	{0x22, 0x21, 0x1d, 0x11, 0x00, 0x00, 0x00, 0x00},
+	{0x20, 0x20, 0x1b, 0x10, 0x00, 0x00, 0x00, 0x00},
+	{0x1f, 0x1e, 0x1a, 0x0f, 0x00, 0x00, 0x00, 0x00},
+	{0x1d, 0x1c, 0x18, 0x0e, 0x00, 0x00, 0x00, 0x00},
+	{0x1b, 0x1a, 0x17, 0x0e, 0x00, 0x00, 0x00, 0x00},
+	{0x1a, 0x19, 0x16, 0x0d, 0x00, 0x00, 0x00, 0x00},
+	{0x18, 0x17, 0x15, 0x0c, 0x00, 0x00, 0x00, 0x00},
+	{0x17, 0x16, 0x13, 0x0b, 0x00, 0x00, 0x00, 0x00},
+	{0x16, 0x15, 0x12, 0x0b, 0x00, 0x00, 0x00, 0x00},
+	{0x14, 0x14, 0x11, 0x0a, 0x00, 0x00, 0x00, 0x00},
+	{0x13, 0x13, 0x10, 0x0a, 0x00, 0x00, 0x00, 0x00},
+	{0x12, 0x12, 0x0f, 0x09, 0x00, 0x00, 0x00, 0x00},
+	{0x11, 0x11, 0x0f, 0x09, 0x00, 0x00, 0x00, 0x00},
+	{0x10, 0x10, 0x0e, 0x08, 0x00, 0x00, 0x00, 0x00},
+	{0x0f, 0x0f, 0x0d, 0x08, 0x00, 0x00, 0x00, 0x00},
+	{0x0e, 0x0e, 0x0c, 0x07, 0x00, 0x00, 0x00, 0x00},
+	{0x0d, 0x0d, 0x0c, 0x07, 0x00, 0x00, 0x00, 0x00},
+	{0x0d, 0x0c, 0x0b, 0x06, 0x00, 0x00, 0x00, 0x00},
+	{0x0c, 0x0c, 0x0a, 0x06, 0x00, 0x00, 0x00, 0x00},
+	{0x0b, 0x0b, 0x0a, 0x06, 0x00, 0x00, 0x00, 0x00},
+	{0x0b, 0x0a, 0x09, 0x05, 0x00, 0x00, 0x00, 0x00},
+	{0x0a, 0x0a, 0x09, 0x05, 0x00, 0x00, 0x00, 0x00},
+	{0x0a, 0x09, 0x08, 0x05, 0x00, 0x00, 0x00, 0x00},
+	{0x09, 0x09, 0x08, 0x05, 0x00, 0x00, 0x00, 0x00},
+	{0x09, 0x08, 0x07, 0x04, 0x00, 0x00, 0x00, 0x00}
+};
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static u8 rtl8723e_dm_initial_gain_min_pwdb(struct ieee80211_hw *hw)
 {
 	struct rtl_priv *rtlpriv = rtl_priv(hw);
 	struct dig_t *dm_digtable = &rtlpriv->dm_digtable;
+<<<<<<< HEAD
 	struct rtl_mac *mac = rtl_mac(rtlpriv);
 	long rssi_val_min = 0;
 
@@ -25,6 +168,10 @@ static u8 rtl8723e_dm_initial_gain_min_pwdb(struct ieee80211_hw *hw)
 	    rtlpriv->link_info.bcn_rx_inperiod == 0)
 		return 0;
 
+=======
+	long rssi_val_min = 0;
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if ((dm_digtable->curmultista_cstate == DIG_MULTISTA_CONNECT) &&
 	    (dm_digtable->cursta_cstate == DIG_STA_CONNECT)) {
 		if (rtlpriv->dm.entry_min_undec_sm_pwdb != 0)
@@ -82,6 +229,7 @@ static void rtl8723e_dm_false_alarm_counter_statistics(struct ieee80211_hw *hw)
 	rtl_set_bbreg(hw, RCCK0_FALSEALARMREPORT, 0x0000c000, 0);
 	rtl_set_bbreg(hw, RCCK0_FALSEALARMREPORT, 0x0000c000, 2);
 
+<<<<<<< HEAD
 	rtl_dbg(rtlpriv, COMP_DIG, DBG_TRACE,
 		"cnt_parity_fail = %d, cnt_rate_illegal = %d, cnt_crc8_fail = %d, cnt_mcs_fail = %d\n",
 		falsealm_cnt->cnt_parity_fail,
@@ -92,6 +240,18 @@ static void rtl8723e_dm_false_alarm_counter_statistics(struct ieee80211_hw *hw)
 		"cnt_ofdm_fail = %x, cnt_cck_fail = %x, cnt_all = %x\n",
 		falsealm_cnt->cnt_ofdm_fail,
 		falsealm_cnt->cnt_cck_fail, falsealm_cnt->cnt_all);
+=======
+	RT_TRACE(rtlpriv, COMP_DIG, DBG_TRACE,
+		 "cnt_parity_fail = %d, cnt_rate_illegal = %d, cnt_crc8_fail = %d, cnt_mcs_fail = %d\n",
+		 falsealm_cnt->cnt_parity_fail,
+		 falsealm_cnt->cnt_rate_illegal,
+		 falsealm_cnt->cnt_crc8_fail, falsealm_cnt->cnt_mcs_fail);
+
+	RT_TRACE(rtlpriv, COMP_DIG, DBG_TRACE,
+		 "cnt_ofdm_fail = %x, cnt_cck_fail = %x, cnt_all = %x\n",
+		 falsealm_cnt->cnt_ofdm_fail,
+		 falsealm_cnt->cnt_cck_fail, falsealm_cnt->cnt_all);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static void rtl92c_dm_ctrl_initgain_by_fa(struct ieee80211_hw *hw)
@@ -150,9 +310,15 @@ static void rtl92c_dm_ctrl_initgain_by_rssi(struct ieee80211_hw *hw)
 		dm_digtable->cur_igvalue = dm_digtable->rssi_val_min + 10 -
 		    dm_digtable->back_val;
 
+<<<<<<< HEAD
 	rtl_dbg(rtlpriv, COMP_DIG, DBG_TRACE,
 		"rssi_val_min = %x back_val %x\n",
 		dm_digtable->rssi_val_min, dm_digtable->back_val);
+=======
+	RT_TRACE(rtlpriv, COMP_DIG, DBG_TRACE,
+		 "rssi_val_min = %x back_val %x\n",
+		  dm_digtable->rssi_val_min, dm_digtable->back_val);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	rtl8723e_dm_write_dig(hw);
 }
@@ -201,10 +367,17 @@ static void rtl8723e_dm_initial_gain_multi_sta(struct ieee80211_hw *hw)
 		rtl8723e_dm_write_dig(hw);
 	}
 
+<<<<<<< HEAD
 	rtl_dbg(rtlpriv, COMP_DIG, DBG_TRACE,
 		"curmultista_cstate = %x dig_ext_port_stage %x\n",
 		dm_digtable->curmultista_cstate,
 		dm_digtable->dig_ext_port_stage);
+=======
+	RT_TRACE(rtlpriv, COMP_DIG, DBG_TRACE,
+		 "curmultista_cstate = %x dig_ext_port_stage %x\n",
+		 dm_digtable->curmultista_cstate,
+		 dm_digtable->dig_ext_port_stage);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static void rtl8723e_dm_initial_gain_sta(struct ieee80211_hw *hw)
@@ -212,10 +385,17 @@ static void rtl8723e_dm_initial_gain_sta(struct ieee80211_hw *hw)
 	struct rtl_priv *rtlpriv = rtl_priv(hw);
 	struct dig_t *dm_digtable = &rtlpriv->dm_digtable;
 
+<<<<<<< HEAD
 	rtl_dbg(rtlpriv, COMP_DIG, DBG_TRACE,
 		"presta_cstate = %x, cursta_cstate = %x\n",
 		dm_digtable->presta_cstate,
 		dm_digtable->cursta_cstate);
+=======
+	RT_TRACE(rtlpriv, COMP_DIG, DBG_TRACE,
+		 "presta_cstate = %x, cursta_cstate = %x\n",
+		  dm_digtable->presta_cstate,
+		  dm_digtable->cursta_cstate);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (dm_digtable->presta_cstate == dm_digtable->cursta_cstate ||
 	    dm_digtable->cursta_cstate == DIG_STA_BEFORE_CONNECT ||
@@ -289,15 +469,23 @@ static void rtl8723e_dm_cck_packet_detection_thresh(struct ieee80211_hw *hw)
 		} else {
 			rtl_set_bbreg(hw, RCCK0_CCA, MASKBYTE2, 0xcd);
 			rtl_set_bbreg(hw, RCCK0_SYSTEM, MASKBYTE1, 0x47);
+<<<<<<< HEAD
 			dm_digtable->pre_cck_fa_state = 0;
 			dm_digtable->cur_cck_fa_state = 0;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 		}
 		dm_digtable->pre_cck_pd_state = dm_digtable->cur_cck_pd_state;
 	}
 
+<<<<<<< HEAD
 	rtl_dbg(rtlpriv, COMP_DIG, DBG_TRACE,
 		"CCKPDStage=%x\n", dm_digtable->cur_cck_pd_state);
+=======
+	RT_TRACE(rtlpriv, COMP_DIG, DBG_TRACE,
+		 "CCKPDStage=%x\n", dm_digtable->cur_cck_pd_state);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 }
 
@@ -354,8 +542,13 @@ static void rtl8723e_dm_dynamic_txpower(struct ieee80211_hw *hw)
 
 	if ((mac->link_state < MAC80211_LINKED) &&
 	    (rtlpriv->dm.entry_min_undec_sm_pwdb == 0)) {
+<<<<<<< HEAD
 		rtl_dbg(rtlpriv, COMP_POWER, DBG_TRACE,
 			"Not connected to any\n");
+=======
+		RT_TRACE(rtlpriv, COMP_POWER, DBG_TRACE,
+			 "Not connected to any\n");
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 		rtlpriv->dm.dynamic_txhighpower_lvl = TXHIGHPWRLEVEL_NORMAL;
 
@@ -367,6 +560,7 @@ static void rtl8723e_dm_dynamic_txpower(struct ieee80211_hw *hw)
 		if (mac->opmode == NL80211_IFTYPE_ADHOC) {
 			undec_sm_pwdb =
 			    rtlpriv->dm.entry_min_undec_sm_pwdb;
+<<<<<<< HEAD
 			rtl_dbg(rtlpriv, COMP_POWER, DBG_LOUD,
 				"AP Client PWDB = 0x%lx\n",
 				undec_sm_pwdb);
@@ -376,25 +570,48 @@ static void rtl8723e_dm_dynamic_txpower(struct ieee80211_hw *hw)
 			rtl_dbg(rtlpriv, COMP_POWER, DBG_LOUD,
 				"STA Default Port PWDB = 0x%lx\n",
 				undec_sm_pwdb);
+=======
+			RT_TRACE(rtlpriv, COMP_POWER, DBG_LOUD,
+				 "AP Client PWDB = 0x%lx\n",
+				  undec_sm_pwdb);
+		} else {
+			undec_sm_pwdb =
+			    rtlpriv->dm.undec_sm_pwdb;
+			RT_TRACE(rtlpriv, COMP_POWER, DBG_LOUD,
+				 "STA Default Port PWDB = 0x%lx\n",
+				  undec_sm_pwdb);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		}
 	} else {
 		undec_sm_pwdb =
 		    rtlpriv->dm.entry_min_undec_sm_pwdb;
 
+<<<<<<< HEAD
 		rtl_dbg(rtlpriv, COMP_POWER, DBG_LOUD,
 			"AP Ext Port PWDB = 0x%lx\n",
 			undec_sm_pwdb);
+=======
+		RT_TRACE(rtlpriv, COMP_POWER, DBG_LOUD,
+			 "AP Ext Port PWDB = 0x%lx\n",
+			  undec_sm_pwdb);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 
 	if (undec_sm_pwdb >= TX_POWER_NEAR_FIELD_THRESH_LVL2) {
 		rtlpriv->dm.dynamic_txhighpower_lvl = TXHIGHPWRLEVEL_LEVEL1;
+<<<<<<< HEAD
 		rtl_dbg(rtlpriv, COMP_POWER, DBG_LOUD,
 			"TXHIGHPWRLEVEL_LEVEL1 (TxPwr=0x0)\n");
+=======
+		RT_TRACE(rtlpriv, COMP_POWER, DBG_LOUD,
+			 "TXHIGHPWRLEVEL_LEVEL1 (TxPwr=0x0)\n");
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	} else if ((undec_sm_pwdb <
 		    (TX_POWER_NEAR_FIELD_THRESH_LVL2 - 3)) &&
 		   (undec_sm_pwdb >=
 		    TX_POWER_NEAR_FIELD_THRESH_LVL1)) {
 		rtlpriv->dm.dynamic_txhighpower_lvl = TXHIGHPWRLEVEL_LEVEL1;
+<<<<<<< HEAD
 		rtl_dbg(rtlpriv, COMP_POWER, DBG_LOUD,
 			"TXHIGHPWRLEVEL_LEVEL1 (TxPwr=0x10)\n");
 	} else if (undec_sm_pwdb <
@@ -408,6 +625,21 @@ static void rtl8723e_dm_dynamic_txpower(struct ieee80211_hw *hw)
 		rtl_dbg(rtlpriv, COMP_POWER, DBG_LOUD,
 			"PHY_SetTxPowerLevel8192S() Channel = %d\n",
 			rtlphy->current_channel);
+=======
+		RT_TRACE(rtlpriv, COMP_POWER, DBG_LOUD,
+			 "TXHIGHPWRLEVEL_LEVEL1 (TxPwr=0x10)\n");
+	} else if (undec_sm_pwdb <
+		   (TX_POWER_NEAR_FIELD_THRESH_LVL1 - 5)) {
+		rtlpriv->dm.dynamic_txhighpower_lvl = TXHIGHPWRLEVEL_NORMAL;
+		RT_TRACE(rtlpriv, COMP_POWER, DBG_LOUD,
+			 "TXHIGHPWRLEVEL_NORMAL\n");
+	}
+
+	if (rtlpriv->dm.dynamic_txhighpower_lvl != rtlpriv->dm.last_dtp_lvl) {
+		RT_TRACE(rtlpriv, COMP_POWER, DBG_LOUD,
+			 "PHY_SetTxPowerLevel8192S() Channel = %d\n",
+			  rtlphy->current_channel);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		rtl8723e_phy_set_txpower_level(hw, rtlphy->current_channel);
 	}
 
@@ -419,10 +651,17 @@ void rtl8723e_dm_write_dig(struct ieee80211_hw *hw)
 	struct rtl_priv *rtlpriv = rtl_priv(hw);
 	struct dig_t *dm_digtable = &rtlpriv->dm_digtable;
 
+<<<<<<< HEAD
 	rtl_dbg(rtlpriv, COMP_DIG, DBG_LOUD,
 		"cur_igvalue = 0x%x, pre_igvalue = 0x%x, back_val = %d\n",
 		dm_digtable->cur_igvalue, dm_digtable->pre_igvalue,
 		dm_digtable->back_val);
+=======
+	RT_TRACE(rtlpriv, COMP_DIG, DBG_LOUD,
+		 "cur_igvalue = 0x%x, pre_igvalue = 0x%x, back_val = %d\n",
+		  dm_digtable->cur_igvalue, dm_digtable->pre_igvalue,
+		  dm_digtable->back_val);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (dm_digtable->pre_igvalue != dm_digtable->cur_igvalue) {
 		rtl_set_bbreg(hw, ROFDM0_XAAGCCORE1, 0x7f,
@@ -521,9 +760,15 @@ static void rtl8723e_dm_initialize_txpower_tracking_thermalmeter(
 	rtlpriv->dm.txpower_tracking = true;
 	rtlpriv->dm.txpower_trackinginit = false;
 
+<<<<<<< HEAD
 	rtl_dbg(rtlpriv, COMP_POWER_TRACKING, DBG_LOUD,
 		"pMgntInfo->txpower_tracking = %d\n",
 		rtlpriv->dm.txpower_tracking);
+=======
+	RT_TRACE(rtlpriv, COMP_POWER_TRACKING, DBG_LOUD,
+		 "pMgntInfo->txpower_tracking = %d\n",
+		  rtlpriv->dm.txpower_tracking);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static void rtl8723e_dm_initialize_txpower_tracking(struct ieee80211_hw *hw)
@@ -539,7 +784,11 @@ void rtl8723e_dm_check_txpower_tracking(struct ieee80211_hw *hw)
 void rtl8723e_dm_init_rate_adaptive_mask(struct ieee80211_hw *hw)
 {
 	struct rtl_priv *rtlpriv = rtl_priv(hw);
+<<<<<<< HEAD
 	struct rate_adaptive *p_ra = &rtlpriv->ra;
+=======
+	struct rate_adaptive *p_ra = &(rtlpriv->ra);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	p_ra->ratr_state = DM_RATR_STA_INIT;
 	p_ra->pre_ratr_state = DM_RATR_STA_INIT;
@@ -551,6 +800,7 @@ void rtl8723e_dm_init_rate_adaptive_mask(struct ieee80211_hw *hw)
 
 }
 
+<<<<<<< HEAD
 static void rtl8723e_dm_refresh_rate_adaptive_mask(struct ieee80211_hw *hw)
 {
 	struct rtl_priv *rtlpriv = rtl_priv(hw);
@@ -634,6 +884,8 @@ static void rtl8723e_dm_refresh_rate_adaptive_mask(struct ieee80211_hw *hw)
 	}
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 void rtl8723e_dm_rf_saving(struct ieee80211_hw *hw, u8 bforce_in_normal)
 {
 	struct rtl_priv *rtlpriv = rtl_priv(hw);
@@ -716,14 +968,20 @@ static void rtl8723e_dm_dynamic_bb_powersaving(struct ieee80211_hw *hw)
 	if (((mac->link_state == MAC80211_NOLINK)) &&
 	    (rtlpriv->dm.entry_min_undec_sm_pwdb == 0)) {
 		dm_pstable->rssi_val_min = 0;
+<<<<<<< HEAD
 		rtl_dbg(rtlpriv, DBG_LOUD, DBG_LOUD,
 			"Not connected to any\n");
+=======
+		RT_TRACE(rtlpriv, DBG_LOUD, DBG_LOUD,
+			 "Not connected to any\n");
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 
 	if (mac->link_state == MAC80211_LINKED) {
 		if (mac->opmode == NL80211_IFTYPE_ADHOC) {
 			dm_pstable->rssi_val_min =
 			    rtlpriv->dm.entry_min_undec_sm_pwdb;
+<<<<<<< HEAD
 			rtl_dbg(rtlpriv, DBG_LOUD, DBG_LOUD,
 				"AP Client PWDB = 0x%lx\n",
 				dm_pstable->rssi_val_min);
@@ -733,14 +991,31 @@ static void rtl8723e_dm_dynamic_bb_powersaving(struct ieee80211_hw *hw)
 			rtl_dbg(rtlpriv, DBG_LOUD, DBG_LOUD,
 				"STA Default Port PWDB = 0x%lx\n",
 				dm_pstable->rssi_val_min);
+=======
+			RT_TRACE(rtlpriv, DBG_LOUD, DBG_LOUD,
+				 "AP Client PWDB = 0x%lx\n",
+				  dm_pstable->rssi_val_min);
+		} else {
+			dm_pstable->rssi_val_min =
+			    rtlpriv->dm.undec_sm_pwdb;
+			RT_TRACE(rtlpriv, DBG_LOUD, DBG_LOUD,
+				 "STA Default Port PWDB = 0x%lx\n",
+				  dm_pstable->rssi_val_min);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		}
 	} else {
 		dm_pstable->rssi_val_min =
 		    rtlpriv->dm.entry_min_undec_sm_pwdb;
 
+<<<<<<< HEAD
 		rtl_dbg(rtlpriv, DBG_LOUD, DBG_LOUD,
 			"AP Ext Port PWDB = 0x%lx\n",
 			dm_pstable->rssi_val_min);
+=======
+		RT_TRACE(rtlpriv, DBG_LOUD, DBG_LOUD,
+			 "AP Ext Port PWDB = 0x%lx\n",
+			  dm_pstable->rssi_val_min);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 
 	rtl8723e_dm_rf_saving(hw, false);
@@ -783,7 +1058,11 @@ void rtl8723e_dm_watchdog(struct ieee80211_hw *hw)
 		rtl8723e_dm_dynamic_bb_powersaving(hw);
 		rtl8723e_dm_dynamic_txpower(hw);
 		rtl8723e_dm_check_txpower_tracking(hw);
+<<<<<<< HEAD
 		rtl8723e_dm_refresh_rate_adaptive_mask(hw);
+=======
+		/* rtl92c_dm_refresh_rate_adaptive_mask(hw); */
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		rtl8723e_dm_bt_coexist(hw);
 		rtl8723e_dm_check_edca_turbo(hw);
 	}
@@ -820,21 +1099,38 @@ void rtl8723e_dm_bt_coexist(struct ieee80211_hw *hw)
 	struct rtl_priv *rtlpriv = rtl_priv(hw);
 	u8 tmp_byte = 0;
 	if (!rtlpriv->btcoexist.bt_coexistence) {
+<<<<<<< HEAD
 		rtl_dbg(rtlpriv, COMP_BT_COEXIST, DBG_LOUD,
 			"[DM]{BT], BT not exist!!\n");
+=======
+		RT_TRACE(rtlpriv, COMP_BT_COEXIST, DBG_LOUD,
+			 "[DM]{BT], BT not exist!!\n");
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		return;
 	}
 
 	if (!rtlpriv->btcoexist.init_set) {
+<<<<<<< HEAD
 		rtl_dbg(rtlpriv, COMP_BT_COEXIST, DBG_LOUD,
 			"[DM][BT], %s\n", __func__);
+=======
+		RT_TRACE(rtlpriv, COMP_BT_COEXIST, DBG_LOUD,
+			 "[DM][BT], rtl8723e_dm_bt_coexist()\n");
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		rtl8723e_dm_init_bt_coexist(hw);
 	}
 
 	tmp_byte = rtl_read_byte(rtlpriv, 0x40);
+<<<<<<< HEAD
 	rtl_dbg(rtlpriv, COMP_BT_COEXIST, DBG_LOUD,
 		"[DM][BT], 0x40 is 0x%x\n", tmp_byte);
 	rtl_dbg(rtlpriv, COMP_BT_COEXIST, DBG_DMESG,
 		"[DM][BT], bt_dm_coexist start\n");
+=======
+	RT_TRACE(rtlpriv, COMP_BT_COEXIST, DBG_LOUD,
+		 "[DM][BT], 0x40 is 0x%x\n", tmp_byte);
+	RT_TRACE(rtlpriv, COMP_BT_COEXIST, DBG_DMESG,
+		 "[DM][BT], bt_dm_coexist start\n");
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	rtl8723e_dm_bt_coexist_8723(hw);
 }

@@ -1781,7 +1781,11 @@ int dentry_needs_remove_privs(struct dentry *dentry)
 	return mask;
 }
 
+<<<<<<< HEAD
 static int __remove_privs(struct vfsmount *mnt, struct dentry *dentry, int kill)
+=======
+static int __remove_privs(struct dentry *dentry, int kill)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	struct iattr newattrs;
 
@@ -1790,7 +1794,11 @@ static int __remove_privs(struct vfsmount *mnt, struct dentry *dentry, int kill)
 	 * Note we call this on write, so notify_change will not
 	 * encounter any conflicting delegations:
 	 */
+<<<<<<< HEAD
 	return notify_change2(mnt, dentry, &newattrs, NULL);
+=======
+	return notify_change(dentry, &newattrs, NULL);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 /*
@@ -1817,7 +1825,11 @@ int file_remove_privs(struct file *file)
 	if (kill < 0)
 		return kill;
 	if (kill)
+<<<<<<< HEAD
 		error = __remove_privs(file->f_path.mnt, dentry, kill);
+=======
+		error = __remove_privs(dentry, kill);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (!error)
 		inode_has_no_xattr(inode);
 

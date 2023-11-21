@@ -2,6 +2,7 @@
 # Makefile for the linux memory manager.
 #
 
+<<<<<<< HEAD
 subdir-ccflags-y += -Werror
 ccflags-y += -I$(srctree)/drivers/misc/mediatek/include
 
@@ -9,6 +10,8 @@ ifdef CONFIG_MTK_ION
 subdir-ccflags-y += -I$(srctree)/drivers/staging/android/ion
 endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 KASAN_SANITIZE_slab_common.o := n
 KASAN_SANITIZE_slab.o := n
 KASAN_SANITIZE_slub.o := n
@@ -107,6 +110,7 @@ obj-$(CONFIG_IDLE_PAGE_TRACKING) += page_idle.o
 obj-$(CONFIG_FRAME_VECTOR) += frame_vector.o
 obj-$(CONFIG_DEBUG_PAGE_REF) += debug_page_ref.o
 obj-$(CONFIG_HARDENED_USERCOPY) += usercopy.o
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 #/* Huacai.Zhou@PSW.BSP.Kernel.MM, 2018-07-07, add alloc wait monitor support*/
 obj-$(CONFIG_OPPO_MEM_MONITOR) += memory_monitor.o
@@ -115,3 +119,5 @@ obj-$(CONFIG_OPPO_MEM_MONITOR) += memory_monitor.o
 #/* Kui.Zhang@TEC.Kernel.Performance, 2019-03-13, add new interface for process memory reclaim*/
 obj-$(CONFIG_PROCESS_RECLAIM) += process_mm_reclaim.o
 #endif /*defined(VENDOR_EDIT) && defined(CONFIG_VIRTUAL_RESERVE_MEMORY)*/
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

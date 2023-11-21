@@ -37,7 +37,10 @@
 #include <linux/uio.h>
 #include <linux/atomic.h>
 #include <linux/prefetch.h>
+<<<<<<< HEAD
 #include <linux/hie.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /*
  * How many user pages to map in one call to get_user_pages().  This determines
@@ -389,8 +392,11 @@ dio_bio_alloc(struct dio *dio, struct dio_submit *sdio,
 
 	sdio->bio = bio;
 	sdio->logical_offset_in_bio = sdio->cur_page_fs_offset;
+<<<<<<< HEAD
 
 	hie_set_dio_crypt_context(dio->inode, bio, sdio->cur_page_fs_offset);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 /*

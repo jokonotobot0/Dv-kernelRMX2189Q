@@ -300,6 +300,7 @@ EXPORT_SYMBOL(sysctl_tcp_wmem);
 atomic_long_t tcp_memory_allocated;	/* Current allocated memory. */
 EXPORT_SYMBOL(tcp_memory_allocated);
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 //Mengqing.Zhao@PSW.CN.WiFi.Network.internet.1394484, 2019/04/02,
 //add for: When find TCP SYN-ACK Timestamp value error, just do not use Timestamp
@@ -315,6 +316,8 @@ int sysctl_tcp_info_print __read_mostly = -1;
 EXPORT_SYMBOL(sysctl_tcp_info_print);
 #endif /* VENDOR_EDIT */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * Current number of TCP sockets.
  */
@@ -553,12 +556,15 @@ unsigned int tcp_poll(struct file *file, struct socket *sock, poll_table *wait)
 
 		if (tp->urg_data & TCP_URG_VALID)
 			mask |= POLLPRI;
+<<<<<<< HEAD
 	} else if (state == TCP_SYN_SENT && inet_sk(sk)->defer_connect) {
 		/* Active TCP fastopen socket with defer_connect
 		 * Return POLLOUT so application can call write()
 		 * in order for kernel to generate SYN+data
 		 */
 		mask |= POLLOUT | POLLWRNORM;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 	/* This barrier is coupled with smp_wmb() in tcp_reset() */
 	smp_rmb();
@@ -1100,7 +1106,10 @@ static int tcp_sendmsg_fastopen(struct sock *sk, struct msghdr *msg,
 				int *copied, size_t size)
 {
 	struct tcp_sock *tp = tcp_sk(sk);
+<<<<<<< HEAD
 	struct inet_sock *inet = inet_sk(sk);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct sockaddr *uaddr = msg->msg_name;
 	int err, flags;
 
@@ -1118,6 +1127,7 @@ static int tcp_sendmsg_fastopen(struct sock *sk, struct msghdr *msg,
 	tp->fastopen_req->data = msg;
 	tp->fastopen_req->size = size;
 
+<<<<<<< HEAD
 	if (inet->defer_connect) {
 		err = tcp_connect(sk);
 		/* Same failure procedure as in tcp_v4/6_connect */
@@ -1138,6 +1148,13 @@ static int tcp_sendmsg_fastopen(struct sock *sk, struct msghdr *msg,
 		tcp_free_fastopen_req(tp);
 		inet->defer_connect = 0;
 	}
+=======
+	flags = (msg->msg_flags & MSG_DONTWAIT) ? O_NONBLOCK : 0;
+	err = __inet_stream_connect(sk->sk_socket, uaddr,
+				    msg->msg_namelen, flags);
+	*copied = tp->fastopen_req->copied;
+	tcp_free_fastopen_req(tp);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return err;
 }
 
@@ -1155,8 +1172,12 @@ int tcp_sendmsg(struct sock *sk, struct msghdr *msg, size_t size)
 	lock_sock(sk);
 
 	flags = msg->msg_flags;
+<<<<<<< HEAD
 	if (unlikely(flags & MSG_FASTOPEN || inet_sk(sk)->defer_connect) &&
 	    !tp->repair) {
+=======
+	if ((flags & MSG_FASTOPEN) && !tp->repair) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		err = tcp_sendmsg_fastopen(sk, msg, &copied_syn, size);
 		if (err == -EINPROGRESS && copied_syn > 0)
 			goto out;
@@ -2353,10 +2374,13 @@ int tcp_disconnect(struct sock *sk, int flags)
 	tp->bytes_acked = 0;
 	tp->bytes_received = 0;
 
+<<<<<<< HEAD
 	/* Clean up fastopen related fields */
 	tcp_free_fastopen_req(tp);
 	inet->defer_connect = 0;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	WARN_ON(inet->inet_num && !icsk->icsk_bind_hash);
 
 	if (sk->sk_frag.page) {
@@ -2731,6 +2755,7 @@ static int do_tcp_setsockopt(struct sock *sk, int level,
 			err = -EINVAL;
 		}
 		break;
+<<<<<<< HEAD
 	case TCP_FASTOPEN_CONNECT:
 		if (val > 1 || val < 0) {
 			err = -EINVAL;
@@ -2743,6 +2768,8 @@ static int do_tcp_setsockopt(struct sock *sk, int level,
 			err = -EOPNOTSUPP;
 		}
 		break;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	case TCP_TIMESTAMP:
 		if (!tp->repair)
 			err = -EPERM;
@@ -3056,10 +3083,13 @@ static int do_tcp_getsockopt(struct sock *sk, int level,
 		val = icsk->icsk_accept_queue.fastopenq.max_qlen;
 		break;
 
+<<<<<<< HEAD
 	case TCP_FASTOPEN_CONNECT:
 		val = tp->fastopen_connect;
 		break;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	case TCP_TIMESTAMP:
 		val = tcp_time_stamp + tp->tsoffset;
 		break;

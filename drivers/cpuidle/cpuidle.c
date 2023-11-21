@@ -6,6 +6,7 @@
  *               Adam Belay <abelay@novell.com>
  *
  * This code is licenced under the GPL.
+<<<<<<< HEAD
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -15,6 +16,8 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See http://www.gnu.org/licenses/gpl-2.0.html for more details.
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  */
 
 #include <linux/clockchips.h>
@@ -44,6 +47,7 @@ static int enabled_devices;
 static int off __read_mostly;
 static int initialized __read_mostly;
 
+<<<<<<< HEAD
 /**
  * wake_up_avail_idle_cpus - break non-iso cpus out of idle
  * wake_up_avail_idle_cpus try to break non-iso cpus which is in idle state
@@ -67,6 +71,8 @@ void wake_up_avail_idle_cpus(void)
 	preempt_enable();
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 int cpuidle_disabled(void)
 {
 	return off;
@@ -225,7 +231,11 @@ int cpuidle_enter_state(struct cpuidle_device *dev, struct cpuidle_driver *drv,
 	}
 
 	/* Take note of the planned idle state. */
+<<<<<<< HEAD
 	sched_idle_set_state(target_state, index);
+=======
+	sched_idle_set_state(target_state);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	trace_cpu_idle_rcuidle(index, dev->cpu);
 	time_start = ns_to_ktime(local_clock());
@@ -238,7 +248,11 @@ int cpuidle_enter_state(struct cpuidle_device *dev, struct cpuidle_driver *drv,
 	trace_cpu_idle_rcuidle(PWR_EVENT_EXIT, dev->cpu);
 
 	/* The cpu is no longer idle or about to enter idle. */
+<<<<<<< HEAD
 	sched_idle_set_state(NULL, -1);
+=======
+	sched_idle_set_state(NULL);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (broadcast) {
 		if (WARN_ON_ONCE(!irqs_disabled()))
@@ -655,6 +669,7 @@ EXPORT_SYMBOL_GPL(cpuidle_register);
 static int cpuidle_latency_notify(struct notifier_block *b,
 		unsigned long l, void *v)
 {
+<<<<<<< HEAD
 	/*
 	 * MTK patch:
 	 * only wakeup idle CPUs which is `online & !isolated`,
@@ -663,6 +678,9 @@ static int cpuidle_latency_notify(struct notifier_block *b,
 /*	wake_up_all_idle_cpus(); */
 	wake_up_avail_idle_cpus();
 
+=======
+	wake_up_all_idle_cpus();
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return NOTIFY_OK;
 }
 

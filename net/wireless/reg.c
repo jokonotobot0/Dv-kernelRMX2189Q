@@ -2165,7 +2165,11 @@ static void reg_process_pending_hints(void)
 
 	/* When last_request->processed becomes true this will be rescheduled */
 	if (lr && !lr->processed) {
+<<<<<<< HEAD
 		reg_process_hint(lr);
+=======
+		pr_debug("Pending regulatory request, waiting for it to be processed...\n");
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		return;
 	}
 

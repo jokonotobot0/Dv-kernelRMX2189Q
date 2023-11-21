@@ -1,5 +1,32 @@
+<<<<<<< HEAD
 // SPDX-License-Identifier: GPL-2.0
 /* Copyright(c) 2009-2014  Realtek Corporation.*/
+=======
+/******************************************************************************
+ *
+ * Copyright(c) 2009-2014  Realtek Corporation.
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of version 2 of the GNU General Public License as
+ * published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ * more details.
+ *
+ * The full GNU General Public License is included in this distribution in the
+ * file called LICENSE.
+ *
+ * Contact Information:
+ * wlanfae <wlanfae@realtek.com>
+ * Realtek Corporation, No. 2, Innovation Road II, Hsinchu Science Park,
+ * Hsinchu 300, Taiwan.
+ *
+ * Larry Finger <Larry.Finger@lwfinger.net>
+ *
+ *****************************************************************************/
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #include "../wifi.h"
 #include "phy_common.h"
@@ -14,15 +41,26 @@ u32 rtl8723_phy_query_bb_reg(struct ieee80211_hw *hw,
 	struct rtl_priv *rtlpriv = rtl_priv(hw);
 	u32 returnvalue, originalvalue, bitshift;
 
+<<<<<<< HEAD
 	rtl_dbg(rtlpriv, COMP_RF, DBG_TRACE,
 		"regaddr(%#x), bitmask(%#x)\n", regaddr, bitmask);
+=======
+	RT_TRACE(rtlpriv, COMP_RF, DBG_TRACE,
+		 "regaddr(%#x), bitmask(%#x)\n", regaddr, bitmask);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	originalvalue = rtl_read_dword(rtlpriv, regaddr);
 	bitshift = rtl8723_phy_calculate_bit_shift(bitmask);
 	returnvalue = (originalvalue & bitmask) >> bitshift;
 
+<<<<<<< HEAD
 	rtl_dbg(rtlpriv, COMP_RF, DBG_TRACE,
 		"BBR MASK=0x%x Addr[0x%x]=0x%x\n", bitmask,
 		regaddr, originalvalue);
+=======
+	RT_TRACE(rtlpriv, COMP_RF, DBG_TRACE,
+		 "BBR MASK=0x%x Addr[0x%x]=0x%x\n", bitmask,
+		 regaddr, originalvalue);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return returnvalue;
 }
 EXPORT_SYMBOL_GPL(rtl8723_phy_query_bb_reg);
@@ -33,9 +71,15 @@ void rtl8723_phy_set_bb_reg(struct ieee80211_hw *hw, u32 regaddr,
 	struct rtl_priv *rtlpriv = rtl_priv(hw);
 	u32 originalvalue, bitshift;
 
+<<<<<<< HEAD
 	rtl_dbg(rtlpriv, COMP_RF, DBG_TRACE,
 		"regaddr(%#x), bitmask(%#x), data(%#x)\n", regaddr, bitmask,
 		data);
+=======
+	RT_TRACE(rtlpriv, COMP_RF, DBG_TRACE,
+		 "regaddr(%#x), bitmask(%#x), data(%#x)\n", regaddr, bitmask,
+		 data);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (bitmask != MASKDWORD) {
 		originalvalue = rtl_read_dword(rtlpriv, regaddr);
@@ -45,17 +89,33 @@ void rtl8723_phy_set_bb_reg(struct ieee80211_hw *hw, u32 regaddr,
 
 	rtl_write_dword(rtlpriv, regaddr, data);
 
+<<<<<<< HEAD
 	rtl_dbg(rtlpriv, COMP_RF, DBG_TRACE,
 		"regaddr(%#x), bitmask(%#x), data(%#x)\n",
 		regaddr, bitmask, data);
+=======
+	RT_TRACE(rtlpriv, COMP_RF, DBG_TRACE,
+		 "regaddr(%#x), bitmask(%#x), data(%#x)\n",
+		 regaddr, bitmask, data);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 EXPORT_SYMBOL_GPL(rtl8723_phy_set_bb_reg);
 
 u32 rtl8723_phy_calculate_bit_shift(u32 bitmask)
 {
+<<<<<<< HEAD
 	u32 i = ffs(bitmask);
 
 	return i ? i - 1 : 32;
+=======
+	u32 i;
+
+	for (i = 0; i <= 31; i++) {
+		if (((bitmask >> i) & 0x1) == 1)
+			break;
+	}
+	return i;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 EXPORT_SYMBOL_GPL(rtl8723_phy_calculate_bit_shift);
 
@@ -73,7 +133,11 @@ u32 rtl8723_phy_rf_serial_read(struct ieee80211_hw *hw,
 	offset &= 0xff;
 	newoffset = offset;
 	if (RT_CANNOT_IO(hw)) {
+<<<<<<< HEAD
 		pr_err("return all one\n");
+=======
+		RT_TRACE(rtlpriv, COMP_ERR, DBG_EMERG, "return all one\n");
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		return 0xFFFFFFFF;
 	}
 	tmplong = rtl_get_bbreg(hw, RFPGA0_XA_HSSIPARAMETER2, MASKDWORD);
@@ -85,10 +149,19 @@ u32 rtl8723_phy_rf_serial_read(struct ieee80211_hw *hw,
 	    (newoffset << 23) | BLSSIREADEDGE;
 	rtl_set_bbreg(hw, RFPGA0_XA_HSSIPARAMETER2, MASKDWORD,
 		      tmplong & (~BLSSIREADEDGE));
+<<<<<<< HEAD
 	rtl_set_bbreg(hw, pphyreg->rfhssi_para2, MASKDWORD, tmplong2);
 	rtl_set_bbreg(hw, RFPGA0_XA_HSSIPARAMETER2, MASKDWORD,
 		      tmplong | BLSSIREADEDGE);
 	udelay(120);
+=======
+	mdelay(1);
+	rtl_set_bbreg(hw, pphyreg->rfhssi_para2, MASKDWORD, tmplong2);
+	mdelay(1);
+	rtl_set_bbreg(hw, RFPGA0_XA_HSSIPARAMETER2, MASKDWORD,
+		      tmplong | BLSSIREADEDGE);
+	mdelay(1);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (rfpath == RF90_PATH_A)
 		rfpi_enable = (u8) rtl_get_bbreg(hw, RFPGA0_XA_HSSIPARAMETER1,
 						 BIT(8));
@@ -101,9 +174,15 @@ u32 rtl8723_phy_rf_serial_read(struct ieee80211_hw *hw,
 	else
 		retvalue = rtl_get_bbreg(hw, pphyreg->rf_rb,
 					 BLSSIREADBACKDATA);
+<<<<<<< HEAD
 	rtl_dbg(rtlpriv, COMP_RF, DBG_TRACE,
 		"RFR-%d Addr[0x%x]=0x%x\n",
 		rfpath, pphyreg->rf_rb, retvalue);
+=======
+	RT_TRACE(rtlpriv, COMP_RF, DBG_TRACE,
+		 "RFR-%d Addr[0x%x]=0x%x\n",
+		 rfpath, pphyreg->rf_rb, retvalue);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return retvalue;
 }
 EXPORT_SYMBOL_GPL(rtl8723_phy_rf_serial_read);
@@ -119,17 +198,28 @@ void rtl8723_phy_rf_serial_write(struct ieee80211_hw *hw,
 	struct bb_reg_def *pphyreg = &rtlphy->phyreg_def[rfpath];
 
 	if (RT_CANNOT_IO(hw)) {
+<<<<<<< HEAD
 		pr_err("stop\n");
+=======
+		RT_TRACE(rtlpriv, COMP_ERR, DBG_EMERG, "stop\n");
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		return;
 	}
 	offset &= 0xff;
 	newoffset = offset;
 	data_and_addr = ((newoffset << 20) | (data & 0x000fffff)) & 0x0fffffff;
 	rtl_set_bbreg(hw, pphyreg->rf3wire_offset, MASKDWORD, data_and_addr);
+<<<<<<< HEAD
 	rtl_dbg(rtlpriv, COMP_RF, DBG_TRACE,
 		"RFW-%d Addr[0x%x]=0x%x\n",
 		rfpath, pphyreg->rf3wire_offset,
 		data_and_addr);
+=======
+	RT_TRACE(rtlpriv, COMP_RF, DBG_TRACE,
+		 "RFW-%d Addr[0x%x]=0x%x\n",
+		 rfpath, pphyreg->rf3wire_offset,
+		 data_and_addr);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 EXPORT_SYMBOL_GPL(rtl8723_phy_rf_serial_write);
 
@@ -255,7 +345,11 @@ bool rtl8723_phy_set_sw_chnl_cmdarray(struct swchnlcmd *cmdtable,
 	struct swchnlcmd *pcmd;
 
 	if (cmdtable == NULL) {
+<<<<<<< HEAD
 		WARN_ONCE(true, "rtl8723-common: cmdtable cannot be NULL.\n");
+=======
+		RT_ASSERT(false, "cmdtable cannot be NULL.\n");
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		return false;
 	}
 

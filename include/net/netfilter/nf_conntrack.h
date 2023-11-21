@@ -105,6 +105,7 @@ struct nf_conn {
 	/* all members below initialized via memset */
 	u8 __nfct_init_offset[0];
 
+<<<<<<< HEAD
 
 	//#ifdef VENDOR_EDIT
 	//Junyuan.Huang@PSW.CN.WiFi.Network.internet.1197891, 2018/04/10,
@@ -130,6 +131,8 @@ struct nf_conn {
 	u32 oppo_app_uid;
 	#endif /* VENDOR_EDIT */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* If we were expected by an expectation, this will be it */
 	struct nf_conn *master;
 
@@ -331,7 +334,11 @@ static inline bool nf_ct_should_gc(const struct nf_conn *ct)
 
 struct kernel_param;
 
+<<<<<<< HEAD
 int nf_conntrack_set_hashsize(const char *val, const struct kernel_param *kp);
+=======
+int nf_conntrack_set_hashsize(const char *val, struct kernel_param *kp);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 int nf_conntrack_hash_resize(unsigned int hashsize);
 
 extern struct hlist_nulls_head *nf_conntrack_hash;

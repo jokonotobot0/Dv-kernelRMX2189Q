@@ -42,7 +42,10 @@
 #include <linux/of_fdt.h>
 #include <linux/efi.h>
 #include <linux/psci.h>
+<<<<<<< HEAD
 #include <linux/mm.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #include <asm/acpi.h>
 #include <asm/fixmap.h>
@@ -192,7 +195,10 @@ static void __init setup_machine_fdt(phys_addr_t dt_phys)
 			cpu_relax();
 	}
 
+<<<<<<< HEAD
 	machine_desc_set(of_flat_dt_get_machine_name());
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	dump_stack_set_arch_desc("%s (DT)", of_flat_dt_get_machine_name());
 }
 
@@ -201,10 +207,17 @@ static void __init request_standard_resources(void)
 	struct memblock_region *region;
 	struct resource *res;
 
+<<<<<<< HEAD
 	kernel_code.start   = __pa_symbol(_text);
 	kernel_code.end     = __pa_symbol(__init_begin - 1);
 	kernel_data.start   = __pa_symbol(_sdata);
 	kernel_data.end     = __pa_symbol(_end - 1);
+=======
+	kernel_code.start   = virt_to_phys(_text);
+	kernel_code.end     = virt_to_phys(__init_begin - 1);
+	kernel_data.start   = virt_to_phys(_sdata);
+	kernel_data.end     = virt_to_phys(_end - 1);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	for_each_memblock(memory, region) {
 		res = alloc_bootmem_low(sizeof(*res));
@@ -293,6 +306,7 @@ void __init setup_arch(char **cmdline_p)
 	smp_init_cpus();
 	smp_build_mpidr_hash();
 
+<<<<<<< HEAD
 #ifdef CONFIG_ARM64_SW_TTBR0_PAN
 	/*
 	 * Make sure init_thread_info.ttbr0 always generates translation
@@ -302,6 +316,8 @@ void __init setup_arch(char **cmdline_p)
 	init_task.thread_info.ttbr0 = __pa_symbol(empty_zero_page);
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #ifdef CONFIG_VT
 #if defined(CONFIG_VGA_CONSOLE)
 	conswitchp = &vga_con;
@@ -340,12 +356,20 @@ subsys_initcall(topology_init);
 static int dump_kernel_offset(struct notifier_block *self, unsigned long v,
 			      void *p)
 {
+<<<<<<< HEAD
 	const unsigned long offset = kaslr_offset();
 
 	if (IS_ENABLED(CONFIG_RANDOMIZE_BASE) && offset > 0) {
 		pr_emerg("Kernel Offset: 0x%lx from 0x%lx\n",
 			 offset, KIMAGE_VADDR);
 		pr_emerg("PHYS_OFFSET: 0x%llx\n", PHYS_OFFSET);
+=======
+	u64 const kaslr_offset = kimage_vaddr - KIMAGE_VADDR;
+
+	if (IS_ENABLED(CONFIG_RANDOMIZE_BASE) && kaslr_offset > 0) {
+		pr_emerg("Kernel Offset: 0x%llx from 0x%lx\n",
+			 kaslr_offset, KIMAGE_VADDR);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	} else {
 		pr_emerg("Kernel Offset: disabled\n");
 	}

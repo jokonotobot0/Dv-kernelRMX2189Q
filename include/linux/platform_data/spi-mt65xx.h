@@ -16,6 +16,7 @@
 struct mtk_chip_config {
 	u32 tx_mlsb;
 	u32 rx_mlsb;
+<<<<<<< HEAD
 	u32 cs_pol;
 	u32 sample_sel;
 
@@ -24,5 +25,7 @@ struct mtk_chip_config {
 	u32 cs_holdtime;
 	u32 cs_idletime;
 	u32 deassert_mode;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 #endif

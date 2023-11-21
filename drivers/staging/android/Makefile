@@ -1,4 +1,5 @@
 ccflags-y += -I$(src)			# needed for trace events
+<<<<<<< HEAD
 subdir-ccflags-y += -I$(srctree)/mm/
 MTK_PLATFORM:= $(subst ",,$(CONFIG_MTK_PLATFORM))
 subdir-ccflags-y += -I$(srctree)/drivers/misc/mediatek/include
@@ -20,3 +21,10 @@ obj-$(CONFIG_ANDROID_INTF_ALARM_DEV)	+= alarm-dev.o
 obj-$(CONFIG_OPPO_HANS) += hans.o
 obj-$(CONFIG_OPPO_HANS) += hans_netfilter.o
 #endif
+=======
+
+obj-y					+= ion/
+
+obj-$(CONFIG_ASHMEM)			+= ashmem.o
+obj-$(CONFIG_ANDROID_LOW_MEMORY_KILLER)	+= lowmemorykiller.o
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

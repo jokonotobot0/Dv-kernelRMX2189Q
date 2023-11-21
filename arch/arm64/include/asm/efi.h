@@ -1,7 +1,10 @@
 #ifndef _ASM_EFI_H
 #define _ASM_EFI_H
 
+<<<<<<< HEAD
 #include <asm/cpufeature.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <asm/io.h>
 #include <asm/mmu_context.h>
 #include <asm/neon.h>
@@ -83,6 +86,7 @@ static inline void efifb_setup_from_dmi(struct screen_info *si, const char *opt)
 
 static inline void efi_set_pgd(struct mm_struct *mm)
 {
+<<<<<<< HEAD
 	__switch_mm(mm);
 
 	if (system_uses_ttbr0_pan()) {
@@ -109,6 +113,9 @@ static inline void efi_set_pgd(struct mm_struct *mm)
 				update_saved_ttbr0(current, current->active_mm);
 		}
 	}
+=======
+	switch_mm(NULL, mm, NULL);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 void efi_virtmap_load(void);

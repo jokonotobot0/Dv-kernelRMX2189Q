@@ -1662,6 +1662,7 @@ static inline void securityfs_remove(struct dentry *dentry)
 
 #endif
 
+<<<<<<< HEAD
 #ifdef CONFIG_BPF_SYSCALL
 union bpf_attr;
 struct bpf_map;
@@ -1710,6 +1711,8 @@ static inline void security_bpf_prog_free(struct bpf_prog_aux *aux)
 #endif /* CONFIG_SECURITY */
 #endif /* CONFIG_BPF_SYSCALL */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #ifdef CONFIG_SECURITY
 
 static inline char *alloc_secdata(void)
@@ -1734,3 +1737,7 @@ static inline void free_secdata(void *secdata)
 #endif /* CONFIG_SECURITY */
 
 #endif /* ! __LINUX_SECURITY_H */
+<<<<<<< HEAD
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

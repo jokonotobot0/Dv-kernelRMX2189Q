@@ -315,6 +315,10 @@ static struct fixed {
 	{ "inst_retired.any_p", "event=0xc0" },
 	{ "cpu_clk_unhalted.ref", "event=0x0,umask=0x03" },
 	{ "cpu_clk_unhalted.thread", "event=0x3c" },
+<<<<<<< HEAD
+=======
+	{ "cpu_clk_unhalted.core", "event=0x3c" },
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	{ "cpu_clk_unhalted.thread_any", "event=0x3c,any=1" },
 	{ NULL, NULL},
 };

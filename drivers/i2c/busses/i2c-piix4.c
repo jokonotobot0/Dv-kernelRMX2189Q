@@ -96,7 +96,11 @@
 #define SB800_PIIX4_PORT_IDX_MASK	0x06
 #define SB800_PIIX4_PORT_IDX_SHIFT	1
 
+<<<<<<< HEAD
 /* On kerncz, SmBus0Sel is at bit 20:19 of PMx00 DecodeEn */
+=======
+/* On kerncz and Hudson2, SmBus0Sel is at bit 20:19 of PMx00 DecodeEn */
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define SB800_PIIX4_PORT_IDX_KERNCZ		0x02
 #define SB800_PIIX4_PORT_IDX_MASK_KERNCZ	0x18
 #define SB800_PIIX4_PORT_IDX_SHIFT_KERNCZ	3
@@ -355,6 +359,7 @@ static int piix4_setup_sb800(struct pci_dev *PIIX4_dev,
 
 	/* Find which register is used for port selection */
 	if (PIIX4_dev->vendor == PCI_VENDOR_ID_AMD) {
+<<<<<<< HEAD
 		switch (PIIX4_dev->device) {
 		case PCI_DEVICE_ID_AMD_KERNCZ_SMBUS:
 			piix4_port_sel_sb800 = SB800_PIIX4_PORT_IDX_KERNCZ;
@@ -367,6 +372,18 @@ static int piix4_setup_sb800(struct pci_dev *PIIX4_dev,
 			piix4_port_mask_sb800 = SB800_PIIX4_PORT_IDX_MASK;
 			piix4_port_shift_sb800 = SB800_PIIX4_PORT_IDX_SHIFT;
 			break;
+=======
+		if (PIIX4_dev->device == PCI_DEVICE_ID_AMD_KERNCZ_SMBUS ||
+		    (PIIX4_dev->device == PCI_DEVICE_ID_AMD_HUDSON2_SMBUS &&
+		     PIIX4_dev->revision >= 0x1F)) {
+			piix4_port_sel_sb800 = SB800_PIIX4_PORT_IDX_KERNCZ;
+			piix4_port_mask_sb800 = SB800_PIIX4_PORT_IDX_MASK_KERNCZ;
+			piix4_port_shift_sb800 = SB800_PIIX4_PORT_IDX_SHIFT_KERNCZ;
+		} else {
+			piix4_port_sel_sb800 = SB800_PIIX4_PORT_IDX_ALT;
+			piix4_port_mask_sb800 = SB800_PIIX4_PORT_IDX_MASK;
+			piix4_port_shift_sb800 = SB800_PIIX4_PORT_IDX_SHIFT;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		}
 	} else {
 		mutex_lock(&piix4_mutex_sb800);

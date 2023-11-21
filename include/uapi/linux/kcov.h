@@ -7,6 +7,7 @@
 #define KCOV_ENABLE			_IO('c', 100)
 #define KCOV_DISABLE			_IO('c', 101)
 
+<<<<<<< HEAD
 enum {
 	/*
 	 * Tracing coverage collection mode.
@@ -31,4 +32,6 @@ enum {
 #define KCOV_CMP_SIZE(n)        ((n) << 1)
 #define KCOV_CMP_MASK           KCOV_CMP_SIZE(3)
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif /* _LINUX_KCOV_IOCTLS_H */

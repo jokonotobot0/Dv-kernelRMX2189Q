@@ -238,7 +238,10 @@ static int tcp_v6_connect(struct sock *sk, struct sockaddr *uaddr,
 	fl6.flowi6_mark = sk->sk_mark;
 	fl6.fl6_dport = usin->sin6_port;
 	fl6.fl6_sport = inet->inet_sport;
+<<<<<<< HEAD
 	fl6.flowi6_uid = sk->sk_uid;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	opt = rcu_dereference_protected(np->opt, lockdep_sock_is_held(sk));
 	final_p = fl6_update_dst(&fl6, opt, &final);
@@ -290,11 +293,14 @@ static int tcp_v6_connect(struct sock *sk, struct sockaddr *uaddr,
 							     inet->inet_sport,
 							     inet->inet_dport);
 
+<<<<<<< HEAD
 	if (tcp_fastopen_defer_connect(sk, &err))
 		return err;
 	if (err)
 		goto late_failure;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	err = tcp_connect(sk);
 	if (err)
 		goto late_failure;
@@ -303,6 +309,10 @@ static int tcp_v6_connect(struct sock *sk, struct sockaddr *uaddr,
 
 late_failure:
 	tcp_set_state(sk, TCP_CLOSE);
+<<<<<<< HEAD
+=======
+	__sk_dst_reset(sk);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 failure:
 	inet->inet_dport = 0;
 	sk->sk_route_caps = 0;
@@ -840,7 +850,10 @@ static void tcp_v6_send_response(const struct sock *sk, struct sk_buff *skb, u32
 	fl6.flowi6_mark = IP6_REPLY_MARK(net, skb->mark);
 	fl6.fl6_dport = t1->dest;
 	fl6.fl6_sport = t1->source;
+<<<<<<< HEAD
 	fl6.flowi6_uid = sock_net_uid(net, sk && sk_fullsock(sk) ? sk : NULL);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	security_skb_classify_flow(skb, flowi6_to_flowi(&fl6));
 
 	/* Pass a socket to ip6_dst_lookup either it is for RST
@@ -1246,6 +1259,12 @@ static int tcp_v6_do_rcv(struct sock *sk, struct sk_buff *skb)
 	if (skb->protocol == htons(ETH_P_IP))
 		return tcp_v4_do_rcv(sk, skb);
 
+<<<<<<< HEAD
+=======
+	if (tcp_filter(sk, skb))
+		goto discard;
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/*
 	 *	socket locking is here for SMP purposes as backlog rcv
 	 *	is currently called with bh processing disabled.
@@ -1446,9 +1465,13 @@ process:
 		}
 		sock_hold(sk);
 		refcounted = true;
+<<<<<<< HEAD
 		nsk = NULL;
 		if (!tcp_filter(sk, skb))
 			nsk = tcp_check_req(sk, skb, req, false);
+=======
+		nsk = tcp_check_req(sk, skb, req, false);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		if (!nsk) {
 			reqsk_put(req);
 			goto discard_and_relse;

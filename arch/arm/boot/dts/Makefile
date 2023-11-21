@@ -960,6 +960,7 @@ endif
 dtstree		:= $(srctree)/$(src)
 dtb-$(CONFIG_OF_ALL_DTBS) := $(patsubst $(dtstree)/%.dts,%.dtb, $(wildcard $(dtstree)/*.dts))
 
+<<<<<<< HEAD
 DTB_NAMES := $(subst $\",,$(CONFIG_BUILD_ARM_APPENDED_DTB_IMAGE_NAMES))
 ifneq ($(DTB_NAMES),)
 DTB_LIST := $(addsuffix .dtb,$(DTB_NAMES))
@@ -975,4 +976,7 @@ targets += dtbs dtbs_install
 targets += $(DTB_LIST)
 
 always		:= $(DTB_LIST)
+=======
+always		:= $(dtb-y)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 clean-files	:= *.dtb

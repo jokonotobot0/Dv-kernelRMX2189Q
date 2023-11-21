@@ -14,6 +14,7 @@
 # platform driver
 snd-soc-mtk-common-objs := mtk-afe-platform-driver.o mtk-afe-fe-dai.o
 obj-$(CONFIG_SND_SOC_MEDIATEK) += snd-soc-mtk-common.o
+<<<<<<< HEAD
 obj-$(CONFIG_SND_SOC_MTK_SRAM) += mtk-sram-manager.o
 
 snd-soc-mtk-sp-common-objs := mtk-sp-pcm-ops.o mtk-afe-debug.o mtk-sp-spk-amp.o
@@ -24,3 +25,5 @@ obj-$(CONFIG_SND_SOC_MTK_BTCVSD) += mtk-btcvsd.o
 ifeq ($(CONFIG_SND_SOC_MTK_AUDIO_DSP),y)
 subdir-ccflags-y += -I$(srctree)/drivers/misc/mediatek/audio_ipi/common/framework/
 endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

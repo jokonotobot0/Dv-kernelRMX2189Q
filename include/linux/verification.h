@@ -32,6 +32,7 @@ enum key_being_used_for {
 };
 extern const char *const key_being_used_for[NR__KEY_BEING_USED_FOR];
 
+<<<<<<< HEAD
 struct key;
 struct public_key_signature;
 
@@ -40,6 +41,12 @@ extern int verify_signature_one(const struct public_key_signature *sig,
 
 #ifdef CONFIG_SYSTEM_DATA_VERIFICATION
 
+=======
+#ifdef CONFIG_SYSTEM_DATA_VERIFICATION
+
+struct key;
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 extern int verify_pkcs7_signature(const void *data, size_t len,
 				  const void *raw_pkcs7, size_t pkcs7_len,
 				  struct key *trusted_keys,

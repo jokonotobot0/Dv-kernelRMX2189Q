@@ -104,6 +104,7 @@ int bpf_prog_load(enum bpf_prog_type prog_type,
 	return syscall(__NR_bpf, BPF_PROG_LOAD, &attr, sizeof(attr));
 }
 
+<<<<<<< HEAD
 int bpf_prog_attach(int prog_fd, int target_fd, enum bpf_attach_type type,
 		    unsigned int flags)
 {
@@ -127,6 +128,8 @@ int bpf_prog_detach(int target_fd, enum bpf_attach_type type)
 	return syscall(__NR_bpf, BPF_PROG_DETACH, &attr, sizeof(attr));
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 int bpf_obj_pin(int fd, const char *pathname)
 {
 	union bpf_attr attr = {

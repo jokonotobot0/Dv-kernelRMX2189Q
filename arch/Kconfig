@@ -492,6 +492,7 @@ config LD_DEAD_CODE_DATA_ELIMINATION
 	  sections (e.g., '.text.init'). Typically '.' in section names
 	  is used to distinguish them from label names / C identifiers.
 
+<<<<<<< HEAD
 config LTO
 	def_bool n
 
@@ -561,6 +562,8 @@ config CFI_CLANG_SHADOW
 	  If you select this option, the kernel builds a fast look-up table of
 	  CFI check functions in loaded modules to reduce overhead.
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 config HAVE_ARCH_WITHIN_STACK_FRAMES
 	bool
 	help

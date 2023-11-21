@@ -28,6 +28,10 @@
  */
 
 #include <linux/export.h>
+<<<<<<< HEAD
+=======
+#include <linux/kernel.h>
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <linux/timex.h>
 #include <linux/capability.h>
 #include <linux/timekeeper_internal.h>
@@ -41,7 +45,10 @@
 #include <asm/uaccess.h>
 #include <asm/unistd.h>
 
+<<<<<<< HEAD
 #include <mt-plat/mtk_ccci_common.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <generated/timeconst.h>
 #include "timekeeping.h"
 
@@ -185,7 +192,10 @@ int do_sys_settimeofday64(const struct timespec64 *tv, const struct timezone *tz
 			if (!tv)
 				warp_clock();
 		}
+<<<<<<< HEAD
 		notify_time_update();
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 	if (tv)
 		return do_settimeofday64(tv);
@@ -260,9 +270,16 @@ unsigned int jiffies_to_msecs(const unsigned long j)
 	return (j + (HZ / MSEC_PER_SEC) - 1)/(HZ / MSEC_PER_SEC);
 #else
 # if BITS_PER_LONG == 32
+<<<<<<< HEAD
 	return (HZ_TO_MSEC_MUL32 * j) >> HZ_TO_MSEC_SHR32;
 # else
 	return (j * HZ_TO_MSEC_NUM) / HZ_TO_MSEC_DEN;
+=======
+	return (HZ_TO_MSEC_MUL32 * j + (1ULL << HZ_TO_MSEC_SHR32) - 1) >>
+	       HZ_TO_MSEC_SHR32;
+# else
+	return DIV_ROUND_UP(j * HZ_TO_MSEC_NUM, HZ_TO_MSEC_DEN);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 # endif
 #endif
 }
@@ -802,6 +819,7 @@ struct timespec64 timespec64_add_safe(const struct timespec64 lhs,
 
 	return res;
 }
+<<<<<<< HEAD
 
 /*
  * Add dummy API to avoid build error,
@@ -810,3 +828,5 @@ struct timespec64 timespec64_add_safe(const struct timespec64 lhs,
 void __weak notify_time_update(void)
 {
 }
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

@@ -180,8 +180,12 @@ static inline struct page *
 alloc_zeroed_user_highpage_movable(struct vm_area_struct *vma,
 					unsigned long vaddr)
 {
+<<<<<<< HEAD
 	return __alloc_zeroed_user_highpage(__GFP_MOVABLE | __GFP_CMA,
 			vma, vaddr);
+=======
+	return __alloc_zeroed_user_highpage(__GFP_MOVABLE, vma, vaddr);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static inline void clear_highpage(struct page *page)

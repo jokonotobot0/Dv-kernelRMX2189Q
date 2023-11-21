@@ -36,7 +36,10 @@ enum {
 	ND_OPT_RDNSS = 25,		/* RFC5006 */
 	ND_OPT_DNSSL = 31,		/* RFC6106 */
 	ND_OPT_6CO = 34,		/* RFC6775 */
+<<<<<<< HEAD
 	ND_OPT_CAPTIVE_PORTAL = 37,	/* RFC7710 */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	__ND_OPT_MAX
 };
 

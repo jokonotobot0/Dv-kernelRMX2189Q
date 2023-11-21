@@ -27,12 +27,18 @@
 #include <linux/shrinker.h>
 #include <linux/types.h>
 #include <linux/miscdevice.h>
+<<<<<<< HEAD
 #include "mtk/ion_drv.h"
 
 #include "ion.h"
 
 struct ion_buffer *ion_handle_buffer(struct ion_handle *handle);
 
+=======
+
+#include "ion.h"
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /**
  * struct ion_buffer - metadata for a particular buffer
  * @ref:		reference count
@@ -81,7 +87,10 @@ struct ion_buffer {
 	int handle_count;
 	char task_comm[TASK_COMM_LEN];
 	pid_t pid;
+<<<<<<< HEAD
 	char alloc_dbg[ION_MM_DBG_NAME_LEN];
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 void ion_buffer_destroy(struct ion_buffer *buffer);
 
@@ -137,12 +146,15 @@ struct ion_client {
 	struct task_struct *task;
 	pid_t pid;
 	struct dentry *debug_root;
+<<<<<<< HEAD
 	char dbg_name[ION_MM_DBG_NAME_LEN]; /* add by K for debug! */
 };
 
 struct ion_handle_debug {
 	int fd;
 	unsigned long long user_ts; /* alloc or import timestamp */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 /**
@@ -164,7 +176,10 @@ struct ion_handle {
 	struct rb_node node;
 	unsigned int kmap_cnt;
 	int id;
+<<<<<<< HEAD
 	struct ion_handle_debug dbg; /*add by K for debug */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 /**
@@ -192,9 +207,12 @@ struct ion_heap_ops {
 	int (*map_user)(struct ion_heap *mapper, struct ion_buffer *buffer,
 			struct vm_area_struct *vma);
 	int (*shrink)(struct ion_heap *heap, gfp_t gfp_mask, int nr_to_scan);
+<<<<<<< HEAD
 	int (*phys)(struct ion_heap *heap, struct ion_buffer *buffer,
 		    ion_phys_addr_t *addr, size_t *len);
 	int (*page_pool_total)(struct ion_heap *heap);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 /**
@@ -477,14 +495,23 @@ void ion_free_nolock(struct ion_client *client, struct ion_handle *handle);
 
 int ion_handle_put_nolock(struct ion_handle *handle);
 
+<<<<<<< HEAD
 struct ion_handle *ion_handle_get_by_id(struct ion_client *client,
 					int id);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 int ion_handle_put(struct ion_handle *handle);
 
 int ion_query_heaps(struct ion_client *client, struct ion_heap_query *query);
 
+<<<<<<< HEAD
 extern struct ion_device *g_ion_device;
 
 extern atomic64_t page_sz_cnt;
+=======
+int ion_share_dma_buf_fd_nolock(struct ion_client *client,
+				struct ion_handle *handle);
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif /* _ION_PRIV_H */

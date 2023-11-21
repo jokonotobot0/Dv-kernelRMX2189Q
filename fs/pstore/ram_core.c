@@ -36,6 +36,7 @@ struct persistent_ram_buffer {
 	uint8_t     data[0];
 };
 
+<<<<<<< HEAD
 #ifdef __aarch64__
 #ifdef memcpy
 #undef memcpy
@@ -43,6 +44,8 @@ struct persistent_ram_buffer {
 #define memcpy memcpy_toio
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define PERSISTENT_RAM_SIG (0x43474244) /* DBGC */
 
 static inline size_t buffer_size(struct persistent_ram_zone *prz)

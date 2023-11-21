@@ -30,10 +30,13 @@
 #define CREATE_TRACE_POINTS
 #include <trace/events/irq.h>
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_SCHED_MONITOR
 #include "mtk_sched_mon.h"
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
    - No shared variables, all the data are CPU local.
    - If a softirq needs serialization, let it serialize itself
@@ -82,6 +85,24 @@ static void wakeup_softirqd(void)
 }
 
 /*
+<<<<<<< HEAD
+=======
+ * If ksoftirqd is scheduled, we do not want to process pending softirqs
+ * right now. Let ksoftirqd handle this at its own rate, to get fairness,
+ * unless we're doing some of the synchronous softirqs.
+ */
+#define SOFTIRQ_NOW_MASK ((1 << HI_SOFTIRQ) | (1 << TASKLET_SOFTIRQ))
+static bool ksoftirqd_running(unsigned long pending)
+{
+	struct task_struct *tsk = __this_cpu_read(ksoftirqd);
+
+	if (pending & SOFTIRQ_NOW_MASK)
+		return false;
+	return tsk && (tsk->state == TASK_RUNNING);
+}
+
+/*
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  * preempt_count and SOFTIRQ_OFFSET usage:
  * - preempt_count is changed by SOFTIRQ_OFFSET on entering or leaving
  *   softirq processing.
@@ -123,9 +144,12 @@ void __local_bh_disable_ip(unsigned long ip, unsigned int cnt)
 		current->preempt_disable_ip = get_lock_parent_ip();
 #endif
 		trace_preempt_off(CALLER_ADDR0, get_lock_parent_ip());
+<<<<<<< HEAD
 #ifdef CONFIG_PREEMPT_MONITOR
 		MT_trace_preempt_off();
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 }
 EXPORT_SYMBOL(__local_bh_disable_ip);
@@ -277,6 +301,7 @@ restart:
 		kstat_incr_softirqs_this_cpu(vec_nr);
 
 		trace_softirq_entry(vec_nr);
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_SCHED_MONITOR
 		mt_trace_SoftIRQ_start(vec_nr);
 #endif
@@ -284,6 +309,9 @@ restart:
 #ifdef CONFIG_MTK_SCHED_MONITOR
 		mt_trace_SoftIRQ_end(vec_nr);
 #endif
+=======
+		h->action(h);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		trace_softirq_exit(vec_nr);
 		if (unlikely(prev_count != preempt_count())) {
 			pr_err("huh, entered softirq %u %s %p with preempt_count %08x, exited with %08x?\n",
@@ -326,7 +354,11 @@ asmlinkage __visible void do_softirq(void)
 
 	pending = local_softirq_pending();
 
+<<<<<<< HEAD
 	if (pending)
+=======
+	if (pending && !ksoftirqd_running(pending))
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		do_softirq_own_stack();
 
 	local_irq_restore(flags);
@@ -353,6 +385,12 @@ void irq_enter(void)
 
 static inline void invoke_softirq(void)
 {
+<<<<<<< HEAD
+=======
+	if (ksoftirqd_running(local_softirq_pending()))
+		return;
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (!force_irqthreads) {
 #ifdef CONFIG_HAVE_IRQ_EXIT_ON_IRQ_STACK
 		/*
@@ -515,6 +553,7 @@ static __latent_entropy void tasklet_action(struct softirq_action *a)
 				if (!test_and_clear_bit(TASKLET_STATE_SCHED,
 							&t->state))
 					BUG();
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_SCHED_MONITOR
 				mt_trace_tasklet_start(t->func);
 #endif
@@ -522,6 +561,9 @@ static __latent_entropy void tasklet_action(struct softirq_action *a)
 #ifdef CONFIG_MTK_SCHED_MONITOR
 				mt_trace_tasklet_end(t->func);
 #endif
+=======
+				t->func(t->data);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 				tasklet_unlock(t);
 				continue;
 			}

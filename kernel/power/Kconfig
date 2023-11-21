@@ -1,7 +1,10 @@
 config SUSPEND
 	bool "Suspend to RAM and standby"
 	depends on ARCH_SUSPEND_POSSIBLE
+<<<<<<< HEAD
 	select RTC_LIB
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	default y
 	---help---
 	  Allow the system to enter sleep states in which main memory is

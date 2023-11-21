@@ -49,6 +49,11 @@ static int ion_cma_allocate(struct ion_heap *heap, struct ion_buffer *buffer,
 	struct device *dev = cma_heap->dev;
 	struct ion_cma_buffer_info *info;
 
+<<<<<<< HEAD
+=======
+	dev_dbg(dev, "Request buffer allocation len %ld\n", len);
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (buffer->flags & ION_FLAG_CACHED)
 		return -EINVAL;
 
@@ -77,6 +82,10 @@ static int ion_cma_allocate(struct ion_heap *heap, struct ion_buffer *buffer,
 	/* keep this for memory release */
 	buffer->priv_virt = info;
 	buffer->sg_table = info->table;
+<<<<<<< HEAD
+=======
+	dev_dbg(dev, "Allocate buffer %p\n", buffer);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return 0;
 
 free_table:
@@ -94,6 +103,10 @@ static void ion_cma_free(struct ion_buffer *buffer)
 	struct device *dev = cma_heap->dev;
 	struct ion_cma_buffer_info *info = buffer->priv_virt;
 
+<<<<<<< HEAD
+=======
+	dev_dbg(dev, "Release buffer %p\n", buffer);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* release memory */
 	dma_free_coherent(dev, buffer->size, info->cpu_addr, info->handle);
 	/* release sg table */

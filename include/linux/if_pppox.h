@@ -43,6 +43,7 @@ struct pptp_opt {
 	u32 seq_sent, seq_recv;
 	int ppp_flags;
 };
+<<<<<<< HEAD
 
 struct pppolac_opt {
 	__u32		local;
@@ -62,6 +63,8 @@ struct pppopns_opt {
 	int		(*backlog_rcv)(struct sock *sk_raw, struct sk_buff *skb);
 };
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <net/sock.h>
 
 struct pppox_sock {
@@ -72,8 +75,11 @@ struct pppox_sock {
 	union {
 		struct pppoe_opt pppoe;
 		struct pptp_opt  pptp;
+<<<<<<< HEAD
 		struct pppolac_opt lac;
 		struct pppopns_opt pns;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	} proto;
 	__be16			num;
 };

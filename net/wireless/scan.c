@@ -70,6 +70,7 @@ module_param(bss_entries_limit, int, 0644);
 MODULE_PARM_DESC(bss_entries_limit,
                  "limit to number of scan BSS entries (per wiphy, default 1000)");
 
+<<<<<<< HEAD
 #ifndef VENDOR_EDIT
 //Shimin.Jiang@PSW.CN.WiFi.Connct.Scan,1301119,2018/3/4
 //Modify for make scan result cache more time
@@ -77,6 +78,10 @@ MODULE_PARM_DESC(bss_entries_limit,
 #else
 #define IEEE80211_SCAN_RESULT_EXPIRE	(30 * HZ)
 #endif  /*VENDOR_EDIT*/
+=======
+#define IEEE80211_SCAN_RESULT_EXPIRE	(30 * HZ)
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static void bss_free(struct cfg80211_internal_bss *bss)
 {
 	struct cfg80211_bss_ies *ies;

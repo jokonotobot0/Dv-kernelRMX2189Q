@@ -41,15 +41,21 @@
 #include <linux/mutex.h>
 #include <linux/debugfs.h>
 #include <linux/seq_file.h>
+<<<<<<< HEAD
 #include <linux/vmalloc.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #define RCU_TREE_NONCORE
 #include "tree.h"
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_USE_RESERVED_EXT_MEM
 #include <linux/exm_driver.h>
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 DECLARE_PER_CPU_SHARED_ALIGNED(unsigned long, rcu_qs_ctr);
 
 static int r_open(struct inode *inode, struct file *file,
@@ -430,6 +436,7 @@ static const struct file_operations rcutorture_fops = {
 	.llseek = seq_lseek,
 	.release = single_release,
 };
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_RCU_MONITOR
 DEFINE_PER_CPU(struct rcu_callback_log, rcu_callback_log_head);
 DEFINE_PER_CPU(struct rcu_invoke_log, rcu_invoke_callback_log);
@@ -631,6 +638,8 @@ static void alloc_rcu_log_entry(void)
 	}
 }
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 static struct dentry *rcudir;
 
@@ -640,10 +649,13 @@ static int __init rcutree_trace_init(void)
 	struct dentry *retval;
 	struct dentry *rspdir;
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_RCU_MONITOR
 	alloc_rcu_log_entry();
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	rcudir = debugfs_create_dir("rcu", NULL);
 	if (!rcudir)
 		goto free_out;
@@ -695,10 +707,13 @@ static int __init rcutree_trace_init(void)
 
 	retval = debugfs_create_file("rcutorture", 0444, rcudir,
 						NULL, &rcutorture_fops);
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_RCU_MONITOR
 	retval = debugfs_create_file("rcu_callback_log", 0444, rcudir,
 						NULL, &rcu_callback_log_fops);
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (!retval)
 		goto free_out;
 	return 0;

@@ -243,7 +243,11 @@ static int shmem_reserve_inode(struct super_block *sb)
 static void shmem_free_inode(struct super_block *sb)
 {
 	struct shmem_sb_info *sbinfo = SHMEM_SB(sb);
+<<<<<<< HEAD
 	if (sbinfo && sbinfo->max_inodes) {
+=======
+	if (sbinfo->max_inodes) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		spin_lock(&sbinfo->stat_lock);
 		sbinfo->free_inodes++;
 		spin_unlock(&sbinfo->stat_lock);
@@ -2678,9 +2682,13 @@ static long shmem_fallocate(struct file *file, int mode, loff_t offset,
 	if (mode & ~(FALLOC_FL_KEEP_SIZE | FALLOC_FL_PUNCH_HOLE))
 		return -EOPNOTSUPP;
 
+<<<<<<< HEAD
 	lockdep_off();
 	inode_lock(inode);
 	lockdep_on();
+=======
+	inode_lock(inode);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (mode & FALLOC_FL_PUNCH_HOLE) {
 		struct address_space *mapping = file->f_mapping;
@@ -2795,9 +2803,13 @@ undone:
 	inode->i_private = NULL;
 	spin_unlock(&inode->i_lock);
 out:
+<<<<<<< HEAD
 	lockdep_off();
 	inode_unlock(inode);
 	lockdep_on();
+=======
+	inode_unlock(inode);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return error;
 }
 
@@ -4091,6 +4103,7 @@ struct file *shmem_file_setup(const char *name, loff_t size, unsigned long flags
 }
 EXPORT_SYMBOL_GPL(shmem_file_setup);
 
+<<<<<<< HEAD
 void shmem_set_file(struct vm_area_struct *vma, struct file *file)
 {
 	if (vma->vm_file)
@@ -4099,6 +4112,8 @@ void shmem_set_file(struct vm_area_struct *vma, struct file *file)
 	vma->vm_ops = &shmem_vm_ops;
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /**
  * shmem_zero_setup - setup a shared anonymous mapping
  * @vma: the vma to be mmapped is prepared by do_mmap_pgoff
@@ -4118,7 +4133,14 @@ int shmem_zero_setup(struct vm_area_struct *vma)
 	if (IS_ERR(file))
 		return PTR_ERR(file);
 
+<<<<<<< HEAD
 	shmem_set_file(vma, file);
+=======
+	if (vma->vm_file)
+		fput(vma->vm_file);
+	vma->vm_file = file;
+	vma->vm_ops = &shmem_vm_ops;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (IS_ENABLED(CONFIG_TRANSPARENT_HUGE_PAGECACHE) &&
 			((vma->vm_start + ~HPAGE_PMD_MASK) & HPAGE_PMD_MASK) <

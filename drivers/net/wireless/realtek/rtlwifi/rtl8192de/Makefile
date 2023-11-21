@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 # SPDX-License-Identifier: GPL-2.0
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 rtl8192de-objs :=		\
 		dm.o		\
 		fw.o		\
@@ -11,3 +14,8 @@ rtl8192de-objs :=		\
 		trx.o
 
 obj-$(CONFIG_RTL8192DE) += rtl8192de.o
+<<<<<<< HEAD
+=======
+
+ccflags-y += -D__CHECK_ENDIAN__
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

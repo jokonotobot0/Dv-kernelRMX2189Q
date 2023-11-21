@@ -69,7 +69,10 @@ source "drivers/nfc/st-nci/Kconfig"
 source "drivers/nfc/nxp-nci/Kconfig"
 source "drivers/nfc/s3fwrn5/Kconfig"
 source "drivers/nfc/st95hf/Kconfig"
+<<<<<<< HEAD
 #Yuexiu.Wu@ODM_WT.WCN.NFC.Basic.1941873,2019/10/04,add for NFC bringup
 source "drivers/nfc/pn553/Kconfig"
 source "drivers/nfc/p73-spi/Kconfig"
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 endmenu

@@ -1,12 +1,15 @@
 config SND_SOC_MEDIATEK
 	tristate
 
+<<<<<<< HEAD
 config SND_SOC_MTK_SRAM
 	tristate
 
 config SND_SOC_MTK_SMART_PHONE
 	tristate
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 config SND_SOC_MT2701
 	tristate "ASoC support for Mediatek MT2701 chip"
 	depends on ARCH_MEDIATEK
@@ -28,6 +31,7 @@ config SND_SOC_MT2701_CS42448
 	  Select Y if you have such device.
 	  If unsure select "N".
 
+<<<<<<< HEAD
 config SND_SOC_MT2712_D1V1
 	tristate "ASoc Audio driver for MT2712 with D1V1 DTB"
 	depends on SND_SOC_MT2701
@@ -90,6 +94,8 @@ config SND_SOC_MT6779_MT6359
 	  Select Y if you have such device.
 	  If unsure select "N".
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 config SND_SOC_MT8173
 	tristate "ASoC support for Mediatek MT8173 chip"
 	depends on ARCH_MEDIATEK
@@ -143,6 +149,7 @@ config SND_SOC_MT8173_RT5650_RT5676
 	  with the RT5650 and RT5676 codecs.
 	  Select Y if you have such device.
 	  If unsure select "N".
+<<<<<<< HEAD
 
 config MTK_SND_SOC_CODEC
 	string "String for Mediatek audio codec"
@@ -271,3 +278,5 @@ config OPPO_KTV_DEV
 	    This will enable KTV feature
 #endif /*VENDOR_EDIT*/
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

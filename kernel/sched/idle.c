@@ -23,10 +23,16 @@ extern char __cpuidle_text_start[], __cpuidle_text_end[];
  * sched_idle_set_state - Record idle state for the current CPU.
  * @idle_state: State to record.
  */
+<<<<<<< HEAD
 void sched_idle_set_state(struct cpuidle_state *idle_state, int index)
 {
 	idle_set_state(this_rq(), idle_state);
 	idle_set_state_idx(this_rq(), index);
+=======
+void sched_idle_set_state(struct cpuidle_state *idle_state)
+{
+	idle_set_state(this_rq(), idle_state);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static int __read_mostly cpu_idle_force_poll;
@@ -225,6 +231,7 @@ static void cpu_idle_loop(void)
 			check_pgt_cache();
 			rmb();
 
+<<<<<<< HEAD
 			local_irq_disable();
 
 			if (cpu_is_offline(cpu)) {
@@ -235,6 +242,14 @@ static void cpu_idle_loop(void)
 				arch_cpu_idle_dead();
 			}
 
+=======
+			if (cpu_is_offline(cpu)) {
+				cpuhp_report_idle_dead();
+				arch_cpu_idle_dead();
+			}
+
+			local_irq_disable();
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			arch_cpu_idle_enter();
 
 			/*

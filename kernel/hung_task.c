@@ -19,6 +19,7 @@
 #include <linux/utsname.h>
 #include <trace/events/sched.h>
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 #include <soc/oppo/oppo_project.h>
 /* fanhui@PhoneSW.BSP, 2016/02/02, DeathHealer, record the hung task killing
@@ -37,17 +38,22 @@ char last_stopper_comm[64];
 #define MAX_IO_WAIT_HUNG 5
 int __read_mostly sysctl_hung_task_maxiowait_count = MAX_IO_WAIT_HUNG;
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * The number of tasks checked:
  */
 int __read_mostly sysctl_hung_task_check_count = PID_MAX_LIMIT;
 
+<<<<<<< HEAD
 #if defined(VENDOR_EDIT) && defined(CONFIG_OPPO_HEALTHINFO)
 // jiheng.xie@PSW.TECH.KERNEL, 2018/12/28
 // Add for iowait hung monitor
 #include <soc/oppo/oppo_healthinfo.h>
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * Limit number of tasks checked in a batch.
  *
@@ -97,6 +103,7 @@ static struct notifier_block panic_block = {
 	.notifier_call = hung_task_panic,
 };
 
+<<<<<<< HEAD
 #if defined(VENDOR_EDIT)
 //yixue.ge@PhoneSW.BSP,20170228 modify for use is_zygote64_process replace "main"
 static bool is_zygote_process(struct task_struct *t)
@@ -135,11 +142,18 @@ static void check_hung_task(struct task_struct *t, unsigned long timeout)
 	}
 #endif
 
+=======
+static void check_hung_task(struct task_struct *t, unsigned long timeout)
+{
+	unsigned long switch_count = t->nvcsw + t->nivcsw;
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/*
 	 * Ensure the task is not frozen.
 	 * Also, skip vfork and any other user process that freezer should skip.
 	 */
 	if (unlikely(t->flags & (PF_FROZEN | PF_FREEZER_SKIP)))
+<<<<<<< HEAD
 #if defined(VENDOR_EDIT) && defined(CONFIG_DEATH_HEALER)
 /* fanhui@PhoneSW.BSP, 2016/02/02, DeathHealer, kill D/T/t state tasks */
 	{
@@ -154,6 +168,10 @@ static void check_hung_task(struct task_struct *t, unsigned long timeout)
 #else
 		return;
 #endif
+=======
+	    return;
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/*
 	 * When a freshly created task is scheduled once, changes its state to
 	 * TASK_UNINTERRUPTIBLE without having ever been switched out once, it
@@ -169,6 +187,7 @@ static void check_hung_task(struct task_struct *t, unsigned long timeout)
 
 	trace_sched_process_hang(t);
 
+<<<<<<< HEAD
 #if defined(VENDOR_EDIT) && defined(CONFIG_DEATH_HEALER)
 /* fanhui@PhoneSW.BSP, 2016/02/02, DeathHealer, kill D/T/t state tasks */
 	//if this task blocked at iowait. so maybe we should reboot system first
@@ -214,6 +233,8 @@ static void check_hung_task(struct task_struct *t, unsigned long timeout)
 		}
 	}
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (!sysctl_hung_task_warnings && !sysctl_hung_task_panic)
 		return;
 
@@ -238,6 +259,7 @@ static void check_hung_task(struct task_struct *t, unsigned long timeout)
 	touch_nmi_watchdog();
 
 	if (sysctl_hung_task_panic) {
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /* Hui.Fan@SWDP.BSP.Kernel.Debug, 2017-05-01
  * Panic on critical process D-state
@@ -252,6 +274,10 @@ static void check_hung_task(struct task_struct *t, unsigned long timeout)
 
 		}
 #endif
+=======
+		trigger_all_cpu_backtrace();
+		panic("hung_task: blocked tasks");
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 }
 
@@ -283,6 +309,7 @@ static bool rcu_lock_break(struct task_struct *g, struct task_struct *t)
  * a really long time (120 seconds). If that happens, print out
  * a warning.
  */
+<<<<<<< HEAD
 #if defined(VENDOR_EDIT) && defined(CONFIG_OPPO_HEALTHINFO)
 // wenbin.liu@PSW.PLATFORM.KERNEL, 2018/12/19
 // Add for iowait hung ctrl set by QualityProtect APK RUS
@@ -298,14 +325,19 @@ bool ohm_iopanic_mon_trig = false;
 unsigned int  iowait_hung_cnt = 0;
 unsigned int  iowait_panic_cnt = 0;
 #endif /*VENDOR_EDIT*/
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static void check_hung_uninterruptible_tasks(unsigned long timeout)
 {
 	int max_count = sysctl_hung_task_check_count;
 	unsigned long last_break = jiffies;
 	struct task_struct *g, *t;
+<<<<<<< HEAD
 #if defined(VENDOR_EDIT) && defined(CONFIG_DEATH_HEALER)
 	unsigned int iowait_count = 0;
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/*
 	 * If the system crashed already then all bets are off,
@@ -324,6 +356,7 @@ static void check_hung_uninterruptible_tasks(unsigned long timeout)
 			last_break = jiffies;
 		}
 		/* use "==" to skip the TASK_KILLABLE tasks waiting on NFS */
+<<<<<<< HEAD
 #if defined(VENDOR_EDIT) && defined(CONFIG_DEATH_HEALER)
 /* fanhui@PhoneSW.BSP, 2016/02/02, DeathHealer, detect D/T/t state tasks */
 /*yixue.ge@PhoneSW.BSP,20180305,add io wait monitor*/
@@ -354,6 +387,12 @@ static void check_hung_uninterruptible_tasks(unsigned long timeout)
     iowait_hung_cnt += iowait_count;
 #endif
 
+=======
+		if (t->state == TASK_UNINTERRUPTIBLE)
+			check_hung_task(t, timeout);
+	}
+ unlock:
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	rcu_read_unlock();
 }
 

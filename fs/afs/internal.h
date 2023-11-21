@@ -497,7 +497,11 @@ extern const struct file_operations afs_file_operations;
 
 extern int afs_open(struct inode *, struct file *);
 extern int afs_release(struct inode *, struct file *);
+<<<<<<< HEAD
 extern int afs_page_filler(struct file *, struct page *);
+=======
+extern int afs_page_filler(void *, struct page *);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /*
  * flock.c

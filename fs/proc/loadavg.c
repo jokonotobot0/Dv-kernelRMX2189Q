@@ -3,11 +3,20 @@
 #include <linux/pid_namespace.h>
 #include <linux/proc_fs.h>
 #include <linux/sched.h>
+<<<<<<< HEAD
 #include <linux/sched/loadavg.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <linux/seq_file.h>
 #include <linux/seqlock.h>
 #include <linux/time.h>
 
+<<<<<<< HEAD
+=======
+#define LOAD_INT(x) ((x) >> FSHIFT)
+#define LOAD_FRAC(x) LOAD_INT(((x) & (FIXED_1-1)) * 100)
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int loadavg_proc_show(struct seq_file *m, void *v)
 {
 	unsigned long avnrun[3];

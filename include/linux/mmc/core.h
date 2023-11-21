@@ -47,8 +47,12 @@ struct mmc_command {
  */
 #define MMC_RSP_NONE	(0)
 #define MMC_RSP_R1	(MMC_RSP_PRESENT|MMC_RSP_CRC|MMC_RSP_OPCODE)
+<<<<<<< HEAD
 #define MMC_RSP_R1B	\
 	(MMC_RSP_PRESENT|MMC_RSP_CRC|MMC_RSP_OPCODE|MMC_RSP_BUSY)
+=======
+#define MMC_RSP_R1B	(MMC_RSP_PRESENT|MMC_RSP_CRC|MMC_RSP_OPCODE|MMC_RSP_BUSY)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define MMC_RSP_R2	(MMC_RSP_PRESENT|MMC_RSP_136|MMC_RSP_CRC)
 #define MMC_RSP_R3	(MMC_RSP_PRESENT)
 #define MMC_RSP_R4	(MMC_RSP_PRESENT)
@@ -59,8 +63,12 @@ struct mmc_command {
 /* Can be used by core to poll after switch to MMC HS mode */
 #define MMC_RSP_R1_NO_CRC	(MMC_RSP_PRESENT|MMC_RSP_OPCODE)
 
+<<<<<<< HEAD
 #define mmc_resp_type(cmd)	((cmd)->flags & \
 	(MMC_RSP_PRESENT|MMC_RSP_136|MMC_RSP_CRC|MMC_RSP_BUSY|MMC_RSP_OPCODE))
+=======
+#define mmc_resp_type(cmd)	((cmd)->flags & (MMC_RSP_PRESENT|MMC_RSP_136|MMC_RSP_CRC|MMC_RSP_BUSY|MMC_RSP_OPCODE))
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /*
  * These are the SPI response types for MMC, SD, and SDIO cards.
@@ -142,6 +150,7 @@ struct mmc_request {
 	void			(*done)(struct mmc_request *);/* completion function */
 	struct mmc_host		*host;
 
+<<<<<<< HEAD
 #if defined(CONFIG_MTK_HW_FDE) || defined(CONFIG_HIE) \
 	|| defined(CONFIG_MTK_EMMC_HW_CQ)
 	struct request          *req;
@@ -169,10 +178,15 @@ struct mmc_request {
 #ifdef CONFIG_BLOCK
 	int			lat_hist_enabled;
 #endif
+=======
+	/* Allow other commands during this ongoing data transfer or busy wait */
+	bool			cap_cmd_during_tfr;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 struct mmc_card;
 struct mmc_async_req;
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_EMMC_HW_CQ
 struct mmc_cmdq_req;
 
@@ -189,6 +203,9 @@ extern int mmc_cmdq_erase(struct mmc_cmdq_req *cmdq_req,
 	      struct mmc_card *card, unsigned int from, unsigned int nr,
 	      unsigned int arg);
 #endif
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 extern int mmc_stop_bkops(struct mmc_card *);
 extern int mmc_read_bkops_status(struct mmc_card *);
 extern struct mmc_async_req *mmc_start_req(struct mmc_host *,
@@ -204,11 +221,14 @@ extern int mmc_wait_for_app_cmd(struct mmc_host *, struct mmc_card *,
 	struct mmc_command *, int);
 extern void mmc_start_bkops(struct mmc_card *card, bool from_exception);
 extern int mmc_switch(struct mmc_card *, u8, u8, u8, unsigned int);
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_EMMC_HW_CQ
 extern int __mmc_switch_cmdq_mode(struct mmc_command *cmd, u8 set, u8 index,
 				  u8 value, unsigned int timeout_ms,
 				  bool use_busy_signal, bool ignore_timeout);
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 extern int mmc_send_tuning(struct mmc_host *host, u32 opcode, int *cmd_error);
 extern int mmc_get_ext_csd(struct mmc_card *card, u8 **new_ext_csd);
 
@@ -237,9 +257,12 @@ extern int mmc_set_blocklen(struct mmc_card *card, unsigned int blocklen);
 extern int mmc_set_blockcount(struct mmc_card *card, unsigned int blockcount,
 			      bool is_rel_write);
 extern int mmc_hw_reset(struct mmc_host *host);
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_EMMC_HW_CQ
 extern int mmc_cmdq_hw_reset(struct mmc_host *host);
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 extern int mmc_can_reset(struct mmc_card *card);
 
 extern void mmc_set_data_timeout(struct mmc_data *, const struct mmc_card *);
@@ -247,7 +270,10 @@ extern unsigned int mmc_align_data_size(struct mmc_card *, unsigned int);
 
 extern int __mmc_claim_host(struct mmc_host *host, atomic_t *abort);
 extern void mmc_release_host(struct mmc_host *host);
+<<<<<<< HEAD
 extern int mmc_try_claim_host(struct mmc_host *host, unsigned int delay);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 extern void mmc_get_card(struct mmc_card *card);
 extern void mmc_put_card(struct mmc_card *card);
@@ -256,6 +282,7 @@ extern int mmc_flush_cache(struct mmc_card *);
 
 extern int mmc_detect_card_removed(struct mmc_host *host);
 
+<<<<<<< HEAD
 #if defined(CONFIG_MMC_FFU)
 extern int mmc_reinit_oldcard(struct mmc_host *host);
 #endif
@@ -267,6 +294,8 @@ extern int mmc_blk_cmdq_switch(struct mmc_card *card, int enable);
 extern int mmc_run_queue_thread(void *data);
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /**
  *	mmc_claim_host - exclusively claim a host
  *	@host: mmc host to claim

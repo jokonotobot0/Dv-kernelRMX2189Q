@@ -456,6 +456,7 @@ static int mt2701_ies_smt_set(struct regmap *regmap, unsigned int pin,
 	return -EINVAL;
 }
 
+<<<<<<< HEAD
 static int mt2701_spec_ies_get(struct regmap *regmap, unsigned int pin)
 {
 	return mtk_spec_get_ies_smt_range(regmap, mt2701_ies_set,
@@ -474,6 +475,8 @@ static int mt2701_spec_pull_get(struct regmap *regmap, unsigned int pin)
 		ARRAY_SIZE(mt2701_spec_pupd), pin);
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static const struct mtk_spec_pinmux_set mt2701_spec_pinmux[] = {
 	MTK_PINMUX_SPEC(22, 0xb10, 3),
 	MTK_PINMUX_SPEC(23, 0xb10, 4),
@@ -521,8 +524,12 @@ static void mt2701_spec_pinmux_set(struct regmap *reg, unsigned int pin,
 	regmap_update_bits(reg, mt2701_spec_pinmux[i].offset, mask, value);
 }
 
+<<<<<<< HEAD
 static void mt2701_spec_dir_set(struct mtk_pinctrl *pctl,
 			unsigned int *reg_addr, unsigned int pin, bool input)
+=======
+static void mt2701_spec_dir_set(unsigned int *reg_addr, unsigned int pin)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	if (pin > 175)
 		*reg_addr += 0x10;
@@ -539,9 +546,12 @@ static const struct mtk_pinctrl_devdata mt2701_pinctrl_data = {
 	.spec_ies_smt_set = mt2701_ies_smt_set,
 	.spec_pinmux_set = mt2701_spec_pinmux_set,
 	.spec_dir_set = mt2701_spec_dir_set,
+<<<<<<< HEAD
 	.spec_pull_get = mt2701_spec_pull_get,
 	.spec_ies_get = mt2701_spec_ies_get,
 	.spec_smt_get = mt2701_spec_smt_get,
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	.dir_offset = 0x0000,
 	.pullen_offset = 0x0150,
 	.pullsel_offset = 0x0280,
@@ -595,7 +605,10 @@ static struct platform_driver mtk_pinctrl_driver = {
 	.probe = mt2701_pinctrl_probe,
 	.driver = {
 		.name = "mediatek-mt2701-pinctrl",
+<<<<<<< HEAD
 		.owner = THIS_MODULE,
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		.of_match_table = mt2701_pctrl_match,
 		.pm = &mtk_eint_pm_ops,
 	},

@@ -16,7 +16,10 @@
 #include <linux/delay.h>
 #include <linux/io.h>
 #include <linux/module.h>
+<<<<<<< HEAD
 #include <linux/of_device.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <linux/platform_device.h>
 #include <linux/phy/phy.h>
 
@@ -88,9 +91,12 @@
 
 #define MIPITX_DSI_PLL_CON2	0x58
 
+<<<<<<< HEAD
 #define MIPITX_DSI_PLL_TOP	0x64
 #define RG_DSI_MPPLL_PRESERVE		(0xff << 8)
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define MIPITX_DSI_PLL_PWR	0x68
 #define RG_DSI_MPPLL_SDM_PWR_ON		BIT(0)
 #define RG_DSI_MPPLL_SDM_ISO_EN		BIT(1)
@@ -127,6 +133,7 @@
 #define SW_LNT2_HSTX_PRE_OE		BIT(24)
 #define SW_LNT2_HSTX_OE			BIT(25)
 
+<<<<<<< HEAD
 struct mtk_mipitx_data {
 	const u32 mppll_preserve;
 };
@@ -136,6 +143,12 @@ struct mtk_mipi_tx {
 	void __iomem *regs;
 	u32 data_rate;
 	const struct mtk_mipitx_data *driver_data;
+=======
+struct mtk_mipi_tx {
+	struct device *dev;
+	void __iomem *regs;
+	unsigned int data_rate;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct clk_hw pll_hw;
 	struct clk *pll;
 };
@@ -172,7 +185,11 @@ static void mtk_mipi_tx_update_bits(struct mtk_mipi_tx *mipi_tx, u32 offset,
 static int mtk_mipi_tx_pll_prepare(struct clk_hw *hw)
 {
 	struct mtk_mipi_tx *mipi_tx = mtk_mipi_tx_from_clk_hw(hw);
+<<<<<<< HEAD
 	u8 txdiv, txdiv0, txdiv1;
+=======
+	unsigned int txdiv, txdiv0, txdiv1;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	u64 pcw;
 
 	dev_dbg(mipi_tx->dev, "prepare: %u Hz\n", mipi_tx->data_rate);
@@ -252,10 +269,13 @@ static int mtk_mipi_tx_pll_prepare(struct clk_hw *hw)
 	mtk_mipi_tx_clear_bits(mipi_tx, MIPITX_DSI_PLL_CON1,
 			       RG_DSI_MPPLL_SDM_SSC_EN);
 
+<<<<<<< HEAD
 	mtk_mipi_tx_update_bits(mipi_tx, MIPITX_DSI_PLL_TOP,
 				RG_DSI_MPPLL_PRESERVE,
 				mipi_tx->driver_data->mppll_preserve);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return 0;
 }
 
@@ -268,9 +288,12 @@ static void mtk_mipi_tx_pll_unprepare(struct clk_hw *hw)
 	mtk_mipi_tx_clear_bits(mipi_tx, MIPITX_DSI_PLL_CON0,
 			       RG_DSI_MPPLL_PLL_EN);
 
+<<<<<<< HEAD
 	mtk_mipi_tx_update_bits(mipi_tx, MIPITX_DSI_PLL_TOP,
 				RG_DSI_MPPLL_PRESERVE, 0);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	mtk_mipi_tx_update_bits(mipi_tx, MIPITX_DSI_PLL_PWR,
 				RG_DSI_MPPLL_SDM_ISO_EN |
 				RG_DSI_MPPLL_SDM_PWR_ON,
@@ -326,7 +349,11 @@ static const struct clk_ops mtk_mipi_tx_pll_ops = {
 static int mtk_mipi_tx_power_on_signal(struct phy *phy)
 {
 	struct mtk_mipi_tx *mipi_tx = phy_get_drvdata(phy);
+<<<<<<< HEAD
 	u32 reg;
+=======
+	unsigned int reg;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	for (reg = MIPITX_DSI_CLOCK_LANE;
 	     reg <= MIPITX_DSI_DATA_LANE3; reg += 4)
@@ -357,7 +384,11 @@ static int mtk_mipi_tx_power_on(struct phy *phy)
 static void mtk_mipi_tx_power_off_signal(struct phy *phy)
 {
 	struct mtk_mipi_tx *mipi_tx = phy_get_drvdata(phy);
+<<<<<<< HEAD
 	u32 reg;
+=======
+	unsigned int reg;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	mtk_mipi_tx_set_bits(mipi_tx, MIPITX_DSI_TOP_CON,
 			     RG_DSI_PAD_TIE_LOW_EN);
@@ -407,7 +438,10 @@ static int mtk_mipi_tx_probe(struct platform_device *pdev)
 	if (!mipi_tx)
 		return -ENOMEM;
 
+<<<<<<< HEAD
 	mipi_tx->driver_data = of_device_get_match_data(dev);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	mem = platform_get_resource(pdev, IORESOURCE_MEM, 0);
 	mipi_tx->regs = devm_ioremap_resource(dev, mem);
 	if (IS_ERR(mipi_tx->regs)) {
@@ -465,6 +499,7 @@ static int mtk_mipi_tx_remove(struct platform_device *pdev)
 	return 0;
 }
 
+<<<<<<< HEAD
 static const struct mtk_mipitx_data mt2701_mipitx_data = {
 	.mppll_preserve = (3 << 8)
 };
@@ -478,6 +513,10 @@ static const struct of_device_id mtk_mipi_tx_match[] = {
 	  .data = &mt2701_mipitx_data },
 	{ .compatible = "mediatek,mt8173-mipi-tx",
 	  .data = &mt8173_mipitx_data },
+=======
+static const struct of_device_id mtk_mipi_tx_match[] = {
+	{ .compatible = "mediatek,mt8173-mipi-tx", },
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	{},
 };
 

@@ -8,5 +8,8 @@ obj-$(CONFIG_SOC_CAMERA_PLATFORM)	+= soc_camera_platform.o
 # soc-camera host drivers have to be linked after camera drivers
 obj-$(CONFIG_VIDEO_ATMEL_ISI)		+= atmel-isi.o
 obj-$(CONFIG_VIDEO_SH_MOBILE_CEU)	+= sh_mobile_ceu_camera.o
+<<<<<<< HEAD
 obj-$(CONFIG_VIDEO_MTK_MIPICSI0)  	+= mtk_mipicsi0.o
 obj-$(CONFIG_VIDEO_MTK_MIPICSI1)  	+= mtk_mipicsi1.o
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

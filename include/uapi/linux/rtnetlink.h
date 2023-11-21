@@ -132,9 +132,12 @@ enum {
 	RTM_GETMDB = 86,
 #define RTM_GETMDB RTM_GETMDB
 
+<<<<<<< HEAD
 	RTM_NORA = 87,
 #define RTM_NORA RTM_NORA
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	RTM_NEWNSID = 88,
 #define RTM_NEWNSID RTM_NEWNSID
 	RTM_DELNSID = 89,
@@ -321,7 +324,10 @@ enum rtattr_type_t {
 	RTA_ENCAP,
 	RTA_EXPIRES,
 	RTA_PAD,
+<<<<<<< HEAD
 	RTA_UID,
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	__RTA_MAX
 };
 

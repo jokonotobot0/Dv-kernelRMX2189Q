@@ -18,7 +18,10 @@
 #include "ext4.h"
 #include "xattr.h"
 #include "truncate.h"
+<<<<<<< HEAD
 #include <trace/events/android_fs.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #define EXT4_XATTR_SYSTEM_DATA	"data"
 #define EXT4_MIN_INLINE_DATA_SIZE	((sizeof(__le32) * EXT4_N_BLOCKS))
@@ -503,6 +506,7 @@ int ext4_readpage_inline(struct inode *inode, struct page *page)
 		return -EAGAIN;
 	}
 
+<<<<<<< HEAD
 	if (trace_android_fs_dataread_start_enabled()) {
 		char *path, pathbuf[MAX_TRACE_PATHBUF_LEN];
 
@@ -514,6 +518,8 @@ int ext4_readpage_inline(struct inode *inode, struct page *page)
 						path, current->comm);
 	}
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/*
 	 * Current inline data can only exist in the 1st page,
 	 * So for all the other pages, just set them uptodate.
@@ -525,8 +531,11 @@ int ext4_readpage_inline(struct inode *inode, struct page *page)
 		SetPageUptodate(page);
 	}
 
+<<<<<<< HEAD
 	trace_android_fs_dataread_end(inode, page_offset(page), PAGE_SIZE);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	up_read(&EXT4_I(inode)->xattr_sem);
 
 	unlock_page(page);
@@ -1042,7 +1051,11 @@ static int ext4_add_dirent_to_inline(handle_t *handle,
 	err = ext4_journal_get_write_access(handle, iloc->bh);
 	if (err)
 		return err;
+<<<<<<< HEAD
 	ext4_insert_dentry(inode, de, inline_size, fname);
+=======
+	ext4_insert_dentry(dir, inode, de, inline_size, fname);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	ext4_show_inline_dir(dir, iloc->bh, inline_start, inline_size);
 

@@ -708,7 +708,11 @@ static void _remove_opp_dev(struct opp_device *opp_dev,
 			    struct opp_table *opp_table)
 {
 	opp_debug_unregister(opp_dev, opp_table);
+<<<<<<< HEAD
 	list_del_rcu(&opp_dev->node);
+=======
+	list_del(&opp_dev->node);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	call_srcu(&opp_table->srcu_head.srcu, &opp_dev->rcu_head,
 		  _kfree_opp_dev_rcu);
 }

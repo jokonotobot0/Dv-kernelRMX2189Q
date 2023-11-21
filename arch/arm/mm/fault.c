@@ -25,7 +25,10 @@
 #include <asm/system_misc.h>
 #include <asm/system_info.h>
 #include <asm/tlbflush.h>
+<<<<<<< HEAD
 #include <mt-plat/aee.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #include "fault.h"
 
@@ -215,7 +218,11 @@ static inline bool access_error(unsigned int fsr, struct vm_area_struct *vma)
 {
 	unsigned int mask = VM_READ | VM_WRITE | VM_EXEC;
 
+<<<<<<< HEAD
 	if ((fsr & FSR_WRITE) && !(fsr & FSR_CM))
+=======
+	if (fsr & FSR_WRITE)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		mask = VM_WRITE;
 	if (fsr & FSR_LNX_PF)
 		mask = VM_EXEC;
@@ -277,15 +284,26 @@ do_page_fault(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
 		local_irq_enable();
 
 	/*
+<<<<<<< HEAD
 	 * If we're in an interrupt, or have no irqs, or have no user
 	 * context, we must not take the fault..
 	 */
 	if (faulthandler_disabled() || irqs_disabled() || !mm)
+=======
+	 * If we're in an interrupt or have no user
+	 * context, we must not take the fault..
+	 */
+	if (faulthandler_disabled() || !mm)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		goto no_context;
 
 	if (user_mode(regs))
 		flags |= FAULT_FLAG_USER;
+<<<<<<< HEAD
 	if ((fsr & FSR_WRITE) && !(fsr & FSR_CM))
+=======
+	if (fsr & FSR_WRITE)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		flags |= FAULT_FLAG_WRITE;
 
 	/*
@@ -487,6 +505,7 @@ bad_area:
 	do_bad_area(addr, fsr, regs);
 	return 0;
 }
+<<<<<<< HEAD
 
 #if defined(CONFIG_MTK_AEE_FEATURE) && defined(CONFIG_MODULES)
 int __kprobes
@@ -547,6 +566,8 @@ bad_ret:
 	return -1;
 }
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #else					/* CONFIG_MMU */
 static int
 do_translation_fault(unsigned long addr, unsigned int fsr,
@@ -611,6 +632,7 @@ hook_fault_code(int nr, int (*fn)(unsigned long, unsigned int, struct pt_regs *)
 asmlinkage void __exception
 do_DataAbort(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
 {
+<<<<<<< HEAD
 	struct thread_info *thread = current_thread_info();
 	const struct fsr_info *inf = fsr_info + fsr_fs(fsr);
 	struct siginfo info;
@@ -638,6 +660,13 @@ do_DataAbort(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
 			thread->cpu_excp--;
 		return;
 	}
+=======
+	const struct fsr_info *inf = fsr_info + fsr_fs(fsr);
+	struct siginfo info;
+
+	if (!inf->fn(addr, fsr & ~FSR_LNX_PF, regs))
+		return;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	pr_alert("Unhandled fault: %s (0x%03x) at 0x%08lx\n",
 		inf->name, fsr, addr);
@@ -666,6 +695,7 @@ hook_ifault_code(int nr, int (*fn)(unsigned long, unsigned int, struct pt_regs *
 asmlinkage void __exception
 do_PrefetchAbort(unsigned long addr, unsigned int ifsr, struct pt_regs *regs)
 {
+<<<<<<< HEAD
 	struct thread_info *thread = current_thread_info();
 	const struct fsr_info *inf = ifsr_info + fsr_fs(ifsr);
 	struct siginfo info;
@@ -691,6 +721,13 @@ do_PrefetchAbort(unsigned long addr, unsigned int ifsr, struct pt_regs *regs)
 			thread->cpu_excp--;
 		return;
 	}
+=======
+	const struct fsr_info *inf = ifsr_info + fsr_fs(ifsr);
+	struct siginfo info;
+
+	if (!inf->fn(addr, ifsr | FSR_LNX_PF, regs))
+		return;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	pr_alert("Unhandled prefetch abort: %s (0x%03x) at 0x%08lx\n",
 		inf->name, ifsr, addr);

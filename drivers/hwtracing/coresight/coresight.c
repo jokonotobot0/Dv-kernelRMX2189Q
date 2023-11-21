@@ -371,6 +371,7 @@ struct coresight_device *coresight_get_sink(struct list_head *path)
 	return csdev;
 }
 
+<<<<<<< HEAD
 static int coresight_enabled_sink(struct device *dev, void *data)
 {
 	bool *reset = data;
@@ -417,6 +418,8 @@ struct coresight_device *coresight_get_enabled_sink(bool deactivate)
 	return dev ? to_coresight_device(dev) : NULL;
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /**
  * _coresight_build_path - recursively build a path from a @csdev to a sink.
  * @csdev:	The device to start from.
@@ -429,7 +432,10 @@ struct coresight_device *coresight_get_enabled_sink(bool deactivate)
  * last one.
  */
 static int _coresight_build_path(struct coresight_device *csdev,
+<<<<<<< HEAD
 				 struct coresight_device *sink,
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 				 struct list_head *path)
 {
 	int i;
@@ -437,15 +443,24 @@ static int _coresight_build_path(struct coresight_device *csdev,
 	struct coresight_node *node;
 
 	/* An activated sink has been found.  Enqueue the element */
+<<<<<<< HEAD
 	if (csdev == sink)
+=======
+	if ((csdev->type == CORESIGHT_DEV_TYPE_SINK ||
+	     csdev->type == CORESIGHT_DEV_TYPE_LINKSINK) && csdev->activated)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		goto out;
 
 	/* Not a sink - recursively explore each port found on this element */
 	for (i = 0; i < csdev->nr_outport; i++) {
 		struct coresight_device *child_dev = csdev->conns[i].child_dev;
 
+<<<<<<< HEAD
 		if (child_dev &&
 		    _coresight_build_path(child_dev, sink, path) == 0) {
+=======
+		if (child_dev && _coresight_build_path(child_dev, path) == 0) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			found = true;
 			break;
 		}
@@ -472,22 +487,33 @@ out:
 	return 0;
 }
 
+<<<<<<< HEAD
 struct list_head *coresight_build_path(struct coresight_device *source,
 				       struct coresight_device *sink)
+=======
+struct list_head *coresight_build_path(struct coresight_device *csdev)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	struct list_head *path;
 	int rc;
 
+<<<<<<< HEAD
 	if (!sink)
 		return ERR_PTR(-EINVAL);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	path = kzalloc(sizeof(struct list_head), GFP_KERNEL);
 	if (!path)
 		return ERR_PTR(-ENOMEM);
 
 	INIT_LIST_HEAD(path);
 
+<<<<<<< HEAD
 	rc = _coresight_build_path(source, sink, path);
+=======
+	rc = _coresight_build_path(csdev, path);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (rc) {
 		kfree(path);
 		return ERR_PTR(rc);
@@ -551,7 +577,10 @@ static int coresight_validate_source(struct coresight_device *csdev,
 int coresight_enable(struct coresight_device *csdev)
 {
 	int cpu, ret = 0;
+<<<<<<< HEAD
 	struct coresight_device *sink;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct list_head *path;
 	enum coresight_dev_subtype_source subtype;
 
@@ -574,6 +603,7 @@ int coresight_enable(struct coresight_device *csdev)
 		goto out;
 	}
 
+<<<<<<< HEAD
 	/*
 	 * Search for a valid sink for this session but don't reset the
 	 * "enable_sink" flag in sysFS.  Users get to do that explicitly.
@@ -585,6 +615,9 @@ int coresight_enable(struct coresight_device *csdev)
 	}
 
 	path = coresight_build_path(csdev, sink);
+=======
+	path = coresight_build_path(csdev);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (IS_ERR(path)) {
 		pr_err("building path(s) failed\n");
 		ret = PTR_ERR(path);

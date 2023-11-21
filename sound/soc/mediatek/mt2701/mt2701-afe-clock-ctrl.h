@@ -33,6 +33,7 @@ int mt2701_turn_on_afe_clock(struct mtk_base_afe *afe);
 void mt2701_turn_off_afe_clock(struct mtk_base_afe *afe);
 
 void mt2701_mclk_configuration(struct mtk_base_afe *afe, int id, int domain,
+<<<<<<< HEAD
 			       unsigned int mclk);
 int mt2701_turn_on_mclk(struct mtk_base_afe *afe, int id);
 void mt2701_turn_off_mclk(struct mtk_base_afe *afe, int id);
@@ -62,5 +63,8 @@ void mt2712_turn_off_tdm_clock(struct mtk_base_afe *afe);
 
 int mt2701_tdm_clk_configuration(struct mtk_base_afe *afe, int tdm_id,
 				  struct snd_pcm_hw_params *params, bool coclk);
+=======
+			       int mclk);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #endif

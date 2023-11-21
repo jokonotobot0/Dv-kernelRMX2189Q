@@ -15,7 +15,10 @@
 #define MTK_DRM_DDP_COMP_H
 
 #include <linux/io.h>
+<<<<<<< HEAD
 #include <stdbool.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 struct device;
 struct device_node;
@@ -37,12 +40,16 @@ enum mtk_ddp_comp_type {
 	MTK_DISP_PWM,
 	MTK_DISP_MUTEX,
 	MTK_DISP_OD,
+<<<<<<< HEAD
 	MTK_DISP_BLS,
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	MTK_DDP_COMP_TYPE_MAX,
 };
 
 enum mtk_ddp_comp_id {
 	DDP_COMPONENT_AAL,
+<<<<<<< HEAD
 	DDP_COMPONENT_AAL1,
 	DDP_COMPONENT_BLS,
 	DDP_COMPONENT_COLOR0,
@@ -50,14 +57,24 @@ enum mtk_ddp_comp_id {
 	DDP_COMPONENT_COLOR2,
 	DDP_COMPONENT_DPI0,
 	DDP_COMPONENT_DPI1,
+=======
+	DDP_COMPONENT_COLOR0,
+	DDP_COMPONENT_COLOR1,
+	DDP_COMPONENT_DPI0,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	DDP_COMPONENT_DSI0,
 	DDP_COMPONENT_DSI1,
 	DDP_COMPONENT_GAMMA,
 	DDP_COMPONENT_OD,
+<<<<<<< HEAD
 	DDP_COMPONENT_OD1,
 	DDP_COMPONENT_OVL0,
 	DDP_COMPONENT_OVL1,
 	DDP_COMPONENT_OVL2,
+=======
+	DDP_COMPONENT_OVL0,
+	DDP_COMPONENT_OVL1,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	DDP_COMPONENT_PWM0,
 	DDP_COMPONENT_PWM1,
 	DDP_COMPONENT_RDMA0,
@@ -91,7 +108,10 @@ struct mtk_ddp_comp {
 	void __iomem *regs;
 	int irq;
 	struct device *larb_dev;
+<<<<<<< HEAD
 	struct device *dev;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	enum mtk_ddp_comp_id id;
 	const struct mtk_ddp_comp_funcs *funcs;
 };
@@ -158,7 +178,11 @@ static inline void mtk_ddp_gamma_set(struct mtk_ddp_comp *comp,
 		comp->funcs->gamma_set(comp, state);
 }
 
+<<<<<<< HEAD
 enum mtk_ddp_comp_id mtk_ddp_comp_get_id(struct device_node *node,
+=======
+int mtk_ddp_comp_get_id(struct device_node *node,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			enum mtk_ddp_comp_type comp_type);
 int mtk_ddp_comp_init(struct device *dev, struct device_node *comp_node,
 		      struct mtk_ddp_comp *comp, enum mtk_ddp_comp_id comp_id,

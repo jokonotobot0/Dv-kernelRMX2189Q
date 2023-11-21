@@ -14,7 +14,10 @@
 #include <linux/uaccess.h>
 #include <linux/tracehook.h>
 #include <linux/uprobes.h>
+<<<<<<< HEAD
 #include <linux/syscalls.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #include <asm/elf.h>
 #include <asm/cacheflush.h>
@@ -641,9 +644,12 @@ struct page *get_signal_page(void)
 
 	return page;
 }
+<<<<<<< HEAD
 
 /* Defer to generic check */
 asmlinkage void addr_limit_check_failed(void)
 {
 	addr_limit_user_check();
 }
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

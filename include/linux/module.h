@@ -20,7 +20,10 @@
 #include <linux/export.h>
 #include <linux/extable.h>	/* only as arch move module.h -> extable.h */
 #include <linux/rbtree_latch.h>
+<<<<<<< HEAD
 #include <linux/cfi.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #include <linux/percpu.h>
 #include <asm/module.h>
@@ -350,10 +353,13 @@ struct module {
 	const unsigned long *crcs;
 	unsigned int num_syms;
 
+<<<<<<< HEAD
 #ifdef CONFIG_CFI_CLANG
 	cfi_check_fn cfi_check;
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* Kernel parameters. */
 #ifdef CONFIG_SYSFS
 	struct mutex param_lock;

@@ -180,6 +180,7 @@ void generic_smp_call_function_single_interrupt(void)
 	flush_smp_call_function_queue(true);
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTPROF
 static unsigned long long mt_record_smp_call_func_start(void)
 {
@@ -204,6 +205,8 @@ static void mt_record_smp_call_func_end(struct call_single_data *csd,
 }
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /**
  * flush_smp_call_function_queue - Flush pending smp-call-function callbacks
  *
@@ -249,6 +252,7 @@ static void flush_smp_call_function_queue(bool warn_cpu_offline)
 	llist_for_each_entry_safe(csd, csd_next, entry, llist) {
 		smp_call_func_t func = csd->func;
 		void *info = csd->info;
+<<<<<<< HEAD
 		unsigned long long start;
 
 		/* Do we wait until *after* callback? */
@@ -262,6 +266,16 @@ static void flush_smp_call_function_queue(bool warn_cpu_offline)
 			start = mt_record_smp_call_func_start();
 			func(info);
 			mt_record_smp_call_func_end(csd, start);
+=======
+
+		/* Do we wait until *after* callback? */
+		if (csd->flags & CSD_FLAG_SYNCHRONOUS) {
+			func(info);
+			csd_unlock(csd);
+		} else {
+			csd_unlock(csd);
+			func(info);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		}
 	}
 

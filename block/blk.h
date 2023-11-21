@@ -133,6 +133,7 @@ static inline void blk_clear_rq_complete(struct request *rq)
 #define ELV_ON_HASH(rq) ((rq)->cmd_flags & REQ_HASHED)
 
 void blk_insert_flush(struct request *rq);
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /*Huacai.Zhou@PSW.BSP.Kernel.Performance, 2018-04-28, add foreground task io opt*/
 extern int fg_count;
@@ -140,6 +141,8 @@ extern int both_count;
 extern bool fg_debug;
 extern unsigned int sysctl_fg_io_opt;
 #endif /*VENDOR_EDIT*/
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 static inline struct request *__elv_next_request(struct request_queue *q)
 {
@@ -148,6 +151,7 @@ static inline struct request *__elv_next_request(struct request_queue *q)
 
 	while (1) {
 		if (!list_empty(&q->queue_head)) {
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /*Huacai.Zhou@PSW.BSP.Kernel.Performance, 2018-04-28, add foreground task io opt*/
 			if ( unlikely(!sysctl_fg_io_opt))
@@ -174,6 +178,9 @@ static inline struct request *__elv_next_request(struct request_queue *q)
 #else
 			rq = list_entry_rq(q->queue_head.next);
 #endif /*VENDOR_EDIT*/
+=======
+			rq = list_entry_rq(q->queue_head.next);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			return rq;
 		}
 
@@ -233,7 +240,11 @@ static inline int blk_should_fake_timeout(struct request_queue *q)
 
 int ll_back_merge_fn(struct request_queue *q, struct request *req,
 		     struct bio *bio);
+<<<<<<< HEAD
 int ll_front_merge_fn(struct request_queue *q, struct request *req,
+=======
+int ll_front_merge_fn(struct request_queue *q, struct request *req, 
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		      struct bio *bio);
 int attempt_back_merge(struct request_queue *q, struct request *rq);
 int attempt_front_merge(struct request_queue *q, struct request *rq);

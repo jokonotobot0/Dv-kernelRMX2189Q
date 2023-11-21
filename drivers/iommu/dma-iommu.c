@@ -480,8 +480,11 @@ static int __finalise_sg(struct device *dev, struct scatterlist *sg, int nents,
 		unsigned int s_length = sg_dma_len(s);
 		unsigned int s_iova_len = s->length;
 
+<<<<<<< HEAD
 		if (sg_page(s) == NULL)
 			s_iova_off = 0;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		s->offset += s_iova_off;
 		s->length = s_length;
 		sg_dma_address(s) = DMA_ERROR_CODE;
@@ -495,7 +498,11 @@ static int __finalise_sg(struct device *dev, struct scatterlist *sg, int nents,
 		 * - and wouldn't make the resulting output segment too long
 		 */
 		if (cur_len && !s_iova_off && (dma_addr & seg_mask) &&
+<<<<<<< HEAD
 		    (cur_len + s_length <= max_len)) {
+=======
+		    (max_len - cur_len >= s_length)) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			/* ...then concatenate it with the previous one */
 			cur_len += s_length;
 		} else {
@@ -566,6 +573,7 @@ int iommu_dma_map_sg(struct device *dev, struct scatterlist *sg,
 		size_t s_length = s->length;
 		size_t pad_len = (mask - iova_len + 1) & mask;
 
+<<<<<<< HEAD
 		if (sg_page(s)) {
 
 			sg_dma_address(s) = s_iova_off;
@@ -575,6 +583,13 @@ int iommu_dma_map_sg(struct device *dev, struct scatterlist *sg,
 			s_length = iova_align(iovad, s_length + s_iova_off);
 
 
+=======
+		sg_dma_address(s) = s_iova_off;
+		sg_dma_len(s) = s_length;
+		s->offset -= s_iova_off;
+		s_length = iova_align(iovad, s_length + s_iova_off);
+		s->length = s_length;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 		/*
 		 * Due to the alignment of our single IOVA allocation, we can
@@ -589,21 +604,34 @@ int iommu_dma_map_sg(struct device *dev, struct scatterlist *sg,
 		 *   iova_len == 0, thus we cannot dereference prev the first
 		 *   time through here (i.e. before it has a meaningful value).
 		 */
+<<<<<<< HEAD
 			if (pad_len && pad_len < s_length - 1) {
 				prev->length += pad_len;
 				iova_len += pad_len;
 			}
 		}
+=======
+		if (pad_len && pad_len < s_length - 1) {
+			prev->length += pad_len;
+			iova_len += pad_len;
+		}
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		iova_len += s_length;
 		prev = s;
 	}
 
 	iova = __alloc_iova(domain, iova_len, dma_get_mask(dev));
+<<<<<<< HEAD
 	if (!iova) {
 		pr_info("iommu map_sg2 size %zu, 0x%llx\n",
 			iova_len, dma_get_mask(dev));
 		goto out_restore_sg;
 	}
+=======
+	if (!iova)
+		goto out_restore_sg;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/*
 	 * We'll leave any physical concatenation to the IOMMU driver's

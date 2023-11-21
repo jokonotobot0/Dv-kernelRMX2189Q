@@ -1100,7 +1100,10 @@ struct snd_soc_card {
 
 	struct mutex mutex;
 	struct mutex dapm_mutex;
+<<<<<<< HEAD
 	spinlock_t dpcm_lock;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	bool instantiated;
 

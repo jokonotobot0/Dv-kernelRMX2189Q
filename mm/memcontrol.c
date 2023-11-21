@@ -1638,6 +1638,7 @@ cleanup:
  * @page: the page
  *
  * This function protects unlocked LRU pages from being moved to
+<<<<<<< HEAD
  * another cgroup.
  *
  * It ensures lifetime of the returned memcg. Caller is responsible
@@ -1645,6 +1646,11 @@ cleanup:
  * when @page might get freed inside the locked section.
  */
 struct mem_cgroup *lock_page_memcg(struct page *page)
+=======
+ * another cgroup and stabilizes their page->mem_cgroup binding.
+ */
+void lock_page_memcg(struct page *page)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	struct mem_cgroup *memcg;
 	unsigned long flags;
@@ -1653,6 +1659,7 @@ struct mem_cgroup *lock_page_memcg(struct page *page)
 	 * The RCU lock is held throughout the transaction.  The fast
 	 * path can get away without acquiring the memcg->move_lock
 	 * because page moving starts with an RCU grace period.
+<<<<<<< HEAD
 	 *
 	 * The RCU lock also protects the memcg from being freed when
 	 * the page state that is going to change is the only thing
@@ -1671,6 +1678,20 @@ again:
 
 	if (atomic_read(&memcg->moving_account) <= 0)
 		return memcg;
+=======
+	 */
+	rcu_read_lock();
+
+	if (mem_cgroup_disabled())
+		return;
+again:
+	memcg = page->mem_cgroup;
+	if (unlikely(!memcg))
+		return;
+
+	if (atomic_read(&memcg->moving_account) <= 0)
+		return;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	spin_lock_irqsave(&memcg->move_lock, flags);
 	if (memcg != page->mem_cgroup) {
@@ -1686,11 +1707,16 @@ again:
 	memcg->move_lock_task = current;
 	memcg->move_lock_flags = flags;
 
+<<<<<<< HEAD
 	return memcg;
+=======
+	return;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 EXPORT_SYMBOL(lock_page_memcg);
 
 /**
+<<<<<<< HEAD
  * __unlock_page_memcg - unlock and unpin a memcg
  * @memcg: the memcg
  *
@@ -1698,6 +1724,15 @@ EXPORT_SYMBOL(lock_page_memcg);
  */
 void __unlock_page_memcg(struct mem_cgroup *memcg)
 {
+=======
+ * unlock_page_memcg - unlock a page->mem_cgroup binding
+ * @page: the page
+ */
+void unlock_page_memcg(struct page *page)
+{
+	struct mem_cgroup *memcg = page->mem_cgroup;
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (memcg && memcg->move_lock_task == current) {
 		unsigned long flags = memcg->move_lock_flags;
 
@@ -1709,6 +1744,7 @@ void __unlock_page_memcg(struct mem_cgroup *memcg)
 
 	rcu_read_unlock();
 }
+<<<<<<< HEAD
 
 /**
  * unlock_page_memcg - unlock a page->mem_cgroup binding
@@ -1718,6 +1754,8 @@ void unlock_page_memcg(struct page *page)
 {
 	__unlock_page_memcg(page->mem_cgroup);
 }
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 EXPORT_SYMBOL(unlock_page_memcg);
 
 /*
@@ -2787,7 +2825,10 @@ static void tree_events(struct mem_cgroup *memcg, unsigned long *events)
 	}
 }
 
+<<<<<<< HEAD
 #ifndef CONFIG_MTK_GMO_RAM_OPTIMIZE
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static unsigned long mem_cgroup_usage(struct mem_cgroup *memcg, bool swap)
 {
 	unsigned long val = 0;
@@ -2812,6 +2853,7 @@ static unsigned long mem_cgroup_usage(struct mem_cgroup *memcg, bool swap)
 	}
 	return val;
 }
+<<<<<<< HEAD
 #else
 static unsigned long mem_cgroup_usage(struct mem_cgroup *memcg, bool swap)
 {
@@ -2842,6 +2884,8 @@ static unsigned long mem_cgroup_usage(struct mem_cgroup *memcg, bool swap)
 	return val;
 }
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 enum {
 	RES_USAGE,
@@ -3313,10 +3357,15 @@ static int mem_cgroup_swappiness_write(struct cgroup_subsys_state *css,
 {
 	struct mem_cgroup *memcg = mem_cgroup_from_css(css);
 
+<<<<<<< HEAD
 #ifndef CONFIG_MTK_GMO_RAM_OPTIMIZE
 	if (val > 100)
 		return -EINVAL;
 #endif
+=======
+	if (val > 100)
+		return -EINVAL;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (css->parent)
 		memcg->swappiness = val;
@@ -4229,8 +4278,11 @@ static void __mem_cgroup_free(struct mem_cgroup *memcg)
 	for_each_node(node)
 		free_mem_cgroup_per_node_info(memcg, node);
 	free_percpu(memcg->stat);
+<<<<<<< HEAD
 	/* poison memcg before freeing it */
 	memset(memcg, 0x78, sizeof(struct mem_cgroup));
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	kfree(memcg);
 }
 
@@ -5871,11 +5923,14 @@ static int __init mem_cgroup_init(void)
 {
 	int cpu, node;
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_GMO_RAM_OPTIMIZE
 	cgroup_memory_nokmem = true;
 	cgroup_memory_nosocket = true;
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #ifndef CONFIG_SLOB
 	/*
 	 * Kmem cache creation is mostly done with the slab_mutex held,

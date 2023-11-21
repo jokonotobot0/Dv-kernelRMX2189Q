@@ -38,8 +38,11 @@
 #include <asm/tls.h>
 #include <asm/system_misc.h>
 #include <asm/opcodes.h>
+<<<<<<< HEAD
 #include <mt-plat/aee.h>
 #include <sched.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 
 static const char *handler[]= {
@@ -221,10 +224,13 @@ static void dump_backtrace(struct pt_regs *regs, struct task_struct *tsk)
 		fp = frame_pointer(regs);
 		mode = processor_mode(regs);
 	} else if (tsk != current) {
+<<<<<<< HEAD
 		if (tsk == task_rq(tsk)->curr) {
 			pr_cont("Do not dump other cpus' running task\n");
 			return;
 		}
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		fp = thread_saved_fp(tsk);
 		mode = 0x10;
 	} else {
@@ -441,11 +447,15 @@ int call_undef_hook(struct pt_regs *regs, unsigned int instr)
 
 asmlinkage void __exception do_undefinstr(struct pt_regs *regs)
 {
+<<<<<<< HEAD
 	struct thread_info *thread = current_thread_info();
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	unsigned int instr;
 	siginfo_t info;
 	void __user *pc;
 
+<<<<<<< HEAD
 	if (!user_mode(regs)) {
 		thread->cpu_excp++;
 		if (thread->cpu_excp == 1) {
@@ -456,6 +466,8 @@ asmlinkage void __exception do_undefinstr(struct pt_regs *regs)
 			aee_stop_nested_panic(regs);
 	}
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	pc = (void __user *)instruction_pointer(regs);
 
 	if (processor_mode(regs) == SVC_MODE) {
@@ -487,11 +499,16 @@ asmlinkage void __exception do_undefinstr(struct pt_regs *regs)
 		instr = __mem_to_opcode_arm(instr);
 	}
 
+<<<<<<< HEAD
 	if (call_undef_hook(regs, instr) == 0) {
 		if (!user_mode(regs))
 			thread->cpu_excp--;
 		return;
 	}
+=======
+	if (call_undef_hook(regs, instr) == 0)
+		return;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 die_sig:
 #ifdef CONFIG_DEBUG_USER

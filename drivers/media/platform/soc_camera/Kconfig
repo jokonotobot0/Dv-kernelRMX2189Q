@@ -37,6 +37,7 @@ config VIDEO_ATMEL_ISI
 	  This module makes the ATMEL Image Sensor Interface available
 	  as a v4l2 device.
 
+<<<<<<< HEAD
 config VIDEO_MTK_MIPICSI0
 	tristate "MTK MIPICSI0 Quick Capture Interface driver"
 	depends on VIDEO_DEV && SOC_CAMERA
@@ -58,3 +59,5 @@ config VIDEO_MTK_MIPICSI1
 	select VIDEOBUF2_DMA_CONTIG
 	---help---
 	  This is a v4l2 driver for the MTK MIPICSI1 Quick Capture Interface.
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

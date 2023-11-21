@@ -1,5 +1,8 @@
 #include "sched.h"
+<<<<<<< HEAD
 #include "walt.h"
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /*
  * stop-task scheduling class.
@@ -25,7 +28,11 @@ check_preempt_curr_stop(struct rq *rq, struct task_struct *p, int flags)
 }
 
 static struct task_struct *
+<<<<<<< HEAD
 pick_next_task_stop(struct rq *rq, struct task_struct *prev, struct rq_flags *rf)
+=======
+pick_next_task_stop(struct rq *rq, struct task_struct *prev, struct pin_cookie cookie)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	struct task_struct *stop = rq->stop;
 
@@ -43,14 +50,20 @@ static void
 enqueue_task_stop(struct rq *rq, struct task_struct *p, int flags)
 {
 	add_nr_running(rq, 1);
+<<<<<<< HEAD
 	walt_inc_cumulative_runnable_avg(rq, p);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static void
 dequeue_task_stop(struct rq *rq, struct task_struct *p, int flags)
 {
 	sub_nr_running(rq, 1);
+<<<<<<< HEAD
 	walt_dec_cumulative_runnable_avg(rq, p);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static void yield_task_stop(struct rq *rq)

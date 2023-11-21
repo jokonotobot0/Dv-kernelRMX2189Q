@@ -17,6 +17,7 @@ extern void __dump_page_owner(struct page *page);
 extern void pagetypeinfo_showmixedcount_print(struct seq_file *m,
 					pg_data_t *pgdat, struct zone *zone);
 
+<<<<<<< HEAD
 extern int __dump_pfn_backtrace(unsigned long pfn);
 
 static inline int dump_pfn_backtrace(unsigned long pfn)
@@ -27,6 +28,8 @@ static inline int dump_pfn_backtrace(unsigned long pfn)
 		return -1;
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static inline void reset_page_owner(struct page *page, unsigned int order)
 {
 	if (static_branch_unlikely(&page_owner_inited))
@@ -60,6 +63,7 @@ static inline void dump_page_owner(struct page *page)
 	if (static_branch_unlikely(&page_owner_inited))
 		__dump_page_owner(page);
 }
+<<<<<<< HEAD
 
 #ifdef CONFIG_PAGE_OWNER_SLIM
 
@@ -77,6 +81,8 @@ struct BtEntry {
 };
 
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #else
 static inline void reset_page_owner(struct page *page, unsigned int order)
 {
@@ -95,12 +101,15 @@ static inline void copy_page_owner(struct page *oldpage, struct page *newpage)
 static inline void set_page_owner_migrate_reason(struct page *page, int reason)
 {
 }
+<<<<<<< HEAD
 
 static inline int dump_pfn_backtrace(unsigned long pfn)
 {
 	return -1;
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static inline void dump_page_owner(struct page *page)
 {
 }

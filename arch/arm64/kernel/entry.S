@@ -32,9 +32,13 @@
 #include <asm/memory.h>
 #include <asm/mmu.h>
 #include <asm/processor.h>
+<<<<<<< HEAD
 #include <asm/ptrace.h>
 #include <asm/thread_info.h>
 #include <asm/uaccess.h>
+=======
+#include <asm/thread_info.h>
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <asm/asm-uaccess.h>
 #include <asm/unistd.h>
 #include <asm/kernel-pgtable.h>
@@ -107,7 +111,11 @@ alternative_cb	arm64_enable_wa2_handling
 alternative_cb_end
 	ldr_this_cpu	\tmp2, arm64_ssbd_callback_required, \tmp1
 	cbz	\tmp2, \targ
+<<<<<<< HEAD
 	ldr	\tmp2, [tsk, #TSK_TI_FLAGS]
+=======
+	ldr	\tmp2, [tsk, #TI_FLAGS]
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	tbnz	\tmp2, #TIF_SSBD, \targ
 	mov	w0, #ARM_SMCCC_ARCH_WORKAROUND_2
 	mov	w1, #\state
@@ -139,8 +147,14 @@ alternative_cb_end
 
 	.if	\el == 0
 	mrs	x21, sp_el0
+<<<<<<< HEAD
 	ldr_this_cpu	tsk, __entry_task, x20	// Ensure MDSCR_EL1.SS is clear,
 	ldr	x19, [tsk, #TSK_TI_FLAGS]	// since we can unmask debug
+=======
+	mov	tsk, sp
+	and	tsk, tsk, #~(THREAD_SIZE - 1)	// Ensure MDSCR_EL1.SS is clear,
+	ldr	x19, [tsk, #TI_FLAGS]		// since we can unmask debug
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	disable_step_tsk x19, x20		// exceptions when scheduling.
 
 	apply_ssbd 1, 1f, x22, x23
@@ -156,15 +170,23 @@ alternative_cb_end
 	add	x21, sp, #S_FRAME_SIZE
 	get_thread_info tsk
 	/* Save the task's original addr_limit and set USER_DS */
+<<<<<<< HEAD
 	ldr	x20, [tsk, #TSK_TI_ADDR_LIMIT]
 	str	x20, [sp, #S_ORIG_ADDR_LIMIT]
 	mov	x20, #USER_DS
 	str	x20, [tsk, #TSK_TI_ADDR_LIMIT]
+=======
+	ldr	x20, [tsk, #TI_ADDR_LIMIT]
+	str	x20, [sp, #S_ORIG_ADDR_LIMIT]
+	mov	x20, #USER_DS
+	str	x20, [tsk, #TI_ADDR_LIMIT]
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* No need to reset PSTATE.UAO, hardware's already set it to 0 for us */
 	.endif /* \el == 0 */
 	mrs	x22, elr_el1
 	mrs	x23, spsr_el1
 	stp	lr, x21, [sp, #S_LR]
+<<<<<<< HEAD
 
 #ifdef CONFIG_ARM64_SW_TTBR0_PAN
 	/*
@@ -191,6 +213,8 @@ alternative_else_nop_endif
 1:
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	stp	x22, x23, [sp, #S_PC]
 
 	/*
@@ -221,7 +245,11 @@ alternative_else_nop_endif
 	.if	\el != 0
 	/* Restore the task's original addr_limit. */
 	ldr	x20, [sp, #S_ORIG_ADDR_LIMIT]
+<<<<<<< HEAD
 	str	x20, [tsk, #TSK_TI_ADDR_LIMIT]
+=======
+	str	x20, [tsk, #TI_ADDR_LIMIT]
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/* No need to restore UAO, it will be restored from SPSR_EL1 */
 	.endif
@@ -229,6 +257,7 @@ alternative_else_nop_endif
 	ldp	x21, x22, [sp, #S_PC]		// load ELR, SPSR
 	.if	\el == 0
 	ct_user_enter
+<<<<<<< HEAD
 	.endif
 
 #ifdef CONFIG_ARM64_SW_TTBR0_PAN
@@ -263,6 +292,8 @@ alternative_else_nop_endif
 #endif
 
 	.if	\el == 0
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	ldr	x23, [sp, #S_SP]		// load return stack pointer
 	msr	sp_el0, x23
 	tst	x22, #PSR_MODE32_BIT		// native task?
@@ -282,7 +313,10 @@ alternative_else_nop_endif
 	apply_ssbd 0, 5f, x0, x1
 5:
 	.endif
+<<<<<<< HEAD
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	msr	elr_el1, x21			// set up the return data
 	msr	spsr_el1, x22
 	ldp	x0, x1, [sp, #16 * 0]
@@ -319,10 +353,18 @@ alternative_insn eret, nop, ARM64_UNMAP_KERNEL_AT_EL0
 	.endif
 	.endm
 
+<<<<<<< HEAD
+=======
+	.macro	get_thread_info, rd
+	mrs	\rd, sp_el0
+	.endm
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	.macro	irq_stack_entry
 	mov	x19, sp			// preserve the original sp
 
 	/*
+<<<<<<< HEAD
 	 * Compare sp with the base of the task stack.
 	 * If the top ~(THREAD_SIZE - 1) bits match, we are on a task stack,
 	 * and should switch to the irq stack.
@@ -331,6 +373,15 @@ alternative_insn eret, nop, ARM64_UNMAP_KERNEL_AT_EL0
 	eor	x25, x25, x19
 	and	x25, x25, #~(THREAD_SIZE - 1)
 	cbnz	x25, 9998f
+=======
+	 * Compare sp with the current thread_info, if the top
+	 * ~(THREAD_SIZE - 1) bits match, we are on a task stack, and
+	 * should switch to the irq stack.
+	 */
+	and	x25, x19, #~(THREAD_SIZE - 1)
+	cmp	x25, tsk
+	b.ne	9998f
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	adr_this_cpu x25, irq_stack, x26
 	mov	x26, #IRQ_STACK_START_SP
@@ -475,6 +526,7 @@ ENDPROC(el1_error_invalid)
 	.align	6
 el1_sync:
 	kernel_entry 1
+<<<<<<< HEAD
 	mov	x0, sp
 	get_thread_info x20	// top of stack
 	ldr	w4, [x20, #TI_CPU_EXCP]
@@ -495,6 +547,8 @@ el1_sync_nest_skip_dec:
 	b.lt	el1_sync_nest_skip
 	bl	aee_stop_nested_panic
 el1_sync_nest_skip:
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	mrs	x1, esr_el1			// read the syndrome register
 	lsr	x24, x1, #ESR_ELx_EC_SHIFT	// exception class
 	cmp	x24, #ESR_ELx_EC_DABT_CUR	// data abort in EL1
@@ -530,6 +584,7 @@ el1_da:
 	clear_address_tag x0, x3
 	mov	x2, sp				// struct pt_regs
 	bl	do_mem_abort
+<<<<<<< HEAD
 	cmp	x24, #ESR_ELx_EC_DABT_CUR	// data abort in EL1
 	b.eq	el1_da_nest_skip_dec
 	mov	x5, sp
@@ -538,6 +593,8 @@ el1_da:
 	sub	w4, w4, #0x1
 	str	w4, [x20, #TI_CPU_EXCP]
 el1_da_nest_skip_dec:
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	// disable interrupts before pulling preserved data off the stack
 	disable_irq
@@ -567,12 +624,15 @@ el1_dbg:
 	mrs	x0, far_el1
 	mov	x2, sp				// struct pt_regs
 	bl	do_debug_exception
+<<<<<<< HEAD
 	mov	x5, sp
 	get_thread_info x20	// top of stack
 	ldr	w4, [x20, #TI_CPU_EXCP]
 	sub	w4, w4, #0x1
 	str	w4, [x20, #TI_CPU_EXCP]
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	kernel_exit 1
 el1_inv:
 	// TODO: add support for undefined instructions in kernel mode
@@ -594,9 +654,15 @@ el1_irq:
 	irq_handler
 
 #ifdef CONFIG_PREEMPT
+<<<<<<< HEAD
 	ldr	w24, [tsk, #TSK_TI_PREEMPT]	// get preempt count
 	cbnz	w24, 1f				// preempt count != 0
 	ldr	x0, [tsk, #TSK_TI_FLAGS]	// get flags
+=======
+	ldr	w24, [tsk, #TI_PREEMPT]		// get preempt count
+	cbnz	w24, 1f				// preempt count != 0
+	ldr	x0, [tsk, #TI_FLAGS]		// get flags
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	tbz	x0, #TIF_NEED_RESCHED, 1f	// needs rescheduling?
 	bl	el1_preempt
 1:
@@ -611,7 +677,11 @@ ENDPROC(el1_irq)
 el1_preempt:
 	mov	x24, lr
 1:	bl	preempt_schedule_irq		// irq en/disable is done inside
+<<<<<<< HEAD
 	ldr	x0, [tsk, #TSK_TI_FLAGS]	// get new tasks TI_FLAGS
+=======
+	ldr	x0, [tsk, #TI_FLAGS]		// get new tasks TI_FLAGS
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	tbnz	x0, #TIF_NEED_RESCHED, 1b	// needs rescheduling?
 	ret	x24
 #endif
@@ -850,7 +920,12 @@ ENTRY(cpu_switch_to)
 	ldp	x29, x9, [x8], #16
 	ldr	lr, [x8]
 	mov	sp, x9
+<<<<<<< HEAD
 	msr	sp_el0, x1
+=======
+	and	x9, x9, #~(THREAD_SIZE - 1)
+	msr	sp_el0, x9
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	ret
 ENDPROC(cpu_switch_to)
 
@@ -861,7 +936,11 @@ ENDPROC(cpu_switch_to)
 ret_fast_syscall:
 	disable_irq				// disable interrupts
 	str	x0, [sp, #S_X0]			// returned x0
+<<<<<<< HEAD
 	ldr	x1, [tsk, #TSK_TI_FLAGS]	// re-check for syscall tracing
+=======
+	ldr	x1, [tsk, #TI_FLAGS]		// re-check for syscall tracing
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	and	x2, x1, #_TIF_SYSCALL_WORK
 	cbnz	x2, ret_fast_syscall_trace
 	and	x2, x1, #_TIF_WORK_MASK
@@ -881,14 +960,22 @@ work_pending:
 #ifdef CONFIG_TRACE_IRQFLAGS
 	bl	trace_hardirqs_on		// enabled while in userspace
 #endif
+<<<<<<< HEAD
 	ldr	x1, [tsk, #TSK_TI_FLAGS]	// re-check for single-step
+=======
+	ldr	x1, [tsk, #TI_FLAGS]		// re-check for single-step
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	b	finish_ret_to_user
 /*
  * "slow" syscall return path.
  */
 ret_to_user:
 	disable_irq				// disable interrupts
+<<<<<<< HEAD
 	ldr	x1, [tsk, #TSK_TI_FLAGS]
+=======
+	ldr	x1, [tsk, #TI_FLAGS]
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	and	x2, x1, #_TIF_WORK_MASK
 	cbnz	x2, work_pending
 finish_ret_to_user:
@@ -921,12 +1008,17 @@ el0_svc_naked:					// compat entry point
 	enable_dbg_and_irq
 	ct_user_exit 1
 
+<<<<<<< HEAD
 	ldr	x16, [tsk, #TSK_TI_FLAGS]	// check for syscall hooks
+=======
+	ldr	x16, [tsk, #TI_FLAGS]		// check for syscall hooks
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	tst	x16, #_TIF_SYSCALL_WORK
 	b.ne	__sys_trace
 	cmp     scno, sc_nr                     // check upper syscall limit
 	b.hs	ni_sys
 	mask_nospec64 scno, sc_nr, x19	// enforce bounds for syscall number
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 //Ke.Li@ROM.Security, 2019-9-30, Add for prevent root check
 #ifdef CONFIG_OPPO_ROOT_CHECK
@@ -935,6 +1027,9 @@ el0_svc_naked:					// compat entry point
 	ldr	x16, [stbl, scno, lsl #3]	// address in the syscall table
 #endif /* CONFIG_OPPO_ROOT_CHECK */
 #endif /* VENDOR_EDIT */
+=======
+	ldr	x16, [stbl, scno, lsl #3]	// address in the syscall table
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	blr	x16				// call sys_* routine
 	b	ret_fast_syscall
 ni_sys:
@@ -965,6 +1060,7 @@ __sys_trace:
 	ldp	x2, x3, [sp, #S_X2]
 	ldp	x4, x5, [sp, #S_X4]
 	ldp	x6, x7, [sp, #S_X6]
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 //Ke.Li@ROM.Security, 2019-9-30, Add for prevent root check
 #ifdef CONFIG_OPPO_ROOT_CHECK
@@ -973,6 +1069,9 @@ __sys_trace:
 	ldr	x16, [stbl, scno, lsl #3]	// address in the syscall table
 #endif /* CONFIG_OPPO_ROOT_CHECK */
 #endif /* VENDOR_EDIT */
+=======
+	ldr	x16, [stbl, scno, lsl #3]	// address in the syscall table
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	blr	x16				// call sys_* routine
 
 __sys_trace_return:
@@ -997,6 +1096,7 @@ __ni_sys_trace:
 
 	.macro tramp_map_kernel, tmp
 	mrs	\tmp, ttbr1_el1
+<<<<<<< HEAD
 	sub	\tmp, \tmp, #(SWAPPER_DIR_SIZE + RESERVED_TTBR0_SIZE)
 	bic	\tmp, \tmp, #USER_ASID_FLAG
 	msr	ttbr1_el1, \tmp
@@ -1010,11 +1110,20 @@ __ni_sys_trace:
 	tlbi	vae1, \tmp
 	dsb	nsh
 #endif /* CONFIG_ARCH_MSM8996 */
+=======
+	sub	\tmp, \tmp, #SWAPPER_DIR_SIZE
+	bic	\tmp, \tmp, #USER_ASID_FLAG
+	msr	ttbr1_el1, \tmp
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	.endm
 
 	.macro tramp_unmap_kernel, tmp
 	mrs	\tmp, ttbr1_el1
+<<<<<<< HEAD
 	add	\tmp, \tmp, #(SWAPPER_DIR_SIZE + RESERVED_TTBR0_SIZE)
+=======
+	add	\tmp, \tmp, #SWAPPER_DIR_SIZE
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	orr	\tmp, \tmp, #USER_ASID_FLAG
 	msr	ttbr1_el1, \tmp
 	/*
@@ -1041,9 +1150,13 @@ __ni_sys_trace:
 	tramp_map_kernel	x30
 #ifdef CONFIG_RANDOMIZE_BASE
 	adr	x30, tramp_vectors + PAGE_SIZE
+<<<<<<< HEAD
 #ifndef CONFIG_ARCH_MSM8996
 	isb
 #endif
+=======
+	isb
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	ldr	x30, [x30]
 #else
 	ldr	x30, =vectors

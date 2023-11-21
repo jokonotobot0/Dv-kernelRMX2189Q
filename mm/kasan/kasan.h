@@ -23,6 +23,7 @@
 #define KASAN_STACK_PARTIAL     0xF4
 #define KASAN_USE_AFTER_SCOPE   0xF8
 
+<<<<<<< HEAD
 /*
  * alloca redzone shadow values
  */
@@ -31,6 +32,8 @@
 
 #define KASAN_ALLOCA_REDZONE_SIZE	32
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* Don't break randconfig/all*config builds */
 #ifndef KASAN_ABI_VERSION
 #define KASAN_ABI_VERSION 1
@@ -71,7 +74,11 @@ struct kasan_global {
  * Structures to keep alloc and free tracks *
  */
 
+<<<<<<< HEAD
 #define KASAN_STACK_DEPTH 16
+=======
+#define KASAN_STACK_DEPTH 64
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 struct kasan_track {
 	u32 pid;
@@ -104,10 +111,22 @@ static inline const void *kasan_shadow_to_mem(const void *shadow_addr)
 		<< KASAN_SHADOW_SCALE_SHIFT);
 }
 
+<<<<<<< HEAD
 void kasan_report(unsigned long addr, size_t size,
 		bool is_write, unsigned long ip);
 void kasan_report_double_free(struct kmem_cache *cache, void *object,
 					void *ip);
+=======
+static inline bool kasan_report_enabled(void)
+{
+	return !current->kasan_depth;
+}
+
+void kasan_report(unsigned long addr, size_t size,
+		bool is_write, unsigned long ip);
+void kasan_report_double_free(struct kmem_cache *cache, void *object,
+			s8 shadow);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #if defined(CONFIG_SLAB) || defined(CONFIG_SLUB)
 void quarantine_put(struct kasan_free_meta *info, struct kmem_cache *cache);
@@ -120,6 +139,7 @@ static inline void quarantine_reduce(void) { }
 static inline void quarantine_remove_cache(struct kmem_cache *cache) { }
 #endif
 
+<<<<<<< HEAD
 /*
  * Exported functions for interfaces called from assembly or from generated
  * code. Declarations here to avoid warning about missing declarations.
@@ -164,4 +184,6 @@ void __asan_set_shadow_f3(const void *addr, size_t size);
 void __asan_set_shadow_f5(const void *addr, size_t size);
 void __asan_set_shadow_f8(const void *addr, size_t size);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif

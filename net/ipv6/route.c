@@ -1377,6 +1377,7 @@ static void __ip6_rt_update_pmtu(struct dst_entry *dst, const struct sock *sk,
 		return;
 
 	dst_confirm(dst);
+<<<<<<< HEAD
 
 #ifdef VENDOR_EDIT
 	//Huang.junyuan@PSW.CN.WiFi.Network.internet, 2020/06/08,
@@ -1386,6 +1387,8 @@ static void __ip6_rt_update_pmtu(struct dst_entry *dst, const struct sock *sk,
 	}
 #endif /* VENDOR_EDIT */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	mtu = max_t(u32, mtu, IPV6_MIN_MTU);
 	if (mtu >= dst_mtu(dst))
 		return;
@@ -1426,7 +1429,11 @@ static void ip6_rt_update_pmtu(struct dst_entry *dst, struct sock *sk,
 }
 
 void ip6_update_pmtu(struct sk_buff *skb, struct net *net, __be32 mtu,
+<<<<<<< HEAD
 		     int oif, u32 mark, kuid_t uid)
+=======
+		     int oif, u32 mark)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	const struct ipv6hdr *iph = (struct ipv6hdr *) skb->data;
 	struct dst_entry *dst;
@@ -1438,7 +1445,10 @@ void ip6_update_pmtu(struct sk_buff *skb, struct net *net, __be32 mtu,
 	fl6.daddr = iph->daddr;
 	fl6.saddr = iph->saddr;
 	fl6.flowlabel = ip6_flowinfo(iph);
+<<<<<<< HEAD
 	fl6.flowi6_uid = uid;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	dst = ip6_route_output(net, NULL, &fl6);
 	if (!dst->error)
@@ -1455,7 +1465,11 @@ void ip6_sk_update_pmtu(struct sk_buff *skb, struct sock *sk, __be32 mtu)
 	if (!oif && skb->dev)
 		oif = l3mdev_master_ifindex(skb->dev);
 
+<<<<<<< HEAD
 	ip6_update_pmtu(skb, sock_net(sk), mtu, oif, sk->sk_mark, sk->sk_uid);
+=======
+	ip6_update_pmtu(skb, sock_net(sk), mtu, oif, sk->sk_mark);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	dst = __sk_dst_get(sk);
 	if (!dst || !dst->obsolete ||
@@ -1547,8 +1561,12 @@ static struct dst_entry *ip6_route_redirect(struct net *net,
 				flags, __ip6_route_redirect);
 }
 
+<<<<<<< HEAD
 void ip6_redirect(struct sk_buff *skb, struct net *net, int oif, u32 mark,
 		  kuid_t uid)
+=======
+void ip6_redirect(struct sk_buff *skb, struct net *net, int oif, u32 mark)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	const struct ipv6hdr *iph = (struct ipv6hdr *) skb->data;
 	struct dst_entry *dst;
@@ -1561,7 +1579,10 @@ void ip6_redirect(struct sk_buff *skb, struct net *net, int oif, u32 mark,
 	fl6.daddr = iph->daddr;
 	fl6.saddr = iph->saddr;
 	fl6.flowlabel = ip6_flowinfo(iph);
+<<<<<<< HEAD
 	fl6.flowi6_uid = uid;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	dst = ip6_route_redirect(net, &fl6, &ipv6_hdr(skb)->saddr);
 	rt6_do_redirect(dst, NULL, skb);
@@ -1583,7 +1604,10 @@ void ip6_redirect_no_header(struct sk_buff *skb, struct net *net, int oif,
 	fl6.flowi6_mark = mark;
 	fl6.daddr = msg->dest;
 	fl6.saddr = iph->daddr;
+<<<<<<< HEAD
 	fl6.flowi6_uid = sock_net_uid(net, NULL);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	dst = ip6_route_redirect(net, &fl6, &iph->saddr);
 	rt6_do_redirect(dst, NULL, skb);
@@ -1592,8 +1616,12 @@ void ip6_redirect_no_header(struct sk_buff *skb, struct net *net, int oif,
 
 void ip6_sk_redirect(struct sk_buff *skb, struct sock *sk)
 {
+<<<<<<< HEAD
 	ip6_redirect(skb, sock_net(sk), sk->sk_bound_dev_if, sk->sk_mark,
 		     sk->sk_uid);
+=======
+	ip6_redirect(skb, sock_net(sk), sk->sk_bound_dev_if, sk->sk_mark);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 EXPORT_SYMBOL_GPL(ip6_sk_redirect);
 
@@ -2368,7 +2396,12 @@ static struct rt6_info *rt6_get_route_info(struct net *net,
 					   const struct in6_addr *gwaddr,
 					   struct net_device *dev)
 {
+<<<<<<< HEAD
 	u32 tb_id = l3mdev_fib_table(dev) ? : addrconf_rt_table(dev, RT6_TABLE_INFO);
+=======
+	u32 tb_id = l3mdev_fib_table(dev) ? : RT6_TABLE_INFO;
+	int ifindex = dev->ifindex;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct fib6_node *fn;
 	struct rt6_info *rt = NULL;
 	struct fib6_table *table;
@@ -2383,7 +2416,11 @@ static struct rt6_info *rt6_get_route_info(struct net *net,
 		goto out;
 
 	for (rt = fn->leaf; rt; rt = rt->dst.rt6_next) {
+<<<<<<< HEAD
 		if (rt->dst.dev->ifindex != dev->ifindex)
+=======
+		if (rt->dst.dev->ifindex != ifindex)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			continue;
 		if ((rt->rt6i_flags & (RTF_ROUTEINFO|RTF_GATEWAY)) != (RTF_ROUTEINFO|RTF_GATEWAY))
 			continue;
@@ -2414,7 +2451,11 @@ static struct rt6_info *rt6_add_route_info(struct net *net,
 		.fc_nlinfo.nl_net = net,
 	};
 
+<<<<<<< HEAD
 	cfg.fc_table = l3mdev_fib_table(dev) ? : addrconf_rt_table(dev, RT6_TABLE_INFO),
+=======
+	cfg.fc_table = l3mdev_fib_table(dev) ? : RT6_TABLE_INFO,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	cfg.fc_dst = *prefix;
 	cfg.fc_gateway = *gwaddr;
 
@@ -2430,7 +2471,11 @@ static struct rt6_info *rt6_add_route_info(struct net *net,
 
 struct rt6_info *rt6_get_dflt_router(const struct in6_addr *addr, struct net_device *dev)
 {
+<<<<<<< HEAD
 	u32 tb_id = l3mdev_fib_table(dev) ? : addrconf_rt_table(dev, RT6_TABLE_MAIN);
+=======
+	u32 tb_id = l3mdev_fib_table(dev) ? : RT6_TABLE_DFLT;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct rt6_info *rt;
 	struct fib6_table *table;
 
@@ -2451,6 +2496,7 @@ struct rt6_info *rt6_get_dflt_router(const struct in6_addr *addr, struct net_dev
 	return rt;
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_IPV6_VZW
 struct rt6_info *rt6_get_dflt_router_expires(struct net_device *dev)
 {
@@ -2476,12 +2522,18 @@ struct rt6_info *rt6_get_dflt_router_expires(struct net_device *dev)
 }
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 struct rt6_info *rt6_add_dflt_router(const struct in6_addr *gwaddr,
 				     struct net_device *dev,
 				     unsigned int pref)
 {
 	struct fib6_config cfg = {
+<<<<<<< HEAD
 		.fc_table	= l3mdev_fib_table(dev) ? : addrconf_rt_table(dev, RT6_TABLE_DFLT),
+=======
+		.fc_table	= l3mdev_fib_table(dev) ? : RT6_TABLE_DFLT,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		.fc_metric	= IP6_RT_PRIO_USER,
 		.fc_ifindex	= dev->ifindex,
 		.fc_flags	= RTF_GATEWAY | RTF_ADDRCONF | RTF_DEFAULT |
@@ -2504,16 +2556,55 @@ struct rt6_info *rt6_add_dflt_router(const struct in6_addr *gwaddr,
 	return rt6_get_dflt_router(gwaddr, dev);
 }
 
+<<<<<<< HEAD
 int rt6_addrconf_purge(struct rt6_info *rt, void *arg) {
 	if (rt->rt6i_flags & (RTF_DEFAULT | RTF_ADDRCONF) &&
 	    (!rt->rt6i_idev || rt->rt6i_idev->cnf.accept_ra != 2))
 		return -1;
 	return 0;
+=======
+static void __rt6_purge_dflt_routers(struct fib6_table *table)
+{
+	struct rt6_info *rt;
+
+restart:
+	read_lock_bh(&table->tb6_lock);
+	for (rt = table->tb6_root.leaf; rt; rt = rt->dst.rt6_next) {
+		if (rt->rt6i_flags & (RTF_DEFAULT | RTF_ADDRCONF) &&
+		    (!rt->rt6i_idev || rt->rt6i_idev->cnf.accept_ra != 2)) {
+			dst_hold(&rt->dst);
+			read_unlock_bh(&table->tb6_lock);
+			ip6_del_rt(rt);
+			goto restart;
+		}
+	}
+	read_unlock_bh(&table->tb6_lock);
+
+	table->flags &= ~RT6_TABLE_HAS_DFLT_ROUTER;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 void rt6_purge_dflt_routers(struct net *net)
 {
+<<<<<<< HEAD
 	fib6_clean_all(net, rt6_addrconf_purge, NULL);
+=======
+	struct fib6_table *table;
+	struct hlist_head *head;
+	unsigned int h;
+
+	rcu_read_lock();
+
+	for (h = 0; h < FIB6_TABLE_HASHSZ; h++) {
+		head = &net->ipv6.fib_table_hash[h];
+		hlist_for_each_entry_rcu(table, head, tb6_hlist) {
+			if (table->flags & RT6_TABLE_HAS_DFLT_ROUTER)
+				__rt6_purge_dflt_routers(table);
+		}
+	}
+
+	rcu_read_unlock();
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static void rtmsg_to_fib6_config(struct net *net,
@@ -2832,7 +2923,10 @@ static const struct nla_policy rtm_ipv6_policy[RTA_MAX+1] = {
 	[RTA_ENCAP_TYPE]	= { .type = NLA_U16 },
 	[RTA_ENCAP]		= { .type = NLA_NESTED },
 	[RTA_EXPIRES]		= { .type = NLA_U32 },
+<<<<<<< HEAD
 	[RTA_UID]		= { .type = NLA_U32 },
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	[RTA_TABLE]		= { .type = NLA_U32 },
 };
 
@@ -3413,12 +3507,15 @@ static int inet6_rtm_getroute(struct sk_buff *in_skb, struct nlmsghdr *nlh)
 	if (tb[RTA_MARK])
 		fl6.flowi6_mark = nla_get_u32(tb[RTA_MARK]);
 
+<<<<<<< HEAD
 	if (tb[RTA_UID])
 		fl6.flowi6_uid = make_kuid(current_user_ns(),
 					   nla_get_u32(tb[RTA_UID]));
 	else
 		fl6.flowi6_uid = iif ? INVALID_UID : current_uid();
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (iif) {
 		struct net_device *dev;
 		int flags = 0;

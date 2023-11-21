@@ -132,6 +132,9 @@ config EXTCON_USB_GPIO
 	  Say Y here to enable GPIO based USB cable detection extcon support.
 	  Used typically if GPIO is used for USB ID pin detection.
 
+<<<<<<< HEAD
 source "drivers/extcon/mediatek/Kconfig"
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 endif

@@ -24,6 +24,7 @@
 #undef __noretpoline
 #endif
 
+<<<<<<< HEAD
 #ifdef CONFIG_LTO_CLANG
 #ifdef CONFIG_FTRACE_MCOUNT_RECORD
 #define __norecordmcount \
@@ -41,6 +42,8 @@
 #define __SANITIZE_ADDRESS__
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * Not all versions of clang implement the the type-generic versions
  * of the builtin overflow checkers. Fortunately, clang implements

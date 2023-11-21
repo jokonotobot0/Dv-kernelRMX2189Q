@@ -37,6 +37,7 @@ int main(void)
 {
   DEFINE(TSK_ACTIVE_MM,		offsetof(struct task_struct, active_mm));
   BLANK();
+<<<<<<< HEAD
   DEFINE(TSK_TI_FLAGS,		offsetof(struct task_struct, thread_info.flags));
   DEFINE(TSK_TI_PREEMPT,	offsetof(struct task_struct, thread_info.preempt_count));
   DEFINE(TSK_TI_ADDR_LIMIT,	offsetof(struct task_struct, thread_info.addr_limit));
@@ -46,6 +47,13 @@ int main(void)
   DEFINE(TI_CPU_EXCP,		offsetof(struct thread_info, cpu_excp));
   DEFINE(TI_REGS_ON_EXCP,	offsetof(struct thread_info, regs_on_excp));
   DEFINE(TSK_STACK,		offsetof(struct task_struct, stack));
+=======
+  DEFINE(TI_FLAGS,		offsetof(struct thread_info, flags));
+  DEFINE(TI_PREEMPT,		offsetof(struct thread_info, preempt_count));
+  DEFINE(TI_ADDR_LIMIT,		offsetof(struct thread_info, addr_limit));
+  DEFINE(TI_TASK,		offsetof(struct thread_info, task));
+  DEFINE(TI_CPU,		offsetof(struct thread_info, cpu));
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
   BLANK();
   DEFINE(THREAD_CPU_CONTEXT,	offsetof(struct task_struct, thread.cpu_context));
   BLANK();
@@ -128,7 +136,10 @@ int main(void)
   DEFINE(TZ_DSTTIME,		offsetof(struct timezone, tz_dsttime));
   BLANK();
   DEFINE(CPU_BOOT_STACK,	offsetof(struct secondary_data, stack));
+<<<<<<< HEAD
   DEFINE(CPU_BOOT_TASK,		offsetof(struct secondary_data, task));
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
   BLANK();
 #ifdef CONFIG_KVM_ARM_HOST
   DEFINE(VCPU_CONTEXT,		offsetof(struct kvm_vcpu, arch.ctxt));
@@ -161,6 +172,9 @@ int main(void)
 #ifdef CONFIG_UNMAP_KERNEL_AT_EL0
   DEFINE(TRAMP_VALIAS,		TRAMP_VALIAS);
 #endif
+<<<<<<< HEAD
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
   return 0;
 }

@@ -70,7 +70,11 @@ struct fq {
 	struct list_head backlogs;
 	spinlock_t lock;
 	u32 flows_cnt;
+<<<<<<< HEAD
 	siphash_key_t	perturbation;
+=======
+	u32 perturbation;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	u32 limit;
 	u32 memory_limit;
 	u32 memory_usage;

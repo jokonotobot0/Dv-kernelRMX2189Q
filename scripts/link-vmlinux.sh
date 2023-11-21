@@ -53,6 +53,7 @@ archive_builtin()
 		${AR} rcsT${KBUILD_ARFLAGS} built-in.o			\
 					${KBUILD_VMLINUX_INIT}		\
 					${KBUILD_VMLINUX_MAIN}
+<<<<<<< HEAD
 
 		if [ -n "${CONFIG_LTO_CLANG}" ]; then
 			mv -f built-in.o built-in.o.tmp
@@ -85,6 +86,9 @@ modversions()
 	done
 
 	echo "-T .tmp_symversions"
+=======
+	fi
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 # Link of vmlinux.o used for section mismatch analysis
@@ -101,6 +105,7 @@ modpost_link()
 			${KBUILD_VMLINUX_MAIN}				\
 			--end-group"
 	fi
+<<<<<<< HEAD
 
 	if [ -n "${CONFIG_LTO_CLANG}" ]; then
 		# This might take a while, so indicate that we're doing
@@ -124,6 +129,9 @@ recordmcount()
 	if [ -n "${CONFIG_FTRACE_MCOUNT_RECORD}" ]; then
 		scripts/recordmcount ${RECORDMCOUNT_FLAGS} $*
 	fi
+=======
+	${LD} ${LDFLAGS} -r -o ${1} ${objects}
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 # Link of vmlinux
@@ -135,6 +143,7 @@ vmlinux_link()
 	local objects
 
 	if [ "${SRCARCH}" != "um" ]; then
+<<<<<<< HEAD
 		local ld=${LD}
 		local ldflags="${LDFLAGS} ${LDFLAGS_vmlinux}"
 
@@ -144,6 +153,9 @@ vmlinux_link()
 		fi
 
 		if [[ -n "${CONFIG_THIN_ARCHIVES}" && -z "${CONFIG_LTO_CLANG}" ]]; then
+=======
+		if [ -n "${CONFIG_THIN_ARCHIVES}" ]; then
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			objects="--whole-archive built-in.o ${1}"
 		else
 			objects="${KBUILD_VMLINUX_INIT}			\
@@ -153,7 +165,12 @@ vmlinux_link()
 				${1}"
 		fi
 
+<<<<<<< HEAD
 		${ld} ${ldflags} -o ${2} -T ${lds} ${objects}
+=======
+		${LD} ${LDFLAGS} ${LDFLAGS_vmlinux} -o ${2}		\
+			-T ${lds} ${objects}
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	else
 		if [ -n "${CONFIG_THIN_ARCHIVES}" ]; then
 			objects="-Wl,--whole-archive built-in.o ${1}"
@@ -173,6 +190,10 @@ vmlinux_link()
 	fi
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 # Create ${2} .o file with all symbols from the ${1} object file
 kallsyms()
 {
@@ -223,7 +244,10 @@ cleanup()
 	rm -f .tmp_System.map
 	rm -f .tmp_kallsyms*
 	rm -f .tmp_version
+<<<<<<< HEAD
 	rm -f .tmp_symversions
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	rm -f .tmp_vmlinux*
 	rm -f built-in.o
 	rm -f System.map
@@ -269,6 +293,18 @@ case "${KCONFIG_CONFIG}" in
 	. "./${KCONFIG_CONFIG}"
 esac
 
+<<<<<<< HEAD
+=======
+archive_builtin
+
+#link vmlinux.o
+info LD vmlinux.o
+modpost_link vmlinux.o
+
+# modpost vmlinux.o to check for section mismatches
+${MAKE} -f "${srctree}/scripts/Makefile.modpost" vmlinux.o
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 # Update version
 info GEN .version
 if [ ! -r .version ]; then
@@ -279,6 +315,7 @@ else
 	expr 0$(cat .old_version) + 1 >.version;
 fi;
 
+<<<<<<< HEAD
 archive_builtin
 
 #link vmlinux.o
@@ -300,6 +337,11 @@ if [ -n "${CONFIG_LTO_CLANG}" ]; then
 	recordmcount vmlinux.o
 fi
 
+=======
+# final build of init/
+${MAKE} -f "${srctree}/scripts/Makefile.build" obj=init GCC_PLUGINS_CFLAGS="${GCC_PLUGINS_CFLAGS}"
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 kallsymso=""
 kallsyms_vmlinux=""
 if [ -n "${CONFIG_KALLSYMS}" ]; then

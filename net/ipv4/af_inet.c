@@ -121,6 +121,7 @@
 #endif
 #include <net/l3mdev.h>
 
+<<<<<<< HEAD
 #ifdef CONFIG_ANDROID_PARANOID_NETWORK
 #include <linux/android_aid.h>
 
@@ -134,6 +135,8 @@ static inline int current_has_network(void)
 	return 1;
 }
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /* The inetsw table contains everything that inet_create needs to
  * build a new socket.
@@ -268,9 +271,12 @@ static int inet_create(struct net *net, struct socket *sock, int protocol,
 	if (protocol < 0 || protocol >= IPPROTO_MAX)
 		return -EINVAL;
 
+<<<<<<< HEAD
 	if (!current_has_network())
 		return -EACCES;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	sock->state = SS_UNCONNECTED;
 
 	/* Look for the requested type/protocol pair. */
@@ -319,7 +325,12 @@ lookup_protocol:
 	}
 
 	err = -EPERM;
+<<<<<<< HEAD
 	if (sock->type == SOCK_RAW && !kern && !capable(CAP_NET_RAW))
+=======
+	if (sock->type == SOCK_RAW && !kern &&
+	    !ns_capable(net->user_ns, CAP_NET_RAW))
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		goto out_rcu_unlock;
 
 	sock->ops = answer->ops;
@@ -581,6 +592,7 @@ int __inet_stream_connect(struct socket *sock, struct sockaddr *uaddr,
 	int err;
 	long timeo;
 
+<<<<<<< HEAD
 	/*
 	 * uaddr can be NULL and addr_len can be 0 if:
 	 * sk is a TCP fastopen active socket and
@@ -599,6 +611,15 @@ int __inet_stream_connect(struct socket *sock, struct sockaddr *uaddr,
 			sock->state = err ? SS_DISCONNECTING : SS_UNCONNECTED;
 			goto out;
 		}
+=======
+	if (addr_len < sizeof(uaddr->sa_family))
+		return -EINVAL;
+
+	if (uaddr->sa_family == AF_UNSPEC) {
+		err = sk->sk_prot->disconnect(sk, flags);
+		sock->state = err ? SS_DISCONNECTING : SS_UNCONNECTED;
+		goto out;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 
 	switch (sock->state) {
@@ -609,10 +630,14 @@ int __inet_stream_connect(struct socket *sock, struct sockaddr *uaddr,
 		err = -EISCONN;
 		goto out;
 	case SS_CONNECTING:
+<<<<<<< HEAD
 		if (inet_sk(sk)->defer_connect)
 			err = -EINPROGRESS;
 		else
 			err = -EALREADY;
+=======
+		err = -EALREADY;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		/* Fall out of switch with err, set for this state */
 		break;
 	case SS_UNCONNECTED:
@@ -626,9 +651,12 @@ int __inet_stream_connect(struct socket *sock, struct sockaddr *uaddr,
 
 		sock->state = SS_CONNECTING;
 
+<<<<<<< HEAD
 		if (!err && inet_sk(sk)->defer_connect)
 			goto out;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		/* Just entered SS_CONNECTING state; the only
 		 * difference is that return value in non-blocking
 		 * case is EINPROGRESS, rather than EALREADY.

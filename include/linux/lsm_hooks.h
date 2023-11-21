@@ -1328,6 +1328,7 @@
  *	@inode we wish to get the security context of.
  *	@ctx is a pointer in which to place the allocated security context.
  *	@ctxlen points to the place to put the length of @ctx.
+<<<<<<< HEAD
  *
  * Security hooks for using the eBPF maps and programs functionalities through
  * eBPF syscalls.
@@ -1362,6 +1363,9 @@
  * @bpf_prog_free_security:
  *	Clean up the security information stored inside bpf prog.
  *
+=======
+ * This is the main security structure.
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  */
 
 union security_list_options {
@@ -1685,6 +1689,7 @@ union security_list_options {
 				struct audit_context *actx);
 	void (*audit_rule_free)(void *lsmrule);
 #endif /* CONFIG_AUDIT */
+<<<<<<< HEAD
 
 #ifdef CONFIG_BPF_SYSCALL
 	int (*bpf)(int cmd, union bpf_attr *attr,
@@ -1696,6 +1701,8 @@ union security_list_options {
 	int (*bpf_prog_alloc_security)(struct bpf_prog_aux *aux);
 	void (*bpf_prog_free_security)(struct bpf_prog_aux *aux);
 #endif /* CONFIG_BPF_SYSCALL */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 struct security_hook_heads {
@@ -1910,6 +1917,7 @@ struct security_hook_heads {
 	struct list_head audit_rule_match;
 	struct list_head audit_rule_free;
 #endif /* CONFIG_AUDIT */
+<<<<<<< HEAD
 #ifdef CONFIG_BPF_SYSCALL
 	struct list_head bpf;
 	struct list_head bpf_map;
@@ -1919,6 +1927,8 @@ struct security_hook_heads {
 	struct list_head bpf_prog_alloc_security;
 	struct list_head bpf_prog_free_security;
 #endif /* CONFIG_BPF_SYSCALL */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 /*

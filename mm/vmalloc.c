@@ -2673,11 +2673,15 @@ static int s_show(struct seq_file *m, void *p)
 	seq_printf(m, "0x%pK-0x%pK %7ld",
 		v->addr, v->addr + v->size, v->size);
 
+<<<<<<< HEAD
 	#ifdef VENDOR_EDIT //wanghao@bsp.drv modify for android.bg get pss too slow
 	if (v->caller && (strcmp(current->comm, "android.bg") != 0))
 	#else
 	if (v->caller)
 	#endif
+=======
+	if (v->caller)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		seq_printf(m, " %pS", v->caller);
 
 	if (v->nr_pages)

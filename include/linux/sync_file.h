@@ -40,13 +40,20 @@ struct sync_file {
 #endif
 
 	wait_queue_head_t	wq;
+<<<<<<< HEAD
 	unsigned long		flags;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	struct fence		*fence;
 	struct fence_cb cb;
 };
 
+<<<<<<< HEAD
 #define POLL_ENABLED 0
+=======
+#define POLL_ENABLED FENCE_FLAG_USER_BITS
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 struct sync_file *sync_file_create(struct fence *fence);
 struct fence *sync_file_get_fence(int fd);

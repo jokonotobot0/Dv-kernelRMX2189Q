@@ -4524,7 +4524,11 @@ static int rbd_init_disk(struct rbd_device *rbd_dev)
 	q->limits.discard_zeroes_data = 1;
 
 	if (!ceph_test_opt(rbd_dev->rbd_client->client, NOCRC))
+<<<<<<< HEAD
 		q->backing_dev_info->capabilities |= BDI_CAP_STABLE_WRITES;
+=======
+		q->backing_dev_info.capabilities |= BDI_CAP_STABLE_WRITES;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	disk->queue = q;
 

@@ -32,11 +32,14 @@ int __mmc_switch(struct mmc_card *card, u8 set, u8 index, u8 value,
 		unsigned int timeout_ms, bool use_busy_signal, bool send_status,
 		bool ignore_crc);
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_EMMC_HW_CQ
 int mmc_discard_queue(struct mmc_host *host, u32 tasks);
 int mmc_cmdq_enable(struct mmc_card *card);
 int mmc_cmdq_disable(struct mmc_card *card);
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif
 

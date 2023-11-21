@@ -637,8 +637,11 @@ void migrate_page_copy(struct page *newpage, struct page *page)
 		SetPageActive(newpage);
 	} else if (TestClearPageUnevictable(page))
 		SetPageUnevictable(newpage);
+<<<<<<< HEAD
 	if (PageWorkingset(page))
 		SetPageWorkingset(newpage);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (PageChecked(page))
 		SetPageChecked(newpage);
 	if (PageMappedToDisk(page))
@@ -1022,6 +1025,7 @@ static int __unmap_and_move(struct page *page, struct page *newpage,
 		/* Establish migration ptes */
 		VM_BUG_ON_PAGE(PageAnon(page) && !PageKsm(page) && !anon_vma,
 				page);
+<<<<<<< HEAD
 #if defined(VENDOR_EDIT) && defined(CONFIG_PROCESS_RECLAIM)
 		/* Kui.Zhang@PSW.TEC.Kernel.Performance. 2019/01/16,
 		 * adapte the new interface
@@ -1032,6 +1036,10 @@ static int __unmap_and_move(struct page *page, struct page *newpage,
 		try_to_unmap(page,
 			TTU_MIGRATION|TTU_IGNORE_MLOCK|TTU_IGNORE_ACCESS);
 #endif
+=======
+		try_to_unmap(page,
+			TTU_MIGRATION|TTU_IGNORE_MLOCK|TTU_IGNORE_ACCESS);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		page_was_mapped = 1;
 	}
 
@@ -1261,6 +1269,7 @@ static int unmap_and_move_huge_page(new_page_t get_new_page,
 		goto put_anon;
 
 	if (page_mapped(hpage)) {
+<<<<<<< HEAD
 #if defined(VENDOR_EDIT) && defined(CONFIG_PROCESS_RECLAIM)
 		/* Kui.Zhang@PSW.TEC.Kernel.Performance. 2019/01/16,
 		 * adapte the new interface
@@ -1271,6 +1280,10 @@ static int unmap_and_move_huge_page(new_page_t get_new_page,
 		try_to_unmap(hpage,
 			TTU_MIGRATION|TTU_IGNORE_MLOCK|TTU_IGNORE_ACCESS);
 #endif
+=======
+		try_to_unmap(hpage,
+			TTU_MIGRATION|TTU_IGNORE_MLOCK|TTU_IGNORE_ACCESS);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		page_was_mapped = 1;
 	}
 

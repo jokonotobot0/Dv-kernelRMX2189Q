@@ -24,7 +24,10 @@ struct seq_file;
 struct vm_area_struct;
 struct super_block;
 struct file_system_type;
+<<<<<<< HEAD
 struct poll_table_struct;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 struct kernfs_open_node;
 struct kernfs_iattrs;
@@ -47,7 +50,10 @@ enum kernfs_node_flag {
 	KERNFS_SUICIDAL		= 0x0400,
 	KERNFS_SUICIDED		= 0x0800,
 	KERNFS_EMPTY_DIR	= 0x1000,
+<<<<<<< HEAD
 	KERNFS_HAS_RELEASE	= 0x2000,
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 /* @flags for kernfs_create_root() */
@@ -177,7 +183,10 @@ struct kernfs_open_file {
 	/* published fields */
 	struct kernfs_node	*kn;
 	struct file		*file;
+<<<<<<< HEAD
 	struct seq_file		*seq_file;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	void			*priv;
 
 	/* private fields, do not use outside kernfs proper */
@@ -189,12 +198,16 @@ struct kernfs_open_file {
 
 	size_t			atomic_write_len;
 	bool			mmapped;
+<<<<<<< HEAD
 	bool			released:1;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	const struct vm_operations_struct *vm_ops;
 };
 
 struct kernfs_ops {
 	/*
+<<<<<<< HEAD
 	 * Optional open/release methods.  Both are called with
 	 * @of->seq_file populated.
 	 */
@@ -202,6 +215,8 @@ struct kernfs_ops {
 	void (*release)(struct kernfs_open_file *of);
 
 	/*
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	 * Read is handled by either seq_file or raw_read().
 	 *
 	 * If seq_show() is present, seq_file path is active.  Other seq
@@ -239,9 +254,12 @@ struct kernfs_ops {
 	ssize_t (*write)(struct kernfs_open_file *of, char *buf, size_t bytes,
 			 loff_t off);
 
+<<<<<<< HEAD
 	unsigned int (*poll)(struct kernfs_open_file *of,
 			     struct poll_table_struct *pt);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	int (*mmap)(struct kernfs_open_file *of, struct vm_area_struct *vma);
 
 #ifdef CONFIG_DEBUG_LOCK_ALLOC
@@ -329,8 +347,11 @@ int kernfs_remove_by_name_ns(struct kernfs_node *parent, const char *name,
 int kernfs_rename_ns(struct kernfs_node *kn, struct kernfs_node *new_parent,
 		     const char *new_name, const void *new_ns);
 int kernfs_setattr(struct kernfs_node *kn, const struct iattr *iattr);
+<<<<<<< HEAD
 unsigned int kernfs_generic_poll(struct kernfs_open_file *of,
 				 struct poll_table_struct *pt);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 void kernfs_notify(struct kernfs_node *kn);
 
 const void *kernfs_super_ns(struct super_block *sb);

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #
 # Copyright (C) 2015 MediaTek Inc.
 #
@@ -106,3 +107,8 @@ else
   subdir-ccflags-y += -Werror -I$(src)/$(AUDIO_PLATFORM)
 endif
 endif
+=======
+obj-$(CONFIG_SND_SOC_MEDIATEK) += common/
+obj-$(CONFIG_SND_SOC_MT2701) += mt2701/
+obj-$(CONFIG_SND_SOC_MT8173) += mt8173/
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

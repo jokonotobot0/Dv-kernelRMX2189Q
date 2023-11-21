@@ -873,6 +873,7 @@
  * @NL80211_CMD_NAN_FUNC_MATCH: Notification sent when a match is reported.
  *	This will contain a %NL80211_ATTR_NAN_MATCH nested attribute and
  *	%NL80211_ATTR_COOKIE.
+<<<<<<< HEAD
  * @NL80211_CMD_EXTERNAL_AUTH: This interface is exclusively defined for host
  *	drivers that do not define separate commands for authentication and
  *	association, but rely on user space for the authentication to happen.
@@ -893,6 +894,8 @@
  *	Host driver reports this status on an authentication failure to the
  *	user space through the connect result as the user space would have
  *	initiated the connection through the connect request.
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  *
  * @NL80211_CMD_MAX: highest used command number
  * @__NL80211_CMD_AFTER_LAST: internal use
@@ -1089,6 +1092,7 @@ enum nl80211_commands {
 	NL80211_CMD_CHANGE_NAN_CONFIG,
 	NL80211_CMD_NAN_MATCH,
 
+<<<<<<< HEAD
 	NL80211_CMD_SET_MULTICAST_TO_UNICAST,
 
 	NL80211_CMD_UPDATE_CONNECT_PARAMS,
@@ -1101,6 +1105,8 @@ enum nl80211_commands {
 	NL80211_CMD_RELOAD_REGDB,
 
 	NL80211_CMD_EXTERNAL_AUTH,
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* add new commands above here */
 
 	/* used to define NL80211_CMD_MAX below */
@@ -1820,8 +1826,11 @@ enum nl80211_commands {
  *	and remove functions. NAN notifications will be sent in unicast to that
  *	socket. Without this attribute, any socket can add functions and the
  *	notifications will be sent to the %NL80211_MCGRP_NAN multicast group.
+<<<<<<< HEAD
  *	If set during %NL80211_CMD_ASSOCIATE or %NL80211_CMD_CONNECT the
  *	station will deauthenticate when the socket is closed.
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  *
  * @NL80211_ATTR_TDLS_INITIATOR: flag attribute indicating the current end is
  *	the TDLS link initiator.
@@ -1974,6 +1983,7 @@ enum nl80211_commands {
  * @NL80211_ATTR_BSSID: The BSSID of the AP. Note that %NL80211_ATTR_MAC is also
  *	used in various commands/events for specifying the BSSID.
  *
+<<<<<<< HEAD
  * @NL80211_ATTR_EXTERNAL_AUTH_ACTION: Identify the requested external
  *     authentication operation (u32 attribute with an
  *     &enum nl80211_external_auth_action value). This is used with the
@@ -1984,6 +1994,8 @@ enum nl80211_commands {
  *     authentication processing to user space if this capability is indicated
  *     in NL80211_CMD_CONNECT requests from the user space.
  *
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  * @NUM_NL80211_ATTR: total number of nl80211_attrs available
  * @NL80211_ATTR_MAX: highest attribute number currently defined
  * @__NL80211_ATTR_AFTER_LAST: internal use
@@ -2383,6 +2395,7 @@ enum nl80211_attrs {
 	NL80211_ATTR_NAN_FUNC,
 	NL80211_ATTR_NAN_MATCH,
 
+<<<<<<< HEAD
 	NL80211_ATTR_FILS_KEK,
 	NL80211_ATTR_FILS_NONCES,
 
@@ -2412,6 +2425,10 @@ enum nl80211_attrs {
 
 	NL80211_ATTR_EXTERNAL_AUTH_ACTION,
 	NL80211_ATTR_EXTERNAL_AUTH_SUPPORT,
+=======
+	NL80211_ATTR_BSSID,
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* add attributes here, update the policy in nl80211.c */
 
 	__NL80211_ATTR_AFTER_LAST,
@@ -5201,6 +5218,7 @@ enum nl80211_nan_match_attributes {
 	NL80211_NAN_MATCH_ATTR_MAX = NUM_NL80211_NAN_MATCH_ATTR - 1
 };
 
+<<<<<<< HEAD
 /**
  * nl80211_external_auth_action - Action to perform with external
  *     authentication request. Used by NL80211_ATTR_EXTERNAL_AUTH_ACTION.
@@ -5212,4 +5230,6 @@ enum nl80211_external_auth_action {
 	NL80211_EXTERNAL_AUTH_ABORT,
 };
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif /* __LINUX_NL80211_H */

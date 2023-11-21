@@ -2345,7 +2345,11 @@ static void get_ipsec_sa(struct pktgen_dev *pkt_dev, int flow)
 			x = xfrm_state_lookup_byspi(pn->net, htonl(pkt_dev->spi), AF_INET);
 		} else {
 			/* slow path: we dont already have xfrm_state */
+<<<<<<< HEAD
 			x = xfrm_stateonly_find(pn->net, DUMMY_MARK, 0,
+=======
+			x = xfrm_stateonly_find(pn->net, DUMMY_MARK,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 						(xfrm_address_t *)&pkt_dev->cur_daddr,
 						(xfrm_address_t *)&pkt_dev->cur_saddr,
 						AF_INET,

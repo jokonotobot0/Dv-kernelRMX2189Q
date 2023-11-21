@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
 obj-$(CONFIG_VIDEO_MEDIATEK_VCODEC) += mtk-vcodec-dec.o \
 				       mtk-vcodec-enc.o \
 				       mtk-vcodec-common.o \
@@ -55,3 +56,23 @@ ccflags-y += -I$(srctree)/drivers/misc/mediatek/base/power/qos/$(MTK_PLATFORM)
 ccflags-y += -I$(srctree)/drivers/misc/mediatek/include
 ccflags-y += -I$(srctree)/drivers/misc/mediatek/m4u/$(MTK_PLATFORM)
 ccflags-y += -I$(srctree)/drivers/iommu
+=======
+
+obj-$(CONFIG_VIDEO_MEDIATEK_VCODEC) += mtk-vcodec-enc.o mtk-vcodec-common.o
+
+
+
+mtk-vcodec-enc-y := venc/venc_vp8_if.o \
+		venc/venc_h264_if.o \
+		mtk_vcodec_enc.o \
+		mtk_vcodec_enc_drv.o \
+		mtk_vcodec_enc_pm.o \
+		venc_drv_if.o \
+		venc_vpu_if.o \
+
+
+mtk-vcodec-common-y := mtk_vcodec_intr.o \
+		mtk_vcodec_util.o\
+
+ccflags-y += -I$(srctree)/drivers/media/platform/mtk-vpu
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

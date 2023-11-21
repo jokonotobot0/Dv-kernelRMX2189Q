@@ -427,7 +427,10 @@ bool trylock_super(struct super_block *sb)
 void generic_shutdown_super(struct super_block *sb)
 {
 	const struct super_operations *sop = sb->s_op;
+<<<<<<< HEAD
 	struct inode *inode;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (sb->s_root) {
 		shrink_dcache_for_umount(sb);
@@ -451,6 +454,7 @@ void generic_shutdown_super(struct super_block *sb)
 			printk("VFS: Busy inodes after unmount of %s. "
 			   "Self-destruct in 5 seconds.  Have a nice day...\n",
 			   sb->s_id);
+<<<<<<< HEAD
 			if (sb->s_inodes.next != NULL) {
 				inode = container_of(sb->s_inodes.next,
 					struct inode, i_sb_list);
@@ -458,6 +462,8 @@ void generic_shutdown_super(struct super_block *sb)
 					pr_debug("VFS: inode=0x%p, ino=%d\n",
 						inode, inode->i_ino);
 			}
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		}
 	}
 	spin_lock(&sb_lock);
@@ -779,8 +785,12 @@ rescan:
 }
 
 /**
+<<<<<<< HEAD
  *	do_remount_sb2 - asks filesystem to change mount options.
  *	@mnt:   mount we are looking at
+=======
+ *	do_remount_sb - asks filesystem to change mount options.
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  *	@sb:	superblock in question
  *	@flags:	numeric part of options
  *	@data:	the rest of options
@@ -788,7 +798,11 @@ rescan:
  *
  *	Alters the mount options of a mounted file system.
  */
+<<<<<<< HEAD
 int do_remount_sb2(struct vfsmount *mnt, struct super_block *sb, int flags, void *data, int force)
+=======
+int do_remount_sb(struct super_block *sb, int flags, void *data, int force)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	int retval;
 	int remount_ro;
@@ -830,6 +844,7 @@ int do_remount_sb2(struct vfsmount *mnt, struct super_block *sb, int flags, void
 		}
 	}
 
+<<<<<<< HEAD
 	if (mnt && sb->s_op->remount_fs2) {
 		retval = sb->s_op->remount_fs2(mnt, sb, &flags, data);
 		if (retval) {
@@ -840,6 +855,9 @@ int do_remount_sb2(struct vfsmount *mnt, struct super_block *sb, int flags, void
 			     sb->s_type->name, retval);
 		}
 	} else if (sb->s_op->remount_fs) {
+=======
+	if (sb->s_op->remount_fs) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		retval = sb->s_op->remount_fs(sb, &flags, data);
 		if (retval) {
 			if (!force)
@@ -871,17 +889,24 @@ cancel_readonly:
 	return retval;
 }
 
+<<<<<<< HEAD
 int do_remount_sb(struct super_block *sb, int flags, void *data, int force)
 {
 	return do_remount_sb2(NULL, sb, flags, data, force);
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static void do_emergency_remount(struct work_struct *work)
 {
 	struct super_block *sb, *p = NULL;
 
 	spin_lock(&sb_lock);
+<<<<<<< HEAD
 	list_for_each_entry_reverse(sb, &super_blocks, s_list) {
+=======
+	list_for_each_entry(sb, &super_blocks, s_list) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		if (hlist_unhashed(&sb->s_instances))
 			continue;
 		sb->s_count++;
@@ -1052,7 +1077,11 @@ static int set_bdev_super(struct super_block *s, void *data)
 	 * We set the bdi here to the queue backing, file systems can
 	 * overwrite this in ->fill_super()
 	 */
+<<<<<<< HEAD
 	s->s_bdi = bdev_get_queue(s->s_bdev)->backing_dev_info;
+=======
+	s->s_bdi = &bdev_get_queue(s->s_bdev)->backing_dev_info;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return 0;
 }
 
@@ -1201,7 +1230,11 @@ struct dentry *mount_single(struct file_system_type *fs_type,
 EXPORT_SYMBOL(mount_single);
 
 struct dentry *
+<<<<<<< HEAD
 mount_fs(struct file_system_type *type, int flags, const char *name, struct vfsmount *mnt, void *data)
+=======
+mount_fs(struct file_system_type *type, int flags, const char *name, void *data)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	struct dentry *root;
 	struct super_block *sb;
@@ -1218,10 +1251,14 @@ mount_fs(struct file_system_type *type, int flags, const char *name, struct vfsm
 			goto out_free_secdata;
 	}
 
+<<<<<<< HEAD
 	if (type->mount2)
 		root = type->mount2(mnt, type, flags, name, data);
 	else
 		root = type->mount(type, flags, name, data);
+=======
+	root = type->mount(type, flags, name, data);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (IS_ERR(root)) {
 		error = PTR_ERR(root);
 		goto out_free_secdata;

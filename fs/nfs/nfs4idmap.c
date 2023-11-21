@@ -316,7 +316,11 @@ static ssize_t nfs_idmap_get_key(const char *name, size_t namelen,
 	if (ret < 0)
 		goto out_up;
 
+<<<<<<< HEAD
 	payload = user_key_payload_rcu(rkey);
+=======
+	payload = user_key_payload(rkey);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (IS_ERR_OR_NULL(payload)) {
 		ret = PTR_ERR(payload);
 		goto out_up;

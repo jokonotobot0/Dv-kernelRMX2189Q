@@ -14,6 +14,7 @@ config NET_MEDIATEK_SOC
 	  This driver supports the gigabit ethernet MACs in the
 	  MediaTek MT2701/MT7623 chipset family.
 
+<<<<<<< HEAD
 config MT2712_MAC
 	tristate "MediaTek MT2712 Gigabit AVB ethernet support"
 	select PHYLIB
@@ -23,4 +24,6 @@ config MT2712_MAC
 	  This driver supports the gigabit avb ethernet MACs in the
 	  MediaTek MT2712 chipset family.
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 endif #NET_VENDOR_MEDIATEK

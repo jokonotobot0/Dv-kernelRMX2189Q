@@ -35,8 +35,11 @@
 #include <linux/mmc/mmc.h>
 #include <linux/mmc/sd.h>
 #include <linux/mmc/slot-gpio.h>
+<<<<<<< HEAD
 #include <mt-plat/mtk_io_boost.h>
 #include <mt-plat/aee.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #define CREATE_TRACE_POINTS
 #include <trace/events/mmc.h>
@@ -50,8 +53,11 @@
 #include "mmc_ops.h"
 #include "sd_ops.h"
 #include "sdio_ops.h"
+<<<<<<< HEAD
 #include "../card/mtk_mmc_block.h"
 #include "../card/queue.h"
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /* If the device is not responding */
 #define MMC_CORE_TIMEOUT_MS	(10 * 60 * 1000) /* 10 minute timeout */
@@ -75,6 +81,7 @@ static const unsigned freqs[] = { 400000, 300000, 200000, 100000 };
 bool use_spi_crc = 1;
 module_param(use_spi_crc, bool, 0);
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_EMMC_CQ_SUPPORT
 static void mmc_enqueue_queue(struct mmc_host *host, struct mmc_request *mrq)
 {
@@ -901,6 +908,8 @@ out:
 EXPORT_SYMBOL(mmc_blk_cmdq_switch);
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int mmc_schedule_delayed_work(struct delayed_work *work,
 				     unsigned long delay)
 {
@@ -1015,8 +1024,12 @@ void mmc_request_done(struct mmc_host *host, struct mmc_request *mrq)
 			led_trigger_event(host->led, LED_OFF);
 
 		if (mrq->sbc) {
+<<<<<<< HEAD
 			pr_debug(
 			"%s: req done <CMD%u>: %d: %08x %08x %08x %08x\n",
+=======
+			pr_debug("%s: req done <CMD%u>: %d: %08x %08x %08x %08x\n",
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 				mmc_hostname(host), mrq->sbc->opcode,
 				mrq->sbc->error,
 				mrq->sbc->resp[0], mrq->sbc->resp[1],
@@ -1032,6 +1045,7 @@ void mmc_request_done(struct mmc_host *host, struct mmc_request *mrq)
 			pr_debug("%s:     %d bytes transferred: %d\n",
 				mmc_hostname(host),
 				mrq->data->bytes_xfered, mrq->data->error);
+<<<<<<< HEAD
 #ifdef CONFIG_BLOCK
 			if (mrq->lat_hist_enabled) {
 				ktime_t completion;
@@ -1046,6 +1060,8 @@ void mmc_request_done(struct mmc_host *host, struct mmc_request *mrq)
 					&host->io_lat_write, delta_us);
 			}
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		}
 
 		if (mrq->stop) {
@@ -1172,6 +1188,7 @@ static int mmc_start_request(struct mmc_host *host, struct mmc_request *mrq)
 			mrq->stop->mrq = mrq;
 		}
 	}
+<<<<<<< HEAD
 
 #ifdef CONFIG_MTK_EMMC_CQ_SUPPORT
 	if (host->card && mmc_card_cmdq(host->card) &&
@@ -1202,10 +1219,15 @@ static int mmc_start_request(struct mmc_host *host, struct mmc_request *mrq)
 #ifdef CONFIG_MTK_EMMC_CQ_SUPPORT
 	}
 #endif
+=======
+	led_trigger_event(host->led, LED_FULL);
+	__mmc_start_request(host, mrq);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	return 0;
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_EMMC_HW_CQ
 static void mmc_start_cmdq_request(struct mmc_host *host,
 				   struct mmc_request *mrq)
@@ -1238,6 +1260,8 @@ static void mmc_start_cmdq_request(struct mmc_host *host,
 }
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /**
  *	mmc_start_bkops - start BKOPS for supported cards
  *	@card: MMC card to start BKOPS
@@ -1355,11 +1379,14 @@ static int __mmc_start_data_req(struct mmc_host *host, struct mmc_request *mrq)
 
 	mmc_wait_ongoing_tfr_cmd(host);
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_EMMC_CQ_SUPPORT
 	if (host->card && mmc_card_cmdq(host->card))
 		mrq->done = mmc_wait_cmdq_done;
 	else
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	mrq->done = mmc_wait_data_done;
 	mrq->host = host;
 
@@ -1435,8 +1462,12 @@ static int mmc_wait_for_data_req_done(struct mmc_host *host,
 				break; /* return err */
 			} else {
 				mmc_retune_recheck(host);
+<<<<<<< HEAD
 				pr_info(
 				"%s: req failed (CMD%u): %d, retrying...\n",
+=======
+				pr_info("%s: req failed (CMD%u): %d, retrying...\n",
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 					mmc_hostname(host),
 					cmd->opcode, cmd->error);
 				cmd->retries--;
@@ -1552,6 +1583,7 @@ static void mmc_post_req(struct mmc_host *host, struct mmc_request *mrq,
 		host->ops->post_req(host, mrq, err);
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_EMMC_HW_CQ
 /**
  *	mmc_cmdq_discard_card_queue - discard the task[s] in the device
@@ -1689,6 +1721,8 @@ int mmc_cmdq_prepare_flush(struct mmc_command *cmd)
 EXPORT_SYMBOL(mmc_cmdq_prepare_flush);
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /**
  *	mmc_start_req - start a non-blocking request
  *	@host: MMC host to start command
@@ -1726,8 +1760,11 @@ struct mmc_async_req *mmc_start_req(struct mmc_host *host,
 			 * nothing to return
 			 */
 			return NULL;
+<<<<<<< HEAD
 		} else {
 			mt_biolog_mmcqd_req_end(host->areq->mrq->data);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		}
 		/*
 		 * Check BKOPS urgency for each R1 response
@@ -1749,6 +1786,7 @@ struct mmc_async_req *mmc_start_req(struct mmc_host *host,
 		}
 	}
 
+<<<<<<< HEAD
 	if (!err && areq) {
 #ifdef CONFIG_BLOCK
 		if (host->latency_hist_enabled) {
@@ -1776,22 +1814,34 @@ struct mmc_async_req *mmc_start_req(struct mmc_host *host,
 	if (host->areq)
 
 #endif
+=======
+	if (!err && areq)
+		start_err = __mmc_start_data_req(host, areq->mrq);
+
+	if (host->areq)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		mmc_post_req(host, host->areq->mrq, 0);
 
 	 /* Cancel a prepared request if it was not started. */
 	if ((err || start_err) && areq)
 		mmc_post_req(host, areq->mrq, -EINVAL);
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_EMMC_CQ_SUPPORT
 	if (!(areq && areq->cmdq_en)) {
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (err)
 		host->areq = NULL;
 	else
 		host->areq = areq;
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_EMMC_CQ_SUPPORT
 	}
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (error)
 		*error = err;
@@ -1897,8 +1947,12 @@ EXPORT_SYMBOL(mmc_interrupt_hpi);
  *	to complete.  Return any error that occurred while the command
  *	was executing.  Do not attempt to parse the response.
  */
+<<<<<<< HEAD
 int mmc_wait_for_cmd(struct mmc_host *host, struct mmc_command *cmd,
 	int retries)
+=======
+int mmc_wait_for_cmd(struct mmc_host *host, struct mmc_command *cmd, int retries)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	struct mmc_request mrq = {NULL};
 
@@ -2144,6 +2198,7 @@ int __mmc_claim_host(struct mmc_host *host, atomic_t *abort)
 EXPORT_SYMBOL(__mmc_claim_host);
 
 /**
+<<<<<<< HEAD
  *     mmc_try_claim_host - try exclusively to claim a host
  *        and keep trying for given time, with a gap of 10ms
  *     @host: mmc host to claim
@@ -2181,6 +2236,8 @@ int mmc_try_claim_host(struct mmc_host *host, unsigned int delay_ms)
 EXPORT_SYMBOL(mmc_try_claim_host);
 
 /**
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  *	mmc_release_host - release a host
  *	@host: mmc host to release
  *
@@ -3156,7 +3213,10 @@ void mmc_init_erase(struct mmc_card *card)
 			card->pref_erase = 2 * 1024 * 1024 / 512;
 		else
 			card->pref_erase = 4 * 1024 * 1024 / 512;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		if (card->pref_erase < card->erase_size)
 			card->pref_erase = card->erase_size;
 		else {
@@ -3169,7 +3229,11 @@ void mmc_init_erase(struct mmc_card *card)
 }
 
 static unsigned int mmc_mmc_erase_timeout(struct mmc_card *card,
+<<<<<<< HEAD
 					  unsigned int arg, unsigned int qty)
+=======
+				          unsigned int arg, unsigned int qty)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	unsigned int erase_timeout;
 
@@ -3267,6 +3331,7 @@ static unsigned int mmc_erase_timeout(struct mmc_card *card,
 		return mmc_mmc_erase_timeout(card, arg, qty);
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_EMMC_HW_CQ
 static u32 mmc_get_erase_qty(struct mmc_card *card, u32 from, u32 to)
 {
@@ -3390,6 +3455,8 @@ out:
 }
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int mmc_do_erase(struct mmc_card *card, unsigned int from,
 			unsigned int to, unsigned int arg)
 {
@@ -3577,6 +3644,7 @@ static unsigned int mmc_align_erase_size(struct mmc_card *card,
 	return nr_new;
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_EMMC_HW_CQ
 int mmc_erase_sanity_check(struct mmc_card *card, unsigned int from,
 		unsigned int nr, unsigned int arg)
@@ -3648,6 +3716,8 @@ int mmc_cmdq_erase(struct mmc_cmdq_req *cmdq_req,
 EXPORT_SYMBOL(mmc_cmdq_erase);
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /**
  * mmc_erase - erase sectors.
  * @card: card to erase
@@ -3861,9 +3931,12 @@ unsigned int mmc_calc_max_discard(struct mmc_card *card)
 	struct mmc_host *host = card->host;
 	unsigned int max_discard, max_trim;
 
+<<<<<<< HEAD
 	if (!host->max_busy_timeout)
 		return UINT_MAX;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/*
 	 * Without erase_group_def set, MMC erase timeout depends on clock
 	 * frequence which can change.  In that case, the best choice is
@@ -3923,6 +3996,7 @@ static void mmc_hw_reset_for_init(struct mmc_host *host)
 	host->ops->hw_reset(host);
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_EMMC_HW_CQ
 /*
  * mmc_cmdq_hw_reset: Helper API for doing
@@ -3965,6 +4039,8 @@ out:
 EXPORT_SYMBOL(mmc_cmdq_halt_on_empty_queue);
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 int mmc_hw_reset(struct mmc_host *host)
 {
 	int ret;
@@ -4036,6 +4112,7 @@ static int mmc_rescan_try_freq(struct mmc_host *host, unsigned freq)
 	return -EIO;
 }
 
+<<<<<<< HEAD
 #if defined(MOUNT_EXSTORAGE_IF)
 /*ye.zhang@BSP, 2016-05-01, add for CTSI support external storage or not*/
 static struct workqueue_struct *exStorage_prop_wq;
@@ -4161,6 +4238,8 @@ static void exStorage_prop_func(struct work_struct *work)
 }
 #endif//MOUNT_EXSTORAGE_IF
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 int _mmc_detect_card_removed(struct mmc_host *host)
 {
 	int ret;
@@ -4182,6 +4261,7 @@ int _mmc_detect_card_removed(struct mmc_host *host)
 		pr_debug("%s: card removed too slowly\n", mmc_hostname(host));
 	}
 
+<<<<<<< HEAD
 #if defined(MOUNT_EXSTORAGE_IF)
 /*ye.zhang@BSP, 2016-05-01, add for CTSI support external storage or not*/
 	if (ret || (!strcmp(mmc_hostname(host), "mmc1") && exStor_prop.external_storage_support == EXTERNAL_STORAGE_UNSUPPORT)) {
@@ -4190,11 +4270,16 @@ int _mmc_detect_card_removed(struct mmc_host *host)
 		pr_debug("%s: card remove detected\n", mmc_hostname(host));
 	}
 #else
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (ret) {
 		mmc_card_set_removed(host->card);
 		pr_debug("%s: card remove detected\n", mmc_hostname(host));
 	}
+<<<<<<< HEAD
 #endif//MOUNT_EXSTORAGE_IF
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	return ret;
 }
@@ -4246,6 +4331,7 @@ void mmc_rescan(struct work_struct *work)
 	if (host->rescan_disable)
 		return;
 
+<<<<<<< HEAD
 #if defined(MOUNT_EXSTORAGE_IF)
 /*ye.zhang@BSP, 2016-05-01, add for CTSI support external storage or not*/
 	if (!(host->caps & MMC_CAP_NONREMOVABLE) && (!strcmp(mmc_hostname(host), "mmc1")))
@@ -4262,6 +4348,8 @@ void mmc_rescan(struct work_struct *work)
 		exStor_prop.prev_support_value = exStor_prop.external_storage_support;
 	}
 #endif//MOUNT_EXSTORAGE_IF
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* If there is a non-removable card registered, only scan once */
 	if (!mmc_card_is_removable(host) && host->rescan_entered)
 		return;
@@ -4294,6 +4382,7 @@ void mmc_rescan(struct work_struct *work)
 
 	/* if there still is a card present, stop here */
 	if (host->bus_ops != NULL) {
+<<<<<<< HEAD
 #if defined(MOUNT_EXSTORAGE_IF)
 		if (strcmp(mmc_hostname(host), "mmc1") || exStor_prop.external_storage_support != EXTERNAL_STORAGE_UNSUPPORT)
 #endif//MOUNT_EXSTORAGE_IF
@@ -4301,6 +4390,10 @@ void mmc_rescan(struct work_struct *work)
 			mmc_bus_put(host);
 			goto out;
 		}
+=======
+		mmc_bus_put(host);
+		goto out;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 
 	/*
@@ -4310,6 +4403,7 @@ void mmc_rescan(struct work_struct *work)
 	mmc_bus_put(host);
 
 	mmc_claim_host(host);
+<<<<<<< HEAD
 #ifndef MOUNT_EXSTORAGE_IF
 /*ye.zhang@BSP, 2016-05-01, add for CTSI support external storage or not*/
 	if (mmc_card_is_removable(host) && host->ops->get_cd &&
@@ -4319,6 +4413,10 @@ void mmc_rescan(struct work_struct *work)
 			host->ops->get_cd(host) == 0) ||
 			(!strcmp(mmc_hostname(host), "mmc1") && exStor_prop.external_storage_support == EXTERNAL_STORAGE_UNSUPPORT)) {
 #endif
+=======
+	if (mmc_card_is_removable(host) && host->ops->get_cd &&
+			host->ops->get_cd(host) == 0) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		mmc_power_off(host);
 		mmc_release_host(host);
 		goto out;
@@ -4339,10 +4437,13 @@ void mmc_rescan(struct work_struct *work)
 
 void mmc_start_host(struct mmc_host *host)
 {
+<<<<<<< HEAD
 #if defined(MOUNT_EXSTORAGE_IF)
 /*ye.zhang@BSP, 2016-02-26, add for CTSI support external storage or not*/
 	int err;
 #endif//MOUNT_EXSTORAGE_IF
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	host->f_init = max(freqs[0], host->f_min);
 	host->rescan_disable = 0;
 	host->ios.power_mode = MMC_POWER_UNDEFINED;
@@ -4355,6 +4456,7 @@ void mmc_start_host(struct mmc_host *host)
 	mmc_release_host(host);
 
 	mmc_gpiod_request_cd_irq(host);
+<<<<<<< HEAD
 
 #if defined(MOUNT_EXSTORAGE_IF)
 /*ye.zhang@BSP, 2016-02-26, add for CTSI support external storage or not*/
@@ -4370,6 +4472,8 @@ void mmc_start_host(struct mmc_host *host)
 	}
 #endif//MOUNT_EXSTORAGE_IF
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	_mmc_detect_change(host, 0, false);
 }
 
@@ -4385,12 +4489,16 @@ void mmc_stop_host(struct mmc_host *host)
 		disable_irq(host->slot.cd_irq);
 
 	host->rescan_disable = 1;
+<<<<<<< HEAD
 #ifndef VENDOR_EDIT 
 //tianwen@BSP.Kernel.Stability, 2019/11/01, Modify for system_server hang
 	cancel_delayed_work_sync(&host->detect);
 #else
 	cancel_delayed_work(&host->detect);
 #endif
+=======
+	cancel_delayed_work_sync(&host->detect);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/* clear pm flags now and let card drivers set them as needed */
 	host->pm_flags = 0;
@@ -4577,6 +4685,7 @@ void mmc_init_context_info(struct mmc_host *host)
 	init_waitqueue_head(&host->context_info.wait);
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_MMC_EMBEDDED_SDIO
 void mmc_set_embedded_sdio_data(struct mmc_host *host,
 				struct sdio_cis *cis,
@@ -4593,10 +4702,13 @@ void mmc_set_embedded_sdio_data(struct mmc_host *host,
 EXPORT_SYMBOL(mmc_set_embedded_sdio_data);
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int __init mmc_init(void)
 {
 	int ret;
 
+<<<<<<< HEAD
 #if defined(MOUNT_EXSTORAGE_IF)
 /*ye.zhang@BSP, 2016-05-01, add for CTSI support external storage or not*/
 	exStorage_prop_wq = create_singlethread_workqueue("exStorage_prop_wq");
@@ -4609,6 +4721,8 @@ static int __init mmc_init(void)
 	init_waitqueue_head(&exStor_prop.prop_waitq);
 #endif//MOUNT_EXSTORAGE_IF
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	ret = mmc_register_bus();
 	if (ret)
 		return ret;
@@ -4637,6 +4751,7 @@ static void __exit mmc_exit(void)
 	mmc_unregister_bus();
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_BLOCK
 static ssize_t
 latency_hist_show(struct device *dev, struct device_attribute *attr, char *buf)
@@ -4694,6 +4809,8 @@ mmc_latency_hist_sysfs_exit(struct mmc_host *host)
 }
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 subsys_initcall(mmc_init);
 module_exit(mmc_exit);
 

@@ -17,6 +17,7 @@
 #include <linux/bitops.h>
 #include <linux/device.h>
 
+<<<<<<< HEAD
 #if IS_ENABLED(CONFIG_MTK_SMI_EXT)
 #include <linux/platform_device.h>
 
@@ -60,6 +61,11 @@ int smi_unregister(struct platform_driver *drv);
 #if IS_ENABLED(CONFIG_MTK_SMI)
 
 #define MTK_LARB_NR_MAX		16
+=======
+#ifdef CONFIG_MTK_SMI
+
+#define MTK_LARB_NR_MAX		8
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #define MTK_SMI_MMU_EN(port)	BIT(port)
 

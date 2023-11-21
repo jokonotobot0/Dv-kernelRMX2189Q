@@ -131,6 +131,7 @@ struct ufs_dev_fix {
  */
 #define UFS_DEVICE_QUIRK_HOST_PA_SAVECONFIGTIME	(1 << 8)
 
+<<<<<<< HEAD
 
 /*
  * MTK PATCH
@@ -139,4 +140,6 @@ struct ufs_dev_fix {
  */
 #define UFS_DEVICE_QUIRK_LIMITED_RPMB_MAX_RW_SIZE	(1 << 30)
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif /* UFS_QUIRKS_H_ */

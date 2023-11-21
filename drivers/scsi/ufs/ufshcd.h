@@ -67,12 +67,15 @@
 
 #include "ufs.h"
 #include "ufshci.h"
+<<<<<<< HEAD
 #if defined(CONFIG_UFSHPB)
 #include "ufshpb.h"
 #endif
 
 /* MTK PATCH */
 #include <linux/rpmb.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #define UFSHCD "ufshcd"
 #define UFSHCD_DRIVER_VERSION "0.2"
@@ -182,6 +185,7 @@ struct ufshcd_lrb {
 	int task_tag;
 	u8 lun; /* UPIU LUN id field is only 8-bit wide */
 	bool intr_cmd;
+<<<<<<< HEAD
 
 	/*
 	 * Use sched_clock instead of ktime_get to align with
@@ -195,6 +199,8 @@ struct ufshcd_lrb {
 	u32 crypto_cfgid;
 	u32 crypto_dunl;
 	u32 crypto_dunu;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 /**
@@ -231,10 +237,13 @@ struct ufs_desc_size {
 	int interc_desc;
 	int unit_desc;
 	int conf_desc;
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
     //xiaofan.yang@PSW.TECH.Stability, 2019/03/15,Add for check storage endurance    
 	int hlth_desc;
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 /**
@@ -277,6 +286,7 @@ struct ufs_pwr_mode_info {
 	struct ufs_pa_layer_attr info;
 };
 
+<<<<<<< HEAD
 /* MTK PATCH */
 enum ufs_scsi_dev_cfg {
 	UFS_SCSI_DEV_SLAVE_ALLOC,
@@ -284,6 +294,8 @@ enum ufs_scsi_dev_cfg {
 	UFS_SCSI_DEV_SLAVE_DESTROY
 };
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /**
  * struct ufs_hba_variant_ops - variant specific callbacks
  * @name: variant name
@@ -328,6 +340,7 @@ struct ufs_hba_variant_ops {
 	int     (*resume)(struct ufs_hba *, enum ufs_pm_op);
 	void	(*dbg_register_dump)(struct ufs_hba *hba);
 	int	(*phy_initialization)(struct ufs_hba *);
+<<<<<<< HEAD
 
 	/*
 	 * MTK PATCH: Control AH8
@@ -354,6 +367,8 @@ struct ufs_hba_variant_ops {
 	 * MTK PATCH: SCSI device slave alloc/configure/destroy.
 	 */
 	int     (*scsi_dev_cfg)(struct scsi_device *, enum ufs_scsi_dev_cfg);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 /* clock gating state  */
@@ -404,6 +419,7 @@ struct ufs_init_prefetch {
 	u32 icc_level;
 };
 
+<<<<<<< HEAD
 #define UIC_ERR_REG_HIST_LENGTH 20
 /**
  * struct ufs_uic_err_reg_hist - keeps history of uic errors
@@ -459,6 +475,8 @@ enum ufs_crypto_state {
 	UFS_CRYPTO_HW_FBE_ENCRYPTED   = (1 << 3),
 };
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /**
  * struct ufs_hba - per adapter private structure
  * @mmio_base: UFSHCI base register address
@@ -470,7 +488,10 @@ enum ufs_crypto_state {
  * @utmrdl_dma_addr: UTMRDL DMA address
  * @host: Scsi_Host instance of the driver
  * @dev: device handle
+<<<<<<< HEAD
  * @sdev_ufs_rpmb: reference to RPMB device W-LU
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  * @lrb: local reference block
  * @lrb_in_use: lrb in use
  * @outstanding_tasks: Bits representing outstanding task requests
@@ -513,7 +534,10 @@ enum ufs_crypto_state {
  * @urgent_bkops_lvl: keeps track of urgent bkops level for device
  * @is_urgent_bkops_lvl_checked: keeps track if the urgent bkops level for
  *  device is known or not.
+<<<<<<< HEAD
  * @scsi_block_reqs_cnt: reference counting for scsi block requests
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  */
 struct ufs_hba {
 	void __iomem *mmio_base;
@@ -536,12 +560,15 @@ struct ufs_hba {
 	 */
 	struct scsi_device *sdev_ufs_device;
 
+<<<<<<< HEAD
 	/*
 	 * MTK PATCH: RPMB device
 	 */
 	struct scsi_device *sdev_ufs_rpmb;
 	struct rpmb_dev *rawdev_ufs_rpmb;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	enum ufs_dev_pwr_mode curr_dev_pwr_mode;
 	enum uic_link_state uic_link_state;
 	/* Desired UFS power management level during runtime PM */
@@ -611,6 +638,7 @@ struct ufs_hba {
 	 */
 	#define UFSHCD_QUIRK_PRDT_BYTE_GRAN			UFS_BIT(7)
 
+<<<<<<< HEAD
 	/*
 	 * MTK PATCH
 	 * This quirk needs to be enabled if we apply performance heuristic
@@ -639,6 +667,8 @@ struct ufs_hba {
 	 */
 	#define UFSHCD_QUIRK_UFS_HCI_DISABLE_AH8_BEFORE_RDB	UFS_BIT(11)
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	unsigned int quirks;	/* Deviations from standard UFSHCI spec. */
 
 	/* Device deviations from standard UFS device spec. */
@@ -664,14 +694,20 @@ struct ufs_hba {
 	/* Work Queues */
 	struct work_struct eh_work;
 	struct work_struct eeh_work;
+<<<<<<< HEAD
 	struct work_struct rls_work;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/* HBA Errors */
 	u32 errors;
 	u32 uic_error;
 	u32 saved_err;
 	u32 saved_uic_err;
+<<<<<<< HEAD
 	struct ufs_stats ufs_stats;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/* Device management request data */
 	struct ufs_dev_cmd dev_cmd;
@@ -685,12 +721,15 @@ struct ufs_hba {
 
 	bool wlun_dev_clr_ua;
 
+<<<<<<< HEAD
 	/* MTK PATCH Number of requests aborts */
 	int req_abort_count;
 
 	/* MTK PATCH Bitmask for enabling debug prints */
 	u32 ufshcd_dbg_print;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* Number of lanes available (1 or 2) for Rx/Tx */
 	u32 lanes_per_direction;
 	struct ufs_pa_layer_attr pwr_info;
@@ -726,6 +765,7 @@ struct ufs_hba {
 	struct ufs_clk_scaling clk_scaling;
 	bool is_sys_suspended;
 
+<<<<<<< HEAD
 #if defined(CONFIG_UFSHPB)
 	struct ufshpb_lu *ufshpb_lup[UFS_UPIU_MAX_GENERAL_LUN];
 	struct delayed_work ufshpb_init_work;
@@ -735,10 +775,13 @@ struct ufs_hba {
 	bool issue_ioctl;
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	enum bkops_status urgent_bkops_lvl;
 	bool is_urgent_bkops_lvl_checked;
 
 	struct ufs_desc_size desc_size;
+<<<<<<< HEAD
 
 	int latency_hist_enabled;
 	struct io_latency_state io_lat_s;
@@ -792,6 +835,10 @@ static inline u8 ufshcd_scsi_to_upiu_lun(unsigned int scsi_lun)
 		return scsi_lun & UFS_UPIU_MAX_UNIT_NUM_ID;
 }
 
+=======
+};
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* Returns true if clocks can be gated. Otherwise false */
 static inline bool ufshcd_is_clkgating_allowed(struct ufs_hba *hba)
 {
@@ -854,6 +901,7 @@ int ufshcd_wait_for_register(struct ufs_hba *hba, u32 reg, u32 mask,
 				u32 val, unsigned long interval_us,
 				unsigned long timeout_ms, bool can_sleep);
 
+<<<<<<< HEAD
 /**
  * MTK PATCH
  * Wrapper function for safely calling variant operations
@@ -889,6 +937,8 @@ static inline void ufshcd_vops_scsi_dev_cfg(struct scsi_device *sdev,
 		hba->vops->scsi_dev_cfg(sdev, op);
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static inline void check_upiu_size(void)
 {
 	BUILD_BUG_ON(ALIGNED_UPIU_SIZE <
@@ -978,6 +1028,7 @@ static inline int ufshcd_dme_peer_get(struct ufs_hba *hba,
 	return ufshcd_dme_get_attr(hba, attr_sel, mib_val, DME_PEER);
 }
 
+<<<<<<< HEAD
 /* MTK PATCH */
 extern struct ufs_pm_lvl_states ufs_pm_lvl_states[];
 extern const int ufs_pm_lvl_states_size;
@@ -987,6 +1038,10 @@ int ufshcd_read_device_desc(struct ufs_hba *hba, u8 *buf, u32 size);
 /* MTK PATCH */
 int ufshcd_read_health_desc(struct ufs_hba *hba, u8 *buf, u32 size);
 
+=======
+int ufshcd_read_device_desc(struct ufs_hba *hba, u8 *buf, u32 size);
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static inline bool ufshcd_is_hs_mode(struct ufs_pa_layer_attr *pwr_info)
 {
 	return (pwr_info->pwr_rx == FAST_MODE ||
@@ -1122,6 +1177,7 @@ static inline void ufshcd_vops_dbg_register_dump(struct ufs_hba *hba)
 		hba->vops->dbg_register_dump(hba);
 }
 
+<<<<<<< HEAD
 /**
  * MTK PATCH:
  *
@@ -1164,4 +1220,6 @@ static inline u16 ufshcd_upiu_wlun_to_scsi_wlun(u8 upiu_wlun_id)
 {
 	return (upiu_wlun_id & ~UFS_UPIU_WLUN_ID) | SCSI_W_LUN_BASE;
 }
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif /* End of Header */

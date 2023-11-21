@@ -266,7 +266,11 @@ static const struct super_operations tracefs_super_operations = {
 
 static int trace_fill_super(struct super_block *sb, void *data, int silent)
 {
+<<<<<<< HEAD
 	static const struct tree_descr trace_files[] = {{""}};
+=======
+	static struct tree_descr trace_files[] = {{""}};
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct tracefs_fs_info *fsi;
 	int err;
 

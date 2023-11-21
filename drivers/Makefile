@@ -4,7 +4,10 @@
 # 15 Sep 2000, Christoph Hellwig <hch@infradead.org>
 # Rewritten to use lists instead of if-statements.
 #
+<<<<<<< HEAD
 subdir-ccflags-y += -Werror
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 obj-y				+= irqchip/
 obj-y				+= bus/
@@ -176,5 +179,8 @@ obj-$(CONFIG_STM)		+= hwtracing/stm/
 obj-$(CONFIG_ANDROID)		+= android/
 obj-$(CONFIG_NVMEM)		+= nvmem/
 obj-$(CONFIG_FPGA)		+= fpga/
+<<<<<<< HEAD
 obj-$(CONFIG_TEE)		+= tee/
 obj-$(CONFIG_TRUSTY)	+= trusty/
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

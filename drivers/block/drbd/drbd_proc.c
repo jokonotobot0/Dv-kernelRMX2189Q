@@ -288,7 +288,11 @@ static int drbd_seq_show(struct seq_file *seq, void *v)
 			seq_printf(seq, "%2d: cs:Unconfigured\n", i);
 		} else {
 			/* reset device->congestion_reason */
+<<<<<<< HEAD
 			bdi_rw_congested(device->rq_queue->backing_dev_info);
+=======
+			bdi_rw_congested(&device->rq_queue->backing_dev_info);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 			nc = rcu_dereference(first_peer_device(device)->connection->net_conf);
 			wp = nc ? nc->wire_protocol - DRBD_PROT_A + 'A' : ' ';

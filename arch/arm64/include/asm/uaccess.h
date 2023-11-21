@@ -18,6 +18,7 @@
 #ifndef __ASM_UACCESS_H
 #define __ASM_UACCESS_H
 
+<<<<<<< HEAD
 #include <asm/alternative.h>
 #include <asm/kernel-pgtable.h>
 #include <asm/mmu.h>
@@ -25,6 +26,8 @@
 
 #ifndef __ASSEMBLY__
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * User space memory access functions
  */
@@ -33,9 +36,17 @@
 #include <linux/string.h>
 #include <linux/thread_info.h>
 
+<<<<<<< HEAD
 #include <asm/cpufeature.h>
 #include <asm/processor.h>
 #include <asm/ptrace.h>
+=======
+#include <asm/alternative.h>
+#include <asm/cpufeature.h>
+#include <asm/processor.h>
+#include <asm/ptrace.h>
+#include <asm/sysreg.h>
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <asm/errno.h>
 #include <asm/memory.h>
 #include <asm/compiler.h>
@@ -72,9 +83,12 @@ static inline void set_fs(mm_segment_t fs)
 {
 	current_thread_info()->addr_limit = fs;
 
+<<<<<<< HEAD
 	/* On user-mode return, check fs is correct */
 	set_thread_flag(TIF_FSCHECK);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/*
 	 * Prevent a mispredicted conditional call to set_fs from forwarding
 	 * the wrong address limit to access_ok under speculation.
@@ -144,6 +158,7 @@ static inline unsigned long __range_ok(unsigned long addr, unsigned long size)
 	"	.popsection\n"
 
 /*
+<<<<<<< HEAD
  * User access enabling/disabling.
  */
 #ifdef CONFIG_ARM64_SW_TTBR0_PAN
@@ -253,6 +268,8 @@ static inline void uaccess_enable_not_uao(void)
 }
 
 /*
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  * Sanitise a uaccess pointer such that it becomes NULL if above the
  * current addr_limit.
  */
@@ -299,7 +316,12 @@ static inline void __user *__uaccess_mask_ptr(const void __user *ptr)
 do {									\
 	unsigned long __gu_val;						\
 	__chk_user_ptr(ptr);						\
+<<<<<<< HEAD
 	uaccess_enable_not_uao();					\
+=======
+	asm(ALTERNATIVE("nop", SET_PSTATE_PAN(0), ARM64_ALT_PAN_NOT_UAO,\
+			CONFIG_ARM64_PAN));				\
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	switch (sizeof(*(ptr))) {					\
 	case 1:								\
 		__get_user_asm("ldrb", "ldtrb", "%w", __gu_val, (ptr),  \
@@ -320,8 +342,14 @@ do {									\
 	default:							\
 		BUILD_BUG();						\
 	}								\
+<<<<<<< HEAD
 	uaccess_disable_not_uao();					\
 	(x) = (__force __typeof__(*(ptr)))__gu_val;			\
+=======
+	(x) = (__force __typeof__(*(ptr)))__gu_val;			\
+	asm(ALTERNATIVE("nop", SET_PSTATE_PAN(1), ARM64_ALT_PAN_NOT_UAO,\
+			CONFIG_ARM64_PAN));				\
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 } while (0)
 
 #define __get_user_check(x, ptr, err)					\
@@ -371,7 +399,12 @@ do {									\
 do {									\
 	__typeof__(*(ptr)) __pu_val = (x);				\
 	__chk_user_ptr(ptr);						\
+<<<<<<< HEAD
 	uaccess_enable_not_uao();					\
+=======
+	asm(ALTERNATIVE("nop", SET_PSTATE_PAN(0), ARM64_ALT_PAN_NOT_UAO,\
+			CONFIG_ARM64_PAN));				\
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	switch (sizeof(*(ptr))) {					\
 	case 1:								\
 		__put_user_asm("strb", "sttrb", "%w", __pu_val, (ptr),	\
@@ -392,7 +425,12 @@ do {									\
 	default:							\
 		BUILD_BUG();						\
 	}								\
+<<<<<<< HEAD
 	uaccess_disable_not_uao();					\
+=======
+	asm(ALTERNATIVE("nop", SET_PSTATE_PAN(1), ARM64_ALT_PAN_NOT_UAO,\
+			CONFIG_ARM64_PAN));				\
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 } while (0)
 
 #define __put_user_check(x, ptr, err)					\
@@ -492,6 +530,7 @@ extern long strncpy_from_user(char *dest, const char __user *src, long count);
 extern __must_check long strlen_user(const char __user *str);
 extern __must_check long strnlen_user(const char __user *str, long n);
 
+<<<<<<< HEAD
 #else	/* __ASSEMBLY__ */
 
 #include <asm/assembler.h>
@@ -565,4 +604,6 @@ alternative_else_nop_endif
 
 #endif	/* __ASSEMBLY__ */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif /* __ASM_UACCESS_H */

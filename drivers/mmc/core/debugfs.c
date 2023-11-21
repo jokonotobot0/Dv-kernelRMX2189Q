@@ -313,6 +313,7 @@ static int mmc_ext_csd_open(struct inode *inode, struct file *filp)
 		return -ENOMEM;
 
 	mmc_get_card(card);
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_EMMC_HW_CQ
 	/* disable cqhci before xf */
 	(void)mmc_blk_cmdq_switch(card, 0);
@@ -322,6 +323,9 @@ static int mmc_ext_csd_open(struct inode *inode, struct file *filp)
 	/* enable cqhci after xf */
 	(void)mmc_blk_cmdq_switch(card, 1);
 #endif
+=======
+	err = mmc_get_ext_csd(card, &ext_csd);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	mmc_put_card(card);
 	if (err)
 		goto out_free;
@@ -362,6 +366,7 @@ static const struct file_operations mmc_dbg_ext_csd_fops = {
 	.llseek		= default_llseek,
 };
 
+<<<<<<< HEAD
 #ifdef ODM_WT_EDIT
 //Haibo.Dong@ODM_WT.BSP.Storage.EMMC,2020/04/08, add for debug emmc life&size display
 #define SECTOR_COUNT_BUF_LEN 16
@@ -533,6 +538,8 @@ static const struct file_operations mmc_dbg_life_time_fops = {
 };
 #endif /*ODM_WT_EDIT*/
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 void mmc_add_card_debugfs(struct mmc_card *card)
 {
 	struct mmc_host	*host = card->host;
@@ -564,6 +571,7 @@ void mmc_add_card_debugfs(struct mmc_card *card)
 		if (!debugfs_create_file("ext_csd", S_IRUSR, root, card,
 					&mmc_dbg_ext_csd_fops))
 			goto err;
+<<<<<<< HEAD
 #ifdef ODM_WT_EDIT
 //Haibo.Dong@ODM_WT.BSP.Storage.EMMC,2020/04/08,add for debug emmc life&size display
 	if (mmc_card_mmc(card))
@@ -576,6 +584,8 @@ void mmc_add_card_debugfs(struct mmc_card *card)
 						&mmc_dbg_life_time_fops))
 			goto err;
 #endif /* ODM_WT_EDIT */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	return;
 

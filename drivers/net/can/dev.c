@@ -1095,6 +1095,11 @@ static struct rtnl_link_ops can_link_ops __read_mostly = {
 int register_candev(struct net_device *dev)
 {
 	dev->rtnl_link_ops = &can_link_ops;
+<<<<<<< HEAD
+=======
+	netif_carrier_off(dev);
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return register_netdev(dev);
 }
 EXPORT_SYMBOL_GPL(register_candev);

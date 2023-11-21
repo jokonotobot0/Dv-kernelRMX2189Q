@@ -534,6 +534,7 @@ static ssize_t sockfs_listxattr(struct dentry *dentry, char *buffer,
 	return used;
 }
 
+<<<<<<< HEAD
 static int sockfs_setattr(struct dentry *dentry, struct iattr *iattr)
 {
 	int err = simple_setattr(dentry, iattr);
@@ -553,6 +554,10 @@ static int sockfs_setattr(struct dentry *dentry, struct iattr *iattr)
 static const struct inode_operations sockfs_inode_ops = {
 	.listxattr = sockfs_listxattr,
 	.setattr = sockfs_setattr,
+=======
+static const struct inode_operations sockfs_inode_ops = {
+	.listxattr = sockfs_listxattr,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 /**
@@ -595,17 +600,25 @@ EXPORT_SYMBOL(sock_alloc);
  *	an inode not a file.
  */
 
+<<<<<<< HEAD
 static void __sock_release(struct socket *sock, struct inode *inode)
+=======
+void sock_release(struct socket *sock)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	if (sock->ops) {
 		struct module *owner = sock->ops->owner;
 
+<<<<<<< HEAD
 		if (inode)
 			inode_lock(inode);
 		sock->ops->release(sock);
 		sock->sk = NULL;
 		if (inode)
 			inode_unlock(inode);
+=======
+		sock->ops->release(sock);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		sock->ops = NULL;
 		module_put(owner);
 	}
@@ -620,11 +633,14 @@ static void __sock_release(struct socket *sock, struct inode *inode)
 	}
 	sock->file = NULL;
 }
+<<<<<<< HEAD
 
 void sock_release(struct socket *sock)
 {
 	__sock_release(sock, NULL);
 }
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 EXPORT_SYMBOL(sock_release);
 
 void __sock_tx_timestamp(__u16 tsflags, __u8 *tx_flags)
@@ -1057,7 +1073,11 @@ static int sock_mmap(struct file *file, struct vm_area_struct *vma)
 
 static int sock_close(struct inode *inode, struct file *filp)
 {
+<<<<<<< HEAD
 	__sock_release(SOCKET_I(inode), inode);
+=======
+	sock_release(SOCKET_I(inode));
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return 0;
 }
 
@@ -1993,10 +2013,15 @@ static int ___sys_sendmsg(struct socket *sock, struct user_msghdr __user *msg,
 	}
 
 out_freectl:
+<<<<<<< HEAD
 	if (ctl_buf != ctl){
 		sock_kfree_s(sock->sk, ctl_buf, ctl_len);
 	}
 
+=======
+	if (ctl_buf != ctl)
+		sock_kfree_s(sock->sk, ctl_buf, ctl_len);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 out_freeiov:
 	kfree(iov);
 	return err;

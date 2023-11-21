@@ -609,6 +609,7 @@ int propagate_umount(struct list_head *list)
 
 	return 0;
 }
+<<<<<<< HEAD
 
 void propagate_remount(struct mount *mnt)
 {
@@ -625,3 +626,5 @@ void propagate_remount(struct mount *mnt)
 			sb->s_op->copy_mnt_data(m->mnt.data, mnt->mnt.data);
 	}
 }
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

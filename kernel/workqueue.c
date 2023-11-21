@@ -291,8 +291,11 @@ module_param_named(disable_numa, wq_disable_numa, bool, 0444);
 static bool wq_power_efficient = IS_ENABLED(CONFIG_WQ_POWER_EFFICIENT_DEFAULT);
 module_param_named(power_efficient, wq_power_efficient, bool, 0444);
 
+<<<<<<< HEAD
 bool wq_online;				/* can kworkers be created yet? */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static bool wq_numa_enabled;		/* unbound NUMA affinity enabled */
 
 /* buf for wq_update_unbound_numa_attrs(), protected by CPU hotplug exclusion */
@@ -912,6 +915,7 @@ struct task_struct *wq_worker_sleeping(struct task_struct *task)
 }
 
 /**
+<<<<<<< HEAD
  * wq_worker_last_func - retrieve worker's last work function
  *
  * Determine the last function a worker executed. This is called from
@@ -932,6 +936,8 @@ work_func_t wq_worker_last_func(struct task_struct *task)
 }
 
 /**
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  * worker_set_flags - set worker flags and adjust nr_running accordingly
  * @worker: self
  * @flags: flags to set
@@ -2145,9 +2151,12 @@ __acquires(&pool->lock)
 	if (unlikely(cpu_intensive))
 		worker_clr_flags(worker, WORKER_CPU_INTENSIVE);
 
+<<<<<<< HEAD
 	/* tag the worker for identification in schedule() */
 	worker->last_func = worker->current_func;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* we're done with it, release */
 	hash_del(&worker->hentry);
 	worker->current_work = NULL;
@@ -2604,9 +2613,12 @@ void flush_workqueue(struct workqueue_struct *wq)
 	};
 	int next_color;
 
+<<<<<<< HEAD
 	if (WARN_ON(!wq_online))
 		return;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	lock_map_acquire(&wq->lockdep_map);
 	lock_map_release(&wq->lockdep_map);
 
@@ -2867,9 +2879,12 @@ bool flush_work(struct work_struct *work)
 {
 	struct wq_barrier barr;
 
+<<<<<<< HEAD
 	if (WARN_ON(!wq_online))
 		return false;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	lock_map_acquire(&work->lockdep_map);
 	lock_map_release(&work->lockdep_map);
 
@@ -2940,6 +2955,7 @@ static bool __cancel_work_timer(struct work_struct *work, bool is_dwork)
 	mark_work_canceling(work);
 	local_irq_restore(flags);
 
+<<<<<<< HEAD
 	/*
 	 * This allows canceling during early boot.  We know that @work
 	 * isn't executing.
@@ -2947,6 +2963,9 @@ static bool __cancel_work_timer(struct work_struct *work, bool is_dwork)
 	if (wq_online)
 		flush_work(work);
 
+=======
+	flush_work(work);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	clear_work_data(work);
 
 	/*
@@ -3396,7 +3415,11 @@ static struct worker_pool *get_unbound_pool(const struct workqueue_attrs *attrs)
 		goto fail;
 
 	/* create and start the initial worker */
+<<<<<<< HEAD
 	if (wq_online && !create_worker(pool))
+=======
+	if (!create_worker(pool))
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		goto fail;
 
 	/* install */
@@ -3461,7 +3484,10 @@ static void pwq_adjust_max_active(struct pool_workqueue *pwq)
 {
 	struct workqueue_struct *wq = pwq->wq;
 	bool freezable = wq->flags & WQ_FREEZABLE;
+<<<<<<< HEAD
 	unsigned long flags;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/* for @wq->saved_max_active */
 	lockdep_assert_held(&wq->mutex);
@@ -3470,8 +3496,12 @@ static void pwq_adjust_max_active(struct pool_workqueue *pwq)
 	if (!freezable && pwq->max_active == wq->saved_max_active)
 		return;
 
+<<<<<<< HEAD
 	/* this function can be called during early boot w/ irq disabled */
 	spin_lock_irqsave(&pwq->pool->lock, flags);
+=======
+	spin_lock_irq(&pwq->pool->lock);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/*
 	 * During [un]freezing, the caller is responsible for ensuring that
@@ -3494,7 +3524,11 @@ static void pwq_adjust_max_active(struct pool_workqueue *pwq)
 		pwq->max_active = 0;
 	}
 
+<<<<<<< HEAD
 	spin_unlock_irqrestore(&pwq->pool->lock, flags);
+=======
+	spin_unlock_irq(&pwq->pool->lock);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 /* initialize newly alloced @pwq which is associated with @wq and @pool */
@@ -5544,6 +5578,7 @@ static void __init wq_numa_init(void)
 	wq_numa_enabled = true;
 }
 
+<<<<<<< HEAD
 /**
  * workqueue_init_early - early init for workqueue subsystem
  *
@@ -5555,6 +5590,9 @@ static void __init wq_numa_init(void)
  * created and scheduled right before early initcalls.
  */
 int __init workqueue_init_early(void)
+=======
+static int __init init_workqueues(void)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	int std_nice[NR_STD_WORKER_POOLS] = { 0, HIGHPRI_NICE_LEVEL };
 	int i, cpu;
@@ -5587,6 +5625,19 @@ int __init workqueue_init_early(void)
 		}
 	}
 
+<<<<<<< HEAD
+=======
+	/* create the initial worker */
+	for_each_online_cpu(cpu) {
+		struct worker_pool *pool;
+
+		for_each_cpu_worker_pool(pool, cpu) {
+			pool->flags &= ~POOL_DISASSOCIATED;
+			BUG_ON(!create_worker(pool));
+		}
+	}
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* create default unbound and ordered wq attrs */
 	for (i = 0; i < NR_STD_WORKER_POOLS; i++) {
 		struct workqueue_attrs *attrs;
@@ -5623,6 +5674,7 @@ int __init workqueue_init_early(void)
 	       !system_power_efficient_wq ||
 	       !system_freezable_power_efficient_wq);
 
+<<<<<<< HEAD
 	return 0;
 }
 
@@ -5652,7 +5704,13 @@ int __init workqueue_init(void)
 		BUG_ON(!create_worker(pool));
 
 	wq_online = true;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	wq_watchdog_init();
 
 	return 0;
 }
+<<<<<<< HEAD
+=======
+early_initcall(init_workqueues);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

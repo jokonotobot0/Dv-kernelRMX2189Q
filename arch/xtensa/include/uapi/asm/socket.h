@@ -101,6 +101,9 @@
 
 #define SO_CNX_ADVICE		53
 
+<<<<<<< HEAD
 #define SO_COOKIE		57
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif	/* _XTENSA_SOCKET_H */

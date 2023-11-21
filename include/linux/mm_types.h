@@ -326,6 +326,7 @@ struct vm_area_struct {
 	/*
 	 * For areas with an address space and backing store,
 	 * linkage into the address_space->i_mmap interval tree.
+<<<<<<< HEAD
 	 *
 	 * For private anonymous mappings, a pointer to a null terminated string
 	 * in the user process containing the name given to the vma, or NULL
@@ -338,6 +339,13 @@ struct vm_area_struct {
 		} shared;
 		const char __user *anon_name;
 	};
+=======
+	 */
+	struct {
+		struct rb_node rb;
+		unsigned long rb_subtree_last;
+	} shared;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/*
 	 * A file's MAP_PRIVATE vma can be in both i_mmap tree and anon_vma
@@ -627,6 +635,7 @@ typedef struct {
 	unsigned long val;
 } swp_entry_t;
 
+<<<<<<< HEAD
 /* Return the name for an anonymous mapping or NULL for a file-backed mapping */
 static inline const char __user *vma_get_anon_name(struct vm_area_struct *vma)
 {
@@ -636,4 +645,6 @@ static inline const char __user *vma_get_anon_name(struct vm_area_struct *vma)
 	return vma->anon_name;
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif /* _LINUX_MM_TYPES_H */

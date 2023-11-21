@@ -15,6 +15,7 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+<<<<<<< HEAD
 #include <linux/circ_buf.h>
 #include <linux/coresight.h>
 #include <linux/dma-mapping.h>
@@ -39,6 +40,13 @@ struct cs_etr_buffers {
 	struct device		*dev;
 };
 
+=======
+#include <linux/coresight.h>
+#include <linux/dma-mapping.h>
+#include "coresight-priv.h"
+#include "coresight-tmc.h"
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static void tmc_etr_enable_hw(struct tmc_drvdata *drvdata)
 {
 	u32 axictl;
@@ -105,22 +113,40 @@ static void tmc_etr_disable_hw(struct tmc_drvdata *drvdata)
 	 * When operating in sysFS mode the content of the buffer needs to be
 	 * read before the TMC is disabled.
 	 */
+<<<<<<< HEAD
 	if (drvdata->mode == CS_MODE_SYSFS)
+=======
+	if (local_read(&drvdata->mode) == CS_MODE_SYSFS)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		tmc_etr_dump_hw(drvdata);
 	tmc_disable_hw(drvdata);
 
 	CS_LOCK(drvdata->base);
 }
 
+<<<<<<< HEAD
 static int tmc_enable_etr_sink_sysfs(struct coresight_device *csdev)
 {
 	int ret = 0;
 	bool used = false;
+=======
+static int tmc_enable_etr_sink_sysfs(struct coresight_device *csdev, u32 mode)
+{
+	int ret = 0;
+	bool used = false;
+	long val;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	unsigned long flags;
 	void __iomem *vaddr = NULL;
 	dma_addr_t paddr;
 	struct tmc_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
 
+<<<<<<< HEAD
+=======
+	 /* This shouldn't be happening */
+	if (WARN_ON(mode != CS_MODE_SYSFS))
+		return -EINVAL;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/*
 	 * If we don't have a buffer release the lock and allocate memory.
@@ -149,12 +175,20 @@ static int tmc_enable_etr_sink_sysfs(struct coresight_device *csdev)
 		goto out;
 	}
 
+<<<<<<< HEAD
+=======
+	val = local_xchg(&drvdata->mode, mode);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/*
 	 * In sysFS mode we can have multiple writers per sink.  Since this
 	 * sink is already enabled no memory is needed and the HW need not be
 	 * touched.
 	 */
+<<<<<<< HEAD
 	if (drvdata->mode == CS_MODE_SYSFS)
+=======
+	if (val == CS_MODE_SYSFS)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		goto out;
 
 	/*
@@ -169,7 +203,12 @@ static int tmc_enable_etr_sink_sysfs(struct coresight_device *csdev)
 		drvdata->buf = drvdata->vaddr;
 	}
 
+<<<<<<< HEAD
 	drvdata->mode = CS_MODE_SYSFS;
+=======
+	memset(drvdata->vaddr, 0, drvdata->size);
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	tmc_etr_enable_hw(drvdata);
 out:
 	spin_unlock_irqrestore(&drvdata->spinlock, flags);
@@ -184,29 +223,54 @@ out:
 	return ret;
 }
 
+<<<<<<< HEAD
 static int tmc_enable_etr_sink_perf(struct coresight_device *csdev)
 {
 	int ret = 0;
 	unsigned long flags;
 	struct tmc_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
 
+=======
+static int tmc_enable_etr_sink_perf(struct coresight_device *csdev, u32 mode)
+{
+	int ret = 0;
+	long val;
+	unsigned long flags;
+	struct tmc_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
+
+	 /* This shouldn't be happening */
+	if (WARN_ON(mode != CS_MODE_PERF))
+		return -EINVAL;
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	spin_lock_irqsave(&drvdata->spinlock, flags);
 	if (drvdata->reading) {
 		ret = -EINVAL;
 		goto out;
 	}
 
+<<<<<<< HEAD
+=======
+	val = local_xchg(&drvdata->mode, mode);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/*
 	 * In Perf mode there can be only one writer per sink.  There
 	 * is also no need to continue if the ETR is already operated
 	 * from sysFS.
 	 */
+<<<<<<< HEAD
 	if (drvdata->mode != CS_MODE_DISABLED) {
+=======
+	if (val != CS_MODE_DISABLED) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		ret = -EINVAL;
 		goto out;
 	}
 
+<<<<<<< HEAD
 	drvdata->mode = CS_MODE_PERF;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	tmc_etr_enable_hw(drvdata);
 out:
 	spin_unlock_irqrestore(&drvdata->spinlock, flags);
@@ -218,9 +282,15 @@ static int tmc_enable_etr_sink(struct coresight_device *csdev, u32 mode)
 {
 	switch (mode) {
 	case CS_MODE_SYSFS:
+<<<<<<< HEAD
 		return tmc_enable_etr_sink_sysfs(csdev);
 	case CS_MODE_PERF:
 		return tmc_enable_etr_sink_perf(csdev);
+=======
+		return tmc_enable_etr_sink_sysfs(csdev, mode);
+	case CS_MODE_PERF:
+		return tmc_enable_etr_sink_perf(csdev, mode);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 
 	/* We shouldn't be here */
@@ -229,6 +299,10 @@ static int tmc_enable_etr_sink(struct coresight_device *csdev, u32 mode)
 
 static void tmc_disable_etr_sink(struct coresight_device *csdev)
 {
+<<<<<<< HEAD
+=======
+	long val;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	unsigned long flags;
 	struct tmc_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
 
@@ -238,17 +312,25 @@ static void tmc_disable_etr_sink(struct coresight_device *csdev)
 		return;
 	}
 
+<<<<<<< HEAD
 	/* Disable the TMC only if it needs to */
 	if (drvdata->mode != CS_MODE_DISABLED) {
 		tmc_etr_disable_hw(drvdata);
 		drvdata->mode = CS_MODE_DISABLED;
 	}
+=======
+	val = local_xchg(&drvdata->mode, CS_MODE_DISABLED);
+	/* Disable the TMC only if it needs to */
+	if (val != CS_MODE_DISABLED)
+		tmc_etr_disable_hw(drvdata);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	spin_unlock_irqrestore(&drvdata->spinlock, flags);
 
 	dev_info(drvdata->dev, "TMC-ETR disabled\n");
 }
 
+<<<<<<< HEAD
 static void *tmc_alloc_etr_buffer(struct coresight_device *csdev, int cpu,
 				  void **pages, int nr_pages, bool overwrite)
 {
@@ -476,6 +558,11 @@ static const struct coresight_ops_sink tmc_etr_sink_ops = {
 	.set_buffer	= tmc_set_etr_buffer,
 	.reset_buffer	= tmc_reset_etr_buffer,
 	.update_buffer	= tmc_update_etr_buffer,
+=======
+static const struct coresight_ops_sink tmc_etr_sink_ops = {
+	.enable		= tmc_enable_etr_sink,
+	.disable	= tmc_disable_etr_sink,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 const struct coresight_ops tmc_etr_cs_ops = {
@@ -485,6 +572,10 @@ const struct coresight_ops tmc_etr_cs_ops = {
 int tmc_read_prepare_etr(struct tmc_drvdata *drvdata)
 {
 	int ret = 0;
+<<<<<<< HEAD
+=======
+	long val;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	unsigned long flags;
 
 	/* config types are set a boot time and never change */
@@ -497,8 +588,14 @@ int tmc_read_prepare_etr(struct tmc_drvdata *drvdata)
 		goto out;
 	}
 
+<<<<<<< HEAD
 	/* Don't interfere if operated from Perf */
 	if (drvdata->mode == CS_MODE_PERF) {
+=======
+	val = local_read(&drvdata->mode);
+	/* Don't interfere if operated from Perf */
+	if (val == CS_MODE_PERF) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		ret = -EINVAL;
 		goto out;
 	}
@@ -510,7 +607,11 @@ int tmc_read_prepare_etr(struct tmc_drvdata *drvdata)
 	}
 
 	/* Disable the TMC if need be */
+<<<<<<< HEAD
 	if (drvdata->mode == CS_MODE_SYSFS)
+=======
+	if (val == CS_MODE_SYSFS)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		tmc_etr_disable_hw(drvdata);
 
 	drvdata->reading = true;
@@ -533,7 +634,11 @@ int tmc_read_unprepare_etr(struct tmc_drvdata *drvdata)
 	spin_lock_irqsave(&drvdata->spinlock, flags);
 
 	/* RE-enable the TMC if need be */
+<<<<<<< HEAD
 	if (drvdata->mode == CS_MODE_SYSFS) {
+=======
+	if (local_read(&drvdata->mode) == CS_MODE_SYSFS) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		/*
 		 * The trace run will continue with the same allocated trace
 		 * buffer. The trace buffer is cleared in tmc_etr_enable_hw(),

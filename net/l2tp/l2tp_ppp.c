@@ -164,6 +164,28 @@ out:
  * Receive data handling
  *****************************************************************************/
 
+<<<<<<< HEAD
+=======
+static int pppol2tp_recv_payload_hook(struct sk_buff *skb)
+{
+	/* Skip PPP header, if present.	 In testing, Microsoft L2TP clients
+	 * don't send the PPP header (PPP header compression enabled), but
+	 * other clients can include the header. So we cope with both cases
+	 * here. The PPP header is always FF03 when using L2TP.
+	 *
+	 * Note that skb->data[] isn't dereferenced from a u16 ptr here since
+	 * the field may be unaligned.
+	 */
+	if (!pskb_may_pull(skb, 2))
+		return 1;
+
+	if ((skb->data[0] == PPP_ALLSTATIONS) && (skb->data[1] == PPP_UI))
+		skb_pull(skb, 2);
+
+	return 0;
+}
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* Receive message. This is the recvmsg for the PPPoL2TP socket.
  */
 static int pppol2tp_recvmsg(struct socket *sock, struct msghdr *msg,
@@ -209,6 +231,7 @@ static void pppol2tp_recv(struct l2tp_session *session, struct sk_buff *skb, int
 	if (sk == NULL)
 		goto no_sock;
 
+<<<<<<< HEAD
 	/* If the first two bytes are 0xFF03, consider that it is the PPP's
 	 * Address and Control fields and skip them. The L2TP module has always
 	 * worked this way, although, in theory, the use of these fields should
@@ -220,6 +243,8 @@ static void pppol2tp_recv(struct l2tp_session *session, struct sk_buff *skb, int
 	    skb->data[1] == PPP_UI)
 		skb_pull(skb, 2);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (sk->sk_state & PPPOX_BOUND) {
 		struct pppox_sock *po;
 
@@ -678,6 +703,12 @@ static int pppol2tp_connect(struct socket *sock, struct sockaddr *uservaddr,
 			goto end;
 	}
 
+<<<<<<< HEAD
+=======
+	if (tunnel->recv_payload_hook == NULL)
+		tunnel->recv_payload_hook = pppol2tp_recv_payload_hook;
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (tunnel->peer_tunnel_id == 0)
 		tunnel->peer_tunnel_id = peer_tunnel_id;
 

@@ -39,6 +39,7 @@
 #include "kasan.h"
 #include "../slab.h"
 
+<<<<<<< HEAD
 void kasan_enable_current(void)
 {
 	current->kasan_depth++;
@@ -49,6 +50,8 @@ void kasan_disable_current(void)
 	current->kasan_depth--;
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * Poisons the shadow memory for 'size' bytes starting from 'addr'.
  * Memory addresses should be aligned to KASAN_SHADOW_SCALE_SIZE.
@@ -170,10 +173,14 @@ static __always_inline bool memory_is_poisoned_4(unsigned long addr)
 		 */
 		if (likely(((addr + 3) & KASAN_SHADOW_MASK) >= 3))
 			return false;
+<<<<<<< HEAD
 #ifdef CONFIG_KASAN_ENHANCEMENT
 		if (likely(IS_ALIGNED(addr, KASAN_SHADOW_SCALE_SIZE)))
 			return false;
 #endif
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		return unlikely(*(u8 *)shadow_addr);
 	}
 
@@ -195,10 +202,13 @@ static __always_inline bool memory_is_poisoned_8(unsigned long addr)
 		 */
 		if (likely(IS_ALIGNED(addr, KASAN_SHADOW_SCALE_SIZE)))
 			return false;
+<<<<<<< HEAD
 #ifdef CONFIG_KASAN_ENHANCEMENT
 		if (likely(((addr + 7) & KASAN_SHADOW_MASK) >= 7))
 			return false;
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 		return unlikely(*(u8 *)shadow_addr);
 	}
@@ -208,6 +218,7 @@ static __always_inline bool memory_is_poisoned_8(unsigned long addr)
 
 static __always_inline bool memory_is_poisoned_16(unsigned long addr)
 {
+<<<<<<< HEAD
 #ifdef CONFIG_KASAN_ENHANCEMENT
 	u16 *shadow_addr = (u16 *)kasan_mem_to_shadow((void *)addr);
 #else
@@ -222,6 +233,14 @@ static __always_inline bool memory_is_poisoned_16(unsigned long addr)
 
 		if (unlikely(shadow_first_bytes))
 #endif
+=======
+	u32 *shadow_addr = (u32 *)kasan_mem_to_shadow((void *)addr);
+
+	if (unlikely(*shadow_addr)) {
+		u16 shadow_first_bytes = *(u16 *)shadow_addr;
+
+		if (unlikely(shadow_first_bytes))
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			return true;
 
 		/*
@@ -460,7 +479,11 @@ void kasan_cache_shrink(struct kmem_cache *cache)
 	quarantine_remove_cache(cache);
 }
 
+<<<<<<< HEAD
 void kasan_cache_shutdown(struct kmem_cache *cache)
+=======
+void kasan_cache_destroy(struct kmem_cache *cache)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	quarantine_remove_cache(cache);
 }
@@ -591,8 +614,12 @@ bool kasan_slab_free(struct kmem_cache *cache, void *object)
 
 	shadow_byte = READ_ONCE(*(s8 *)kasan_mem_to_shadow(object));
 	if (shadow_byte < 0 || shadow_byte >= KASAN_SHADOW_SCALE_SIZE) {
+<<<<<<< HEAD
 		kasan_report_double_free(cache, object,
 				__builtin_return_address(1));
+=======
+		kasan_report_double_free(cache, object, shadow_byte);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		return true;
 	}
 
@@ -817,6 +844,7 @@ void __asan_unpoison_stack_memory(const void *addr, size_t size)
 }
 EXPORT_SYMBOL(__asan_unpoison_stack_memory);
 
+<<<<<<< HEAD
 /* Emitted by compiler to poison alloca()ed objects. */
 void __asan_alloca_poison(unsigned long addr, size_t size)
 {
@@ -866,6 +894,8 @@ DEFINE_ASAN_SET_SHADOW(f3);
 DEFINE_ASAN_SET_SHADOW(f5);
 DEFINE_ASAN_SET_SHADOW(f8);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #ifdef CONFIG_MEMORY_HOTPLUG
 static int kasan_mem_notifier(struct notifier_block *nb,
 			unsigned long action, void *data)

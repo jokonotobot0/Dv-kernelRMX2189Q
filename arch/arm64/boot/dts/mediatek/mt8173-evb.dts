@@ -134,7 +134,11 @@
 	max-frequency = <50000000>;
 	cap-sd-highspeed;
 	sd-uhs-sdr25;
+<<<<<<< HEAD
 	cd-gpios = <&pio 132 1>;
+=======
+	cd-gpios = <&pio 132 0>;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	vmmc-supply = <&mt6397_vmch_reg>;
 	vqmmc-supply = <&mt6397_vmc_reg>;
 };
@@ -245,7 +249,11 @@
 	};
 };
 
+<<<<<<< HEAD
 &pwm {
+=======
+&pwm0 {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	pinctrl-names = "default";
 	pinctrl-0 = <&disp_pwm0_pins>;
 	status = "okay";
@@ -262,8 +270,11 @@
 		interrupt-controller;
 		#interrupt-cells = <2>;
 
+<<<<<<< HEAD
 		mediatek,system-power-controller;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		mt6397regulator: mt6397regulator {
 			compatible = "mediatek,mt6397-regulator";
 

@@ -5,6 +5,7 @@
  * test source files.
  */
 #include "lkdtm.h"
+<<<<<<< HEAD
 #include <linux/list.h>
 #include <linux/sched.h>
 #include <linux/uaccess.h>
@@ -12,6 +13,9 @@
 struct lkdtm_list {
 	struct list_head node;
 };
+=======
+#include <linux/sched.h>
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /*
  * Make sure our attempts to over run the kernel stack doesn't trigger
@@ -152,6 +156,7 @@ void lkdtm_ATOMIC_OVERFLOW(void)
 	pr_info("attempting bad atomic overflow\n");
 	atomic_inc(&over);
 }
+<<<<<<< HEAD
 
 void lkdtm_CORRUPT_LIST_ADD(void)
 {
@@ -224,3 +229,5 @@ void lkdtm_CORRUPT_USER_DS(void)
 	/* Make sure we do not keep running with a KERNEL_DS! */
 	force_sig(SIGKILL, current);
 }
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

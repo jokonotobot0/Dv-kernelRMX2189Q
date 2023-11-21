@@ -33,6 +33,7 @@ static struct device_type power_supply_dev_type;
 
 #define POWER_SUPPLY_DEFERRED_REGISTER_TIME	msecs_to_jiffies(10)
 
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /*jason.tang@TECH.BSP.Kernel.Storage, 2019-05-20, add control ext4 fsync*/
 extern int sysctl_ext4_fsync_enable;
@@ -54,6 +55,8 @@ static void power_supply_update_fsync(struct power_supply *psy)
 }
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static bool __power_supply_is_supplied_by(struct power_supply *supplier,
 					 struct power_supply *supply)
 {
@@ -115,6 +118,7 @@ static void power_supply_changed_work(struct work_struct *work)
 		class_for_each_device(power_supply_class, NULL, psy,
 				      __power_supply_changed_work);
 		power_supply_update_leds(psy);
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /*jason.tang@TECH.BSP.Kernel.Storage, 2019-05-20, add control ext4 fsync*/
 		if(sysctl_ext4_fsync_enable) {
@@ -124,6 +128,8 @@ static void power_supply_changed_work(struct work_struct *work)
 				ext4_fsync_enable_status = 0;
 		}
 #endif /*VENDOR_EDIT*/
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		atomic_notifier_call_chain(&power_supply_notifier,
 				PSY_EVENT_PROP_CHANGED, psy);
 		kobject_uevent(&psy->dev.kobj, KOBJ_CHANGE);

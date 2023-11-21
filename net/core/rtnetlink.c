@@ -57,6 +57,7 @@
 #include <net/rtnetlink.h>
 #include <net/net_namespace.h>
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_NET_LOGGING
 #include <linux/stacktrace.h>
 #define RTNL_DEBUG_ADDRS_COUNT 10
@@ -128,6 +129,8 @@ void rtnl_relase_btrace(void)
 }
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 struct rtnl_link {
 	rtnl_doit_func		doit;
 	rtnl_dumpit_func	dumpit;
@@ -139,9 +142,12 @@ static DEFINE_MUTEX(rtnl_mutex);
 void rtnl_lock(void)
 {
 	mutex_lock(&rtnl_mutex);
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_NET_LOGGING
 	rtnl_get_btrace(current->comm);
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 EXPORT_SYMBOL(rtnl_lock);
 
@@ -170,9 +176,12 @@ void __rtnl_unlock(void)
 		cond_resched();
 		head = next;
 	}
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_NET_LOGGING
 	rtnl_relase_btrace();
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 void rtnl_unlock(void)

@@ -200,13 +200,21 @@ static unsigned hid_lookup_collection(struct hid_parser *parser, unsigned type)
  * Add a usage to the temporary parser table.
  */
 
+<<<<<<< HEAD
 static int hid_add_usage(struct hid_parser *parser, unsigned usage)
+=======
+static int hid_add_usage(struct hid_parser *parser, unsigned usage, u8 size)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	if (parser->local.usage_index >= HID_MAX_USAGES) {
 		hid_err(parser->device, "usage index exceeded\n");
 		return -1;
 	}
 	parser->local.usage[parser->local.usage_index] = usage;
+<<<<<<< HEAD
+=======
+	parser->local.usage_size[parser->local.usage_index] = size;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	parser->local.collection_index[parser->local.usage_index] =
 		parser->collection_stack_ptr ?
 		parser->collection_stack[parser->collection_stack_ptr - 1] : 0;
@@ -463,10 +471,14 @@ static int hid_parser_local(struct hid_parser *parser, struct hid_item *item)
 			return 0;
 		}
 
+<<<<<<< HEAD
 		if (item->size <= 2)
 			data = (parser->global.usage_page << 16) + data;
 
 		return hid_add_usage(parser, data);
+=======
+		return hid_add_usage(parser, data, item->size);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	case HID_LOCAL_ITEM_TAG_USAGE_MINIMUM:
 
@@ -475,9 +487,12 @@ static int hid_parser_local(struct hid_parser *parser, struct hid_item *item)
 			return 0;
 		}
 
+<<<<<<< HEAD
 		if (item->size <= 2)
 			data = (parser->global.usage_page << 16) + data;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		parser->local.usage_minimum = data;
 		return 0;
 
@@ -488,9 +503,12 @@ static int hid_parser_local(struct hid_parser *parser, struct hid_item *item)
 			return 0;
 		}
 
+<<<<<<< HEAD
 		if (item->size <= 2)
 			data = (parser->global.usage_page << 16) + data;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		count = data - parser->local.usage_minimum;
 		if (count + parser->local.usage_index >= HID_MAX_USAGES) {
 			/*
@@ -510,7 +528,11 @@ static int hid_parser_local(struct hid_parser *parser, struct hid_item *item)
 		}
 
 		for (n = parser->local.usage_minimum; n <= data; n++)
+<<<<<<< HEAD
 			if (hid_add_usage(parser, n)) {
+=======
+			if (hid_add_usage(parser, n, item->size)) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 				dbg_hid("hid_add_usage failed\n");
 				return -1;
 			}
@@ -525,6 +547,25 @@ static int hid_parser_local(struct hid_parser *parser, struct hid_item *item)
 }
 
 /*
+<<<<<<< HEAD
+=======
+ * Concatenate Usage Pages into Usages where relevant:
+ * As per specification, 6.2.2.8: "When the parser encounters a main item it
+ * concatenates the last declared Usage Page with a Usage to form a complete
+ * usage value."
+ */
+
+static void hid_concatenate_usage_page(struct hid_parser *parser)
+{
+	int i;
+
+	for (i = 0; i < parser->local.usage_index; i++)
+		if (parser->local.usage_size[i] <= 2)
+			parser->local.usage[i] += parser->global.usage_page << 16;
+}
+
+/*
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  * Process a main item.
  */
 
@@ -533,6 +574,11 @@ static int hid_parser_main(struct hid_parser *parser, struct hid_item *item)
 	__u32 data;
 	int ret;
 
+<<<<<<< HEAD
+=======
+	hid_concatenate_usage_page(parser);
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	data = item_udata(item);
 
 	switch (item->tag) {
@@ -746,6 +792,11 @@ static int hid_scan_main(struct hid_parser *parser, struct hid_item *item)
 	__u32 data;
 	int i;
 
+<<<<<<< HEAD
+=======
+	hid_concatenate_usage_page(parser);
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	data = item_udata(item);
 
 	switch (item->tag) {
@@ -835,6 +886,7 @@ static int hid_scan_report(struct hid_device *hid)
 		break;
 	}
 
+<<<<<<< HEAD
 	/* fall back to generic driver in case specific driver doesn't exist */
 	switch (hid->group) {
 	case HID_GROUP_MULTITOUCH_WIN_8:
@@ -871,6 +923,8 @@ static int hid_scan_report(struct hid_device *hid)
 	/* fall back to generic driver in case specific driver doesn't exist */
 	hid_warn(hid, "report vendor %u,group %u\n", hid->vendor, hid->group);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	vfree(parser);
 	return 0;
 }
@@ -2347,7 +2401,11 @@ __ATTRIBUTE_GROUPS(hid_dev);
 
 static int hid_uevent(struct device *dev, struct kobj_uevent_env *env)
 {
+<<<<<<< HEAD
 	struct hid_device *hdev = to_hid_device(dev);
+=======
+	struct hid_device *hdev = to_hid_device(dev);	
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (add_uevent_var(env, "HID_ID=%04X:%08X:%08X",
 			hdev->bus, hdev->vendor, hdev->product))

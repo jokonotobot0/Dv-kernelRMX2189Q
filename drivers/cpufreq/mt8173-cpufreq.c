@@ -29,6 +29,10 @@
 #define MAX_VOLT_SHIFT		(200000)
 #define MAX_VOLT_LIMIT		(1150000)
 #define VOLT_TOL		(10000)
+<<<<<<< HEAD
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * The struct mtk_cpu_dvfs_info holds necessary information for doing CPU DVFS
  * on each CPU power/clock domain of Mediatek SoCs. Each CPU cluster in
@@ -51,7 +55,10 @@ struct mtk_cpu_dvfs_info {
 	struct list_head list_head;
 	int intermediate_voltage;
 	bool need_voltage_tracking;
+<<<<<<< HEAD
 	bool support_voltage_scaling;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 static LIST_HEAD(dvfs_info_list);
@@ -75,9 +82,12 @@ static int mtk_cpufreq_voltage_tracking(struct mtk_cpu_dvfs_info *info,
 	struct regulator *sram_reg = info->sram_reg;
 	int old_vproc, old_vsram, new_vsram, vsram, vproc, ret;
 
+<<<<<<< HEAD
 	if (!(info->support_voltage_scaling))
 		return 0;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	old_vproc = regulator_get_voltage(proc_reg);
 	if (old_vproc < 0) {
 		pr_err("%s: invalid Vproc value: %d\n", __func__, old_vproc);
@@ -205,9 +215,12 @@ static int mtk_cpufreq_voltage_tracking(struct mtk_cpu_dvfs_info *info,
 
 static int mtk_cpufreq_set_voltage(struct mtk_cpu_dvfs_info *info, int vproc)
 {
+<<<<<<< HEAD
 	if (!(info->support_voltage_scaling))
 		return 0;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (info->need_voltage_tracking)
 		return mtk_cpufreq_voltage_tracking(info, vproc);
 	else
@@ -225,17 +238,28 @@ static int mtk_cpufreq_set_target(struct cpufreq_policy *policy,
 	struct device *cpu_dev = info->cpu_dev;
 	struct dev_pm_opp *opp;
 	long freq_hz, old_freq_hz;
+<<<<<<< HEAD
 	int vproc, old_vproc = 0, inter_vproc, target_vproc, ret;
+=======
+	int vproc, old_vproc, inter_vproc, target_vproc, ret;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	inter_vproc = info->intermediate_voltage;
 
 	old_freq_hz = clk_get_rate(cpu_clk);
+<<<<<<< HEAD
 	if (info->support_voltage_scaling) {
 		old_vproc = regulator_get_voltage(info->proc_reg);
 		if (old_vproc < 0) {
 			pr_err("%s: invalid Vproc value: %d\n", __func__, old_vproc);
 			return old_vproc;
 		}
+=======
+	old_vproc = regulator_get_voltage(info->proc_reg);
+	if (old_vproc < 0) {
+		pr_err("%s: invalid Vproc value: %d\n", __func__, old_vproc);
+		return old_vproc;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 
 	freq_hz = freq_table[index].frequency * 1000;
@@ -255,6 +279,7 @@ static int mtk_cpufreq_set_target(struct cpufreq_policy *policy,
 	 * If the new voltage or the intermediate voltage is higher than the
 	 * current voltage, scale up voltage first.
 	 */
+<<<<<<< HEAD
 	if (info->support_voltage_scaling) {
 		target_vproc = (inter_vproc > vproc) ? inter_vproc : vproc;
 		if (old_vproc < target_vproc) {
@@ -265,6 +290,16 @@ static int mtk_cpufreq_set_target(struct cpufreq_policy *policy,
 				mtk_cpufreq_set_voltage(info, old_vproc);
 				return ret;
 			}
+=======
+	target_vproc = (inter_vproc > vproc) ? inter_vproc : vproc;
+	if (old_vproc < target_vproc) {
+		ret = mtk_cpufreq_set_voltage(info, target_vproc);
+		if (ret) {
+			pr_err("cpu%d: failed to scale up voltage!\n",
+			       policy->cpu);
+			mtk_cpufreq_set_voltage(info, old_vproc);
+			return ret;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		}
 	}
 
@@ -302,6 +337,7 @@ static int mtk_cpufreq_set_target(struct cpufreq_policy *policy,
 	 * If the new voltage is lower than the intermediate voltage or the
 	 * original voltage, scale down to the new voltage.
 	 */
+<<<<<<< HEAD
 	if (info->support_voltage_scaling) {
 		if (vproc < inter_vproc || vproc < old_vproc) {
 			ret = mtk_cpufreq_set_voltage(info, vproc);
@@ -313,6 +349,17 @@ static int mtk_cpufreq_set_target(struct cpufreq_policy *policy,
 				clk_set_parent(cpu_clk, armpll);
 				return ret;
 			}
+=======
+	if (vproc < inter_vproc || vproc < old_vproc) {
+		ret = mtk_cpufreq_set_voltage(info, vproc);
+		if (ret) {
+			pr_err("cpu%d: failed to scale down voltage!\n",
+			       policy->cpu);
+			clk_set_parent(cpu_clk, info->inter_clk);
+			clk_set_rate(armpll, old_freq_hz);
+			clk_set_parent(cpu_clk, armpll);
+			return ret;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		}
 	}
 
@@ -393,6 +440,7 @@ static int mtk_cpu_dvfs_info_init(struct mtk_cpu_dvfs_info *info, int cpu)
 
 	proc_reg = regulator_get_exclusive(cpu_dev, "proc");
 	if (IS_ERR(proc_reg)) {
+<<<<<<< HEAD
 		if (PTR_ERR(proc_reg) == -EPROBE_DEFER) {
 			pr_warn("proc regulator for cpu%d not ready, retry.\n",
 				cpu);
@@ -403,6 +451,17 @@ static int mtk_cpu_dvfs_info_init(struct mtk_cpu_dvfs_info *info, int cpu)
 			pr_err("failed to get proc regulator for cpu%d\n",
 			       cpu);
 		}
+=======
+		if (PTR_ERR(proc_reg) == -EPROBE_DEFER)
+			pr_warn("proc regulator for cpu%d not ready, retry.\n",
+				cpu);
+		else
+			pr_err("failed to get proc regulator for cpu%d\n",
+			       cpu);
+
+		ret = PTR_ERR(proc_reg);
+		goto out_free_resources;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 
 	/* Both presence and absence of sram regulator are valid cases. */
@@ -446,7 +505,10 @@ static int mtk_cpu_dvfs_info_init(struct mtk_cpu_dvfs_info *info, int cpu)
 	 * for this CPU power domain.
 	 */
 	info->need_voltage_tracking = !IS_ERR(sram_reg);
+<<<<<<< HEAD
 	info->support_voltage_scaling = !IS_ERR(proc_reg);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	return 0;
 
@@ -591,6 +653,7 @@ static struct platform_driver mt8173_cpufreq_platdrv = {
 	.probe		= mt8173_cpufreq_probe,
 };
 
+<<<<<<< HEAD
 static const struct of_device_id machines[] __initconst = {
 	{ .compatible = "mediatek,mt8173", },
 	{ .compatible = "mediatek,mt2712", },
@@ -598,10 +661,14 @@ static const struct of_device_id machines[] __initconst = {
 };
 
 static int __init mt8173_cpufreq_driver_init(void)
+=======
+static int mt8173_cpufreq_driver_init(void)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	struct platform_device *pdev;
 	int err;
 
+<<<<<<< HEAD
 	struct device_node *np;
 	const struct of_device_id *match;
 
@@ -613,6 +680,9 @@ static int __init mt8173_cpufreq_driver_init(void)
 	match = of_match_node(machines, np);
 	of_node_put(np);
 	if (!match)
+=======
+	if (!of_machine_is_compatible("mediatek,mt8173"))
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		return -ENODEV;
 
 	err = platform_driver_register(&mt8173_cpufreq_platdrv);

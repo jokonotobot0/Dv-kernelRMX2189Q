@@ -74,13 +74,17 @@
 #include <net/checksum.h>
 #include <net/inetpeer.h>
 #include <net/lwtunnel.h>
+<<<<<<< HEAD
 #include <linux/bpf-cgroup.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <linux/igmp.h>
 #include <linux/netfilter_ipv4.h>
 #include <linux/netfilter_bridge.h>
 #include <linux/netlink.h>
 #include <linux/tcp.h>
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_ECCCI_DRIVER
 #ifdef CONFIG_MTK_MIX_DEVICES
 void inject_mix_event(struct sk_buff *skb,
@@ -88,6 +92,12 @@ void inject_mix_event(struct sk_buff *skb,
 		      struct iphdr *iph);
 #endif
 #endif
+=======
+static int
+ip_fragment(struct net *net, struct sock *sk, struct sk_buff *skb,
+	    unsigned int mtu,
+	    int (*output)(struct net *, struct sock *, struct sk_buff *));
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /* Generate a checksum for an outgoing IP datagram. */
 void ip_send_check(struct iphdr *iph)
@@ -291,6 +301,7 @@ static int ip_finish_output_gso(struct net *net, struct sock *sk,
 static int ip_finish_output(struct net *net, struct sock *sk, struct sk_buff *skb)
 {
 	unsigned int mtu;
+<<<<<<< HEAD
 	int ret;
 
 	ret = BPF_CGROUP_RUN_PROG_INET_EGRESS(sk, skb);
@@ -298,6 +309,8 @@ static int ip_finish_output(struct net *net, struct sock *sk, struct sk_buff *sk
 		kfree_skb(skb);
 		return ret;
 	}
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #if defined(CONFIG_NETFILTER) && defined(CONFIG_XFRM)
 	/* Policy lookup after SNAT yielded a new policy */
@@ -316,6 +329,7 @@ static int ip_finish_output(struct net *net, struct sock *sk, struct sk_buff *sk
 	return ip_finish_output2(net, sk, skb);
 }
 
+<<<<<<< HEAD
 static int ip_mc_finish_output(struct net *net, struct sock *sk,
 			       struct sk_buff *skb)
 {
@@ -330,6 +344,8 @@ static int ip_mc_finish_output(struct net *net, struct sock *sk,
 	return dev_loopback_xmit(net, sk, skb);
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 int ip_mc_output(struct net *net, struct sock *sk, struct sk_buff *skb)
 {
 	struct rtable *rt = skb_rtable(skb);
@@ -367,7 +383,11 @@ int ip_mc_output(struct net *net, struct sock *sk, struct sk_buff *skb)
 			if (newskb)
 				NF_HOOK(NFPROTO_IPV4, NF_INET_POST_ROUTING,
 					net, sk, newskb, NULL, newskb->dev,
+<<<<<<< HEAD
 					ip_mc_finish_output);
+=======
+					dev_loopback_xmit);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		}
 
 		/* Multicasts with ttl 0 must not go beyond the host */
@@ -383,7 +403,11 @@ int ip_mc_output(struct net *net, struct sock *sk, struct sk_buff *skb)
 		if (newskb)
 			NF_HOOK(NFPROTO_IPV4, NF_INET_POST_ROUTING,
 				net, sk, newskb, NULL, newskb->dev,
+<<<<<<< HEAD
 				ip_mc_finish_output);
+=======
+				dev_loopback_xmit);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 
 	return NF_HOOK_COND(NFPROTO_IPV4, NF_INET_POST_ROUTING,
@@ -401,6 +425,7 @@ int ip_output(struct net *net, struct sock *sk, struct sk_buff *skb)
 	skb->dev = dev;
 	skb->protocol = htons(ETH_P_IP);
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_ECCCI_DRIVER
 #ifdef CONFIG_MTK_MIX_DEVICES
 	if (skb->sk && dev)
@@ -410,6 +435,8 @@ int ip_output(struct net *net, struct sock *sk, struct sk_buff *skb)
 #endif
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return NF_HOOK_COND(NFPROTO_IPV4, NF_INET_POST_ROUTING,
 			    net, sk, skb, NULL, dev,
 			    ip_finish_output,
@@ -547,9 +574,15 @@ static void ip_copy_metadata(struct sk_buff *to, struct sk_buff *from)
 	skb_copy_secmark(to, from);
 }
 
+<<<<<<< HEAD
 int ip_fragment(struct net *net, struct sock *sk, struct sk_buff *skb,
 		unsigned int mtu,
 		int (*output)(struct net *, struct sock *, struct sk_buff *))
+=======
+static int ip_fragment(struct net *net, struct sock *sk, struct sk_buff *skb,
+		       unsigned int mtu,
+		       int (*output)(struct net *, struct sock *, struct sk_buff *))
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	struct iphdr *iph = ip_hdr(skb);
 
@@ -1635,8 +1668,12 @@ void ip_send_unicast_reply(struct sock *sk, struct sk_buff *skb,
 			   RT_SCOPE_UNIVERSE, ip_hdr(skb)->protocol,
 			   ip_reply_arg_flowi_flags(arg),
 			   daddr, saddr,
+<<<<<<< HEAD
 			   tcp_hdr(skb)->source, tcp_hdr(skb)->dest,
 			   arg->uid);
+=======
+			   tcp_hdr(skb)->source, tcp_hdr(skb)->dest);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	security_skb_classify_flow(skb, flowi4_to_flowi(&fl4));
 	rt = ip_route_output_key(net, &fl4);
 	if (IS_ERR(rt))

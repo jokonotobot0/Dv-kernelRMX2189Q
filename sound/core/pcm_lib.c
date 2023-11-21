@@ -1920,7 +1920,11 @@ static int wait_for_avail(struct snd_pcm_substream *substream,
 	if (runtime->no_period_wakeup)
 		wait_time = MAX_SCHEDULE_TIMEOUT;
 	else {
+<<<<<<< HEAD
 		wait_time = 2;/* 10 Modified by MTK */
+=======
+		wait_time = 10;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		if (runtime->rate) {
 			long t = runtime->period_size * 2 / runtime->rate;
 			wait_time = max(t, wait_time);

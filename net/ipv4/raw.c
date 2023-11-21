@@ -612,7 +612,11 @@ static int raw_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
 			   hdrincl ? IPPROTO_RAW : sk->sk_protocol,
 			   inet_sk_flowi_flags(sk) |
 			    (hdrincl ? FLOWI_FLAG_KNOWN_NH : 0),
+<<<<<<< HEAD
 			   daddr, saddr, 0, 0, sk->sk_uid);
+=======
+			   daddr, saddr, 0, 0);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (!hdrincl) {
 		rfv.msg = msg;

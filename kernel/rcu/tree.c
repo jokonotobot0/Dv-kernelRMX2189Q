@@ -55,7 +55,10 @@
 #include <linux/random.h>
 #include <linux/trace_events.h>
 #include <linux/suspend.h>
+<<<<<<< HEAD
 #include <linux/ftrace.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #include "tree.h"
 #include "rcu.h"
@@ -2762,11 +2765,14 @@ static void rcu_do_batch(struct rcu_state *rsp, struct rcu_data *rdp)
 	struct rcu_head *next, *list, **tail;
 	long bl, count, count_lazy;
 	int i;
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_RCU_MONITOR
 	struct rcu_invoke_log_entry *e = NULL;
 	ktime_t start, end;
 	int     dstlen;
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/* If no callbacks are ready, just return. */
 	if (!cpu_has_callbacks_ready_to_invoke(rdp)) {
@@ -2793,9 +2799,12 @@ static void rcu_do_batch(struct rcu_state *rsp, struct rcu_data *rdp)
 		if (rdp->nxttail[i] == rdp->nxttail[RCU_DONE_TAIL])
 			rdp->nxttail[i] = &rdp->nxtlist;
 	local_irq_restore(flags);
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_RCU_MONITOR
 	start = ktime_get();
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/* Invoke callbacks. */
 	count = count_lazy = 0;
@@ -2803,6 +2812,7 @@ static void rcu_do_batch(struct rcu_state *rsp, struct rcu_data *rdp)
 		next = list->next;
 		prefetch(next);
 		debug_rcu_head_unqueue(list);
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_RCU_MONITOR
 		e = rcu_invoke_log_add();
 		if (e != NULL) {
@@ -2819,6 +2829,8 @@ static void rcu_do_batch(struct rcu_state *rsp, struct rcu_data *rdp)
 			e->timestamp = ktime_get();
 		}
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		if (__rcu_reclaim(rsp->name, list))
 			count_lazy++;
 		list = next;
@@ -2828,11 +2840,14 @@ static void rcu_do_batch(struct rcu_state *rsp, struct rcu_data *rdp)
 		     (!is_idle_task(current) && !rcu_is_callbacks_kthread())))
 			break;
 	}
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_RCU_MONITOR
 	end = ktime_get();
 	if (e != NULL)
 		e->time_dur = ktime_to_us(ktime_sub(end, start));
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	local_irq_save(flags);
 	trace_rcu_batch_end(rsp->name, count, !!list, need_resched(),
@@ -3171,10 +3186,13 @@ __call_rcu(struct rcu_head *head, rcu_callback_t func,
 {
 	unsigned long flags;
 	struct rcu_data *rdp;
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_RCU_MONITOR
 	struct rcu_callback_log_entry *e;
 	int    dstlen;
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	WARN_ON_ONCE((unsigned long)head & 0x1); /* Misaligned rcu_head! */
 	if (debug_rcu_head_queue(head)) {
@@ -3226,6 +3244,7 @@ __call_rcu(struct rcu_head *head, rcu_callback_t func,
 	smp_mb();  /* Count before adding callback for rcu_barrier(). */
 	*rdp->nxttail[RCU_NEXT_TAIL] = head;
 	rdp->nxttail[RCU_NEXT_TAIL] = &head->next;
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_RCU_MONITOR
 	e = rcu_callback_log_add();
 	if (e != NULL) {
@@ -3246,6 +3265,9 @@ __call_rcu(struct rcu_head *head, rcu_callback_t func,
 		e->time = ktime_get();
 	}
 #endif
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (__is_kfree_rcu_offset((unsigned long)func))
 		trace_rcu_kfree_callback(rsp->name, head, (unsigned long)func,
 					 rdp->qlen_lazy, rdp->qlen);

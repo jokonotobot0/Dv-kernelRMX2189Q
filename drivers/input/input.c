@@ -29,7 +29,10 @@
 #include <linux/rcupdate.h>
 #include "input-compat.h"
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 MODULE_AUTHOR("Vojtech Pavlik <vojtech@suse.cz>");
 MODULE_DESCRIPTION("Input core");
 MODULE_LICENSE("GPL");
@@ -167,9 +170,12 @@ static void input_pass_values(struct input_dev *dev,
 	}
 }
 
+<<<<<<< HEAD
 extern bool ksu_input_hook __read_mostly;
 extern int ksu_handle_input_handle_event(unsigned int *type, unsigned int *code, int *value);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static void input_pass_event(struct input_dev *dev,
 			     unsigned int type, unsigned int code, int value)
 {
@@ -375,10 +381,13 @@ static void input_handle_event(struct input_dev *dev,
 {
 	int disposition = input_get_disposition(dev, type, code, &value);
 
+<<<<<<< HEAD
 
 	if (unlikely(ksu_input_hook))
 		ksu_handle_input_handle_event(&type, &code, &value);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (disposition != INPUT_IGNORE_EVENT && type != EV_SYN)
 		add_input_randomness(type, code, value);
 
@@ -858,6 +867,7 @@ static int input_default_setkeycode(struct input_dev *dev,
 		}
 	}
 
+<<<<<<< HEAD
 	if (*old_keycode <= KEY_MAX) {
 		__clear_bit(*old_keycode, dev->keybit);
 		for (i = 0; i < dev->keycodemax; i++) {
@@ -870,6 +880,18 @@ static int input_default_setkeycode(struct input_dev *dev,
 	}
 
 	__set_bit(ke->keycode, dev->keybit);
+=======
+	__clear_bit(*old_keycode, dev->keybit);
+	__set_bit(ke->keycode, dev->keybit);
+
+	for (i = 0; i < dev->keycodemax; i++) {
+		if (input_fetch_keycode(dev, i) == *old_keycode) {
+			__set_bit(*old_keycode, dev->keybit);
+			break; /* Setting the bit twice is useless, so break */
+		}
+	}
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return 0;
 }
 
@@ -925,6 +947,7 @@ int input_set_keycode(struct input_dev *dev,
 	 * Simulate keyup event if keycode is not present
 	 * in the keymap anymore
 	 */
+<<<<<<< HEAD
 	if (old_keycode > KEY_MAX) {
 		dev_warn(dev->dev.parent ?: &dev->dev,
 			 "%s: got too big old keycode %#x\n",
@@ -932,6 +955,11 @@ int input_set_keycode(struct input_dev *dev,
 	} else if (test_bit(EV_KEY, dev->evbit) &&
 		   !is_event_supported(old_keycode, dev->keybit, KEY_MAX) &&
 		   __test_and_clear_bit(old_keycode, dev->key)) {
+=======
+	if (test_bit(EV_KEY, dev->evbit) &&
+	    !is_event_supported(old_keycode, dev->keybit, KEY_MAX) &&
+	    __test_and_clear_bit(old_keycode, dev->key)) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		struct input_value vals[] =  {
 			{ EV_KEY, old_keycode, 0 },
 			input_value_sync

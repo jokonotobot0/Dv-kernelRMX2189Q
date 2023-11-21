@@ -656,11 +656,19 @@ static const struct kernel_param_ops param_ops_aalockpolicy = {
 	.get = param_get_aalockpolicy
 };
 
+<<<<<<< HEAD
 static int param_set_audit(const char *val, const struct kernel_param *kp);
 static int param_get_audit(char *buffer, const struct kernel_param *kp);
 
 static int param_set_mode(const char *val, const struct kernel_param *kp);
 static int param_get_mode(char *buffer, const struct kernel_param *kp);
+=======
+static int param_set_audit(const char *val, struct kernel_param *kp);
+static int param_get_audit(char *buffer, struct kernel_param *kp);
+
+static int param_set_mode(const char *val, struct kernel_param *kp);
+static int param_get_mode(char *buffer, struct kernel_param *kp);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /* Flag values, also controllable via /sys/module/apparmor/parameters
  * We define special types as we want to do additional mediation.
@@ -774,7 +782,11 @@ static int param_get_aauint(char *buffer, const struct kernel_param *kp)
 	return param_get_uint(buffer, kp);
 }
 
+<<<<<<< HEAD
 static int param_get_audit(char *buffer, const struct kernel_param *kp)
+=======
+static int param_get_audit(char *buffer, struct kernel_param *kp)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	if (!policy_view_capable())
 		return -EPERM;
@@ -785,7 +797,11 @@ static int param_get_audit(char *buffer, const struct kernel_param *kp)
 	return sprintf(buffer, "%s", audit_mode_names[aa_g_audit]);
 }
 
+<<<<<<< HEAD
 static int param_set_audit(const char *val, const struct kernel_param *kp)
+=======
+static int param_set_audit(const char *val, struct kernel_param *kp)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	int i;
 	if (!policy_admin_capable())
@@ -807,7 +823,11 @@ static int param_set_audit(const char *val, const struct kernel_param *kp)
 	return -EINVAL;
 }
 
+<<<<<<< HEAD
 static int param_get_mode(char *buffer, const struct kernel_param *kp)
+=======
+static int param_get_mode(char *buffer, struct kernel_param *kp)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	if (!policy_admin_capable())
 		return -EPERM;
@@ -818,7 +838,11 @@ static int param_get_mode(char *buffer, const struct kernel_param *kp)
 	return sprintf(buffer, "%s", aa_profile_mode_names[aa_g_profile_mode]);
 }
 
+<<<<<<< HEAD
 static int param_set_mode(const char *val, const struct kernel_param *kp)
+=======
+static int param_set_mode(const char *val, struct kernel_param *kp)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	int i;
 	if (!policy_admin_capable())

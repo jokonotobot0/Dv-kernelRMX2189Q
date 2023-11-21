@@ -200,7 +200,11 @@ EXPORT_SYMBOL(setattr_copy);
  * the file open for write, as there can be no conflicting delegation in
  * that case.
  */
+<<<<<<< HEAD
 int notify_change2(struct vfsmount *mnt, struct dentry * dentry, struct iattr * attr, struct inode **delegated_inode)
+=======
+int notify_change(struct dentry * dentry, struct iattr * attr, struct inode **delegated_inode)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	struct inode *inode = dentry->d_inode;
 	umode_t mode = inode->i_mode;
@@ -224,7 +228,11 @@ int notify_change2(struct vfsmount *mnt, struct dentry * dentry, struct iattr * 
 			return -EPERM;
 
 		if (!inode_owner_or_capable(inode)) {
+<<<<<<< HEAD
 			error = inode_permission2(mnt, inode, MAY_WRITE);
+=======
+			error = inode_permission(inode, MAY_WRITE);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			if (error)
 				return error;
 		}
@@ -307,9 +315,13 @@ int notify_change2(struct vfsmount *mnt, struct dentry * dentry, struct iattr * 
 	if (error)
 		return error;
 
+<<<<<<< HEAD
 	if (mnt && inode->i_op->setattr2)
 		error = inode->i_op->setattr2(mnt, dentry, attr);
 	else if (inode->i_op->setattr)
+=======
+	if (inode->i_op->setattr)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		error = inode->i_op->setattr(dentry, attr);
 	else
 		error = simple_setattr(dentry, attr);
@@ -322,10 +334,13 @@ int notify_change2(struct vfsmount *mnt, struct dentry * dentry, struct iattr * 
 
 	return error;
 }
+<<<<<<< HEAD
 EXPORT_SYMBOL(notify_change2);
 
 int notify_change(struct dentry * dentry, struct iattr * attr, struct inode **delegated_inode)
 {
 	return notify_change2(NULL, dentry, attr, delegated_inode);
 }
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 EXPORT_SYMBOL(notify_change);

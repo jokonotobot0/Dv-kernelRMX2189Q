@@ -462,8 +462,13 @@ int paravirt_disable_iospace(void);
  */
 #ifdef CONFIG_X86_32
 #define PVOP_VCALL_ARGS							\
+<<<<<<< HEAD
 	unsigned long __eax = __eax, __edx = __edx, __ecx = __ecx;
 
+=======
+	unsigned long __eax = __eax, __edx = __edx, __ecx = __ecx;	\
+	register void *__sp asm("esp")
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define PVOP_CALL_ARGS			PVOP_VCALL_ARGS
 
 #define PVOP_CALL_ARG1(x)		"a" ((unsigned long)(x))
@@ -483,8 +488,13 @@ int paravirt_disable_iospace(void);
 /* [re]ax isn't an arg, but the return val */
 #define PVOP_VCALL_ARGS						\
 	unsigned long __edi = __edi, __esi = __esi,		\
+<<<<<<< HEAD
 		__edx = __edx, __ecx = __ecx, __eax = __eax;
 
+=======
+		__edx = __edx, __ecx = __ecx, __eax = __eax;	\
+	register void *__sp asm("rsp")
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define PVOP_CALL_ARGS		PVOP_VCALL_ARGS
 
 #define PVOP_CALL_ARG1(x)		"D" ((unsigned long)(x))
@@ -523,7 +533,11 @@ int paravirt_disable_iospace(void);
 			asm volatile(pre				\
 				     paravirt_alt(PARAVIRT_CALL)	\
 				     post				\
+<<<<<<< HEAD
 				     : call_clbr, ASM_CALL_CONSTRAINT	\
+=======
+				     : call_clbr, "+r" (__sp)		\
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 				     : paravirt_type(op),		\
 				       paravirt_clobber(clbr),		\
 				       ##__VA_ARGS__			\
@@ -533,7 +547,11 @@ int paravirt_disable_iospace(void);
 			asm volatile(pre				\
 				     paravirt_alt(PARAVIRT_CALL)	\
 				     post				\
+<<<<<<< HEAD
 				     : call_clbr, ASM_CALL_CONSTRAINT	\
+=======
+				     : call_clbr, "+r" (__sp)		\
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 				     : paravirt_type(op),		\
 				       paravirt_clobber(clbr),		\
 				       ##__VA_ARGS__			\
@@ -560,7 +578,11 @@ int paravirt_disable_iospace(void);
 		asm volatile(pre					\
 			     paravirt_alt(PARAVIRT_CALL)		\
 			     post					\
+<<<<<<< HEAD
 			     : call_clbr, ASM_CALL_CONSTRAINT		\
+=======
+			     : call_clbr, "+r" (__sp)			\
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			     : paravirt_type(op),			\
 			       paravirt_clobber(clbr),			\
 			       ##__VA_ARGS__				\

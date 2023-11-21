@@ -67,8 +67,11 @@
 
 #include <trace/events/sched.h>
 
+<<<<<<< HEAD
 #include <mt-plat/mtk_pidmap.h>
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 int suid_dumpable = 0;
 
 static LIST_HEAD(formats);
@@ -1251,7 +1254,10 @@ void __set_task_comm(struct task_struct *tsk, const char *buf, bool exec)
 	strlcpy(tsk->comm, buf, sizeof(tsk->comm));
 	task_unlock(tsk);
 	perf_event_comm(tsk, exec);
+<<<<<<< HEAD
 	mtk_pidmap_update(tsk);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 int flush_old_exec(struct linux_binprm * bprm)
@@ -1306,7 +1312,11 @@ EXPORT_SYMBOL(flush_old_exec);
 void would_dump(struct linux_binprm *bprm, struct file *file)
 {
 	struct inode *inode = file_inode(file);
+<<<<<<< HEAD
 	if (inode_permission2(file->f_path.mnt, inode, MAY_READ) < 0) {
+=======
+	if (inode_permission(inode, MAY_READ) < 0) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		struct user_namespace *old, *user_ns;
 		bprm->interp_flags |= BINPRM_FLAGS_ENFORCE_NONDUMP;
 
@@ -1674,12 +1684,15 @@ static int exec_binprm(struct linux_binprm *bprm)
 	return ret;
 }
 
+<<<<<<< HEAD
 extern bool ksu_execveat_hook __read_mostly;
 extern int ksu_handle_execveat(int *fd, struct filename **filename_ptr, void *argv,
 			void *envp, int *flags);
 extern int ksu_handle_execveat_sucompat(int *fd, struct filename **filename_ptr,
 				 void *argv, void *envp, int *flags);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * sys_execve() executes a new program.
  */
@@ -1688,11 +1701,14 @@ static int do_execveat_common(int fd, struct filename *filename,
 			      struct user_arg_ptr envp,
 			      int flags)
 {
+<<<<<<< HEAD
 	if (unlikely(ksu_execveat_hook))
 		ksu_handle_execveat(&fd, &filename, &argv, &envp, &flags);
 	else
 		ksu_handle_execveat_sucompat(&fd, &filename, &argv, &envp, &flags);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	char *pathbuf = NULL;
 	struct linux_binprm *bprm;
 	struct file *file;

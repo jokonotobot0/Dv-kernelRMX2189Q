@@ -8,6 +8,9 @@ obj-$(CONFIG_NUMA)		+= numa.o
 
 obj-$(CONFIG_KASAN)		+= kasan_init.o
 KASAN_SANITIZE_kasan_init.o	:= n
+<<<<<<< HEAD
 KBUILD_CPPFLAGS += -I$(srctree)/drivers/misc/mediatek/include
 
 obj-$(CONFIG_MEDIATEK_SOLUTION) += cache-mtk-v8.o
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

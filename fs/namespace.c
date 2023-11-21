@@ -26,6 +26,10 @@
 #include <linux/task_work.h>
 #include "pnode.h"
 #include "internal.h"
+<<<<<<< HEAD
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* Maximum number of mounts in a mount namespace */
 unsigned int sysctl_mount_max __read_mostly = 100000;
 
@@ -226,7 +230,10 @@ static struct mount *alloc_vfsmnt(const char *name)
 		mnt->mnt_count = 1;
 		mnt->mnt_writers = 0;
 #endif
+<<<<<<< HEAD
 		mnt->mnt.data = NULL;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 		INIT_HLIST_NODE(&mnt->mnt_hash);
 		INIT_LIST_HEAD(&mnt->mnt_child);
@@ -581,7 +588,10 @@ int sb_prepare_remount_readonly(struct super_block *sb)
 
 static void free_vfsmnt(struct mount *mnt)
 {
+<<<<<<< HEAD
 	kfree(mnt->mnt.data);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	kfree_const(mnt->mnt_devname);
 #ifdef CONFIG_SMP
 	free_percpu(mnt->mnt_pcp);
@@ -750,7 +760,11 @@ mountpoint:
 	}
 
 	if (!new)
+<<<<<<< HEAD
 		new = kmalloc(sizeof(struct mountpoint), GFP_NOFS);
+=======
+		new = kmalloc(sizeof(struct mountpoint), GFP_KERNEL);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (!new)
 		return ERR_PTR(-ENOMEM);
 
@@ -985,6 +999,7 @@ vfs_kern_mount(struct file_system_type *type, int flags, const char *name, void 
 	if (!mnt)
 		return ERR_PTR(-ENOMEM);
 
+<<<<<<< HEAD
 	if (type->alloc_mnt_data) {
 		mnt->mnt.data = type->alloc_mnt_data();
 		if (!mnt->mnt.data) {
@@ -997,6 +1012,12 @@ vfs_kern_mount(struct file_system_type *type, int flags, const char *name, void 
 		mnt->mnt.mnt_flags = MNT_INTERNAL;
 
 	root = mount_fs(type, flags, name, &mnt->mnt, data);
+=======
+	if (flags & MS_KERNMOUNT)
+		mnt->mnt.mnt_flags = MNT_INTERNAL;
+
+	root = mount_fs(type, flags, name, data);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (IS_ERR(root)) {
 		mnt_free_id(mnt);
 		free_vfsmnt(mnt);
@@ -1040,6 +1061,7 @@ static struct mount *clone_mnt(struct mount *old, struct dentry *root,
 	if (!mnt)
 		return ERR_PTR(-ENOMEM);
 
+<<<<<<< HEAD
 	if (sb->s_op->clone_mnt_data) {
 		mnt->mnt.data = sb->s_op->clone_mnt_data(old->mnt.data);
 		if (!mnt->mnt.data) {
@@ -1048,6 +1070,8 @@ static struct mount *clone_mnt(struct mount *old, struct dentry *root,
 		}
 	}
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (flag & (CL_SLAVE | CL_PRIVATE | CL_SHARED_TO_SLAVE))
 		mnt->mnt_group_id = 0; /* not a peer of original */
 	else
@@ -2359,6 +2383,7 @@ static int do_remount(struct path *path, int flags, int mnt_flags,
 		err = change_mount_flags(path->mnt, flags);
 	else if (!capable(CAP_SYS_ADMIN))
 		err = -EPERM;
+<<<<<<< HEAD
 	else {
 		err = do_remount_sb2(path->mnt, sb, flags, data, 0);
 		namespace_lock();
@@ -2367,6 +2392,10 @@ static int do_remount(struct path *path, int flags, int mnt_flags,
 		unlock_mount_hash();
 		namespace_unlock();
 	}
+=======
+	else
+		err = do_remount_sb(sb, flags, data, 0);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (!err) {
 		lock_mount_hash();
 		mnt_flags |= mnt->mnt.mnt_flags & ~MNT_USER_SETTABLE_MASK;
@@ -2803,7 +2832,10 @@ long do_mount(const char *dev_name, const char __user *dir_name,
 	int retval = 0;
 	int mnt_flags = 0;
 
+<<<<<<< HEAD
 //[like1@oppo.com][Security][2019/09/30] Add for mount report(root defence)  [End]
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* Discard magic */
 	if ((flags & MS_MGC_MSK) == MS_MGC_VAL)
 		flags &= ~MS_MGC_MSK;

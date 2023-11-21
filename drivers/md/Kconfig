@@ -501,6 +501,7 @@ config DM_LOG_WRITES
 
 	  If unsure, say N.
 
+<<<<<<< HEAD
 config MTK_HW_FDE
 	tristate "Mediatek HW FDE support"
         depends on DM_CRYPT
@@ -572,4 +573,6 @@ config DM_BOW
 
 	  If unsure, say N.
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 endif # MD

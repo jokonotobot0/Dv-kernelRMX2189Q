@@ -1,8 +1,11 @@
+<<<<<<< HEAD
 subdir-ccflags-y += -Werror -I$(srctree)/drivers/misc/mediatek/include
 
 ifeq ($(CONFIG_MTK_AUXADC),y)
 ccflags-y += -I$(srctree)/drivers/misc/mediatek/auxadc/
 endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 snd-soc-88pm860x-objs := 88pm860x-codec.o
 snd-soc-ab8500-codec-objs := ab8500-codec.o
 snd-soc-ac97-objs := ac97.o
@@ -90,10 +93,14 @@ snd-soc-max98926-objs := max98926.o
 snd-soc-max9850-objs := max9850.o
 snd-soc-max9860-objs := max9860.o
 snd-soc-mc13783-objs := mc13783.o
+<<<<<<< HEAD
 snd-soc-mt6358-objs := mt6358.o
 snd-soc-mt6359-objs := mt6359.o
 snd-soc-ml26124-objs := ml26124.o
 snd-soc-mt6391-objs := mt6391.o
+=======
+snd-soc-ml26124-objs := ml26124.o
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 snd-soc-nau8810-objs := nau8810.o
 snd-soc-nau8825-objs := nau8825.o
 snd-soc-hdmi-codec-objs := hdmi-codec.o
@@ -222,10 +229,15 @@ snd-soc-wm9705-objs := wm9705.o
 snd-soc-wm9712-objs := wm9712.o
 snd-soc-wm9713-objs := wm9713.o
 snd-soc-wm-hubs-objs := wm_hubs.o
+<<<<<<< HEAD
 snd-soc-rt5509-objs := rt5509.o rt5509-regmap.o rt5509-calib.o
 
 # Amp
 snd-soc-mt6660-objs := mt6660.o mt6660-regmap.o mt6660-param.o
+=======
+
+# Amp
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 snd-soc-max9877-objs := max9877.o
 snd-soc-max98504-objs := max98504.o
 snd-soc-tpa6130a2-objs := tpa6130a2.o
@@ -320,9 +332,12 @@ obj-$(CONFIG_SND_SOC_MAX9850)	+= snd-soc-max9850.o
 obj-$(CONFIG_SND_SOC_MAX9860)	+= snd-soc-max9860.o
 obj-$(CONFIG_SND_SOC_MC13783)	+= snd-soc-mc13783.o
 obj-$(CONFIG_SND_SOC_ML26124)	+= snd-soc-ml26124.o
+<<<<<<< HEAD
 obj-$(CONFIG_SND_SOC_MT6358)	+= snd-soc-mt6358.o
 obj-$(CONFIG_SND_SOC_MT6359)	+= snd-soc-mt6359.o
 obj-$(CONFIG_SND_SOC_MT6391)	+= snd-soc-mt6391.o
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 obj-$(CONFIG_SND_SOC_NAU8810)   += snd-soc-nau8810.o
 obj-$(CONFIG_SND_SOC_NAU8825)   += snd-soc-nau8825.o
 obj-$(CONFIG_SND_SOC_HDMI_CODEC)	+= snd-soc-hdmi-codec.o
@@ -448,12 +463,16 @@ obj-$(CONFIG_SND_SOC_WM9712)	+= snd-soc-wm9712.o
 obj-$(CONFIG_SND_SOC_WM9713)	+= snd-soc-wm9713.o
 obj-$(CONFIG_SND_SOC_WM_ADSP)	+= snd-soc-wm-adsp.o
 obj-$(CONFIG_SND_SOC_WM_HUBS)	+= snd-soc-wm-hubs.o
+<<<<<<< HEAD
 obj-$(CONFIG_SND_SOC_MT2701)	+= mt2712-codec.o
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 # Amp
 obj-$(CONFIG_SND_SOC_MAX9877)	+= snd-soc-max9877.o
 obj-$(CONFIG_SND_SOC_MAX98504)	+= snd-soc-max98504.o
 obj-$(CONFIG_SND_SOC_TPA6130A2)	+= snd-soc-tpa6130a2.o
+<<<<<<< HEAD
 obj-$(CONFIG_SND_SOC_RT5509)	+= snd-soc-rt5509.o
 obj-$(CONFIG_SND_SOC_MT6660)	+= snd-soc-mt6660.o
 
@@ -475,3 +494,5 @@ obj-$(CONFIG_SND_SOC_ALSACODEC_TFA9890) += tfa98xx/
 # Yongzhi.Zhang@PSW.MM.AudioDriver.Machine, 2018/11/14, add dbmdx
 obj-$(CONFIG_SND_SOC_DBMDX) += dbmdx/
 #endif /* VENDOR_EDIT */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

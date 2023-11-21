@@ -53,7 +53,10 @@ enum hrtimer_restart {
  *
  * 0x00		inactive
  * 0x01		enqueued into rbtree
+<<<<<<< HEAD
  * 0x02		timer is pinned to a cpu
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
  *
  * The callback state is not part of the timer->state because clearing it would
  * mean touching the timer after the callback, this makes it impossible to free
@@ -73,8 +76,11 @@ enum hrtimer_restart {
  */
 #define HRTIMER_STATE_INACTIVE	0x00
 #define HRTIMER_STATE_ENQUEUED	0x01
+<<<<<<< HEAD
 #define HRTIMER_PINNED_SHIFT	1
 #define HRTIMER_STATE_PINNED	(1 << HRTIMER_PINNED_SHIFT)
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /**
  * struct hrtimer - the basic hrtimer structure
@@ -360,9 +366,12 @@ DECLARE_PER_CPU(struct tick_device, tick_cpu_device);
 
 /* Exported timer functions: */
 
+<<<<<<< HEAD
 /* To be used from cpusets, only */
 extern void hrtimer_quiesce_cpu(void *cpup);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* Initialize timers: */
 extern void hrtimer_init(struct hrtimer *timer, clockid_t which_clock,
 			 enum hrtimer_mode mode);

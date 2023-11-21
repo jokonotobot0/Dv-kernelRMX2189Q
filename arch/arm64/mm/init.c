@@ -36,7 +36,10 @@
 #include <linux/efi.h>
 #include <linux/swiotlb.h>
 #include <linux/vmalloc.h>
+<<<<<<< HEAD
 #include <linux/mm.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #include <asm/boot.h>
 #include <asm/fixmap.h>
@@ -49,8 +52,11 @@
 #include <asm/sizes.h>
 #include <asm/tlb.h>
 #include <asm/alternative.h>
+<<<<<<< HEAD
 #include <linux/cma.h>
 #include <mt-plat/mtk_meminfo.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /*
  * We need to be able to catch inadvertent references to memstart_addr
@@ -87,12 +93,15 @@ early_param("initrd", early_initrd);
 static phys_addr_t __init max_zone_dma_phys(void)
 {
 	phys_addr_t offset = memblock_start_of_DRAM() & GENMASK_ULL(63, 32);
+<<<<<<< HEAD
 
 #ifdef CONFIG_ZONE_MOVABLE_CMA
 	if (is_zmc_inited())
 		return min(offset + zmc_max_zone_dma_phys,
 				memblock_end_of_DRAM());
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return min(offset + (1ULL << 32), memblock_end_of_DRAM());
 }
 
@@ -116,6 +125,7 @@ static void __init zone_sizes_init(unsigned long min, unsigned long max)
 	struct memblock_region *reg;
 	unsigned long zone_size[MAX_NR_ZONES], zhole_size[MAX_NR_ZONES];
 	unsigned long max_dma = min;
+<<<<<<< HEAD
 #ifdef CONFIG_ZONE_MOVABLE_CMA
 	phys_addr_t cma_base, cma_size;
 	unsigned long cma_base_pfn = ULONG_MAX;
@@ -128,12 +138,15 @@ static void __init zone_sizes_init(unsigned long min, unsigned long max)
 	if (cma_size)
 		cma_base_pfn = PFN_DOWN(cma_base);
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	memset(zone_size, 0, sizeof(zone_size));
 
 	/* 4GB maximum for 32-bit only capable devices */
 #ifdef CONFIG_ZONE_DMA
 	max_dma = PFN_DOWN(arm64_dma_phys_limit);
+<<<<<<< HEAD
 #ifdef CONFIG_ZONE_MOVABLE_CMA
 	max_dma = min(max_dma, cma_base_pfn);
 #endif
@@ -149,6 +162,11 @@ static void __init zone_sizes_init(unsigned long min, unsigned long max)
 #else
 	zone_size[ZONE_NORMAL] = max - max_dma;
 #endif
+=======
+	zone_size[ZONE_DMA] = max_dma - min;
+#endif
+	zone_size[ZONE_NORMAL] = max - max_dma;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	memcpy(zhole_size, zone_size, sizeof(zhole_size));
 
@@ -165,6 +183,7 @@ static void __init zone_sizes_init(unsigned long min, unsigned long max)
 			zhole_size[ZONE_DMA] -= dma_end - start;
 		}
 #endif
+<<<<<<< HEAD
 #ifdef CONFIG_ZONE_MOVABLE_CMA
 		if (zone_size[ZONE_NORMAL] && end > max_dma &&
 				start < cma_base_pfn) {
@@ -181,12 +200,17 @@ static void __init zone_sizes_init(unsigned long min, unsigned long max)
 			zhole_size[ZONE_MOVABLE] -= movable_end - movable_start;
 		}
 #else
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		if (end > max_dma) {
 			unsigned long normal_end = min(end, max);
 			unsigned long normal_start = max(start, max_dma);
 			zhole_size[ZONE_NORMAL] -= normal_end - normal_start;
 		}
+<<<<<<< HEAD
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 
 	free_area_init_node(0, zone_size, min, zhole_size);
@@ -263,8 +287,13 @@ void __init arm64_memblock_init(void)
 	 * linear mapping. Take care not to clip the kernel which may be
 	 * high in memory.
 	 */
+<<<<<<< HEAD
 	memblock_remove(max_t(u64, memstart_addr + linear_region_size,
 			__pa_symbol(_end)), ULLONG_MAX);
+=======
+	memblock_remove(max_t(u64, memstart_addr + linear_region_size, __pa(_end)),
+			ULLONG_MAX);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (memstart_addr + linear_region_size < memblock_end_of_DRAM()) {
 		/* ensure that memstart_addr remains sufficiently aligned */
 		memstart_addr = round_up(memblock_end_of_DRAM() - linear_region_size,
@@ -279,7 +308,11 @@ void __init arm64_memblock_init(void)
 	 */
 	if (memory_limit != (phys_addr_t)ULLONG_MAX) {
 		memblock_mem_limit_remove_map(memory_limit);
+<<<<<<< HEAD
 		memblock_add(__pa_symbol(_text), (u64)(_end - _text));
+=======
+		memblock_add(__pa(_text), (u64)(_end - _text));
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 
 	if (IS_ENABLED(CONFIG_BLK_DEV_INITRD) && initrd_start) {
@@ -332,7 +365,11 @@ void __init arm64_memblock_init(void)
 	 * Register the kernel text, kernel data, initrd, and initial
 	 * pagetables with memblock.
 	 */
+<<<<<<< HEAD
 	memblock_reserve(__pa_symbol(_text), _end - _text);
+=======
+	memblock_reserve(__pa(_text), _end - _text);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #ifdef CONFIG_BLK_DEV_INITRD
 	if (initrd_start) {
 		memblock_reserve(initrd_start, initrd_end - initrd_start);
@@ -542,8 +579,12 @@ void __init mem_init(void)
 
 void free_initmem(void)
 {
+<<<<<<< HEAD
 	free_reserved_area(lm_alias(__init_begin),
 			   lm_alias(__init_end),
+=======
+	free_reserved_area(__va(__pa(__init_begin)), __va(__pa(__init_end)),
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			   0, "unused kernel");
 	/*
 	 * Unmap the __init region but leave the VM area in place. This

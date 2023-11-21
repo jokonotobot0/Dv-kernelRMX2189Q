@@ -30,10 +30,15 @@ Currently, these files are in /proc/sys/vm:
 - dirty_writeback_centisecs
 - drop_caches
 - extfrag_threshold
+<<<<<<< HEAD
 - extra_free_kbytes
 - hugepages_treat_as_movable
 - hugetlb_shm_group
 - kswapd_threads
+=======
+- hugepages_treat_as_movable
+- hugetlb_shm_group
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 - laptop_mode
 - legacy_va_layout
 - lowmem_reserve_ratio
@@ -242,6 +247,7 @@ fragmentation index is <= extfrag_threshold. The default value is 500.
 
 ==============================================================
 
+<<<<<<< HEAD
 extra_free_kbytes
 
 This parameter tells the VM to keep extra free memory between the threshold
@@ -257,6 +263,8 @@ related latencies.
 
 ==============================================================
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 hugepages_treat_as_movable
 
 This parameter controls whether we can allocate hugepages from ZONE_MOVABLE
@@ -288,6 +296,7 @@ shared memory segment using hugetlb page.
 
 ==============================================================
 
+<<<<<<< HEAD
 kswapd_threads
 
 kswapd_threads allows you to control the number of kswapd threads per node
@@ -310,6 +319,8 @@ higher due to increased lock contention.
 
 ==============================================================
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 laptop_mode
 
 laptop_mode is a knob that controls "laptop mode". All the things that are

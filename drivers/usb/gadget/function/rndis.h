@@ -190,7 +190,10 @@ typedef struct rndis_params
 	struct net_device	*dev;
 
 	u32			vendorID;
+<<<<<<< HEAD
 	u8			max_pkt_per_xfer;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	const char		*vendorDescr;
 	void			(*resp_avail)(void *v);
 	void			*v;
@@ -207,7 +210,10 @@ int  rndis_set_param_vendor(struct rndis_params *params, u32 vendorID,
 			    const char *vendorDescr);
 int  rndis_set_param_medium(struct rndis_params *params, u32 medium,
 			     u32 speed);
+<<<<<<< HEAD
 void rndis_set_max_pkt_xfer(struct rndis_params *params, u8 max_pkt_per_xfer);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 void rndis_add_hdr(struct sk_buff *skb);
 int rndis_rm_hdr(struct gether *port, struct sk_buff *skb,
 			struct sk_buff_head *list);
@@ -219,8 +225,11 @@ int  rndis_signal_connect(struct rndis_params *params);
 int  rndis_signal_disconnect(struct rndis_params *params);
 int  rndis_state(struct rndis_params *params);
 extern void rndis_set_host_mac(struct rndis_params *params, const u8 *addr);
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_MD_DIRECT_TETHERING_SUPPORT
 void rndis_set_direct_tethering(struct usb_function *f, bool direct);
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #endif  /* _LINUX_RNDIS_H */

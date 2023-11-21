@@ -52,6 +52,10 @@
 #include <linux/zpool.h>
 #include <linux/mount.h>
 #include <linux/migrate.h>
+<<<<<<< HEAD
+=======
+#include <linux/wait.h>
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <linux/pagemap.h>
 
 #define ZSPAGE_MAGIC	0x58
@@ -68,12 +72,16 @@
  * A single 'zspage' is composed of up to 2^N discontiguous 0-order (single)
  * pages. ZS_MAX_ZSPAGE_ORDER defines upper limit on N.
  */
+<<<<<<< HEAD
 #ifndef VENDOR_EDIT //YiXue.Ge@PSW.kernel.drv 20170703 modify ZS_MAX_ZSPAGE_ORDER as 3
 #define ZS_MAX_ZSPAGE_ORDER 2
 #else
 #define ZS_MAX_ZSPAGE_ORDER 3
 #endif
 
+=======
+#define ZS_MAX_ZSPAGE_ORDER 2
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define ZS_MAX_PAGES_PER_ZSPAGE (_AC(1, UL) << ZS_MAX_ZSPAGE_ORDER)
 
 #define ZS_HANDLE_SIZE (sizeof(unsigned long))
@@ -118,12 +126,16 @@
  */
 #define OBJ_ALLOCATED_TAG 1
 #define OBJ_TAG_BITS 1
+<<<<<<< HEAD
 #if BITS_PER_LONG == 32
 /* minus 1 bit for large DRAM (>3GB) */
 #define OBJ_INDEX_BITS	(BITS_PER_LONG - _PFN_BITS - OBJ_TAG_BITS - 1)
 #else
 #define OBJ_INDEX_BITS	(BITS_PER_LONG - _PFN_BITS - OBJ_TAG_BITS)
 #endif
+=======
+#define OBJ_INDEX_BITS	(BITS_PER_LONG - _PFN_BITS - OBJ_TAG_BITS)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define OBJ_INDEX_MASK	((_AC(1, UL) << OBJ_INDEX_BITS) - 1)
 
 #define MAX(a, b) ((a) >= (b) ? (a) : (b))
@@ -198,7 +210,10 @@ static int zs_size_classes;
  * (see: fix_fullness_group())
  */
 static const int fullness_threshold_frac = 4;
+<<<<<<< HEAD
 static size_t huge_class_size;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 struct size_class {
 	spinlock_t lock;
@@ -276,6 +291,13 @@ struct zs_pool {
 #ifdef CONFIG_COMPACTION
 	struct inode *inode;
 	struct work_struct free_work;
+<<<<<<< HEAD
+=======
+	/* A wait queue for when migration races with async_free_zspage() */
+	wait_queue_head_t migration_wait;
+	atomic_long_t isolated_pages;
+	bool destroying;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif
 };
 
@@ -285,11 +307,15 @@ struct zs_pool {
  */
 #define FULLNESS_BITS	2
 #define CLASS_BITS	8
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT //YiXue.Ge@PSW.kernel.drv 20170703 modify ZS_MAX_ZSPAGE_ORDER as 3
 #define ISOLATED_BITS	(ZS_MAX_ZSPAGE_ORDER+1)
 #else
 #define ISOLATED_BITS	3
 #endif
+=======
+#define ISOLATED_BITS	3
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define MAGIC_VAL_BITS	8
 
 struct zspage {
@@ -775,7 +801,11 @@ static void insert_zspage(struct size_class *class,
 {
 	struct zspage *head;
 
+<<<<<<< HEAD
 	zs_stat_inc(class, (enum zs_stat_type)fullness, 1);
+=======
+	zs_stat_inc(class, fullness, 1);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	head = list_first_entry_or_null(&class->fullness_list[fullness],
 					struct zspage, list);
 	/*
@@ -803,7 +833,11 @@ static void remove_zspage(struct size_class *class,
 	VM_BUG_ON(is_zspage_isolated(zspage));
 
 	list_del_init(&zspage->list);
+<<<<<<< HEAD
 	zs_stat_dec(class, (enum zs_stat_type)fullness, 1);
+=======
+	zs_stat_dec(class, fullness, 1);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 /*
@@ -1502,6 +1536,7 @@ void zs_unmap_object(struct zs_pool *pool, unsigned long handle)
 }
 EXPORT_SYMBOL_GPL(zs_unmap_object);
 
+<<<<<<< HEAD
 /**
  * zs_huge_class_size() - Returns the size (in bytes) of the first huge
  *                        zsmalloc &size_class.
@@ -1521,6 +1556,8 @@ size_t zs_huge_class_size(struct zs_pool *pool)
 }
 EXPORT_SYMBOL_GPL(zs_huge_class_size);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static unsigned long obj_malloc(struct size_class *class,
 				struct zspage *zspage, unsigned long handle)
 {
@@ -1973,6 +2010,34 @@ static void dec_zspage_isolation(struct zspage *zspage)
 	zspage->isolated--;
 }
 
+<<<<<<< HEAD
+=======
+static void putback_zspage_deferred(struct zs_pool *pool,
+				    struct size_class *class,
+				    struct zspage *zspage)
+{
+	enum fullness_group fg;
+
+	fg = putback_zspage(class, zspage);
+	if (fg == ZS_EMPTY)
+		schedule_work(&pool->free_work);
+
+}
+
+static inline void zs_pool_dec_isolated(struct zs_pool *pool)
+{
+	VM_BUG_ON(atomic_long_read(&pool->isolated_pages) <= 0);
+	atomic_long_dec(&pool->isolated_pages);
+	/*
+	 * There's no possibility of racing, since wait_for_isolated_drain()
+	 * checks the isolated count under &class->lock after enqueuing
+	 * on migration_wait.
+	 */
+	if (atomic_long_read(&pool->isolated_pages) == 0 && pool->destroying)
+		wake_up_all(&pool->migration_wait);
+}
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static void replace_sub_page(struct size_class *class, struct zspage *zspage,
 				struct page *newpage, struct page *oldpage)
 {
@@ -2042,6 +2107,10 @@ bool zs_page_isolate(struct page *page, isolate_mode_t mode)
 	 */
 	if (!list_empty(&zspage->list) && !is_zspage_isolated(zspage)) {
 		get_zspage_mapping(zspage, &class_idx, &fullness);
+<<<<<<< HEAD
+=======
+		atomic_long_inc(&pool->isolated_pages);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		remove_zspage(class, zspage, fullness);
 	}
 
@@ -2130,8 +2199,21 @@ int zs_page_migrate(struct address_space *mapping, struct page *newpage,
 	 * Page migration is done so let's putback isolated zspage to
 	 * the list if @page is final isolated subpage in the zspage.
 	 */
+<<<<<<< HEAD
 	if (!is_zspage_isolated(zspage))
 		putback_zspage(class, zspage);
+=======
+	if (!is_zspage_isolated(zspage)) {
+		/*
+		 * We cannot race with zs_destroy_pool() here because we wait
+		 * for isolation to hit zero before we start destroying.
+		 * Also, we ensure that everyone can see pool->destroying before
+		 * we start waiting.
+		 */
+		putback_zspage_deferred(pool, class, zspage);
+		zs_pool_dec_isolated(pool);
+	}
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	reset_page(page);
 	put_page(page);
@@ -2178,13 +2260,21 @@ void zs_page_putback(struct page *page)
 	spin_lock(&class->lock);
 	dec_zspage_isolation(zspage);
 	if (!is_zspage_isolated(zspage)) {
+<<<<<<< HEAD
 		fg = putback_zspage(class, zspage);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		/*
 		 * Due to page_lock, we cannot free zspage immediately
 		 * so let's defer.
 		 */
+<<<<<<< HEAD
 		if (fg == ZS_EMPTY)
 			schedule_work(&pool->free_work);
+=======
+		putback_zspage_deferred(pool, class, zspage);
+		zs_pool_dec_isolated(pool);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 	spin_unlock(&class->lock);
 }
@@ -2208,8 +2298,41 @@ static int zs_register_migration(struct zs_pool *pool)
 	return 0;
 }
 
+<<<<<<< HEAD
 static void zs_unregister_migration(struct zs_pool *pool)
 {
+=======
+static bool pool_isolated_are_drained(struct zs_pool *pool)
+{
+	return atomic_long_read(&pool->isolated_pages) == 0;
+}
+
+/* Function for resolving migration */
+static void wait_for_isolated_drain(struct zs_pool *pool)
+{
+
+	/*
+	 * We're in the process of destroying the pool, so there are no
+	 * active allocations. zs_page_isolate() fails for completely free
+	 * zspages, so we need only wait for the zs_pool's isolated
+	 * count to hit zero.
+	 */
+	wait_event(pool->migration_wait,
+		   pool_isolated_are_drained(pool));
+}
+
+static void zs_unregister_migration(struct zs_pool *pool)
+{
+	pool->destroying = true;
+	/*
+	 * We need a memory barrier here to ensure global visibility of
+	 * pool->destroying. Thus pool->isolated pages will either be 0 in which
+	 * case we don't care, or it will be > 0 and pool->destroying will
+	 * ensure that we wake up once isolation hits 0.
+	 */
+	smp_mb();
+	wait_for_isolated_drain(pool); /* This can block */
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	flush_work(&pool->free_work);
 	iput(pool->inode);
 }
@@ -2456,6 +2579,13 @@ struct zs_pool *zs_create_pool(const char *name)
 	if (!pool->name)
 		goto err;
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_COMPACTION
+	init_waitqueue_head(&pool->migration_wait);
+#endif
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (create_cache(pool))
 		goto err;
 
@@ -2477,6 +2607,7 @@ struct zs_pool *zs_create_pool(const char *name)
 		objs_per_zspage = pages_per_zspage * PAGE_SIZE / size;
 
 		/*
+<<<<<<< HEAD
 		 * We iterate from biggest down to smallest classes,
 		 * so huge_class_size holds the size of the first huge
 		 * class. Any object bigger than or equal to that will
@@ -2498,6 +2629,8 @@ struct zs_pool *zs_create_pool(const char *name)
 		}
 
 		/*
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		 * size_class is used for normal zsmalloc operation such
 		 * as alloc/free for that size. Although it is natural that we
 		 * have one size_class for each size, there is a chance that we

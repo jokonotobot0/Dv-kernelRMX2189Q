@@ -61,7 +61,11 @@ obj-$(CONFIG_ARCH_MXC)			+= imx/
 obj-$(CONFIG_MACH_INGENIC)		+= ingenic/
 obj-$(CONFIG_COMMON_CLK_KEYSTONE)	+= keystone/
 obj-$(CONFIG_MACH_LOONGSON32)		+= loongson1/
+<<<<<<< HEAD
 obj-$(CONFIG_COMMON_CLK_MEDIATEK)		+= mediatek/
+=======
+obj-$(CONFIG_ARCH_MEDIATEK)		+= mediatek/
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 obj-$(CONFIG_COMMON_CLK_AMLOGIC)	+= meson/
 obj-$(CONFIG_MACH_PIC32)		+= microchip/
 ifeq ($(CONFIG_COMMON_CLK), y)

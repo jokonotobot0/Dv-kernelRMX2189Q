@@ -47,6 +47,15 @@ void notrace __cpu_suspend_exit(void)
 	cpu_uninstall_idmap();
 
 	/*
+<<<<<<< HEAD
+=======
+	 * Restore per-cpu offset before any kernel
+	 * subsystem relying on it has a chance to run.
+	 */
+	set_my_cpu_offset(per_cpu_offset(cpu));
+
+	/*
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	 * PSTATE was not saved over suspend/resume, re-enable any detected
 	 * features that might not have been set correctly.
 	 */

@@ -26,8 +26,12 @@
  * should satisfy the following equation:
  *      KASAN_SHADOW_OFFSET = KASAN_SHADOW_END - (1ULL << 61)
  */
+<<<<<<< HEAD
 #define KASAN_SHADOW_OFFSET     (KASAN_SHADOW_END - (1ULL \
 	<< (64 - KASAN_SHADOW_SCALE_SHIFT)))
+=======
+#define KASAN_SHADOW_OFFSET     (KASAN_SHADOW_END - (1ULL << (64 - 3)))
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 void kasan_init(void);
 void kasan_copy_shadow(pgd_t *pgdir);

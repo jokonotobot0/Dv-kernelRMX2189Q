@@ -16,9 +16,12 @@
 #include <linux/filter.h>
 #include <linux/perf_event.h>
 
+<<<<<<< HEAD
 #define ARRAY_CREATE_FLAG_MASK \
 	(BPF_F_RDONLY | BPF_F_WRONLY)
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static void bpf_array_free_percpu(struct bpf_array *array)
 {
 	int i;
@@ -60,8 +63,12 @@ static struct bpf_map *array_map_alloc(union bpf_attr *attr)
 
 	/* check sanity of attributes */
 	if (attr->max_entries == 0 || attr->key_size != 4 ||
+<<<<<<< HEAD
 	    attr->value_size == 0 ||
 	    attr->map_flags & ~ARRAY_CREATE_FLAG_MASK)
+=======
+	    attr->value_size == 0 || attr->map_flags)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		return ERR_PTR(-EINVAL);
 
 	if (attr->value_size >= 1 << (KMALLOC_SHIFT_MAX - 1))

@@ -262,6 +262,7 @@ invalid:
 	goto out;
 }
 
+<<<<<<< HEAD
 /*
  * Get the canonical path. Since we must translate to a path, this must be done
  * in the context of the userspace daemon, however, the userspace daemon cannot
@@ -306,6 +307,8 @@ default_path:
 	path_get(canonical_path);
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int invalid_nodeid(u64 nodeid)
 {
 	return !nodeid || nodeid == FUSE_ROOT_ID;
@@ -328,13 +331,19 @@ const struct dentry_operations fuse_dentry_operations = {
 	.d_revalidate	= fuse_dentry_revalidate,
 	.d_init		= fuse_dentry_init,
 	.d_release	= fuse_dentry_release,
+<<<<<<< HEAD
 	.d_canonical_path = fuse_dentry_canonical_path,
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 const struct dentry_operations fuse_root_dentry_operations = {
 	.d_init		= fuse_dentry_init,
 	.d_release	= fuse_dentry_release,
+<<<<<<< HEAD
 	.d_canonical_path = fuse_dentry_canonical_path,
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 int fuse_valid_type(int m)

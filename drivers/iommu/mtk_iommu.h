@@ -40,6 +40,7 @@ struct mtk_iommu_client_priv {
 	struct device			*m4udev;
 };
 
+<<<<<<< HEAD
 enum mtk_iommu_match_type {
 	m4u_mt8173,
 	m4u_mt2712,
@@ -51,6 +52,8 @@ struct mtk_iommu_match_data {
 	int iommu_cnt;
 };
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 struct mtk_iommu_domain;
 
 struct mtk_iommu_data {
@@ -64,8 +67,11 @@ struct mtk_iommu_data {
 	struct iommu_group		*m4u_group;
 	struct mtk_smi_iommu		smi_imu;      /* SMI larb iommu info */
 	bool                            enable_4GB;
+<<<<<<< HEAD
 	const struct mtk_iommu_match_data  *match_data;
 	struct list_head		list;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 static inline int compare_of(struct device *dev, void *data)

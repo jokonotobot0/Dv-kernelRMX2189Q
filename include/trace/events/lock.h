@@ -78,6 +78,7 @@ DEFINE_EVENT(lock, lock_acquired,
 );
 
 #endif
+<<<<<<< HEAD
 
 TRACE_EVENT(lock_monitor_msg,
 
@@ -96,6 +97,8 @@ TRACE_EVENT(lock_monitor_msg,
 	TP_printk("%s", __get_str(mbuf))
 );
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif
 
 #endif /* _TRACE_LOCK_H */

@@ -28,12 +28,20 @@
 
 #define ECC_IDLE_MASK		BIT(0)
 #define ECC_IRQ_EN		BIT(0)
+<<<<<<< HEAD
 #define	ECC_PG_IRQ_SEL		BIT(1)
 #define ECC_OP_ENABLE		(1)
 #define ECC_OP_DISABLE		(0)
 
 #define _ECC_ENCCON		(0x00)
 #define _ECC_ENCCNFG		(0x04)
+=======
+#define ECC_OP_ENABLE		(1)
+#define ECC_OP_DISABLE		(0)
+
+#define ECC_ENCCON		(0x00)
+#define ECC_ENCCNFG		(0x04)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define		ECC_CNFG_4BIT		(0)
 #define		ECC_CNFG_6BIT		(1)
 #define		ECC_CNFG_8BIT		(2)
@@ -54,6 +62,7 @@
 #define		ECC_CNFG_52BIT		(0x11)
 #define		ECC_CNFG_56BIT		(0x12)
 #define		ECC_CNFG_60BIT		(0x13)
+<<<<<<< HEAD
 #define		ECC_CNFG_68BIT		(0x14)
 #define		ECC_CNFG_72BIT		(0x15)
 #define		ECC_CNFG_80BIT		(0x16)
@@ -293,17 +302,51 @@ struct mtk_ecc_comp {
 
 	int pg_irq_enable;
 };
+=======
+#define		ECC_MODE_SHIFT		(5)
+#define		ECC_MS_SHIFT		(16)
+#define ECC_ENCDIADDR		(0x08)
+#define ECC_ENCIDLE		(0x0C)
+#define ECC_ENCPAR(x)		(0x10 + (x) * sizeof(u32))
+#define ECC_ENCIRQ_EN		(0x80)
+#define ECC_ENCIRQ_STA		(0x84)
+#define ECC_DECCON		(0x100)
+#define ECC_DECCNFG		(0x104)
+#define		DEC_EMPTY_EN		BIT(31)
+#define		DEC_CNFG_CORRECT	(0x3 << 12)
+#define ECC_DECIDLE		(0x10C)
+#define ECC_DECENUM0		(0x114)
+#define		ERR_MASK		(0x3f)
+#define ECC_DECDONE		(0x124)
+#define ECC_DECIRQ_EN		(0x200)
+#define ECC_DECIRQ_STA		(0x204)
+
+#define ECC_TIMEOUT		(500000)
+
+#define ECC_IDLE_REG(op)	((op) == ECC_ENCODE ? ECC_ENCIDLE : ECC_DECIDLE)
+#define ECC_CTL_REG(op)		((op) == ECC_ENCODE ? ECC_ENCCON : ECC_DECCON)
+#define ECC_IRQ_REG(op)		((op) == ECC_ENCODE ? \
+					ECC_ENCIRQ_EN : ECC_DECIRQ_EN)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 struct mtk_ecc {
 	struct device *dev;
 	void __iomem *regs;
 	struct clk *clk;
 
+<<<<<<< HEAD
 	struct mtk_ecc_comp *ecc_data;
 
 	struct completion done;
 	struct mutex lock;
 	u32 sectors;
+=======
+	struct completion done;
+	struct mutex lock;
+	u32 sectors;
+
+	u8 eccdata[112];
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 static inline void mtk_ecc_wait_idle(struct mtk_ecc *ecc,
@@ -313,10 +356,16 @@ static inline void mtk_ecc_wait_idle(struct mtk_ecc *ecc,
 	u32 val;
 	int ret;
 
+<<<<<<< HEAD
 	ret = readl_poll_timeout_atomic(ECC_IDLE_REG(ecc, op), val,
 					val & ECC_IDLE_MASK,
 					10, ECC_TIMEOUT);
 
+=======
+	ret = readl_poll_timeout_atomic(ecc->regs + ECC_IDLE_REG(op), val,
+					val & ECC_IDLE_MASK,
+					10, ECC_TIMEOUT);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (ret)
 		dev_warn(dev, "%s NOT idle\n",
 			 op == ECC_ENCODE ? "encoder" : "decoder");
@@ -328,10 +377,17 @@ static irqreturn_t mtk_ecc_irq(int irq, void *id)
 	enum mtk_ecc_operation op;
 	u32 dec, enc;
 
+<<<<<<< HEAD
 	dec = readw(ECC_REG(ecc, ECC_DECIRQ_STA)) & ECC_IRQ_EN;
 	if (dec) {
 		op = ECC_DECODE;
 		dec = readw(ECC_REG(ecc, ECC_DECDONE));
+=======
+	dec = readw(ecc->regs + ECC_DECIRQ_STA) & ECC_IRQ_EN;
+	if (dec) {
+		op = ECC_DECODE;
+		dec = readw(ecc->regs + ECC_DECDONE);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		if (dec & ecc->sectors) {
 			/*
 			 * Clear decode IRQ status once again to ensure that
@@ -344,7 +400,11 @@ static irqreturn_t mtk_ecc_irq(int irq, void *id)
 			return IRQ_HANDLED;
 		}
 	} else {
+<<<<<<< HEAD
 		enc = readl(ECC_REG(ecc, ECC_ENCIRQ_STA)) & ECC_IRQ_EN;
+=======
+		enc = readl(ecc->regs + ECC_ENCIRQ_STA) & ECC_IRQ_EN;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		if (enc) {
 			op = ECC_ENCODE;
 			complete(&ecc->done);
@@ -422,6 +482,7 @@ static void mtk_ecc_config(struct mtk_ecc *ecc, struct mtk_ecc_config *config)
 	case 60:
 		ecc_bit = ECC_CNFG_60BIT;
 		break;
+<<<<<<< HEAD
 	case 68:
 		ecc_bit = ECC_CNFG_68BIT;
 		break;
@@ -431,18 +492,24 @@ static void mtk_ecc_config(struct mtk_ecc *ecc, struct mtk_ecc_config *config)
 	case 80:
 		ecc_bit = ECC_CNFG_80BIT;
 		break;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	default:
 		dev_err(ecc->dev, "invalid strength %d, default to 4 bits\n",
 			config->strength);
 	}
 
+<<<<<<< HEAD
 	if (ecc_bit > ecc->ecc_data->max_ecc_str)
 		ecc_bit = ecc->ecc_data->max_ecc_str;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (config->op == ECC_ENCODE) {
 		/* configure ECC encoder (in bits) */
 		enc_sz = config->len << 3;
 
+<<<<<<< HEAD
 		if (ecc->ecc_data->mode_shift)
 			reg = ecc_bit | (config->mode << ecc->ecc_data->mode_shift);
 		else
@@ -453,10 +520,20 @@ static void mtk_ecc_config(struct mtk_ecc *ecc, struct mtk_ecc_config *config)
 		if (config->mode != ECC_NFI_MODE)
 			writel(lower_32_bits(config->addr),
 			       ECC_REG(ecc, ECC_ENCDIADDR));
+=======
+		reg = ecc_bit | (config->mode << ECC_MODE_SHIFT);
+		reg |= (enc_sz << ECC_MS_SHIFT);
+		writel(reg, ecc->regs + ECC_ENCCNFG);
+
+		if (config->mode != ECC_NFI_MODE)
+			writel(lower_32_bits(config->addr),
+			       ecc->regs + ECC_ENCDIADDR);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	} else {
 		/* configure ECC decoder (in bits) */
 		dec_sz = (config->len << 3) +
+<<<<<<< HEAD
 					config->strength * ecc->ecc_data->parity_bit;
 
 		if (ecc->ecc_data->mode_shift)
@@ -466,6 +543,14 @@ static void mtk_ecc_config(struct mtk_ecc *ecc, struct mtk_ecc_config *config)
 		reg |= (dec_sz << ECC_MS_SHIFT) | DEC_CNFG_CORRECT;
 		reg |= DEC_EMPTY_EN;
 		writel(reg, ECC_REG(ecc, ECC_DECCNFG));
+=======
+					config->strength * ECC_PARITY_BITS;
+
+		reg = ecc_bit | (config->mode << ECC_MODE_SHIFT);
+		reg |= (dec_sz << ECC_MS_SHIFT) | DEC_CNFG_CORRECT;
+		reg |= DEC_EMPTY_EN;
+		writel(reg, ecc->regs + ECC_DECCNFG);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 		if (config->sectors)
 			ecc->sectors = 1 << (config->sectors - 1);
@@ -480,6 +565,7 @@ void mtk_ecc_get_stats(struct mtk_ecc *ecc, struct mtk_ecc_stats *stats,
 
 	stats->corrected = 0;
 	stats->failed = 0;
+<<<<<<< HEAD
 	stats->failed_bitmap = 0;
 
 	for (i = 0; i < sectors; i++) {
@@ -491,6 +577,17 @@ void mtk_ecc_get_stats(struct mtk_ecc *ecc, struct mtk_ecc_stats *stats,
 			/* uncorrectable errors */
 			stats->failed++;
 			stats->failed_bitmap |= (1 << i);
+=======
+
+	for (i = 0; i < sectors; i++) {
+		offset = (i >> 2) << 2;
+		err = readl(ecc->regs + ECC_DECENUM0 + offset);
+		err = err >> ((i % 4) * 8);
+		err &= ERR_MASK;
+		if (err == ERR_MASK) {
+			/* uncorrectable errors */
+			stats->failed++;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			continue;
 		}
 
@@ -512,10 +609,17 @@ EXPORT_SYMBOL(mtk_ecc_release);
 static void mtk_ecc_hw_init(struct mtk_ecc *ecc)
 {
 	mtk_ecc_wait_idle(ecc, ECC_ENCODE);
+<<<<<<< HEAD
 	writew(ECC_OP_DISABLE, ECC_REG(ecc, ECC_ENCCON));
 
 	mtk_ecc_wait_idle(ecc, ECC_DECODE);
 	writel(ECC_OP_DISABLE, ECC_REG(ecc, ECC_DECCON));
+=======
+	writew(ECC_OP_DISABLE, ecc->regs + ECC_ENCCON);
+
+	mtk_ecc_wait_idle(ecc, ECC_DECODE);
+	writel(ECC_OP_DISABLE, ecc->regs + ECC_DECCON);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static struct mtk_ecc *mtk_ecc_get(struct device_node *np)
@@ -554,7 +658,10 @@ int mtk_ecc_enable(struct mtk_ecc *ecc, struct mtk_ecc_config *config)
 {
 	enum mtk_ecc_operation op = config->op;
 	int ret;
+<<<<<<< HEAD
 	u32 reg;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	ret = mutex_lock_interruptible(&ecc->lock);
 	if (ret) {
@@ -564,6 +671,7 @@ int mtk_ecc_enable(struct mtk_ecc *ecc, struct mtk_ecc_config *config)
 
 	mtk_ecc_wait_idle(ecc, op);
 	mtk_ecc_config(ecc, config);
+<<<<<<< HEAD
 
 	if (config->mode != ECC_NFI_MODE || op != ECC_ENCODE) {
 		init_completion(&ecc->done);
@@ -574,6 +682,12 @@ int mtk_ecc_enable(struct mtk_ecc *ecc, struct mtk_ecc_config *config)
 	}
 
 	writew(ECC_OP_ENABLE, ECC_CTL_REG(ecc, op));
+=======
+	writew(ECC_OP_ENABLE, ecc->regs + ECC_CTL_REG(op));
+
+	init_completion(&ecc->done);
+	writew(ECC_IRQ_EN, ecc->regs + ECC_IRQ_REG(op));
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	return 0;
 }
@@ -584,7 +698,11 @@ void mtk_ecc_disable(struct mtk_ecc *ecc)
 	enum mtk_ecc_operation op = ECC_ENCODE;
 
 	/* find out the running operation */
+<<<<<<< HEAD
 	if (readw(ECC_CTL_REG(ecc, op)) != ECC_OP_ENABLE)
+=======
+	if (readw(ecc->regs + ECC_CTL_REG(op)) != ECC_OP_ENABLE)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		op = ECC_DECODE;
 
 	/* disable it */
@@ -621,9 +739,14 @@ int mtk_ecc_encode(struct mtk_ecc *ecc, struct mtk_ecc_config *config,
 		   u8 *data, u32 bytes)
 {
 	dma_addr_t addr;
+<<<<<<< HEAD
 	u8 *p;
 	u32 len, i, val = 0;
 	int ret = 0;
+=======
+	u32 len;
+	int ret;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	addr = dma_map_single(ecc->dev, data, bytes, DMA_TO_DEVICE);
 	ret = dma_mapping_error(ecc->dev, addr);
@@ -647,6 +770,7 @@ int mtk_ecc_encode(struct mtk_ecc *ecc, struct mtk_ecc_config *config,
 	mtk_ecc_wait_idle(ecc, ECC_ENCODE);
 
 	/* Program ECC bytes to OOB: per sector oob = FDM + ECC + SPARE */
+<<<<<<< HEAD
 	len = (config->strength * ecc->ecc_data->parity_bit + 7) >> 3;
 	p = data + bytes;
 
@@ -656,6 +780,15 @@ int mtk_ecc_encode(struct mtk_ecc *ecc, struct mtk_ecc_config *config,
 			val = readl(ECC_REG(ecc, ECC_ENCPAR00 + (i / 4)));
 		p[i] = (val >> ((i % 4) * 8)) & 0xff;
 	}
+=======
+	len = (config->strength * ECC_PARITY_BITS + 7) >> 3;
+
+	/* write the parity bytes generated by the ECC back to temp buffer */
+	__ioread32_copy(ecc->eccdata, ecc->regs + ECC_ENCPAR(0), round_up(len, 4));
+
+	/* copy into possibly unaligned OOB region with actual length */
+	memcpy(data + bytes, ecc->eccdata, len);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 timeout:
 
 	dma_unmap_single(ecc->dev, addr, bytes, DMA_TO_DEVICE);
@@ -685,6 +818,7 @@ void mtk_ecc_adjust_strength(u32 *p)
 }
 EXPORT_SYMBOL(mtk_ecc_adjust_strength);
 
+<<<<<<< HEAD
 /* Compatible to MT2701 */
 static const struct mtk_ecc_comp ecc_mt2701 = {
 	.ecc_regs = mt2701_ecc_regs,
@@ -732,17 +866,22 @@ static const struct of_device_id mtk_ecc_dt_match[] = {
 	},
 };
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int mtk_ecc_probe(struct platform_device *pdev)
 {
 	struct device *dev = &pdev->dev;
 	struct mtk_ecc *ecc;
 	struct resource *res;
 	int irq, ret;
+<<<<<<< HEAD
 	const struct of_device_id *of_ecc_id = NULL;
 
 	of_ecc_id = of_match_device(mtk_ecc_dt_match, &pdev->dev);
 	if (!of_ecc_id)
 		return -EINVAL;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	ecc = devm_kzalloc(dev, sizeof(*ecc), GFP_KERNEL);
 	if (!ecc)
@@ -754,7 +893,10 @@ static int mtk_ecc_probe(struct platform_device *pdev)
 		dev_err(dev, "failed to map regs: %ld\n", PTR_ERR(ecc->regs));
 		return PTR_ERR(ecc->regs);
 	}
+<<<<<<< HEAD
 	ecc->ecc_data = (struct mtk_ecc_comp *)of_ecc_id->data;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	ecc->clk = devm_clk_get(dev, NULL);
 	if (IS_ERR(ecc->clk)) {
@@ -809,12 +951,25 @@ static int mtk_ecc_resume(struct device *dev)
 		return ret;
 	}
 
+<<<<<<< HEAD
+=======
+	mtk_ecc_hw_init(ecc);
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return 0;
 }
 
 static SIMPLE_DEV_PM_OPS(mtk_ecc_pm_ops, mtk_ecc_suspend, mtk_ecc_resume);
 #endif
 
+<<<<<<< HEAD
+=======
+static const struct of_device_id mtk_ecc_dt_match[] = {
+	{ .compatible = "mediatek,mt2701-ecc" },
+	{},
+};
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 MODULE_DEVICE_TABLE(of, mtk_ecc_dt_match);
 
 static struct platform_driver mtk_ecc_driver = {

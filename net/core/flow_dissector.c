@@ -563,20 +563,40 @@ out_bad:
 }
 EXPORT_SYMBOL(__skb_flow_dissect);
 
+<<<<<<< HEAD
 static siphash_key_t hashrnd __read_mostly;
+=======
+static u32 hashrnd __read_mostly;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static __always_inline void __flow_hash_secret_init(void)
 {
 	net_get_random_once(&hashrnd, sizeof(hashrnd));
 }
 
+<<<<<<< HEAD
 static const void *flow_keys_hash_start(const struct flow_keys *flow)
 {
 	BUILD_BUG_ON(FLOW_KEYS_HASH_OFFSET % SIPHASH_ALIGNMENT);
 	return &flow->FLOW_KEYS_HASH_START_FIELD;
+=======
+static __always_inline u32 __flow_hash_words(const u32 *words, u32 length,
+					     u32 keyval)
+{
+	return jhash2(words, length, keyval);
+}
+
+static inline const u32 *flow_keys_hash_start(const struct flow_keys *flow)
+{
+	const void *p = flow;
+
+	BUILD_BUG_ON(FLOW_KEYS_HASH_OFFSET % sizeof(u32));
+	return (const u32 *)(p + FLOW_KEYS_HASH_OFFSET);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 static inline size_t flow_keys_hash_length(const struct flow_keys *flow)
 {
+<<<<<<< HEAD
 	size_t len = offsetof(typeof(*flow), addrs) - FLOW_KEYS_HASH_OFFSET;
 
 	switch (flow->control.addr_type) {
@@ -591,6 +611,25 @@ static inline size_t flow_keys_hash_length(const struct flow_keys *flow)
 		break;
 	}
 	return len;
+=======
+	size_t diff = FLOW_KEYS_HASH_OFFSET + sizeof(flow->addrs);
+	BUILD_BUG_ON((sizeof(*flow) - FLOW_KEYS_HASH_OFFSET) % sizeof(u32));
+	BUILD_BUG_ON(offsetof(typeof(*flow), addrs) !=
+		     sizeof(*flow) - sizeof(flow->addrs));
+
+	switch (flow->control.addr_type) {
+	case FLOW_DISSECTOR_KEY_IPV4_ADDRS:
+		diff -= sizeof(flow->addrs.v4addrs);
+		break;
+	case FLOW_DISSECTOR_KEY_IPV6_ADDRS:
+		diff -= sizeof(flow->addrs.v6addrs);
+		break;
+	case FLOW_DISSECTOR_KEY_TIPC_ADDRS:
+		diff -= sizeof(flow->addrs.tipcaddrs);
+		break;
+	}
+	return (sizeof(*flow) - diff) / sizeof(u32);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 __be32 flow_get_u32_src(const struct flow_keys *flow)
@@ -656,15 +695,24 @@ static inline void __flow_hash_consistentify(struct flow_keys *keys)
 	}
 }
 
+<<<<<<< HEAD
 static inline u32 __flow_hash_from_keys(struct flow_keys *keys,
 					const siphash_key_t *keyval)
+=======
+static inline u32 __flow_hash_from_keys(struct flow_keys *keys, u32 keyval)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	u32 hash;
 
 	__flow_hash_consistentify(keys);
 
+<<<<<<< HEAD
 	hash = siphash(flow_keys_hash_start(keys),
 		       flow_keys_hash_length(keys), keyval);
+=======
+	hash = __flow_hash_words(flow_keys_hash_start(keys),
+				 flow_keys_hash_length(keys), keyval);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (!hash)
 		hash = 1;
 
@@ -674,13 +722,21 @@ static inline u32 __flow_hash_from_keys(struct flow_keys *keys,
 u32 flow_hash_from_keys(struct flow_keys *keys)
 {
 	__flow_hash_secret_init();
+<<<<<<< HEAD
 	return __flow_hash_from_keys(keys, &hashrnd);
+=======
+	return __flow_hash_from_keys(keys, hashrnd);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 EXPORT_SYMBOL(flow_hash_from_keys);
 
 static inline u32 ___skb_get_hash(const struct sk_buff *skb,
+<<<<<<< HEAD
 				  struct flow_keys *keys,
 				  const siphash_key_t *keyval)
+=======
+				  struct flow_keys *keys, u32 keyval)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	skb_flow_dissect_flow_keys(skb, keys,
 				   FLOW_DISSECTOR_F_STOP_AT_FLOW_LABEL);
@@ -728,7 +784,11 @@ u32 __skb_get_hash_symmetric(struct sk_buff *skb)
 			   NULL, 0, 0, 0,
 			   FLOW_DISSECTOR_F_STOP_AT_FLOW_LABEL);
 
+<<<<<<< HEAD
 	return __flow_hash_from_keys(&keys, &hashrnd);
+=======
+	return __flow_hash_from_keys(&keys, hashrnd);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 EXPORT_SYMBOL_GPL(__skb_get_hash_symmetric);
 
@@ -748,14 +808,22 @@ void __skb_get_hash(struct sk_buff *skb)
 
 	__flow_hash_secret_init();
 
+<<<<<<< HEAD
 	hash = ___skb_get_hash(skb, &keys, &hashrnd);
+=======
+	hash = ___skb_get_hash(skb, &keys, hashrnd);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	__skb_set_sw_hash(skb, hash, flow_keys_have_l4(&keys));
 }
 EXPORT_SYMBOL(__skb_get_hash);
 
+<<<<<<< HEAD
 __u32 skb_get_hash_perturb(const struct sk_buff *skb,
 			   const siphash_key_t *perturb)
+=======
+__u32 skb_get_hash_perturb(const struct sk_buff *skb, u32 perturb)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 {
 	struct flow_keys keys;
 

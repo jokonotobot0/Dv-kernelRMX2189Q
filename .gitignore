@@ -115,6 +115,9 @@ all.config
 
 # Kdevelop4
 *.kdev4
+<<<<<<< HEAD
 
 # fetched Android config fragments
 kernel/configs/android-*.cfg
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

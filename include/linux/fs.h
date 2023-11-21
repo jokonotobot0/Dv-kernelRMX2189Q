@@ -21,7 +21,10 @@
 #include <linux/mm_types.h>
 #include <linux/capability.h>
 #include <linux/semaphore.h>
+<<<<<<< HEAD
 #include <linux/fcntl.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <linux/fiemap.h>
 #include <linux/rculist_bl.h>
 #include <linux/atomic.h>
@@ -150,9 +153,12 @@ typedef int (dio_iodone_t)(struct kiocb *iocb, loff_t offset,
 /* File was opened by fanotify and shouldn't generate fanotify events */
 #define FMODE_NONOTIFY		((__force fmode_t)0x4000000)
 
+<<<<<<< HEAD
 /* File is capable of returning -EAGAIN if I/O will block */
 #define FMODE_NOWAIT		((__force fmode_t)0x8000000)
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * Flag for rw_copy_check_uvector and compat_rw_copy_check_uvector
  * that indicates that they should check the contents of the iovec are
@@ -325,6 +331,7 @@ struct page;
 struct address_space;
 struct writeback_control;
 
+<<<<<<< HEAD
 /*
  * Write life time hint values.
  */
@@ -337,6 +344,8 @@ enum rw_hint {
 	WRITE_LIFE_EXTREME	= RWH_WRITE_LIFE_EXTREME,
 };
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define IOCB_EVENTFD		(1 << 0)
 #define IOCB_APPEND		(1 << 1)
 #define IOCB_DIRECT		(1 << 2)
@@ -344,7 +353,10 @@ enum rw_hint {
 #define IOCB_DSYNC		(1 << 4)
 #define IOCB_SYNC		(1 << 5)
 #define IOCB_WRITE		(1 << 6)
+<<<<<<< HEAD
 #define IOCB_NOWAIT		(1 << 7)
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 struct kiocb {
 	struct file		*ki_filp;
@@ -352,7 +364,10 @@ struct kiocb {
 	void (*ki_complete)(struct kiocb *iocb, long ret, long ret2);
 	void			*private;
 	int			ki_flags;
+<<<<<<< HEAD
 	enum rw_hint		ki_hint;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 static inline bool is_sync_kiocb(struct kiocb *kiocb)
@@ -499,7 +514,10 @@ struct block_device {
 	int			bd_invalidated;
 	struct gendisk *	bd_disk;
 	struct request_queue *  bd_queue;
+<<<<<<< HEAD
 	struct backing_dev_info *bd_bdi;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct list_head	bd_list;
 	/*
 	 * Private data.  You must have bd_claim'ed the block_device
@@ -667,7 +685,10 @@ struct inode {
 	spinlock_t		i_lock;	/* i_blocks, i_bytes, maybe i_size */
 	unsigned short          i_bytes;
 	unsigned int		i_blkbits;
+<<<<<<< HEAD
 	enum rw_hint		i_write_hint;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	blkcnt_t		i_blocks;
 
 #ifdef __NEED_I_SIZE_ORDERED
@@ -1095,6 +1116,11 @@ struct file_lock_context {
 #define OFFT_OFFSET_MAX	INT_LIMIT(off_t)
 #endif
 
+<<<<<<< HEAD
+=======
+#include <linux/fcntl.h>
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 extern void send_sigio(struct fown_struct *fown, int fd, int band);
 
 /*
@@ -1633,6 +1659,7 @@ extern bool inode_owner_or_capable(const struct inode *inode);
  * VFS helper functions..
  */
 extern int vfs_create(struct inode *, struct dentry *, umode_t, bool);
+<<<<<<< HEAD
 extern int vfs_create2(struct vfsmount *, struct inode *, struct dentry *, umode_t, bool);
 extern int vfs_mkdir(struct inode *, struct dentry *, umode_t);
 extern int vfs_mkdir2(struct vfsmount *, struct inode *, struct dentry *, umode_t);
@@ -1648,6 +1675,15 @@ extern int vfs_unlink(struct inode *, struct dentry *, struct inode **);
 extern int vfs_unlink2(struct vfsmount *, struct inode *, struct dentry *, struct inode **);
 extern int vfs_rename(struct inode *, struct dentry *, struct inode *, struct dentry *, struct inode **, unsigned int);
 extern int vfs_rename2(struct vfsmount *, struct inode *, struct dentry *, struct inode *, struct dentry *, struct inode **, unsigned int);
+=======
+extern int vfs_mkdir(struct inode *, struct dentry *, umode_t);
+extern int vfs_mknod(struct inode *, struct dentry *, umode_t, dev_t);
+extern int vfs_symlink(struct inode *, struct dentry *, const char *);
+extern int vfs_link(struct dentry *, struct inode *, struct dentry *, struct inode **);
+extern int vfs_rmdir(struct inode *, struct dentry *);
+extern int vfs_unlink(struct inode *, struct dentry *, struct inode **);
+extern int vfs_rename(struct inode *, struct dentry *, struct inode *, struct dentry *, struct inode **, unsigned int);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 extern int vfs_whiteout(struct inode *, struct dentry *);
 
 /*
@@ -1775,7 +1811,10 @@ struct inode_operations {
 	struct dentry * (*lookup) (struct inode *,struct dentry *, unsigned int);
 	const char * (*get_link) (struct dentry *, struct inode *, struct delayed_call *);
 	int (*permission) (struct inode *, int);
+<<<<<<< HEAD
 	int (*permission2) (struct vfsmount *, struct inode *, int);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct posix_acl * (*get_acl)(struct inode *, int);
 
 	int (*readlink) (struct dentry *, char __user *,int);
@@ -1790,7 +1829,10 @@ struct inode_operations {
 	int (*rename) (struct inode *, struct dentry *,
 			struct inode *, struct dentry *, unsigned int);
 	int (*setattr) (struct dentry *, struct iattr *);
+<<<<<<< HEAD
 	int (*setattr2) (struct vfsmount *, struct dentry *, struct iattr *);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	int (*getattr) (struct vfsmount *mnt, struct dentry *, struct kstat *);
 	ssize_t (*listxattr) (struct dentry *, char *, size_t);
 	int (*fiemap)(struct inode *, struct fiemap_extent_info *, u64 start,
@@ -1839,6 +1881,7 @@ struct super_operations {
 	int (*unfreeze_fs) (struct super_block *);
 	int (*statfs) (struct dentry *, struct kstatfs *);
 	int (*remount_fs) (struct super_block *, int *, char *);
+<<<<<<< HEAD
 	int (*remount_fs2) (struct vfsmount *, struct super_block *, int *, char *);
 	void *(*clone_mnt_data) (void *);
 	void (*copy_mnt_data) (void *, void *);
@@ -1846,6 +1889,11 @@ struct super_operations {
 
 	int (*show_options)(struct seq_file *, struct dentry *);
 	int (*show_options2)(struct vfsmount *,struct seq_file *, struct dentry *);
+=======
+	void (*umount_begin) (struct super_block *);
+
+	int (*show_options)(struct seq_file *, struct dentry *);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	int (*show_devname)(struct seq_file *, struct dentry *);
 	int (*show_path)(struct seq_file *, struct dentry *);
 	int (*show_stats)(struct seq_file *, struct dentry *);
@@ -1882,7 +1930,10 @@ struct super_operations {
 #else
 #define S_DAX		0	/* Make all the DAX code disappear */
 #endif
+<<<<<<< HEAD
 #define S_ENCRYPTED	16384	/* Encrypted file (using fs/crypto/) */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /*
  * Note that nosuid etc flags are inode-specific: setting some file-system
@@ -1921,7 +1972,10 @@ struct super_operations {
 #define IS_AUTOMOUNT(inode)	((inode)->i_flags & S_AUTOMOUNT)
 #define IS_NOSEC(inode)		((inode)->i_flags & S_NOSEC)
 #define IS_DAX(inode)		((inode)->i_flags & S_DAX)
+<<<<<<< HEAD
 #define IS_ENCRYPTED(inode)	((inode)->i_flags & S_ENCRYPTED)
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #define IS_WHITEOUT(inode)	(S_ISCHR(inode->i_mode) && \
 				 (inode)->i_rdev == WHITEOUT_DEV)
@@ -2081,9 +2135,12 @@ struct file_system_type {
 #define FS_RENAME_DOES_D_MOVE	32768	/* FS will handle d_move() during rename() internally. */
 	struct dentry *(*mount) (struct file_system_type *, int,
 		       const char *, void *);
+<<<<<<< HEAD
 	struct dentry *(*mount2) (struct vfsmount *, struct file_system_type *, int,
 			       const char *, void *);
 	void *(*alloc_mnt_data) (void);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	void (*kill_sb) (struct super_block *);
 	struct module *owner;
 	struct file_system_type * next;
@@ -2382,8 +2439,11 @@ struct filename {
 extern long vfs_truncate(const struct path *, loff_t);
 extern int do_truncate(struct dentry *, loff_t start, unsigned int time_attrs,
 		       struct file *filp);
+<<<<<<< HEAD
 extern int do_truncate2(struct vfsmount *, struct dentry *, loff_t start,
 			unsigned int time_attrs, struct file *filp);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 extern int vfs_fallocate(struct file *file, int mode, loff_t offset,
 			loff_t len);
 extern long do_sys_open(int dfd, const char __user *filename, int flags,
@@ -2425,7 +2485,10 @@ extern struct kmem_cache *names_cachep;
 #ifdef CONFIG_BLOCK
 extern int register_blkdev(unsigned int, const char *);
 extern void unregister_blkdev(unsigned int, const char *);
+<<<<<<< HEAD
 extern void bdev_unhash_inode(dev_t dev);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 extern struct block_device *bdget(dev_t);
 extern struct block_device *bdgrab(struct block_device *bdev);
 extern void bd_set_size(struct block_device *, loff_t size);
@@ -2627,11 +2690,16 @@ extern void emergency_remount(void);
 extern sector_t bmap(struct inode *, sector_t);
 #endif
 extern int notify_change(struct dentry *, struct iattr *, struct inode **);
+<<<<<<< HEAD
 extern int notify_change2(struct vfsmount *, struct dentry *, struct iattr *, struct inode **);
 extern int inode_permission(struct inode *, int);
 extern int inode_permission2(struct vfsmount *, struct inode *, int);
 extern int __inode_permission(struct inode *, int);
 extern int __inode_permission2(struct vfsmount *, struct inode *, int);
+=======
+extern int inode_permission(struct inode *, int);
+extern int __inode_permission(struct inode *, int);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 extern int generic_permission(struct inode *, int);
 extern int __check_sticky(struct inode *dir, struct inode *inode);
 
@@ -3045,10 +3113,16 @@ extern const struct file_operations simple_dir_operations;
 extern const struct inode_operations simple_dir_inode_operations;
 extern void make_empty_dir_inode(struct inode *inode);
 extern bool is_empty_dir_inode(struct inode *inode);
+<<<<<<< HEAD
 struct tree_descr { const char *name; const struct file_operations *ops; int mode; };
 struct dentry *d_alloc_name(struct dentry *, const char *);
 extern int simple_fill_super(struct super_block *, unsigned long,
 			     const struct tree_descr *);
+=======
+struct tree_descr { char *name; const struct file_operations *ops; int mode; };
+struct dentry *d_alloc_name(struct dentry *, const char *);
+extern int simple_fill_super(struct super_block *, unsigned long, struct tree_descr *);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 extern int simple_pin_fs(struct file_system_type *, struct vfsmount **mount, int *count);
 extern void simple_release_fs(struct vfsmount **mount, int *count);
 

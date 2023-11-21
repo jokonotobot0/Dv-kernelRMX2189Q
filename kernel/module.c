@@ -2099,8 +2099,11 @@ void __weak module_arch_freeing_init(struct module *mod)
 {
 }
 
+<<<<<<< HEAD
 static void cfi_cleanup(struct module *mod);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /* Free a module, remove from lists, etc. */
 static void free_module(struct module *mod)
 {
@@ -2142,10 +2145,13 @@ static void free_module(struct module *mod)
 
 	/* This may be empty, but that's OK */
 	disable_ro_nx(&mod->init_layout);
+<<<<<<< HEAD
 
 	/* Clean up CFI for the module. */
 	cfi_cleanup(mod);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	module_arch_freeing_init(mod);
 	module_memfree(mod->init_layout.base);
 	kfree(mod->args);
@@ -3327,8 +3333,11 @@ int __weak module_finalize(const Elf_Ehdr *hdr,
 	return 0;
 }
 
+<<<<<<< HEAD
 static void cfi_init(struct module *mod);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int post_relocation(struct module *mod, const struct load_info *info)
 {
 	/* Sort exception table now relocations are done. */
@@ -3341,9 +3350,12 @@ static int post_relocation(struct module *mod, const struct load_info *info)
 	/* Setup kallsyms-specific fields. */
 	add_kallsyms(mod, info);
 
+<<<<<<< HEAD
 	/* Setup CFI for the module. */
 	cfi_init(mod);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* Arch-specific module finalizing. */
 	return module_finalize(info->hdr, info->sechdrs, mod);
 }
@@ -3618,9 +3630,12 @@ static int load_module(struct load_info *info, const char __user *uargs,
 	long err;
 	char *after_dashes;
 
+<<<<<<< HEAD
 	flags |= MODULE_INIT_IGNORE_MODVERSIONS;
 	flags |= MODULE_INIT_IGNORE_VERMAGIC;
 	
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	err = module_sig_check(info, flags);
 	if (err)
 		goto free_copy;
@@ -4083,6 +4098,7 @@ int module_kallsyms_on_each_symbol(int (*fn)(void *, const char *,
 }
 #endif /* CONFIG_KALLSYMS */
 
+<<<<<<< HEAD
 static void cfi_init(struct module *mod)
 {
 #ifdef CONFIG_CFI_CLANG
@@ -4099,6 +4115,8 @@ static void cfi_cleanup(struct module *mod)
 #endif
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static char *module_flags(struct module *mod, char *buf)
 {
 	int bx = 0;
@@ -4322,6 +4340,7 @@ void print_modules(void)
 	list_for_each_entry_rcu(mod, &modules, list) {
 		if (mod->state == MODULE_STATE_UNFORMED)
 			continue;
+<<<<<<< HEAD
 #if 0
 		pr_cont(" %s%s", mod->name, module_flags(mod, buf));
 #else
@@ -4333,6 +4352,9 @@ void print_modules(void)
 			mod->init_layout.size,
 			module_flags(mod, buf));
 #endif
+=======
+		pr_cont(" %s%s", mod->name, module_flags(mod, buf));
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 	preempt_enable();
 	if (last_unloaded_module[0])
@@ -4340,6 +4362,7 @@ void print_modules(void)
 	pr_cont("\n");
 }
 
+<<<<<<< HEAD
 int __weak do_translation_fault_preconditioner(unsigned long addr)
 {
 	return -1;
@@ -4385,6 +4408,8 @@ int save_modules(char *mbuf, int mbufsize)
 	return sz;
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #ifdef CONFIG_MODVERSIONS
 /* Generate the signature for all relevant module structures here.
  * If these change, we don't want to try to parse the module. */

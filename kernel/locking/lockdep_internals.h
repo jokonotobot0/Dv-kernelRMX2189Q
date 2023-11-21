@@ -182,9 +182,12 @@ DECLARE_PER_CPU(struct lockdep_stats, lockdep_stats);
 # define debug_atomic_dec(ptr)		do { } while (0)
 # define debug_atomic_read(ptr)		0
 #endif
+<<<<<<< HEAD
 
 void lockdep_test_init(void);
 
 #ifdef MTK_LOCK_MONITOR
 void lock_monitor_init(void);
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

@@ -21,9 +21,12 @@ void lkdtm_SPINLOCKUP(void);
 void lkdtm_HUNG_TASK(void);
 void lkdtm_ATOMIC_UNDERFLOW(void);
 void lkdtm_ATOMIC_OVERFLOW(void);
+<<<<<<< HEAD
 void lkdtm_CORRUPT_LIST_ADD(void);
 void lkdtm_CORRUPT_LIST_DEL(void);
 void lkdtm_CORRUPT_USER_DS(void);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /* lkdtm_heap.c */
 void lkdtm_OVERWRITE_ALLOCATION(void);

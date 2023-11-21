@@ -20,8 +20,11 @@
 #include <linux/filter.h>
 #include <linux/version.h>
 
+<<<<<<< HEAD
 #define BPF_OBJ_FLAG_MASK   (BPF_F_RDONLY | BPF_F_WRONLY)
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 DEFINE_PER_CPU(int, bpf_prog_active);
 
 int sysctl_unprivileged_bpf_disabled __read_mostly;
@@ -121,7 +124,10 @@ static void bpf_map_free_deferred(struct work_struct *work)
 	struct bpf_map *map = container_of(work, struct bpf_map, work);
 
 	bpf_map_uncharge_memlock(map);
+<<<<<<< HEAD
 	security_bpf_map_free(map);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* implementation dependent freeing */
 	map->ops->map_free(map);
 }
@@ -181,6 +187,7 @@ static void bpf_map_show_fdinfo(struct seq_file *m, struct file *filp)
 }
 #endif
 
+<<<<<<< HEAD
 static ssize_t bpf_dummy_read(struct file *filp, char __user *buf, size_t siz,
 			      loff_t *ppos)
 {
@@ -200,10 +207,14 @@ static ssize_t bpf_dummy_write(struct file *filp, const char __user *buf,
 }
 
 const struct file_operations bpf_map_fops = {
+=======
+static const struct file_operations bpf_map_fops = {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #ifdef CONFIG_PROC_FS
 	.show_fdinfo	= bpf_map_show_fdinfo,
 #endif
 	.release	= bpf_map_release,
+<<<<<<< HEAD
 	.read		= bpf_dummy_read,
 	.write		= bpf_dummy_write,
 };
@@ -229,6 +240,14 @@ int bpf_get_file_flag(int flags)
 	if (flags & BPF_F_WRONLY)
 		return O_WRONLY;
 	return O_RDWR;
+=======
+};
+
+int bpf_map_new_fd(struct bpf_map *map)
+{
+	return anon_inode_getfd("bpf-map", &bpf_map_fops, map,
+				O_RDWR | O_CLOEXEC);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 /* helper macro to check that unused fields 'union bpf_attr' are zero */
@@ -244,17 +263,23 @@ int bpf_get_file_flag(int flags)
 static int map_create(union bpf_attr *attr)
 {
 	struct bpf_map *map;
+<<<<<<< HEAD
 	int f_flags;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	int err;
 
 	err = CHECK_ATTR(BPF_MAP_CREATE);
 	if (err)
 		return -EINVAL;
 
+<<<<<<< HEAD
 	f_flags = bpf_get_file_flag(attr->map_flags);
 	if (f_flags < 0)
 		return f_flags;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* find map type and init map: hashtable vs rbtree vs bloom vs ... */
 	map = find_and_alloc_map(attr);
 	if (IS_ERR(map))
@@ -263,6 +288,7 @@ static int map_create(union bpf_attr *attr)
 	atomic_set(&map->refcnt, 1);
 	atomic_set(&map->usercnt, 1);
 
+<<<<<<< HEAD
 	err = security_bpf_map_alloc(map);
 	if (err)
 		goto free_map_nouncharge;
@@ -272,6 +298,13 @@ static int map_create(union bpf_attr *attr)
 		goto free_map_sec;
 
 	err = bpf_map_new_fd(map, f_flags);
+=======
+	err = bpf_map_charge_memlock(map);
+	if (err)
+		goto free_map_nouncharge;
+
+	err = bpf_map_new_fd(map);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (err < 0)
 		/* failed to allocate fd */
 		goto free_map;
@@ -280,8 +313,11 @@ static int map_create(union bpf_attr *attr)
 
 free_map:
 	bpf_map_uncharge_memlock(map);
+<<<<<<< HEAD
 free_map_sec:
 	security_bpf_map_free(map);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 free_map_nouncharge:
 	map->ops->map_free(map);
 	return err;
@@ -364,11 +400,14 @@ static int map_lookup_elem(union bpf_attr *attr)
 	if (IS_ERR(map))
 		return PTR_ERR(map);
 
+<<<<<<< HEAD
 	if (!(f.file->f_mode & FMODE_CAN_READ)) {
 		err = -EPERM;
 		goto err_put;
 	}
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	err = -ENOMEM;
 	key = kmalloc(map->key_size, GFP_USER);
 	if (!key)
@@ -443,11 +482,14 @@ static int map_update_elem(union bpf_attr *attr)
 	if (IS_ERR(map))
 		return PTR_ERR(map);
 
+<<<<<<< HEAD
 	if (!(f.file->f_mode & FMODE_CAN_WRITE)) {
 		err = -EPERM;
 		goto err_put;
 	}
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	err = -ENOMEM;
 	key = kmalloc(map->key_size, GFP_USER);
 	if (!key)
@@ -524,11 +566,14 @@ static int map_delete_elem(union bpf_attr *attr)
 	if (IS_ERR(map))
 		return PTR_ERR(map);
 
+<<<<<<< HEAD
 	if (!(f.file->f_mode & FMODE_CAN_WRITE)) {
 		err = -EPERM;
 		goto err_put;
 	}
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	err = -ENOMEM;
 	key = kmalloc(map->key_size, GFP_USER);
 	if (!key)
@@ -574,11 +619,14 @@ static int map_get_next_key(union bpf_attr *attr)
 	if (IS_ERR(map))
 		return PTR_ERR(map);
 
+<<<<<<< HEAD
 	if (!(f.file->f_mode & FMODE_CAN_READ)) {
 		err = -EPERM;
 		goto err_put;
 	}
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (ukey) {
 		err = -ENOMEM;
 		key = kmalloc(map->key_size, GFP_USER);
@@ -682,7 +730,10 @@ static void __bpf_prog_put_rcu(struct rcu_head *rcu)
 
 	free_used_maps(aux);
 	bpf_prog_uncharge_memlock(aux->prog);
+<<<<<<< HEAD
 	security_bpf_prog_free(aux);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	bpf_prog_free(aux->prog);
 }
 
@@ -701,20 +752,28 @@ static int bpf_prog_release(struct inode *inode, struct file *filp)
 	return 0;
 }
 
+<<<<<<< HEAD
 const struct file_operations bpf_prog_fops = {
         .release = bpf_prog_release,
 	.read		= bpf_dummy_read,
 	.write		= bpf_dummy_write,
+=======
+static const struct file_operations bpf_prog_fops = {
+        .release = bpf_prog_release,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 int bpf_prog_new_fd(struct bpf_prog *prog)
 {
+<<<<<<< HEAD
 	int ret;
 
 	ret = security_bpf_prog(prog);
 	if (ret < 0)
 		return ret;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return anon_inode_getfd("bpf-prog", &bpf_prog_fops, prog,
 				O_RDWR | O_CLOEXEC);
 }
@@ -806,9 +865,13 @@ static int bpf_prog_load(union bpf_attr *attr)
 	    attr->kern_version != LINUX_VERSION_CODE)
 		return -EINVAL;
 
+<<<<<<< HEAD
 	if (type != BPF_PROG_TYPE_SOCKET_FILTER &&
 	    type != BPF_PROG_TYPE_CGROUP_SKB &&
 	    !capable(CAP_SYS_ADMIN))
+=======
+	if (type != BPF_PROG_TYPE_SOCKET_FILTER && !capable(CAP_SYS_ADMIN))
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		return -EPERM;
 
 	/* plain bpf_prog allocation */
@@ -816,6 +879,7 @@ static int bpf_prog_load(union bpf_attr *attr)
 	if (!prog)
 		return -ENOMEM;
 
+<<<<<<< HEAD
 	err = security_bpf_prog_alloc(prog->aux);
 	if (err)
 		goto free_prog_nouncharge;
@@ -823,6 +887,11 @@ static int bpf_prog_load(union bpf_attr *attr)
 	err = bpf_prog_charge_memlock(prog);
 	if (err)
 		goto free_prog_sec;
+=======
+	err = bpf_prog_charge_memlock(prog);
+	if (err)
+		goto free_prog_nouncharge;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	prog->len = attr->insn_cnt;
 
@@ -863,18 +932,29 @@ free_used_maps:
 	free_used_maps(prog->aux);
 free_prog:
 	bpf_prog_uncharge_memlock(prog);
+<<<<<<< HEAD
 free_prog_sec:
 	security_bpf_prog_free(prog->aux);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 free_prog_nouncharge:
 	bpf_prog_free(prog);
 	return err;
 }
 
+<<<<<<< HEAD
 #define BPF_OBJ_LAST_FIELD file_flags
 
 static int bpf_obj_pin(const union bpf_attr *attr)
 {
 	if (CHECK_ATTR(BPF_OBJ) || attr->file_flags != 0)
+=======
+#define BPF_OBJ_LAST_FIELD bpf_fd
+
+static int bpf_obj_pin(const union bpf_attr *attr)
+{
+	if (CHECK_ATTR(BPF_OBJ))
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		return -EINVAL;
 
 	return bpf_obj_pin_user(attr->bpf_fd, u64_to_ptr(attr->pathname));
@@ -882,6 +962,7 @@ static int bpf_obj_pin(const union bpf_attr *attr)
 
 static int bpf_obj_get(const union bpf_attr *attr)
 {
+<<<<<<< HEAD
 	if (CHECK_ATTR(BPF_OBJ) || attr->bpf_fd != 0 ||
 	    attr->file_flags & ~BPF_OBJ_FLAG_MASK)
 		return -EINVAL;
@@ -969,6 +1050,14 @@ static int bpf_prog_detach(const union bpf_attr *attr)
 }
 #endif /* CONFIG_CGROUP_BPF */
 
+=======
+	if (CHECK_ATTR(BPF_OBJ) || attr->bpf_fd != 0)
+		return -EINVAL;
+
+	return bpf_obj_get_user(u64_to_ptr(attr->pathname));
+}
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 SYSCALL_DEFINE3(bpf, int, cmd, union bpf_attr __user *, uattr, unsigned int, size)
 {
 	union bpf_attr attr = {};
@@ -1010,10 +1099,13 @@ SYSCALL_DEFINE3(bpf, int, cmd, union bpf_attr __user *, uattr, unsigned int, siz
 	if (copy_from_user(&attr, uattr, size) != 0)
 		return -EFAULT;
 
+<<<<<<< HEAD
 	err = security_bpf(cmd, &attr, size);
 	if (err < 0)
 		return err;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	switch (cmd) {
 	case BPF_MAP_CREATE:
 		err = map_create(&attr);
@@ -1039,6 +1131,7 @@ SYSCALL_DEFINE3(bpf, int, cmd, union bpf_attr __user *, uattr, unsigned int, siz
 	case BPF_OBJ_GET:
 		err = bpf_obj_get(&attr);
 		break;
+<<<<<<< HEAD
 
 #ifdef CONFIG_CGROUP_BPF
 	case BPF_PROG_ATTACH:
@@ -1049,6 +1142,8 @@ SYSCALL_DEFINE3(bpf, int, cmd, union bpf_attr __user *, uattr, unsigned int, siz
 		break;
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	default:
 		err = -EINVAL;
 		break;

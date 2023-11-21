@@ -530,6 +530,7 @@ bool cpu_report_death(void)
 	return newstate == CPU_DEAD;
 }
 
+<<<<<<< HEAD
 void wait_rq(unsigned int cpu)
 {
 	struct smp_hotplug_thread *cur;
@@ -552,4 +553,6 @@ next:
 
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #endif /* #ifdef CONFIG_HOTPLUG_CPU */

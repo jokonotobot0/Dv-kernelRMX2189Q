@@ -709,14 +709,26 @@ static size_t nilfs_lookup_dirty_data_buffers(struct inode *inode,
 	pagevec_init(&pvec, 0);
  repeat:
 	if (unlikely(index > last) ||
+<<<<<<< HEAD
 	    !pagevec_lookup_range_tag(&pvec, mapping, &index, last,
 				PAGECACHE_TAG_DIRTY))
+=======
+	    !pagevec_lookup_tag(&pvec, mapping, &index, PAGECACHE_TAG_DIRTY,
+				min_t(pgoff_t, last - index,
+				      PAGEVEC_SIZE - 1) + 1))
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		return ndirties;
 
 	for (i = 0; i < pagevec_count(&pvec); i++) {
 		struct buffer_head *bh, *head;
 		struct page *page = pvec.pages[i];
 
+<<<<<<< HEAD
+=======
+		if (unlikely(page->index > last))
+			break;
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		lock_page(page);
 		if (!page_has_buffers(page))
 			create_empty_buffers(page, i_blocksize(inode), 0);
@@ -753,8 +765,13 @@ static void nilfs_lookup_dirty_node_buffers(struct inode *inode,
 
 	pagevec_init(&pvec, 0);
 
+<<<<<<< HEAD
 	while (pagevec_lookup_tag(&pvec, mapping, &index,
 					PAGECACHE_TAG_DIRTY)) {
+=======
+	while (pagevec_lookup_tag(&pvec, mapping, &index, PAGECACHE_TAG_DIRTY,
+				  PAGEVEC_SIZE)) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		for (i = 0; i < pagevec_count(&pvec); i++) {
 			bh = head = page_buffers(pvec.pages[i]);
 			do {

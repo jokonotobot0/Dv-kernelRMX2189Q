@@ -25,8 +25,11 @@
  * Thanks to Arjan van de Ven for coming up with the initial idea of
  * mapping lock dependencies runtime.
  */
+<<<<<<< HEAD
 #define pr_fmt(fmt)	"lockdep: " fmt
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define DISABLE_BRANCH_PROFILING
 #include <linux/mutex.h>
 #include <linux/sched.h>
@@ -49,14 +52,18 @@
 #include <linux/kmemcheck.h>
 #include <linux/random.h>
 #include <linux/jhash.h>
+<<<<<<< HEAD
 #include <linux/printk.h>
 #include <mt-plat/aee.h>
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #include <asm/sections.h>
 
 #include "lockdep_internals.h"
 
+<<<<<<< HEAD
 #ifdef MTK_LOCK_DEBUG
 #include "sched.h"
 #endif
@@ -66,6 +73,10 @@
 #ifdef CONFIG_PREEMPT_MONITOR
 #include "mtk_sched_mon.h"
 #endif
+=======
+#define CREATE_TRACE_POINTS
+#include <trace/events/lock.h>
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #ifdef CONFIG_PROVE_LOCKING
 int prove_locking = 1;
@@ -81,6 +92,7 @@ module_param(lock_stat, int, 0644);
 #define lock_stat 0
 #endif
 
+<<<<<<< HEAD
 #ifdef MTK_LOCK_DEBUG_NEW_DEPENDENCY
 #define MTK_LOCK_DEBUG_NEW_DEPENDENCY_AEE
 /*
@@ -197,6 +209,8 @@ static void lockdep_aee(void)
 	return;
 #endif
 }
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * lockdep_lock: protects the lockdep graph, the hashes and the
  *               class/list/hash allocators.
@@ -549,7 +563,10 @@ static int save_trace(struct stack_trace *trace)
 		if (!debug_locks_off_graph_unlock())
 			return 0;
 
+<<<<<<< HEAD
 		lockdep_aee();
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		print_lockdep_off("BUG: MAX_STACK_TRACE_ENTRIES too low!");
 		dump_stack();
 
@@ -599,6 +616,7 @@ static inline unsigned long lock_flag(enum lock_usage_bit bit)
 	return 1UL << bit;
 }
 
+<<<<<<< HEAD
 #ifdef MTK_LOCK_DEBUG_NEW_DEPENDENCY
 static int check_lock_name(struct lock_class *class, const char *lock_name)
 {
@@ -629,6 +647,8 @@ static int check_lock_name(struct lock_class *class, const char *lock_name)
 }
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static char get_usage_char(struct lock_class *class, enum lock_usage_bit bit)
 {
 	char c = '.';
@@ -719,6 +739,7 @@ static void print_lock(struct held_lock *hlock)
 		(void *)hlock->acquire_ip, (void *)hlock->acquire_ip);
 }
 
+<<<<<<< HEAD
 /* MTK_LOCK_DEBUG_HELD_LOCK */
 void held_lock_save_trace(struct stack_trace *trace, unsigned long *entries)
 {
@@ -748,11 +769,17 @@ static void lockdep_print_held_locks(struct task_struct *curr)
 {
 	int i, depth = curr->lockdep_depth;
 	struct held_lock *hlock;
+=======
+static void lockdep_print_held_locks(struct task_struct *curr)
+{
+	int i, depth = curr->lockdep_depth;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (!depth) {
 		printk("no locks held by %s/%d.\n", curr->comm, task_pid_nr(curr));
 		return;
 	}
+<<<<<<< HEAD
 	pr_info("%d lock%s held by %s/%d/[%ld] on CPU#%d:\n",
 		depth, depth > 1 ? "s" : "", curr->comm,
 		task_pid_nr(curr), curr->state, task_cpu(curr));
@@ -763,6 +790,14 @@ static void lockdep_print_held_locks(struct task_struct *curr)
 		print_lock(hlock + i);
 		/* MTK_LOCK_DEBUG_HELD_LOCK */
 		held_lock_show_trace(&(hlock + i)->trace, TO_KERNEL_LOG);
+=======
+	printk("%d lock%s held by %s/%d:\n",
+		depth, depth > 1 ? "s" : "", curr->comm, task_pid_nr(curr));
+
+	for (i = 0; i < depth; i++) {
+		printk(" #%d: ", i);
+		print_lock(curr->held_locks + i);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 }
 
@@ -855,7 +890,10 @@ look_up_lock_class(struct lockdep_map *lock, unsigned int subclass)
 		printk(KERN_ERR
 			"turning off the locking correctness validator.\n");
 		dump_stack();
+<<<<<<< HEAD
 		lockdep_aee();
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		return NULL;
 	}
 
@@ -926,7 +964,11 @@ register_lock_class(struct lockdep_map *lock, unsigned int subclass, int force)
 		printk("the code is fine but needs lockdep annotation.\n");
 		printk("turning off the locking correctness validator.\n");
 		dump_stack();
+<<<<<<< HEAD
 		lockdep_aee();
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		return NULL;
 	}
 
@@ -1020,7 +1062,10 @@ static struct lock_list *alloc_list_entry(void)
 		if (!debug_locks_off_graph_unlock())
 			return NULL;
 
+<<<<<<< HEAD
 		lockdep_aee();
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		print_lockdep_off("BUG: MAX_LOCKDEP_ENTRIES too low!");
 		dump_stack();
 		return NULL;
@@ -1332,9 +1377,12 @@ print_circular_bug_header(struct lock_list *entry, unsigned int depth,
 	if (debug_locks_silent)
 		return 0;
 
+<<<<<<< HEAD
 	/* Add by Mtk */
 	lockdep_aee();
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	printk("\n");
 	printk("======================================================\n");
 	printk("[ INFO: possible circular locking dependency detected ]\n");
@@ -1673,9 +1721,12 @@ print_bad_irq_dependency(struct task_struct *curr,
 	if (!debug_locks_off_graph_unlock() || debug_locks_silent)
 		return 0;
 
+<<<<<<< HEAD
 	/* Add by Mtk */
 	lockdep_aee();
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	printk("\n");
 	printk("======================================================\n");
 	printk("[ INFO: %s-safe -> %s-unsafe lock order detected ]\n",
@@ -1905,9 +1956,12 @@ print_deadlock_bug(struct task_struct *curr, struct held_lock *prev,
 	if (!debug_locks_off_graph_unlock() || debug_locks_silent)
 		return 0;
 
+<<<<<<< HEAD
 	/* Add by Mtk */
 	lockdep_aee();
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	printk("\n");
 	printk("=============================================\n");
 	printk("[ INFO: possible recursive locking detected ]\n");
@@ -2084,6 +2138,7 @@ check_prev_add(struct task_struct *curr, struct held_lock *prev,
 	/*
 	 * Debugging printouts:
 	 */
+<<<<<<< HEAD
 #ifdef MTK_LOCK_DEBUG_NEW_DEPENDENCY
 	if (check_lock_name(hlock_class(prev), PREV_LOCK_NAME) &&
 		check_lock_name(hlock_class(next), NEXT_LOCK_NAME)) {
@@ -2093,6 +2148,9 @@ check_prev_add(struct task_struct *curr, struct held_lock *prev,
 #else
 	if (verbose(hlock_class(prev)) || verbose(hlock_class(next))) {
 #endif
+=======
+	if (verbose(hlock_class(prev)) || verbose(hlock_class(next))) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		/* We drop graph lock, so another thread can overwrite trace. */
 		*stack_saved = 0;
 		graph_unlock();
@@ -2102,6 +2160,7 @@ check_prev_add(struct task_struct *curr, struct held_lock *prev,
 		print_lock_name(hlock_class(next));
 		printk(KERN_CONT "\n");
 		dump_stack();
+<<<<<<< HEAD
 
 		lockdep_print_held_locks(current);
 #ifdef MTK_LOCK_DEBUG_NEW_DEPENDENCY_AEE
@@ -2109,6 +2168,8 @@ check_prev_add(struct task_struct *curr, struct held_lock *prev,
 		DB_OPT_DUMMY_DUMP, "[Lockdep] new dependency",
 		"[%s => %s]\n", PREV_LOCK_NAME, NEXT_LOCK_NAME);
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		return graph_lock();
 	}
 	return 1;
@@ -2572,9 +2633,12 @@ print_usage_bug(struct task_struct *curr, struct held_lock *this,
 	if (!debug_locks_off_graph_unlock() || debug_locks_silent)
 		return 0;
 
+<<<<<<< HEAD
 	/* Add by Mtk */
 	lockdep_aee();
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	printk("\n");
 	printk("=================================\n");
 	printk("[ INFO: inconsistent lock state ]\n");
@@ -2640,9 +2704,12 @@ print_irq_inversion_bug(struct task_struct *curr,
 	if (!debug_locks_off_graph_unlock() || debug_locks_silent)
 		return 0;
 
+<<<<<<< HEAD
 	/* Add by Mtk */
 	lockdep_aee();
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	printk("\n");
 	printk("=========================================================\n");
 	printk("[ INFO: possible irq lock inversion dependency detected ]\n");
@@ -2961,9 +3028,12 @@ EXPORT_SYMBOL(trace_hardirqs_on_caller);
 
 void trace_hardirqs_on(void)
 {
+<<<<<<< HEAD
 #ifdef CONFIG_PREEMPT_MONITOR
 	MT_trace_hardirqs_on();
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	trace_hardirqs_on_caller(CALLER_ADDR0);
 }
 EXPORT_SYMBOL(trace_hardirqs_on);
@@ -3002,9 +3072,12 @@ EXPORT_SYMBOL(trace_hardirqs_off_caller);
 
 void trace_hardirqs_off(void)
 {
+<<<<<<< HEAD
 #ifdef CONFIG_PREEMPT_MONITOR
 	MT_trace_hardirqs_off();
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	trace_hardirqs_off_caller(CALLER_ADDR0);
 }
 EXPORT_SYMBOL(trace_hardirqs_off);
@@ -3359,7 +3432,10 @@ void lockdep_init_map(struct lockdep_map *lock, const char *name,
 		 * What it says above ^^^^^, I suggest you read it.
 		 */
 		DEBUG_LOCKS_WARN_ON(1);
+<<<<<<< HEAD
 		lockdep_aee();
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		return;
 	}
 	lock->key = key;
@@ -3395,9 +3471,12 @@ print_lock_nested_lock_not_held(struct task_struct *curr,
 	if (debug_locks_silent)
 		return 0;
 
+<<<<<<< HEAD
 	/* Add by Mtk */
 	lockdep_aee();
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	printk("\n");
 	printk("==================================\n");
 	printk("[ BUG: Nested lock was not taken ]\n");
@@ -3530,12 +3609,15 @@ static int __lock_acquire(struct lockdep_map *lock, unsigned int subclass,
 #endif
 	hlock->pin_count = pin_count;
 
+<<<<<<< HEAD
 	/* MTK_LOCK_DEBUG_HELD_LOCK */
 	held_lock_save_trace(&hlock->trace, hlock->entries);
 
 	/* MTK_LOCK_MONITOR */
 	hlock->timestamp = sched_clock();
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (check && !mark_irqflags(curr, hlock))
 		return 0;
 
@@ -3617,9 +3699,12 @@ print_unlock_imbalance_bug(struct task_struct *curr, struct lockdep_map *lock,
 	if (debug_locks_silent)
 		return 0;
 
+<<<<<<< HEAD
 	/* Add by Mtk */
 	lockdep_aee();
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	printk("\n");
 	printk("=====================================\n");
 	printk("[ BUG: bad unlock balance detected! ]\n");
@@ -3783,9 +3868,12 @@ found_it:
 	if (hlock->instance == lock)
 		lock_release_holdtime(hlock);
 
+<<<<<<< HEAD
 	/* MTK_LOCK_MONITOR */
 	hlock->timestamp = 0;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	WARN(hlock->pin_count, "releasing a pinned lock\n");
 
 	if (hlock->references) {
@@ -4116,9 +4204,12 @@ print_lock_contention_bug(struct task_struct *curr, struct lockdep_map *lock,
 	if (debug_locks_silent)
 		return 0;
 
+<<<<<<< HEAD
 	/* Add by Mtk */
 	lockdep_aee();
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	printk("\n");
 	printk("=================================\n");
 	printk("[ BUG: bad contention detected! ]\n");
@@ -4483,9 +4574,12 @@ print_freed_lock_bug(struct task_struct *curr, const void *mem_from,
 	if (debug_locks_silent)
 		return;
 
+<<<<<<< HEAD
 	/* Add by Mtk */
 	lockdep_aee();
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	printk("\n");
 	printk("=========================\n");
 	printk("[ BUG: held lock freed! ]\n");
@@ -4544,9 +4638,12 @@ static void print_held_locks_bug(void)
 	if (debug_locks_silent)
 		return;
 
+<<<<<<< HEAD
 	/* Add by Mtk */
 	lockdep_aee();
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	printk("\n");
 	printk("=====================================\n");
 	printk("[ BUG: %s/%d still has locks held! ]\n",
@@ -4605,6 +4702,7 @@ retry:
 		/*
 		 * It's not reliable to print a task's held locks
 		 * if it's not sleeping (or if it's not the current
+<<<<<<< HEAD
 		 * task). But we still think the information from
 		 * non-sleeping tasks are valuable.
 		 */
@@ -4612,6 +4710,12 @@ retry:
 		if (p->state == TASK_RUNNING && p != current)
 			continue;
 #endif
+=======
+		 * task):
+		 */
+		if (p->state == TASK_RUNNING && p != current)
+			continue;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		if (p->lockdep_depth)
 			lockdep_print_held_locks(p);
 		if (!unlock)
@@ -4649,10 +4753,13 @@ asmlinkage __visible void lockdep_sys_exit(void)
 	if (unlikely(curr->lockdep_depth)) {
 		if (!debug_locks_off())
 			return;
+<<<<<<< HEAD
 
 		/* Add by Mtk */
 		lockdep_aee();
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		printk("\n");
 		printk("================================================\n");
 		printk("[ BUG: lock held when returning to user space! ]\n");
@@ -4673,10 +4780,13 @@ void lockdep_rcu_suspicious(const char *file, const int line, const char *s)
 		return;
 #endif /* #ifdef CONFIG_PROVE_RCU_REPEATEDLY */
 	/* Note: the following can be executed concurrently, so be careful. */
+<<<<<<< HEAD
 
 	/* Add by Mtk */
 	lockdep_aee();
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	printk("\n");
 	printk("===============================\n");
 	printk("[ INFO: suspicious RCU usage. ]\n");
@@ -4691,8 +4801,11 @@ void lockdep_rcu_suspicious(const char *file, const int line, const char *s)
 				? "RCU used illegally from idle CPU!\n"
 				: "",
 	       rcu_scheduler_active, debug_locks);
+<<<<<<< HEAD
 	pr_info("cpu_id = %d, cpu_is_offline = %ld\n",
 		raw_smp_processor_id(), cpu_is_offline(raw_smp_processor_id()));
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/*
 	 * If a CPU is in the RCU-free window in idle (ie: in the section
@@ -4720,6 +4833,7 @@ void lockdep_rcu_suspicious(const char *file, const int line, const char *s)
 	dump_stack();
 }
 EXPORT_SYMBOL_GPL(lockdep_rcu_suspicious);
+<<<<<<< HEAD
 
 #ifdef MTK_LOCK_MONITOR
 static void get_lock_name(struct lock_class *class, char name[MAX_LOCK_NAME])
@@ -5005,3 +5119,5 @@ void lock_monitor_init(void)
 		msecs_to_jiffies(lock_mon_period_ms));
 }
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

@@ -41,8 +41,11 @@ int drm_crtc_check_viewport(const struct drm_crtc *crtc,
 			    const struct drm_display_mode *mode,
 			    const struct drm_framebuffer *fb);
 
+<<<<<<< HEAD
 struct fence *drm_crtc_create_fence(struct drm_crtc *crtc);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 void drm_fb_release(struct drm_file *file_priv);
 
 /* dumb buffer support IOCTLs */

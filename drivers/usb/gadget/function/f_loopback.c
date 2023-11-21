@@ -245,6 +245,7 @@ static void loopback_complete(struct usb_ep *ep, struct usb_request *req)
 	switch (status) {
 	case 0:				/* normal completion? */
 		if (ep == loop->out_ep) {
+<<<<<<< HEAD
 			/* loop this OUT packet back IN to the host */
 			struct usb_request *in_req = req->context;
 
@@ -271,6 +272,30 @@ static void loopback_complete(struct usb_ep *ep, struct usb_request *req)
 			status = usb_ep_queue(loop->out_ep, out_req, GFP_ATOMIC)
 				;
 			if (status == 0)
+=======
+			/*
+			 * We received some data from the host so let's
+			 * queue it so host can read the from our in ep
+			 */
+			struct usb_request *in_req = req->context;
+
+			in_req->zero = (req->actual < req->length);
+			in_req->length = req->actual;
+			ep = loop->in_ep;
+			req = in_req;
+		} else {
+			/*
+			 * We have just looped back a bunch of data
+			 * to host. Now let's wait for some more data.
+			 */
+			req = req->context;
+			ep = loop->out_ep;
+		}
+
+		/* queue the buffer back to host or for next bunch of data */
+		status = usb_ep_queue(ep, req, GFP_ATOMIC);
+		if (status == 0) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			return;
 		} else {
 			ERROR(cdev, "Unable to loop back buffer to %s: %d\n",
@@ -279,8 +304,11 @@ static void loopback_complete(struct usb_ep *ep, struct usb_request *req)
 		}
 
 		/* "should never get here" */
+<<<<<<< HEAD
 		/* FALLTHROUGH */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	default:
 		ERROR(cdev, "%s loop complete --> %d, %d/%d\n", ep->name,
 				status, req->actual, req->length);
@@ -389,6 +417,7 @@ out:
 static int
 enable_loopback(struct usb_composite_dev *cdev, struct f_loopback *loop)
 {
+<<<<<<< HEAD
 	/* use old way */
 	int					result = 0;
 	struct usb_ep				*ep;
@@ -457,6 +486,30 @@ fail0:
 	}
 
 	DBG(cdev, "%s enabled\n", loop->function.name);
+=======
+	int					result = 0;
+
+	result = enable_endpoint(cdev, loop, loop->in_ep);
+	if (result)
+		goto out;
+
+	result = enable_endpoint(cdev, loop, loop->out_ep);
+	if (result)
+		goto disable_in;
+
+	result = alloc_requests(cdev, loop);
+	if (result)
+		goto disable_out;
+
+	DBG(cdev, "%s enabled\n", loop->function.name);
+	return 0;
+
+disable_out:
+	usb_ep_disable(loop->out_ep);
+disable_in:
+	usb_ep_disable(loop->in_ep);
+out:
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	return result;
 }
 
@@ -493,12 +546,19 @@ static struct usb_function *loopback_alloc(struct usb_function_instance *fi)
 	lb_opts->refcnt++;
 	mutex_unlock(&lb_opts->lock);
 
+<<<<<<< HEAD
 	buflen = lb_opts->bulk_buflen;
 	if (!buflen)
 		buflen = 512;
 	qlen = lb_opts->qlen;
 	if (!qlen)
 		qlen = 8;
+=======
+	loop->buflen = lb_opts->bulk_buflen;
+	loop->qlen = lb_opts->qlen;
+	if (!loop->qlen)
+		loop->qlen = 32;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	loop->function.name = "loopback";
 	loop->function.bind = loopback_bind;
@@ -645,6 +705,7 @@ DECLARE_USB_FUNCTION(Loopback, loopback_alloc_instance, loopback_alloc);
 
 int __init lb_modinit(void)
 {
+<<<<<<< HEAD
 	int ret;
 
 	ret = usb_function_register(&Loopbackusb_func);
@@ -652,6 +713,11 @@ int __init lb_modinit(void)
 		return ret;
 	return ret;
 }
+=======
+	return usb_function_register(&Loopbackusb_func);
+}
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 void __exit lb_modexit(void)
 {
 	usb_function_unregister(&Loopbackusb_func);

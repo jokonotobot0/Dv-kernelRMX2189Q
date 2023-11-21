@@ -5,6 +5,7 @@ else
 	call_threshold := 0
 endif
 
+<<<<<<< HEAD
 ifdef CONFIG_KASAN_ENHANCEMENT
 KASAN_SHADOW_OFFSET ?= 0xefffff8800000000
 else
@@ -14,6 +15,16 @@ endif
 CFLAGS_KASAN_MINIMAL := -fsanitize=kernel-address
 
 cc-param = $(call cc-option, -mllvm -$(1), $(call cc-option, --param $(1)))
+=======
+KASAN_SHADOW_OFFSET ?= $(CONFIG_KASAN_SHADOW_OFFSET)
+
+CFLAGS_KASAN_MINIMAL := -fsanitize=kernel-address
+
+CFLAGS_KASAN := $(call cc-option, -fsanitize=kernel-address \
+		-fasan-shadow-offset=$(KASAN_SHADOW_OFFSET) \
+		--param asan-stack=1 --param asan-globals=1 \
+		--param asan-instrumentation-with-call-threshold=$(call_threshold))
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 ifeq ($(call cc-option, $(CFLAGS_KASAN_MINIMAL) -Werror),)
    ifneq ($(CONFIG_COMPILE_TEST),y)
@@ -21,6 +32,7 @@ ifeq ($(call cc-option, $(CFLAGS_KASAN_MINIMAL) -Werror),)
             -fsanitize=kernel-address is not supported by compiler)
    endif
 else
+<<<<<<< HEAD
    # -fasan-shadow-offset fails without -fsanitize
    CFLAGS_KASAN_SHADOW := $(call cc-option, -fsanitize=kernel-address \
 			-fasan-shadow-offset=$(KASAN_SHADOW_OFFSET), \
@@ -47,6 +59,17 @@ ifdef CONFIG_KASAN_ENHANCEMENT
 endif
 
 
+=======
+    ifeq ($(CFLAGS_KASAN),)
+        ifneq ($(CONFIG_COMPILE_TEST),y)
+            $(warning CONFIG_KASAN: compiler does not support all options.\
+                Trying minimal configuration)
+        endif
+        CFLAGS_KASAN := $(CFLAGS_KASAN_MINIMAL)
+    endif
+endif
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 CFLAGS_KASAN_NOSANITIZE := -fno-builtin
 
 endif

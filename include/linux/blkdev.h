@@ -87,10 +87,13 @@ enum rq_cmd_type_bits {
  */
 struct request {
 	struct list_head queuelist;
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /*Huacai.Zhou@PSW.BSP.Kernel.Performance, 2018-04-28, add foreground task io opt*/
 	struct list_head fg_list;
 #endif /*VENDOR_EDIT*/
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	union {
 		struct call_single_data csd;
 		u64 fifo_time;
@@ -200,9 +203,12 @@ struct request {
 
 	/* for bidi */
 	struct request *next_rq;
+<<<<<<< HEAD
 
 	ktime_t			lat_hist_io_start;
 	int			lat_hist_enabled;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 #define REQ_OP_SHIFT (8 * sizeof(u64) - REQ_OP_BITS)
@@ -304,6 +310,7 @@ struct request_queue {
 	 * Together with queue_head for cacheline sharing
 	 */
 	struct list_head	queue_head;
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 	/*Huacai.Zhou@PSW.BSP.Kernel.Performance, 2018-04-28, add foreground task io opt*/
 	struct list_head	fg_head;
@@ -312,6 +319,8 @@ struct request_queue {
 	int fg_count_max;
 	int both_count_max;
 #endif /*VENDOR*/
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct request		*last_merge;
 	struct elevator_queue	*elevator;
 	int			nr_rqs[2];	/* # allocated [a]sync rqs */
@@ -357,7 +366,11 @@ struct request_queue {
 	 */
 	struct delayed_work	delay_work;
 
+<<<<<<< HEAD
 	struct backing_dev_info	*backing_dev_info;
+=======
+	struct backing_dev_info	backing_dev_info;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/*
 	 * The queue owner gets to use this for whatever they like.
@@ -426,6 +439,7 @@ struct request_queue {
 	struct list_head	tag_busy_list;
 
 	unsigned int		nr_sorted;
+<<<<<<< HEAD
 #if defined(VENDOR_EDIT) && defined(CONFIG_OPPO_HEALTHINFO)
 // jiheng.xie@PSW.Tech.BSP.Performance, 2019/03/11
 // Modify for ioqueue
@@ -433,6 +447,9 @@ struct request_queue {
 #else
 	unsigned int		in_flight[2];
 #endif /*VENDOR_EDIT*/
+=======
+	unsigned int		in_flight[2];
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/*
 	 * Number of active block driver functions for which blk_drain_queue()
 	 * must wait. Must be incremented around functions that unlock the
@@ -537,6 +554,7 @@ struct request_queue {
 				 (1 << QUEUE_FLAG_SAME_COMP)	|	\
 				 (1 << QUEUE_FLAG_POLL))
 
+<<<<<<< HEAD
 /* MTK PATCH */
 /* Block r/w size profiling */
 #ifdef CONFIG_MTK_BLK_RW_PROFILING
@@ -569,6 +587,8 @@ void mtk_trace_block_rq_get_rw_counter(u32 *temp_buf,
 int mtk_trace_block_rq_get_rw_counter_clr(void);
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static inline void queue_lockdep_assert_held(struct request_queue *q)
 {
 	if (q->queue_lock)
@@ -629,6 +649,7 @@ static inline void queue_flag_clear(unsigned int flag, struct request_queue *q)
 	queue_lockdep_assert_held(q);
 	__clear_bit(flag, &q->queue_flags);
 }
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /*Huacai.Zhou@PSW.BSP.Kernel.Performance, 2018-04-28, add foreground task io opt*/
 extern unsigned int sysctl_fg_io_opt;
@@ -669,6 +690,8 @@ static inline void ohm_ioqueue_dec_inflight(struct request_queue *q,
                q->in_flight[BLK_RW_BG]--;
 }
 #endif /*VENDOR_EDIT*/
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #define blk_queue_tagged(q)	test_bit(QUEUE_FLAG_QUEUED, &(q)->queue_flags)
 #define blk_queue_stopped(q)	test_bit(QUEUE_FLAG_STOPPED, &(q)->queue_flags)
@@ -1118,6 +1141,10 @@ extern void blk_queue_rq_timed_out(struct request_queue *, rq_timed_out_fn *);
 extern void blk_queue_rq_timeout(struct request_queue *, unsigned int);
 extern void blk_queue_flush_queueable(struct request_queue *q, bool queueable);
 extern void blk_queue_write_cache(struct request_queue *q, bool enabled, bool fua);
+<<<<<<< HEAD
+=======
+extern struct backing_dev_info *blk_get_backing_dev_info(struct block_device *bdev);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 extern int blk_rq_map_sg(struct request_queue *, struct request *, struct scatterlist *);
 extern void blk_dump_rq_flags(struct request *, char *);
@@ -1780,7 +1807,10 @@ struct block_device_operations {
 	int (*getgeo)(struct block_device *, struct hd_geometry *);
 	/* this callback is with swap_lock and sometimes page table lock held */
 	void (*swap_slot_free_notify) (struct block_device *, unsigned long);
+<<<<<<< HEAD
 	int (*check_disk_range_wp)(struct gendisk *d, sector_t s, sector_t l);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	struct module *owner;
 	const struct pr_ops *pr_ops;
 };
@@ -1793,6 +1823,7 @@ extern int bdev_write_page(struct block_device *, sector_t, struct page *,
 extern long bdev_direct_access(struct block_device *, struct blk_dax_ctl *);
 extern int bdev_dax_supported(struct super_block *, int);
 extern bool bdev_dax_capable(struct block_device *);
+<<<<<<< HEAD
 
 /*
  * X-axis for IO latency histogram support.
@@ -1859,6 +1890,8 @@ blk_update_latency_hist(struct io_latency_state *s, u_int64_t delta_us)
 ssize_t blk_latency_hist_show(char* name, struct io_latency_state *s,
 		char *buf, int buf_size);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #else /* CONFIG_BLOCK */
 
 struct block_device;

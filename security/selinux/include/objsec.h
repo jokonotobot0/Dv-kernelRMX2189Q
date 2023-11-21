@@ -128,10 +128,13 @@ struct key_security_struct {
 	u32 sid;	/* SID of key */
 };
 
+<<<<<<< HEAD
 struct bpf_security_struct {
 	u32 sid;  /*SID of bpf obj creater*/
 };
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 extern unsigned int selinux_checkreqprot;
 
 #endif /* _SELINUX_OBJSEC_H_ */

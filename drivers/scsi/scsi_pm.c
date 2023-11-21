@@ -16,10 +16,13 @@
 
 #include "scsi_priv.h"
 
+<<<<<<< HEAD
 /* MTK PATCH */
 static int do_scsi_runtime_resume(struct device *dev,
 				   const struct dev_pm_ops *pm);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #ifdef CONFIG_PM_SLEEP
 
 static int do_scsi_suspend(struct device *dev, const struct dev_pm_ops *pm)
@@ -81,6 +84,7 @@ static int scsi_dev_type_resume(struct device *dev,
 	scsi_device_resume(to_scsi_device(dev));
 	dev_dbg(dev, "scsi resume: %d\n", err);
 
+<<<<<<< HEAD
 	/* MTK PATCH:
 	 *
 	 * For scsi device with runtime PM enabled and managed by block layer,
@@ -89,6 +93,9 @@ static int scsi_dev_type_resume(struct device *dev,
 	 * Note. (cb != do_scsi_runtime_resume) allows system resume path only.
 	 */
 	if (err == 0 && (cb != do_scsi_runtime_resume)) {
+=======
+	if (err == 0) {
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		pm_runtime_disable(dev);
 		err = pm_runtime_set_active(dev);
 		pm_runtime_enable(dev);
@@ -238,6 +245,7 @@ static int scsi_bus_restore(struct device *dev)
 
 #endif /* CONFIG_PM_SLEEP */
 
+<<<<<<< HEAD
 /* MTK PATCH */
 #ifdef CONFIG_PM
 static int do_scsi_runtime_suspend(struct device *dev,
@@ -252,12 +260,15 @@ static int do_scsi_runtime_resume(struct device *dev,
 	return pm && pm->runtime_resume ? pm->runtime_resume(dev) : 0;
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static int sdev_runtime_suspend(struct device *dev)
 {
 	const struct dev_pm_ops *pm = dev->driver ? dev->driver->pm : NULL;
 	struct scsi_device *sdev = to_scsi_device(dev);
 	int err = 0;
 
+<<<<<<< HEAD
 	/*
 	 * MTK PATCH:
 	 *
@@ -275,6 +286,8 @@ static int sdev_runtime_suspend(struct device *dev)
 		return err;
 	}
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	err = blk_pre_runtime_suspend(sdev->request_queue);
 	if (err)
 		return err;
@@ -304,6 +317,7 @@ static int sdev_runtime_resume(struct device *dev)
 	const struct dev_pm_ops *pm = dev->driver ? dev->driver->pm : NULL;
 	int err = 0;
 
+<<<<<<< HEAD
 	/*
 	 * MTK PATCH:
 	 *
@@ -316,6 +330,8 @@ static int sdev_runtime_resume(struct device *dev)
 	if (!sdev->request_queue->dev)
 		return scsi_dev_type_resume(dev, do_scsi_runtime_resume);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	blk_pre_runtime_resume(sdev->request_queue);
 	if (pm && pm->runtime_resume)
 		err = pm->runtime_resume(dev);
@@ -398,6 +414,7 @@ void scsi_autopm_put_host(struct Scsi_Host *shost)
 	pm_runtime_put_sync(&shost->shost_gendev);
 }
 
+<<<<<<< HEAD
 #else
 
 static int do_scsi_runtime_resume(struct device *dev,
@@ -412,6 +429,8 @@ static int do_scsi_runtime_resume(struct device *dev,
 
 #endif /* CONFIG_PM */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 const struct dev_pm_ops scsi_bus_pm_ops = {
 	.prepare =		scsi_bus_prepare,
 	.suspend =		scsi_bus_suspend,

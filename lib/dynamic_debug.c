@@ -548,6 +548,7 @@ static char *dynamic_emit_prefix(const struct _ddebug *desc, char *buf)
 	return buf;
 }
 
+<<<<<<< HEAD
 void __dynamic_pr_emerg(struct _ddebug *descriptor, const char *fmt, ...)
 {
 	va_list args;
@@ -688,6 +689,8 @@ void __dynamic_pr_info(struct _ddebug *descriptor, const char *fmt, ...)
 }
 EXPORT_SYMBOL(__dynamic_pr_info);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 void __dynamic_pr_debug(struct _ddebug *descriptor, const char *fmt, ...)
 {
 	va_list args;

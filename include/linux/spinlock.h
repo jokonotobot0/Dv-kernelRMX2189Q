@@ -89,8 +89,11 @@
 # include <linux/spinlock_up.h>
 #endif
 
+<<<<<<< HEAD
 extern bool is_logbuf_lock(raw_spinlock_t *lock);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #ifdef CONFIG_DEBUG_SPINLOCK
   extern void __raw_spin_lock_init(raw_spinlock_t *lock, const char *name,
 				   struct lock_class_key *key);

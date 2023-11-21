@@ -91,10 +91,14 @@ enum {
 	 */
 	FLUSH_PENDING_TIMEOUT	= 5 * HZ,
 };
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /*jason.tang@TECH.BSP.Kernel.Storage, 2019-05-20, add to count flush*/
 extern unsigned long sysctl_blkdev_issue_flush_count;
 #endif
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 static bool blk_kick_flush(struct request_queue *q,
 			   struct blk_flush_queue *fq);
 
@@ -143,6 +147,7 @@ static bool blk_flush_queue_rq(struct request *rq, bool add_front)
 		blk_mq_kick_requeue_list(q);
 		return false;
 	} else {
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /*Huacai.Zhou@PSW.BSP.Kernel.Performance, 2018-04-28, add foreground task io opt*/
 		if (add_front) {
@@ -154,11 +159,16 @@ static bool blk_flush_queue_rq(struct request *rq, bool add_front)
 			queue_throtl_add_request(rq->q, rq, false);
 		}
 #else
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		if (add_front)
 			list_add(&rq->queuelist, &rq->q->queue_head);
 		else
 			list_add_tail(&rq->queuelist, &rq->q->queue_head);
+<<<<<<< HEAD
 #endif /*VENDOR_EDIT*/
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		return true;
 	}
 }
@@ -466,6 +476,7 @@ void blk_insert_flush(struct request *rq)
 		if (q->mq_ops) {
 			blk_mq_insert_request(rq, false, false, true);
 		} else
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 /*Huacai.Zhou@PSW.BSP.Kernel.Performance, 2018-04-28, add foreground task io opt*/
 		{
@@ -475,6 +486,9 @@ void blk_insert_flush(struct request *rq)
 #else
 			list_add_tail(&rq->queuelist, &q->queue_head);
 #endif /*VENDOR_EDIT*/
+=======
+			list_add_tail(&rq->queuelist, &q->queue_head);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		return;
 	}
 
@@ -533,10 +547,13 @@ int blkdev_issue_flush(struct block_device *bdev, gfp_t gfp_mask,
 	 */
 	if (!q->make_request_fn)
 		return -ENXIO;
+<<<<<<< HEAD
 #ifdef VENDOR_EDIT
 	/*jason.tang@TECH.BSP.Kernel.Storage, 2019-05-20, add to count flush*/
 	sysctl_blkdev_issue_flush_count++;
 #endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	bio = bio_alloc(gfp_mask, 0);
 	bio->bi_bdev = bdev;

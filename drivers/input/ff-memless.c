@@ -501,6 +501,7 @@ static void ml_ff_destroy(struct ff_device *ff)
 {
 	struct ml_device *ml = ff->private;
 
+<<<<<<< HEAD
 	/*
 	 * Even though we stop all playing effects when tearing down
 	 * an input device (via input_device_flush() that calls into
@@ -510,6 +511,8 @@ static void ml_ff_destroy(struct ff_device *ff)
 	 */
 	del_timer_sync(&ml->timer);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	kfree(ml->private);
 }
 

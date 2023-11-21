@@ -470,7 +470,11 @@ do {									\
 	__trace_printk_check_format(fmt, ##args);			\
 	tracing_record_cmdline(current);				\
 	if (__builtin_constant_p(fmt)) {				\
+<<<<<<< HEAD
 		static const char *trace_printk_fmt __used		\
+=======
+		static const char *trace_printk_fmt			\
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		  __attribute__((section("__trace_printk_fmt"))) =	\
 			__builtin_constant_p(fmt) ? fmt : NULL;		\
 									\

@@ -9,8 +9,11 @@ menuconfig INPUT_TOUCHSCREEN
 
 	  If unsure, say Y.
 
+<<<<<<< HEAD
 source "drivers/input/touchscreen/mediatek/Kconfig"
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 if INPUT_TOUCHSCREEN
 
 config TOUCHSCREEN_PROPERTIES
@@ -1216,5 +1219,8 @@ config TOUCHSCREEN_ROHM_BU21023
 	  To compile this driver as a module, choose M here: the
 	  module will be called bu21023_ts.
 
+<<<<<<< HEAD
 source "drivers/input/touchscreen/synaptics_dsx_td4322/Kconfig"
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 endif

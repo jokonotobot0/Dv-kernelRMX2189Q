@@ -91,6 +91,7 @@ config ARCH_MEDIATEK
 	help
 	  Support for Mediatek MT65xx & MT81xx ARMv8 SoCs
 
+<<<<<<< HEAD
 config MACH_MT6758
 	bool "MediaTek MT6758"
 	select GENERIC_CLOCKEVENTS
@@ -420,6 +421,8 @@ config MACH_MT8173
 	  Please note this also select ARCH_MEDIATEK, so driver depends
 	  on it can be selected.
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 config ARCH_MESON
 	bool "Amlogic Platforms"
 	select PINCTRL
@@ -560,6 +563,7 @@ config ARCH_ZYNQMP
 	help
 	  This enables support for Xilinx ZynqMP Family
 
+<<<<<<< HEAD
 # Dabin.Bai@ODM_WT.BSP.Kernel.Boot, 2020/03/27, Add for ODM_WT_EDIT macro for kernel usage
 config ODM_WT_EDIT
 	bool "Enable Support for ODM WT Projects"
@@ -567,4 +571,6 @@ config ODM_WT_EDIT
 	This enables support for the ODM Wingtech projects. If you do not
 	wish to build a kernel that runs on this chipset, say 'N' here.
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 endmenu

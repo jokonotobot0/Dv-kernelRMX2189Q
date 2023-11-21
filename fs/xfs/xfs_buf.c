@@ -744,7 +744,11 @@ xfs_buf_readahead_map(
 	int			nmaps,
 	const struct xfs_buf_ops *ops)
 {
+<<<<<<< HEAD
 	if (bdi_read_congested(target->bt_dev->bd_bdi))
+=======
+	if (bdi_read_congested(target->bt_bdi))
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		return;
 
 	xfs_buf_read_map(target, map, nmaps,
@@ -1782,6 +1786,10 @@ xfs_alloc_buftarg(
 	btp->bt_mount = mp;
 	btp->bt_dev =  bdev->bd_dev;
 	btp->bt_bdev = bdev;
+<<<<<<< HEAD
+=======
+	btp->bt_bdi = blk_get_backing_dev_info(bdev);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	if (xfs_setsize_buftarg_early(btp, bdev))
 		goto error_free;

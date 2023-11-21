@@ -10,7 +10,11 @@
  */
 
 #include <crypto/algapi.h>
+<<<<<<< HEAD
 #include <crypto/chacha.h>
+=======
+#include <crypto/chacha20.h>
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <linux/crypto.h>
 #include <linux/kernel.h>
 #include <linux/module.h>
@@ -29,6 +33,7 @@ static bool chacha20_use_avx2;
 static void chacha20_dosimd(u32 *state, u8 *dst, const u8 *src,
 			    unsigned int bytes)
 {
+<<<<<<< HEAD
 	u8 buf[CHACHA_BLOCK_SIZE];
 
 #ifdef CONFIG_AS_AVX2
@@ -38,10 +43,22 @@ static void chacha20_dosimd(u32 *state, u8 *dst, const u8 *src,
 			bytes -= CHACHA_BLOCK_SIZE * 8;
 			src += CHACHA_BLOCK_SIZE * 8;
 			dst += CHACHA_BLOCK_SIZE * 8;
+=======
+	u8 buf[CHACHA20_BLOCK_SIZE];
+
+#ifdef CONFIG_AS_AVX2
+	if (chacha20_use_avx2) {
+		while (bytes >= CHACHA20_BLOCK_SIZE * 8) {
+			chacha20_8block_xor_avx2(state, dst, src);
+			bytes -= CHACHA20_BLOCK_SIZE * 8;
+			src += CHACHA20_BLOCK_SIZE * 8;
+			dst += CHACHA20_BLOCK_SIZE * 8;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			state[12] += 8;
 		}
 	}
 #endif
+<<<<<<< HEAD
 	while (bytes >= CHACHA_BLOCK_SIZE * 4) {
 		chacha20_4block_xor_ssse3(state, dst, src);
 		bytes -= CHACHA_BLOCK_SIZE * 4;
@@ -54,6 +71,20 @@ static void chacha20_dosimd(u32 *state, u8 *dst, const u8 *src,
 		bytes -= CHACHA_BLOCK_SIZE;
 		src += CHACHA_BLOCK_SIZE;
 		dst += CHACHA_BLOCK_SIZE;
+=======
+	while (bytes >= CHACHA20_BLOCK_SIZE * 4) {
+		chacha20_4block_xor_ssse3(state, dst, src);
+		bytes -= CHACHA20_BLOCK_SIZE * 4;
+		src += CHACHA20_BLOCK_SIZE * 4;
+		dst += CHACHA20_BLOCK_SIZE * 4;
+		state[12] += 4;
+	}
+	while (bytes >= CHACHA20_BLOCK_SIZE) {
+		chacha20_block_xor_ssse3(state, dst, src);
+		bytes -= CHACHA20_BLOCK_SIZE;
+		src += CHACHA20_BLOCK_SIZE;
+		dst += CHACHA20_BLOCK_SIZE;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		state[12]++;
 	}
 	if (bytes) {
@@ -70,12 +101,18 @@ static int chacha20_simd(struct blkcipher_desc *desc, struct scatterlist *dst,
 	struct blkcipher_walk walk;
 	int err;
 
+<<<<<<< HEAD
 	if (nbytes <= CHACHA_BLOCK_SIZE || !may_use_simd())
 		return crypto_chacha_crypt(desc, dst, src, nbytes);
+=======
+	if (nbytes <= CHACHA20_BLOCK_SIZE || !may_use_simd())
+		return crypto_chacha20_crypt(desc, dst, src, nbytes);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	state = (u32 *)roundup((uintptr_t)state_buf, CHACHA20_STATE_ALIGN);
 
 	blkcipher_walk_init(&walk, dst, src, nbytes);
+<<<<<<< HEAD
 	err = blkcipher_walk_virt_block(desc, &walk, CHACHA_BLOCK_SIZE);
 	desc->flags &= ~CRYPTO_TFM_REQ_MAY_SLEEP;
 
@@ -88,6 +125,20 @@ static int chacha20_simd(struct blkcipher_desc *desc, struct scatterlist *dst,
 				rounddown(walk.nbytes, CHACHA_BLOCK_SIZE));
 		err = blkcipher_walk_done(desc, &walk,
 					  walk.nbytes % CHACHA_BLOCK_SIZE);
+=======
+	err = blkcipher_walk_virt_block(desc, &walk, CHACHA20_BLOCK_SIZE);
+	desc->flags &= ~CRYPTO_TFM_REQ_MAY_SLEEP;
+
+	crypto_chacha20_init(state, crypto_blkcipher_ctx(desc->tfm), walk.iv);
+
+	kernel_fpu_begin();
+
+	while (walk.nbytes >= CHACHA20_BLOCK_SIZE) {
+		chacha20_dosimd(state, walk.dst.virt.addr, walk.src.virt.addr,
+				rounddown(walk.nbytes, CHACHA20_BLOCK_SIZE));
+		err = blkcipher_walk_done(desc, &walk,
+					  walk.nbytes % CHACHA20_BLOCK_SIZE);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 
 	if (walk.nbytes) {
@@ -108,14 +159,24 @@ static struct crypto_alg alg = {
 	.cra_flags		= CRYPTO_ALG_TYPE_BLKCIPHER,
 	.cra_blocksize		= 1,
 	.cra_type		= &crypto_blkcipher_type,
+<<<<<<< HEAD
 	.cra_ctxsize		= sizeof(struct chacha_ctx),
+=======
+	.cra_ctxsize		= sizeof(struct chacha20_ctx),
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	.cra_alignmask		= sizeof(u32) - 1,
 	.cra_module		= THIS_MODULE,
 	.cra_u			= {
 		.blkcipher = {
+<<<<<<< HEAD
 			.min_keysize	= CHACHA_KEY_SIZE,
 			.max_keysize	= CHACHA_KEY_SIZE,
 			.ivsize		= CHACHA_IV_SIZE,
+=======
+			.min_keysize	= CHACHA20_KEY_SIZE,
+			.max_keysize	= CHACHA20_KEY_SIZE,
+			.ivsize		= CHACHA20_IV_SIZE,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			.geniv		= "seqiv",
 			.setkey		= crypto_chacha20_setkey,
 			.encrypt	= chacha20_simd,

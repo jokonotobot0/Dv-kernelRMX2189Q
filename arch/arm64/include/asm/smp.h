@@ -29,12 +29,16 @@
 
 #ifndef __ASSEMBLY__
 
+<<<<<<< HEAD
 #include <asm/percpu.h>
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <linux/threads.h>
 #include <linux/cpumask.h>
 #include <linux/thread_info.h>
 
+<<<<<<< HEAD
 DECLARE_PER_CPU_READ_MOSTLY(int, cpu_number);
 
 /*
@@ -45,6 +49,9 @@ DECLARE_PER_CPU_READ_MOSTLY(int, cpu_number);
  * here under CONFIG_DEBUG_PREEMPT=y.
  */
 #define raw_smp_processor_id() (*raw_cpu_ptr(&cpu_number))
+=======
+#define raw_smp_processor_id() (current_thread_info()->cpu)
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 struct seq_file;
 
@@ -84,7 +91,10 @@ asmlinkage void secondary_start_kernel(void);
  */
 struct secondary_data {
 	void *stack;
+<<<<<<< HEAD
 	struct task_struct *task;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	long status;
 };
 

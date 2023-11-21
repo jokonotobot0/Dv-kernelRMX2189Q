@@ -29,6 +29,7 @@
 #define DELAYACCT_PF_BLKIO	0x00000002	/* I am waiting on IO */
 
 #ifdef CONFIG_TASK_DELAY_ACCT
+<<<<<<< HEAD
 struct task_delay_info {
 	spinlock_t	lock;
 	unsigned int	flags;	/* Private per-task flags */
@@ -71,6 +72,9 @@ struct task_delay_info {
 #include <linux/slab.h>
 
 #ifdef CONFIG_TASK_DELAY_ACCT
+=======
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 extern int delayacct_on;	/* Delay accounting turned on/off */
 extern struct kmem_cache *delayacct_cache;
 extern void delayacct_init(void);
@@ -82,8 +86,11 @@ extern int __delayacct_add_tsk(struct taskstats *, struct task_struct *);
 extern __u64 __delayacct_blkio_ticks(struct task_struct *);
 extern void __delayacct_freepages_start(void);
 extern void __delayacct_freepages_end(void);
+<<<<<<< HEAD
 extern void __delayacct_thrashing_start(void);
 extern void __delayacct_thrashing_end(void);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 static inline int delayacct_is_task_waiting_on_io(struct task_struct *p)
 {
@@ -164,6 +171,7 @@ static inline void delayacct_freepages_end(void)
 		__delayacct_freepages_end();
 }
 
+<<<<<<< HEAD
 static inline void delayacct_thrashing_start(void)
 {
 	if (current->delays)
@@ -176,6 +184,8 @@ static inline void delayacct_thrashing_end(void)
 		__delayacct_thrashing_end();
 }
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #else
 static inline void delayacct_set_flag(int flag)
 {}
@@ -202,10 +212,13 @@ static inline void delayacct_freepages_start(void)
 {}
 static inline void delayacct_freepages_end(void)
 {}
+<<<<<<< HEAD
 static inline void delayacct_thrashing_start(void)
 {}
 static inline void delayacct_thrashing_end(void)
 {}
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #endif /* CONFIG_TASK_DELAY_ACCT */
 

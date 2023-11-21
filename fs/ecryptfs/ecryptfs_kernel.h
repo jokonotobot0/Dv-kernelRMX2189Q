@@ -125,7 +125,11 @@ ecryptfs_get_key_payload_data(struct key *key)
 	if (auth_tok)
 		return auth_tok;
 
+<<<<<<< HEAD
 	ukp = user_key_payload_locked(key);
+=======
+	ukp = user_key_payload(key);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (!ukp)
 		return ERR_PTR(-EKEYREVOKED);
 

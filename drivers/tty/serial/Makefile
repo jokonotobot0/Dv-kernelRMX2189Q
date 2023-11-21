@@ -94,6 +94,7 @@ obj-$(CONFIG_SERIAL_MVEBU_UART)	+= mvebu-uart.o
 obj-$(CONFIG_SERIAL_PIC32)	+= pic32_uart.o
 obj-$(CONFIG_SERIAL_MPS2_UART)	+= mps2-uart.o
 
+<<<<<<< HEAD
 #add mtk earlycon config
 obj-$(CONFIG_SERIAL_MTK_EARLY_CONSOLE) += mtk_earlycon.o
 
@@ -105,3 +106,7 @@ obj-$(CONFIG_SERIAL_MCTRL_GPIO)	+= serial_mctrl_gpio.o
 subdir-ccflags-y += -Werror -I$(srctree)/drivers/misc/mediatek/include
 subdir-ccflags-y += -Werror -I$(srctree)/drivers/misc/mediatek/include/mt-plat/$(MTK_PLATFORM)/include
 #endif
+=======
+# GPIOLIB helpers for modem control lines
+obj-$(CONFIG_SERIAL_MCTRL_GPIO)	+= serial_mctrl_gpio.o
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

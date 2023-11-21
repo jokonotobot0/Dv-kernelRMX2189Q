@@ -22,6 +22,7 @@
 #include <linux/types.h>
 
 #define COMMAND_LINE_SIZE	2048
+<<<<<<< HEAD
 #define MBLOCK_RESERVED_NAME_SIZE 128
 #define MBLOCK_RESERVED_NUM_MAX  128
 #define MBLOCK_NUM_MAX 128
@@ -62,5 +63,7 @@ struct dram_info {
 	struct mem_desc rank_info[4];
 };
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #endif

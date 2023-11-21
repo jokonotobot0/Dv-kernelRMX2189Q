@@ -92,8 +92,11 @@ config SND_SOC_ALL_CODECS
 	select SND_SOC_MAX9877 if I2C
 	select SND_SOC_MC13783 if MFD_MC13XXX
 	select SND_SOC_ML26124 if I2C
+<<<<<<< HEAD
 	select SND_SOC_MT6358
 	select SND_SOC_MT6359
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	select SND_SOC_NAU8810 if I2C
 	select SND_SOC_NAU8825 if I2C
 	select SND_SOC_HDMI_CODEC
@@ -205,6 +208,7 @@ config SND_SOC_ALL_CODECS
 	select SND_SOC_WM9705 if SND_SOC_AC97_BUS
 	select SND_SOC_WM9712 if SND_SOC_AC97_BUS
 	select SND_SOC_WM9713 if SND_SOC_AC97_BUS
+<<<<<<< HEAD
 	select SND_SOC_RT5509 if I2C
 	select SND_SOC_MT6660 if I2C
 	help
@@ -212,11 +216,22 @@ config SND_SOC_ALL_CODECS
 	  uses them is also built since they are only usable with a machine
 	  driver.  Selecting this option will allow these drivers to be built
 	  without an explicit machine driver for test and development purposes.
+=======
+        help
+          Normally ASoC codec drivers are only built if a machine driver which
+          uses them is also built since they are only usable with a machine
+          driver.  Selecting this option will allow these drivers to be built
+          without an explicit machine driver for test and development purposes.
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	  Support for the bus types used to access the codecs to be built must
 	  be selected separately.
 
+<<<<<<< HEAD
 	  If unsure select "N".
+=======
+          If unsure select "N".
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 config SND_SOC_88PM860X
 	tristate
@@ -585,9 +600,12 @@ config SND_SOC_MAX9860
 	depends on I2C
 	select REGMAP_I2C
 
+<<<<<<< HEAD
 config SND_SOC_MT6391
 	tristate
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 config SND_SOC_PCM1681
 	tristate "Texas Instruments PCM1681 CODEC"
 	depends on I2C
@@ -1070,6 +1088,7 @@ config SND_SOC_WM9713
 	select REGMAP_AC97
 
 # Amp
+<<<<<<< HEAD
 config SND_SOC_MT6660
 	tristate "Mediatek MT6660 speaker amplifier"
 	depends on I2C
@@ -1082,6 +1101,8 @@ config SND_SOC_MT6660
 	  multi-band DRC, equalizer function. It would
 	  be set to yes if device with MT6660 on it.
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 config SND_SOC_LM4857
 	tristate
 
@@ -1097,12 +1118,15 @@ config SND_SOC_MC13783
 config SND_SOC_ML26124
 	tristate
 
+<<<<<<< HEAD
 config SND_SOC_MT6358
 	tristate
 
 config SND_SOC_MT6359
 	tristate
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 config SND_SOC_NAU8810
 	tristate "Nuvoton Technology Corporation NAU88C10 CODEC"
 	depends on I2C
@@ -1114,6 +1138,7 @@ config SND_SOC_TPA6130A2
 	tristate "Texas Instruments TPA6130A2 headphone amplifier"
 	depends on I2C
 
+<<<<<<< HEAD
 config SND_SOC_RT5509
 	tristate "Richtek RT5509 Smart AMP"
 	depends on I2C
@@ -1139,4 +1164,6 @@ config SND_SOC_DBMDX
 source sound/soc/codecs/dbmdx/Kconfig
 #endif /* VENDOR_EDIT */
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 endmenu

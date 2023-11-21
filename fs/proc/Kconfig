@@ -81,6 +81,7 @@ config PROC_CHILDREN
 
 	  Say Y if you are running any user-space software which takes benefit from
 	  this interface. For example, rkt is such a piece of software.
+<<<<<<< HEAD
 
 config PROC_UID
 	bool "Include /proc/uid/ files"
@@ -96,3 +97,5 @@ config OPPO_FG_OPT
 	help
 	  Add foreground process optimize support to promote performance .
 #endif /*VENDOR_EDIT*/
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

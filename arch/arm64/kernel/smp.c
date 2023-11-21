@@ -58,12 +58,15 @@
 #define CREATE_TRACE_POINTS
 #include <trace/events/ipi.h>
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_SCHED_MONITOR
 #include "mtk_sched_mon.h"
 #endif
 DEFINE_PER_CPU_READ_MOSTLY(int, cpu_number);
 EXPORT_PER_CPU_SYMBOL(cpu_number);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * as from 2.5, kernels no longer have an init_tasks structure
  * so we need some other way of telling a new secondary core
@@ -152,7 +155,10 @@ int __cpu_up(unsigned int cpu, struct task_struct *idle)
 	 * We need to tell the secondary core where to find its stack and the
 	 * page tables.
 	 */
+<<<<<<< HEAD
 	secondary_data.task = idle;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	secondary_data.stack = task_stack_page(idle) + THREAD_START_SP;
 	update_cpu_boot_status(CPU_MMU_OFF);
 	__flush_dcache_area(&secondary_data, sizeof(secondary_data));
@@ -177,7 +183,10 @@ int __cpu_up(unsigned int cpu, struct task_struct *idle)
 		pr_err("CPU%u: failed to boot: %d\n", cpu, ret);
 	}
 
+<<<<<<< HEAD
 	secondary_data.task = NULL;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	secondary_data.stack = NULL;
 	status = READ_ONCE(secondary_data.status);
 	if (ret && status) {
@@ -216,10 +225,14 @@ int __cpu_up(unsigned int cpu, struct task_struct *idle)
 asmlinkage notrace void secondary_start_kernel(void)
 {
 	struct mm_struct *mm = &init_mm;
+<<<<<<< HEAD
 	unsigned int cpu;
 
 	cpu = task_cpu(current);
 	set_my_cpu_offset(per_cpu_offset(cpu));
+=======
+	unsigned int cpu = smp_processor_id();
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/*
 	 * All kernel threads share the same mm context; grab a
@@ -228,6 +241,11 @@ asmlinkage notrace void secondary_start_kernel(void)
 	atomic_inc(&mm->mm_count);
 	current->active_mm = mm;
 
+<<<<<<< HEAD
+=======
+	set_my_cpu_offset(per_cpu_offset(smp_processor_id()));
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/*
 	 * TTBR0 is only used for the identity mapping at this stage. Make it
 	 * point to zero page to avoid speculatively fetching new entries.
@@ -311,6 +329,7 @@ int __cpu_disable(void)
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_GIC_TARGET_ALL
 	{
 		unsigned long flags;
@@ -323,6 +342,8 @@ int __cpu_disable(void)
 	}
 #endif
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/*
 	 * Take this CPU offline.  Once we clear this, we can't return,
 	 * and we must not schedule until we're ready to give up the cpu.
@@ -739,8 +760,11 @@ void __init smp_prepare_cpus(unsigned int max_cpus)
 	 */
 	for_each_possible_cpu(cpu) {
 
+<<<<<<< HEAD
 		per_cpu(cpu_number, cpu) = cpu;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		if (cpu == smp_processor_id())
 			continue;
 
@@ -862,6 +886,7 @@ void handle_IPI(int ipinr, struct pt_regs *regs)
 
 	case IPI_CALL_FUNC:
 		irq_enter();
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_SCHED_MONITOR
 		mt_trace_IPI_start(ipinr);
 #endif
@@ -869,11 +894,15 @@ void handle_IPI(int ipinr, struct pt_regs *regs)
 #ifdef CONFIG_MTK_SCHED_MONITOR
 		mt_trace_IPI_end(ipinr);
 #endif
+=======
+		generic_smp_call_function_interrupt();
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		irq_exit();
 		break;
 
 	case IPI_CPU_STOP:
 		irq_enter();
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_SCHED_MONITOR
 		mt_trace_IPI_start(ipinr);
 #endif
@@ -881,12 +910,16 @@ void handle_IPI(int ipinr, struct pt_regs *regs)
 #ifdef CONFIG_MTK_SCHED_MONITOR
 		mt_trace_IPI_end(ipinr);
 #endif
+=======
+		ipi_cpu_stop(cpu);
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		irq_exit();
 		break;
 
 #ifdef CONFIG_GENERIC_CLOCKEVENTS_BROADCAST
 	case IPI_TIMER:
 		irq_enter();
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_SCHED_MONITOR
 		mt_trace_IPI_start(ipinr);
 #endif
@@ -894,6 +927,9 @@ void handle_IPI(int ipinr, struct pt_regs *regs)
 #ifdef CONFIG_MTK_SCHED_MONITOR
 		mt_trace_IPI_end(ipinr);
 #endif
+=======
+		tick_receive_broadcast();
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		irq_exit();
 		break;
 #endif
@@ -901,6 +937,7 @@ void handle_IPI(int ipinr, struct pt_regs *regs)
 #ifdef CONFIG_IRQ_WORK
 	case IPI_IRQ_WORK:
 		irq_enter();
+<<<<<<< HEAD
 #ifdef CONFIG_MTK_SCHED_MONITOR
 		mt_trace_IPI_start(ipinr);
 #endif
@@ -908,6 +945,9 @@ void handle_IPI(int ipinr, struct pt_regs *regs)
 #ifdef CONFIG_MTK_SCHED_MONITOR
 		mt_trace_IPI_end(ipinr);
 #endif
+=======
+		irq_work_run();
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 		irq_exit();
 		break;
 #endif

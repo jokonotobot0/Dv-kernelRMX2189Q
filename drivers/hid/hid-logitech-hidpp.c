@@ -1238,8 +1238,13 @@ static void hidpp_ff_destroy(struct ff_device *ff)
 static int hidpp_ff_init(struct hidpp_device *hidpp, u8 feature_index)
 {
 	struct hid_device *hid = hidpp->hid_dev;
+<<<<<<< HEAD
 	struct hid_input *hidinput;
 	struct input_dev *dev;
+=======
+	struct hid_input *hidinput = list_entry(hid->inputs.next, struct hid_input, list);
+	struct input_dev *dev = hidinput->input;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	const struct usb_device_descriptor *udesc = &(hid_to_usb_dev(hid)->descriptor);
 	const u16 bcdDevice = le16_to_cpu(udesc->bcdDevice);
 	struct ff_device *ff;
@@ -1248,6 +1253,7 @@ static int hidpp_ff_init(struct hidpp_device *hidpp, u8 feature_index)
 	int error, j, num_slots;
 	u8 version;
 
+<<<<<<< HEAD
 	if (list_empty(&hid->inputs)) {
 		hid_err(hid, "no inputs found\n");
 		return -ENODEV;
@@ -1255,6 +1261,8 @@ static int hidpp_ff_init(struct hidpp_device *hidpp, u8 feature_index)
 	hidinput = list_entry(hid->inputs.next, struct hid_input, list);
 	dev = hidinput->input;
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	if (!dev) {
 		hid_err(hid, "Struct input_dev not set!\n");
 		return -EINVAL;

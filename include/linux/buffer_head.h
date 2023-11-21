@@ -188,8 +188,11 @@ void free_buffer_head(struct buffer_head * bh);
 void unlock_buffer(struct buffer_head *bh);
 void __lock_buffer(struct buffer_head *bh);
 void ll_rw_block(int, int, int, struct buffer_head * bh[]);
+<<<<<<< HEAD
 void ll_rw_block_crypt(struct inode *inode, int op, int op_flags, int nr,
 	struct buffer_head *bh[]);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 int sync_dirty_buffer(struct buffer_head *bh);
 int __sync_dirty_buffer(struct buffer_head *bh, int op_flags);
 void write_dirty_buffer(struct buffer_head *bh, int op_flags);
@@ -200,7 +203,10 @@ void write_boundary_block(struct block_device *bdev,
 			sector_t bblock, unsigned blocksize);
 int bh_uptodate_or_lock(struct buffer_head *bh);
 int bh_submit_read(struct buffer_head *bh);
+<<<<<<< HEAD
 int bh_submit_read_crypt(struct inode *inode, struct buffer_head *bh);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 extern int buffer_heads_over_limit;
 

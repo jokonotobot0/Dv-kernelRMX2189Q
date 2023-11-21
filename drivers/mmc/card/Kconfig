@@ -68,6 +68,7 @@ config MMC_TEST
 
 	  This driver is only of interest to those developing or
 	  testing a host driver. Most people should say N here.
+<<<<<<< HEAD
 
 config MMC_BLOCK_IO_LOG
 	bool "Block IO log"
@@ -113,3 +114,5 @@ config MTK_MMC_PWR_WP
 
 	  E.g.  Kernel hard-code a partition named "system", User space use
 	  ioctl(fd, MMC_IOC_WP_CMD , &buf ) will set power-on write protect on it.
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc

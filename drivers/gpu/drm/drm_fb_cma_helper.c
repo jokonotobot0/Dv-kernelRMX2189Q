@@ -18,16 +18,24 @@
  */
 
 #include <drm/drmP.h>
+<<<<<<< HEAD
 #include <drm/drm_atomic.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <drm/drm_crtc.h>
 #include <drm/drm_fb_helper.h>
 #include <drm/drm_crtc_helper.h>
 #include <drm/drm_gem_cma_helper.h>
 #include <drm/drm_fb_cma_helper.h>
+<<<<<<< HEAD
 #include <linux/dma-buf.h>
 #include <linux/dma-mapping.h>
 #include <linux/module.h>
 #include <linux/reservation.h>
+=======
+#include <linux/dma-mapping.h>
+#include <linux/module.h>
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #define DEFAULT_FBDEFIO_DELAY_MS 50
 
@@ -268,6 +276,7 @@ struct drm_gem_cma_object *drm_fb_cma_get_gem_obj(struct drm_framebuffer *fb,
 }
 EXPORT_SYMBOL_GPL(drm_fb_cma_get_gem_obj);
 
+<<<<<<< HEAD
 /**
  * drm_fb_cma_prepare_fb() - Prepare CMA framebuffer
  * @plane: Which plane
@@ -300,6 +309,8 @@ int drm_fb_cma_prepare_fb(struct drm_plane *plane,
 }
 EXPORT_SYMBOL_GPL(drm_fb_cma_prepare_fb);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #ifdef CONFIG_DEBUG_FS
 static void drm_fb_cma_describe(struct drm_framebuffer *fb, struct seq_file *m)
 {

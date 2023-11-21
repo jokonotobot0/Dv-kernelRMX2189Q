@@ -3,33 +3,46 @@
 
 #ifdef CONFIG_ARM_CPU_TOPOLOGY
 
+<<<<<<< HEAD
 #include <linux/cpufreq.h>
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #include <linux/cpumask.h>
 
 struct cputopo_arm {
 	int thread_id;
 	int core_id;
 	int socket_id;
+<<<<<<< HEAD
 	unsigned int partno;
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	cpumask_t thread_sibling;
 	cpumask_t core_sibling;
 };
 
 extern struct cputopo_arm cpu_topology[NR_CPUS];
+<<<<<<< HEAD
 extern unsigned long arch_get_max_cpu_capacity(int cpu);
 extern unsigned long arch_get_cur_cpu_capacity(int cpu);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #define topology_physical_package_id(cpu)	(cpu_topology[cpu].socket_id)
 #define topology_core_id(cpu)		(cpu_topology[cpu].core_id)
 #define topology_core_cpumask(cpu)	(&cpu_topology[cpu].core_sibling)
 #define topology_sibling_cpumask(cpu)	(&cpu_topology[cpu].thread_sibling)
+<<<<<<< HEAD
 #define topology_max_cpu_capacity(cpu) (arch_get_max_cpu_capacity(cpu))
 #define topology_cur_cpu_capacity(cpu) (arch_get_cur_cpu_capacity(cpu))
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 void init_cpu_topology(void);
 void store_cpu_topology(unsigned int cpuid);
 const struct cpumask *cpu_coregroup_mask(int cpu);
 
+<<<<<<< HEAD
 #ifdef CONFIG_CPU_FREQ
 #define arch_scale_freq_capacity arch_scale_freq_capacity
 
@@ -47,12 +60,15 @@ cpufreq_scale_min_freq_capacity(struct sched_domain *sd, int cpu);
 #define arch_scale_cpu_capacity scale_cpu_capacity
 extern unsigned long scale_cpu_capacity(struct sched_domain *sd, int cpu);
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #else
 
 static inline void init_cpu_topology(void) { }
 static inline void store_cpu_topology(unsigned int cpuid) { }
 
 #endif
+<<<<<<< HEAD
 /* Extras of CPU & Cluster functions */
 extern int arch_cpu_is_big(unsigned int cpu);
 extern int arch_cpu_is_little(unsigned int cpu);
@@ -63,6 +79,8 @@ extern int arch_get_cluster_id(unsigned int cpu);
 extern void arch_get_cluster_cpus(struct cpumask *cpus, int cluster_id);
 extern int arch_better_capacity(unsigned int cpu);
 void arch_build_cpu_topology_domain(void);
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 #include <asm-generic/topology.h>
 

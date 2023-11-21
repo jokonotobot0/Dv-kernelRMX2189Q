@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+if ARCH_MEDIATEK || COMPILE_TEST
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 config PINCTRL_MTK
 	bool
 	depends on OF
@@ -6,6 +11,7 @@ config PINCTRL_MTK
 	select GPIOLIB
 	select OF_GPIO
 
+<<<<<<< HEAD
 config PINCTRL_MTK_V2
 	bool "MediaTek Pinctrl Support V2"
 	depends on OF
@@ -104,6 +110,8 @@ config PINCTRL_MTK_NO_UPSTREAM
 	  we also can use it in user space.
 
 if ARCH_MEDIATEK || COMPILE_TEST
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 # For ARMv7 SoCs
 config PINCTRL_MT2701
 	bool "Mediatek MT2701 pin control" if COMPILE_TEST && !MACH_MT2701
@@ -130,6 +138,7 @@ config PINCTRL_MT8127
 	select PINCTRL_MTK
 
 # For ARMv8 SoCs
+<<<<<<< HEAD
 config PINCTRL_MT2712
 	bool "Mediatek MT2712 pin control"
 	depends on OF
@@ -144,6 +153,8 @@ config PINCTRL_MT8163
 	default ARM64 && ARCH_MEDIATEK
 	select PINCTRL_MTK
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 config PINCTRL_MT8173
 	bool "Mediatek MT8173 pin control"
 	depends on OF

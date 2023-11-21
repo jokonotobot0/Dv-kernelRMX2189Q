@@ -87,7 +87,10 @@ void __init_rwsem(struct rw_semaphore *sem, const char *name,
 	sem->owner = NULL;
 	osq_lock_init(&sem->osq);
 #endif
+<<<<<<< HEAD
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 }
 
 EXPORT_SYMBOL(__init_rwsem);
@@ -272,7 +275,10 @@ struct rw_semaphore __sched *rwsem_down_read_failed(struct rw_semaphore *sem)
 	    (count > RWSEM_WAITING_BIAS &&
 	     adjustment != -RWSEM_ACTIVE_READ_BIAS))
 		__rwsem_mark_wake(sem, RWSEM_WAKE_ANY, &wake_q);
+<<<<<<< HEAD
 	
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	raw_spin_unlock_irq(&sem->wait_lock);
 	wake_up_q(&wake_q);
@@ -282,6 +288,7 @@ struct rw_semaphore __sched *rwsem_down_read_failed(struct rw_semaphore *sem)
 		set_task_state(tsk, TASK_UNINTERRUPTIBLE);
 		if (!waiter.task)
 			break;
+<<<<<<< HEAD
 		//#ifdef VENDOR_EDIT fangpan@Swdp.shanghai,2015/11/12
 		if (hung_long_and_fatal_signal_pending(tsk)) {
 			list_del(&waiter.list);
@@ -297,6 +304,9 @@ struct rw_semaphore __sched *rwsem_down_read_failed(struct rw_semaphore *sem)
 // Liujie.Xie@TECH.Kernel.Sched, 2019/08/29, add for stuck monitor
         current->in_downread = 0;
 #endif
+=======
+		schedule();
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	}
 
 	__set_task_state(tsk, TASK_RUNNING);
@@ -521,7 +531,13 @@ __rwsem_down_write_failed_common(struct rw_semaphore *sem, int state)
 	/* account for this before adding a new element to the list */
 	if (list_empty(&sem->wait_list))
 		waiting = false;
+<<<<<<< HEAD
 	list_add_tail(&waiter.list, &sem->wait_list);
+=======
+
+	list_add_tail(&waiter.list, &sem->wait_list);
+
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* we're now waiting on the lock, but no longer actively locking */
 	if (waiting) {
 		count = atomic_long_read(&sem->count);
@@ -548,7 +564,10 @@ __rwsem_down_write_failed_common(struct rw_semaphore *sem, int state)
 	} else
 		count = atomic_long_add_return(RWSEM_WAITING_BIAS, &sem->count);
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	/* wait until we successfully acquire the lock */
 	set_current_state(state);
 	while (true) {
@@ -558,6 +577,7 @@ __rwsem_down_write_failed_common(struct rw_semaphore *sem, int state)
 
 		/* Block until there are no active lockers. */
 		do {
+<<<<<<< HEAD
 			//#ifdef VENDOR_EDIT fangpan@Swdp.shanghai,2015/11/12
 			if (hung_long_and_fatal_signal_pending(current)) {
 				raw_spin_lock_irq(&sem->wait_lock);
@@ -575,14 +595,23 @@ __rwsem_down_write_failed_common(struct rw_semaphore *sem, int state)
 // Liujie.Xie@TECH.Kernel.Sched, 2019/08/29, add for stuck monitor
             current->in_downwrite = 0;
 #endif
+=======
+			if (signal_pending_state(state, current))
+				goto out_nolock;
+
+			schedule();
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 			set_current_state(state);
 		} while ((count = atomic_long_read(&sem->count)) & RWSEM_ACTIVE_MASK);
 
 		raw_spin_lock_irq(&sem->wait_lock);
 	}
+<<<<<<< HEAD
 //#ifdef VENDOR_EDIT fangpan@Swdp.shanghai,2015/11/12
 out:
 //#endif
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	__set_current_state(TASK_RUNNING);
 	list_del(&waiter.list);
 	raw_spin_unlock_irq(&sem->wait_lock);
@@ -690,7 +719,10 @@ locked:
 	if (!list_empty(&sem->wait_list))
 		__rwsem_mark_wake(sem, RWSEM_WAKE_ANY, &wake_q);
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	raw_spin_unlock_irqrestore(&sem->wait_lock, flags);
 	wake_up_q(&wake_q);
 

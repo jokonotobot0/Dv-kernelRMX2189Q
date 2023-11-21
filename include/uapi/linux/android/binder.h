@@ -33,6 +33,7 @@ enum {
 	BINDER_TYPE_HANDLE	= B_PACK_CHARS('s', 'h', '*', B_TYPE_LARGE),
 	BINDER_TYPE_WEAK_HANDLE	= B_PACK_CHARS('w', 'h', '*', B_TYPE_LARGE),
 	BINDER_TYPE_FD		= B_PACK_CHARS('f', 'd', '*', B_TYPE_LARGE),
+<<<<<<< HEAD
 	BINDER_TYPE_FDA		= B_PACK_CHARS('f', 'd', 'a', B_TYPE_LARGE),
 	BINDER_TYPE_PTR		= B_PACK_CHARS('p', 't', '*', B_TYPE_LARGE),
 };
@@ -95,6 +96,13 @@ enum flat_binder_object_flags {
 	 * context
 	 */
 	FLAT_BINDER_FLAG_TXN_SECURITY_CTX = 0x1000,
+=======
+};
+
+enum {
+	FLAT_BINDER_FLAG_PRIORITY_MASK = 0xff,
+	FLAT_BINDER_FLAG_ACCEPTS_FDS = 0x100,
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 #ifdef BINDER_IPC_32BIT
@@ -105,6 +113,7 @@ typedef __u64 binder_size_t;
 typedef __u64 binder_uintptr_t;
 #endif
 
+<<<<<<< HEAD
 /**
  * struct binder_object_header - header shared by all binder metadata objects.
  * @type:	type of the object
@@ -113,6 +122,8 @@ struct binder_object_header {
 	__u32        type;
 };
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * This is the flattened representation of a Binder object for transfer
  * between processes.  The 'offsets' supplied as part of a binder transaction
@@ -121,8 +132,14 @@ struct binder_object_header {
  * between processes.
  */
 struct flat_binder_object {
+<<<<<<< HEAD
 	struct binder_object_header	hdr;
 	__u32				flags;
+=======
+	/* 8 bytes for large_flat_header. */
+	__u32		type;
+	__u32		flags;
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 	/* 8 bytes of data. */
 	union {
@@ -134,6 +151,7 @@ struct flat_binder_object {
 	binder_uintptr_t	cookie;
 };
 
+<<<<<<< HEAD
 /**
  * struct binder_fd_object - describes a filedescriptor to be fixed up.
  * @hdr:	common header structure
@@ -214,6 +232,8 @@ struct binder_fd_array_object {
 	binder_size_t			parent_offset;
 };
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 /*
  * On 64-bit platforms where user code may run in 32-bits the driver must
  * translate the buffer (and local binder) addresses appropriately.
@@ -241,6 +261,7 @@ struct binder_version {
 #define BINDER_CURRENT_PROTOCOL_VERSION 8
 #endif
 
+<<<<<<< HEAD
 /*
  * Use with BINDER_GET_NODE_DEBUG_INFO, driver reads ptr, writes to all fields.
  * Set ptr to NULL for the first call to get the info for the first node, and
@@ -263,6 +284,8 @@ struct binder_node_info_for_ref {
 	__u32            reserved3;
 };
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 #define BINDER_WRITE_READ		_IOWR('b', 1, struct binder_write_read)
 #define BINDER_SET_IDLE_TIMEOUT		_IOW('b', 3, __s64)
 #define BINDER_SET_MAX_THREADS		_IOW('b', 5, __u32)
@@ -270,9 +293,12 @@ struct binder_node_info_for_ref {
 #define BINDER_SET_CONTEXT_MGR		_IOW('b', 7, __s32)
 #define BINDER_THREAD_EXIT		_IOW('b', 8, __s32)
 #define BINDER_VERSION			_IOWR('b', 9, struct binder_version)
+<<<<<<< HEAD
 #define BINDER_GET_NODE_DEBUG_INFO	_IOWR('b', 11, struct binder_node_debug_info)
 #define BINDER_GET_NODE_INFO_FOR_REF	_IOWR('b', 12, struct binder_node_info_for_ref)
 #define BINDER_SET_CONTEXT_MGR_EXT	_IOW('b', 13, struct flat_binder_object)
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 
 /*
  * NOTE: Two special error codes you should check for when calling
@@ -331,6 +357,7 @@ struct binder_transaction_data {
 	} data;
 };
 
+<<<<<<< HEAD
 struct binder_transaction_data_secctx {
 	struct binder_transaction_data transaction_data;
 	binder_uintptr_t secctx;
@@ -341,6 +368,8 @@ struct binder_transaction_data_sg {
 	binder_size_t buffers_size;
 };
 
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 struct binder_ptr_cookie {
 	binder_uintptr_t ptr;
 	binder_uintptr_t cookie;
@@ -371,11 +400,14 @@ enum binder_driver_return_protocol {
 	BR_OK = _IO('r', 1),
 	/* No parameters! */
 
+<<<<<<< HEAD
 	BR_TRANSACTION_SEC_CTX = _IOR('r', 2,
 				      struct binder_transaction_data_secctx),
 	/*
 	 * binder_transaction_data_secctx: the received command.
 	 */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 	BR_TRANSACTION = _IOR('r', 2, struct binder_transaction_data),
 	BR_REPLY = _IOR('r', 3, struct binder_transaction_data),
 	/*
@@ -530,12 +562,15 @@ enum binder_driver_command_protocol {
 	/*
 	 * void *: cookie
 	 */
+<<<<<<< HEAD
 
 	BC_TRANSACTION_SG = _IOW('c', 17, struct binder_transaction_data_sg),
 	BC_REPLY_SG = _IOW('c', 18, struct binder_transaction_data_sg),
 	/*
 	 * binder_transaction_data_sg: the sent command.
 	 */
+=======
+>>>>>>> 59e6b98dfb018c1d2f6293d84f5d1b82386049bc
 };
 
 #endif /* _UAPI_LINUX_BINDER_H */
